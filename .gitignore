@@ -1,0 +1,11 @@
+# 私人内容
+diary/
+thoughts/
+
+# 日志文件
+*.log
+
+# 系统文件
+.DS_Store
+*.swp
+*.swo
