@@ -1,0 +1,112 @@
+---
+description: 海豚AI学产品背景、业务架构、核心指标、技术架构、团队协作。当涉及海豚AI学、数学AI课、PRD、产品方案、增长策略、课程设计、前端开发时参考。
+alwaysApply: false
+---
+
+# 海豚AI学 - 产品与技术上下文
+
+## 产品概览
+
+- **产品名称**：海豚AI学
+- **所属公司**：猿辅导
+- **产品定位**：AI驱动的小学数学在线学习产品
+- **核心模式**：AI老师实时讲解 + 互动练习，替代真人直播课
+- **目标用户**：小学生（当前主要覆盖五年级），使用人教版数学教材
+
+## 课程流程
+
+一节数学AI课的典型流程：
+1. **例题讲解**（example）— AI老师逐步讲解例题，配合板书动画
+2. **练习题**（exercise）— 学生独立做题，AI实时判断和反馈
+3. **语音快答**（quick-ask）— 口头快速问答，检验理解
+
+关键交互组件：
+- **题目面板**：展示题干、选项
+- **板书区**：AI老师的手写讲解动画
+- **答题区**：选择题、填空题、判断题等多种交互形式
+- **AI形象（"小白"）**：虚拟老师形象，配合语音讲解
+
+## 设备与端
+
+- **手机端**：横屏使用，左右等宽分栏（左题目 | 右板书+交互）
+- **Pad端**：竖屏使用，单栏布局
+- **客户端**：iOS + Android 原生壳，内嵌 WebView 加载前端页面
+
+## 业务核心指标
+
+| 指标 | 说明 |
+|------|------|
+| 首单 ROI / UE | 首次付费的投入产出比和单位经济模型 |
+| 体验课转化率 | 体验课用户转为正价课付费用户的比例 |
+| 周完习率 | 在课用户每周完成学习的比例（在课留存） |
+| 长续率 | 老用户续费下一期课程的比例 |
+| 退费率 | 用户申请退费的比例 |
+
+## 用户生命周期
+
+```
+获客 → 体验课 → 首单转化 → 在课学习 → 续费/断课
+         ↓                    ↓           ↓
+      转化率              周完习率    长续率/退费率
+```
+
+- **断课用户**：曾付费但未续费、当前不在课的老用户
+- **在课用户**：当前有正价课在学的用户
+
+## 技术架构
+
+### 代码仓库
+
+| 仓库 | 地址 | 说明 |
+|------|------|------|
+| 前端 | https://gitlab-ee.zhenguanyu.com/yuanli/aries-web-practice | Vue 3 + Vite + TS + Pinia，MPA 架构 |
+| AI策略 | https://gitlab-ee.zhenguanyu.com/yuanli/aitutor-prompt | AI讲解的 prompt 和策略逻辑 |
+| 服务端 | https://gitlab-ee.zhenguanyu.com/yuanli/aries-aria-ai-rtc | 后端服务，AI实时通信 |
+| iOS | git@gitlab-ee.zhenguanyu.com:aries-client/aries-ios.git | iOS 客户端 |
+| Android | git@gitlab-ee.zhenguanyu.com:aries-client/aries-android.git | Android 客户端 |
+
+### 前端核心路径
+
+主页面入口：`src/pages/ai-live-tutor-solo/`
+- `stages/example/` — 例题讲解
+- `stages/exercise/` — 练习题
+- `stages/quick-ask/` — 语音快答
+- `common/components/exercise-board/` — 题目面板、板书区、答题区
+- `common/components/exercise-board/answer-area/` — 各类答题组件
+
+### 前端技术要点
+
+- MPA 多页架构，`vite-plugin-virtual-mpa` 自动发现 `src/pages/*/index.html`
+- 样式使用 PostCSS px-to-rem 转换（基准 16px）
+- 制作原型时应直接复用 `ai-live-tutor-solo` 中的真实组件和样式
+
+## 团队与协作
+
+### 团队分工
+
+| 角色 | 职责 |
+|------|------|
+| 增长产品经理（文悦） | PRD、增长实验、数据分析、用户行为研究 |
+| 教研AI组 | AI讲解能力、课程内容生产、prompt工程 |
+| 前端开发 | 课堂页面、交互组件 |
+| 服务端开发 | AI通信、业务逻辑 |
+| 客户端开发 | iOS/Android 壳 |
+| 商分 | 数据分析支持 |
+| 运营 | 用户运营、活动策划 |
+
+### 协作工具
+
+| 工具 | 用途 |
+|------|------|
+| Confluence | PRD 文档 |
+| Motiff | 设计稿 |
+| Tableau | 数据看板 |
+| GitLab | 代码和 MR |
+
+## 写 PRD 时的注意事项
+
+- 需求背景要关联具体指标（转化率、留存、ROI 等）
+- 方案设计要考虑手机端和 Pad 端两种设备的适配
+- 涉及课堂内交互时，需了解 example/exercise/quick-ask 三个阶段的差异
+- 涉及前端改动时，可参考上述核心路径定位具体模块
+- 实验设计要明确实验组/对照组、核心观测指标、预期效果
