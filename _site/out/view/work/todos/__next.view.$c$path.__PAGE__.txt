@@ -1,0 +1,55 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/7c92e96509cd355e.js"],""]
+4:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+3:T964,<h1>待办事项</h1>
+<h2>紧急重要</h2>
+<h3>1. 抽奖激励活动需求</h3>
+<ul>
+<li><strong>上线</strong>：3.6（周四）</li>
+<li><strong>TODO</strong>：上线前和业务方完成配置</li>
+<li><strong>状态</strong>：🔥 明天上线</li>
+</ul>
+<h3>2. 加微页 AB 复盘</h3>
+<ul>
+<li><strong>TODO</strong>：明天（3.6）复盘，等文悦发项目背景和数据</li>
+<li><strong>状态</strong>：⏳ 待文悦提供资料</li>
+</ul>
+<h3>3. 体验课购买后加微流失分析</h3>
+<ul>
+<li><strong>TODO</strong>：继续深挖——未回流用户的后续行为、不同渠道/人群的差异</li>
+<li><strong>状态</strong>：🔥 进行中</li>
+</ul>
+<blockquote>
+<p>初步数据：约 40% 的用户跳到微信后 5 分钟内未回流</p>
+</blockquote>
+<h3>3. Cursor + Tableau MCP 跑通真实取数</h3>
+<ul>
+<li><strong>TODO</strong>：本周找空档，结合加微流失或首通分析试跑</li>
+<li><strong>状态</strong>：⏳ 见缝插针</li>
+</ul>
+<h3>4. 投放落地页异形弹窗——和迎春对齐</h3>
+<ul>
+<li><strong>TODO</strong>：准备前置数据背景（异形 vs 标准弹窗效果对比、技术侧确认）</li>
+<li><strong>状态</strong>：⏳ 下周对齐</li>
+<li><strong>详情</strong>：<code>work/projects/投放落地页异形弹窗.md</code></li>
+</ul>
+<h2>重要不紧急</h2>
+<h3>Prompt 学习（W10 本周）</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Prompt 对比实验：复制 prd-review 加入 chain-of-thought，同一份 PRD 跑两版对比，记录到 <code>knowledge/tech/</code></li>
+<li><input disabled="" type="checkbox"> 了解 CO-STAR 框架，用它审视 prd-writer，记录发现</li>
+</ul>
+<h3>能力建设（本月）</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Tableau 取数总结（W11）：总结 MCP 使用体验，判断哪些日常取数可以走 Cursor</li>
+<li><input disabled="" type="checkbox"> 独立设计一个新 skill（W10-W13）：选一个重复性工作，从零设计</li>
+<li><input disabled="" type="checkbox"> 知识沉淀启动（W10-W13）：给 <code>knowledge/</code> 注入第一批内容，每条 3-5 句话</li>
+</ul>
+<h2>已完成</h2>
+<ul>
+<li><del>断课前测需求</del> — 3.4 上线 ✅，验证进度已和瑞楠及商分对齐</li>
+<li><del>入门测/加微分群 × 首通拨打次数分析</del> — 3.4 商分交付 ✅，已完成数据解读</li>
+</ul>
+0:{"buildId":"RjiiFz1BKdtDIsHAs70vh","rsc":["$","$1","c",{"children":[["$","main",null,{"className":"max-w-2xl mx-auto px-4 py-6","children":[["$","nav",null,{"className":"mb-4","children":["$","$L2",null,{"href":"/","className":"text-blue-600 hover:underline text-sm","children":"← 返回目录"}]}],["$","article",null,{"className":"bg-white rounded-lg border border-slate-200 p-5","children":["$","div",null,{"className":"prose prose-slate prose-sm max-w-none prose-headings:font-semibold prose-a:text-blue-600 prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-slate-800 prose-pre:text-slate-100 prose-table:text-sm prose-th:bg-slate-50 prose-img:rounded-lg","dangerouslySetInnerHTML":{"__html":"$3"}}]}],["$","footer",null,{"className":"mt-4 text-center","children":["$","$L2",null,{"href":"/","className":"text-blue-600 hover:underline text-sm","children":"← 返回目录"}]}]]}],[["$","script","script-0",{"src":"/_next/static/chunks/7c92e96509cd355e.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"loading":null,"isPartial":false}
+6:null

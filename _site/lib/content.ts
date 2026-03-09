@@ -2,13 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const ROOT = process.cwd();
+const ROOT = path.resolve(process.cwd(), '..');
 
 const CONTENT_DIRS = ['work', 'diary', 'reviews', 'knowledge', 'skills', 'thoughts'];
 
 const EXCLUDED_PATTERNS = [
   'node_modules', '.next', '.vercel', '.git', '.cursor',
-  'app', 'lib', 'public',
+  'app', 'lib', 'public', '_site',
 ];
 
 const DIR_LABELS: Record<string, string> = {

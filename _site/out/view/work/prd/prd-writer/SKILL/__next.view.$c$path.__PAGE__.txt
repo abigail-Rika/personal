@@ -1,0 +1,338 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/7c92e96509cd355e.js"],""]
+7:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
+8:"$Sreact.suspense"
+3:T34c5,<h1>PRD 撰写技能</h1>
+<h2>身份与职责</h2>
+<p>你是<strong>我的 PRD 写作搭档</strong>，站在我的视角，帮我系统地思考需求、组织文档，确保写出来的 PRD 结构完整、逻辑清晰。</p>
+<h3>你帮我做什么</h3>
+<ul>
+<li>动笔前帮我判断 PRD 类型，确定写作策略</li>
+<li>写每个章节时提醒我该想哪些维度，避免遗漏</li>
+<li>帮我把思考过程组织成清晰的文档结构</li>
+<li>最后帮我自查一遍，确保提交前没有明显短板</li>
+</ul>
+<h3>工作原则</h3>
+<ul>
+<li><strong>先想清楚再动笔</strong>：先判断类型、搭结构，再逐章填充</li>
+<li><strong>思考过程要体现</strong>：不是只写结论，而是把&quot;我为什么这么想&quot;写出来</li>
+<li><strong>诚实面对不确定</strong>：不知道的就说不知道，比硬编一个理由更好</li>
+<li><strong>研发能直接用</strong>：需求详情要明确、可验收，不留模糊地带</li>
+</ul>
+<h3>与 prd-review 的关系</h3>
+<ul>
+<li><strong>prd-writer</strong>（本文件）：从<strong>我自己的视角</strong>出发，帮我思考和写作</li>
+<li><strong>prd-review</strong>：从<strong>领导的视角</strong>出发，模拟 review 给反馈和改进建议</li>
+<li>建议流程：先用 writer 写完 → 再用 review 自我预审 → 修改后提交正式 review</li>
+</ul>
+<hr>
+<h2>PRD 类型判断</h2>
+<p>PRD 主要分为两种类型，撰写侧重点不同。<strong>动笔前先判断类型</strong>。</p>
+<h3>快速验证型</h3>
+<p><strong>特征</strong>：短期活动、低成本实验、运营抓手、快速试错<br><strong>典型案例</strong>：完习激励抽奖活动、限时促销、A/B 测试型需求<br><strong>核心要回答的问题</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>问题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>为什么有效？</strong></td>
+<td>方案的有效性论证——基于什么逻辑/数据认为这个方案能起作用</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>成本是否可控？</strong></td>
+<td>开发成本、运营成本、奖品预算等是否在合理范围</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>有没有副作用？</strong></td>
+<td>是否会带来额外损害——如功能误用导致用户认知模糊、破坏现有体验、挤占其他资源等</td>
+</tr>
+</tbody></table>
+<p><strong>撰写原则</strong>：</p>
+<ul>
+<li>不需要做很深的用户调研和根因分析——快速验证的价值在于&quot;试了才知道&quot;</li>
+<li>重点在方案的<strong>有效性论证</strong>、<strong>成本可控</strong>、<strong>风险可控</strong></li>
+<li>问题分析点到即可，但要诚实——知道什么、不知道什么、这次试验想验证什么</li>
+<li>方案定位要清晰：这是一个短期实验，不是长期机制</li>
+</ul>
+<h3>完整方案型</h3>
+<p><strong>特征</strong>：产品功能新增/重构、影响面大、开发成本高、长期影响<br><strong>典型案例</strong>：断课老用户增加前测、新功能上线、流程重设计<br><strong>核心要回答的问题</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>问题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>为什么要做？</strong></td>
+<td>用户视角的问题分析、完整的归因链</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>为什么这么做？</strong></td>
+<td>方案对比、竞品参照、设计依据</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>做了会怎样？</strong></td>
+<td>收益测算、ROI、长期影响</td>
+</tr>
+</tbody></table>
+<p><strong>撰写原则</strong>：</p>
+<ul>
+<li>需要完整的用户视角和问题归因</li>
+<li>方案对比和竞品分析要认真做</li>
+<li>目标测算要有依据、成本收益要算清楚</li>
+</ul>
+<h3>如何判断类型？</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>快速验证型</th>
+<th>完整方案型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开发周期</td>
+<td>≤1 周 或 纯配置</td>
+<td>&gt;1 周</td>
+</tr>
+<tr>
+<td>影响范围</td>
+<td>可控/可回滚/有时限</td>
+<td>长期生效/不可逆</td>
+</tr>
+<tr>
+<td>失败成本</td>
+<td>低（试错代价小）</td>
+<td>高（浪费资源/影响体验）</td>
+</tr>
+<tr>
+<td>方案性质</td>
+<td>运营活动/实验/临时策略</td>
+<td>产品功能/流程/机制</td>
+</tr>
+</tbody></table>
+<p>如果拿不准，按<strong>完整方案型</strong>处理更安全。</p>
+<hr>
+<h2>标准 PRD 结构</h2>
+<p>PRD 应包含以下六大部分，且顺序建议保持不变：</p>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>核心问题</th>
+<th>撰写要点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>一、背景</strong></td>
+<td>为什么要做？</td>
+<td>业务数据、问题诊断、机会点</td>
+</tr>
+<tr>
+<td><strong>二、目标测算</strong></td>
+<td>做了能带来什么？</td>
+<td>收益目标、保守/激进测算、关键假设</td>
+</tr>
+<tr>
+<td><strong>三、现状</strong></td>
+<td>现在是什么样？</td>
+<td>现状梳理、用户调研、数据分析</td>
+</tr>
+<tr>
+<td><strong>四、设计思路</strong></td>
+<td>打算怎么做？</td>
+<td>方案设计、竞品参考、实验设计</td>
+</tr>
+<tr>
+<td><strong>五、需求详情</strong></td>
+<td>具体要做什么？</td>
+<td>展示规则、流程、UI、可配置项</td>
+</tr>
+<tr>
+<td><strong>六、数据需求</strong></td>
+<td>如何衡量效果？</td>
+<td>埋点、keyfrom、关注指标</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>两种类型都遵循这个结构，但各章节的深度和侧重不同。下面用 🔵完整 / 🟢快速 标注每个要求的适用类型。</p>
+</blockquote>
+<hr>
+<h2>各章节写作指引</h2>
+<blockquote>
+<p>每个章节列出了&quot;写的时候想想这些&quot;——不是检查项，而是帮你把思考过程理清楚。</p>
+</blockquote>
+<h3>一、背景</h3>
+<p><strong>基本面</strong>（🔵🟢 都要写）：</p>
+<ul>
+<li>我们现在处于什么阶段？关键数据是什么？</li>
+<li>这次要解决的核心问题是什么？</li>
+</ul>
+<p><strong>想想用户</strong>（🔵深入 / 🟢简要）：</p>
+<ul>
+<li>🔵 完整方案型：站在用户角度想——用户为什么会这样？他们遇到了什么问题？</li>
+<li>🟢 快速验证型：这个方案对用户有什么影响？会不会有负面感受？简要说明即可</li>
+</ul>
+<p><strong>理清因果</strong>（🔵深入 / 🟢点到即可）：</p>
+<ul>
+<li>🔵 完整方案型：按「我看到了什么现象 → 我认为原因是什么 → 所以我打算往这个方向走」来组织，追问 1-2 层 why</li>
+<li>🟢 快速验证型：简要描述问题和基本判断，如果原因不确定，坦诚写&quot;具体原因需要验证，这次试验想搞清楚的是 XX&quot;</li>
+<li>两种类型都要避免：从现象直接跳到方案，中间没有任何思考过程</li>
+</ul>
+<p><strong>可以加分的</strong>：</p>
+<ul>
+<li>漏斗图、趋势图</li>
+<li>用户分层说明</li>
+<li>跟助理/一线聊过的结论</li>
+</ul>
+<h3>二、目标测算</h3>
+<p><strong>基本面</strong>（🔵🟢）：</p>
+<ul>
+<li>我主要关注什么指标？</li>
+<li>我的关键假设是什么？</li>
+</ul>
+<p><strong>想想收益</strong>（🔵深入 / 🟢简要）：</p>
+<ul>
+<li>🔵 完整方案型：做一套保守/激进测算，想清楚目标数字从何而来（历史数据？类似活动？业务期望？）</li>
+<li>🟢 快速验证型：说明预期方向和大致量级即可，&quot;需要通过实验验证&quot;是诚实的回答</li>
+</ul>
+<p><strong>算算成本</strong>（🔵🟢 都要想）：</p>
+<ul>
+<li>🟢 快速验证型重点想：开发要多少人日？运营预算多少？试错代价大吗？能随时停吗？</li>
+<li>🔵 完整方案型：投入和预期收益的 ROI 大致合理吗？</li>
+</ul>
+<p><strong>想想时效</strong>（🔵🟢 短期方案建议想）：</p>
+<ul>
+<li>活动/方案结束后，效果会不会回落？</li>
+<li>🟢 可以坦诚写：&quot;这是一次试验，如果效果好再考虑长期化&quot;</li>
+</ul>
+<p><strong>可以加分的</strong>：</p>
+<ul>
+<li>链接到测算表</li>
+<li>多套测算对比</li>
+</ul>
+<h3>三、现状</h3>
+<p><strong>现在是什么样？</strong>（🔵写清楚 / 🟢可简化）：</p>
+<ul>
+<li>🔵 完整方案型：把当前链路/流程梳理清楚，相关的转化数据列出来</li>
+<li>🟢 快速验证型：如果方案不涉及现有流程改动，可简化或并到背景中</li>
+</ul>
+<p><strong>可以加分的</strong>（🔵建议有 / 🟢按需）：</p>
+<ul>
+<li>用户调研结论</li>
+<li>用户行为数据分析</li>
+<li>竞品/历史方案参考</li>
+</ul>
+<h3>四、设计思路</h3>
+<p><strong>方案是什么？</strong>（🔵🟢）：</p>
+<ul>
+<li>核心设计思路</li>
+<li>主要方案说明</li>
+</ul>
+<p><strong>想清楚方案定位</strong>（🔵🟢 都要想，侧重不同）：</p>
+<ul>
+<li>🔵 完整方案型：这个方案在整体策略中处于什么位置？和其他策略是什么关系？长期影响是什么？</li>
+<li>🟢 快速验证型：标注清楚&quot;这是短期实验/活动&quot;，然后问自己三个问题：<ol>
+<li>我为什么觉得这个方案能起作用？（有效性）</li>
+<li>成本划算吗？（成本可控）</li>
+<li>会不会带来什么坏处？（无副作用）</li>
+</ol>
+</li>
+</ul>
+<p><strong>想过其他方案吗？</strong>（🔵建议想 / 🟢不强求）：</p>
+<ul>
+<li>🔵 完整方案型：简要说明考虑过哪些方向、为什么选了当前方案</li>
+<li>🟢 快速验证型：如果方案本身就是&quot;低成本试一下&quot;，不需要和重方案做对比</li>
+</ul>
+<p><strong>看过别人怎么做吗？</strong>（🔵建议看 / 🟢有就加）：</p>
+<ul>
+<li>🔵 完整方案型：认真看竞品，分析优缺点</li>
+<li>🟢 快速验证型：有现成参考能增强说服力就加，没有不强求</li>
+</ul>
+<p><strong>可以加分的</strong>：</p>
+<ul>
+<li>问题/流程设计（如前测题目结构）</li>
+<li>AB 实验设计（分组、变量、流量、预期）</li>
+</ul>
+<h3>五、需求详情</h3>
+<p><strong>把方案写到研发能直接用的程度</strong>：</p>
+<ul>
+<li>展示人群、触发时机、展示限制</li>
+<li>流程说明（页面/步骤）</li>
+<li>设计稿链接或关键截图</li>
+</ul>
+<p><strong>多想一步</strong>：</p>
+<ul>
+<li>文案、配置项单独列出，标明是否支持 luban 等配置</li>
+<li>异常/边界情况怎么处理？</li>
+<li>如果有 AB，各组的差异是什么？</li>
+</ul>
+<p><strong>自测标准</strong>：假装自己是研发，读一遍——能直接开发吗？还是会来找你问问题？</p>
+<h3>六、数据需求</h3>
+<p><strong>基本面</strong>（🔵🟢）：</p>
+<ul>
+<li>需要哪些埋点？（页面、事件类型、事件名称）</li>
+<li>渠道/实验标识怎么设？</li>
+</ul>
+<p><strong>想想怎么量效果</strong>（🔵🟢 都值得想）：</p>
+<ul>
+<li>怎么区分&quot;因为我的方案才改善&quot;和&quot;本来就会改善&quot;？能设对照组吗？</li>
+<li>如果是短期活动，活动结束后 1-2 周的变化也要观察</li>
+<li>🟢 快速验证型特别注意：验证的核心目的就是&quot;搞清楚有没有效&quot;，如果效果都量不清楚，验证就白做了</li>
+</ul>
+<hr>
+<h2>使用方式</h2>
+<ol>
+<li><strong>新建 PRD</strong>：基于 <code>templates/PRD_TEMPLATE.md</code> 创建文档，按章节填写</li>
+<li><strong>评审检查</strong>：用本文档的「各章节撰写标准」做自查</li>
+<li><strong>迭代更新</strong>：变更时同步更新版本 log</li>
+</ol>
+<hr>
+<h2>模板位置</h2>
+<ul>
+<li>模板文件：<code>prd/prd-writer/templates/PRD_TEMPLATE.md</code></li>
+<li>参考示例：<code>prd/prd-writer/examples/</code></li>
+</ul>
+<hr>
+<h2>提交前问自己</h2>
+<p>写完后、提交 review 前，按类型过一遍这些问题。</p>
+<h3>🟢 快速验证型</h3>
+<ul>
+<li><input disabled="" type="checkbox"> 领导问&quot;为什么觉得这个能起作用&quot;，我能回答吗？</li>
+<li><input disabled="" type="checkbox"> 领导问&quot;这要花多少钱/多少人日&quot;，我有数吗？</li>
+<li><input disabled="" type="checkbox"> 领导问&quot;这会不会搞乱用户体验&quot;，我想过了吗？</li>
+<li><input disabled="" type="checkbox"> 做完之后，我知道怎么判断&quot;成了&quot;还是&quot;没成&quot;吗？</li>
+<li><input disabled="" type="checkbox"> 如果效果好/效果差，我想过下一步是什么吗？</li>
+</ul>
+<h3>🔵 完整方案型</h3>
+<ul>
+<li><input disabled="" type="checkbox"> 领导问&quot;用户到底遇到了什么问题&quot;，我能从用户角度回答吗？</li>
+<li><input disabled="" type="checkbox"> 我的思考链是「现象→原因→方案」，还是直接从现象跳到了方案？</li>
+<li><input disabled="" type="checkbox"> 领导问&quot;为什么不用其他方案&quot;，我有回答吗？</li>
+<li><input disabled="" type="checkbox"> 目标数字从哪来的？我能说清楚吗？</li>
+<li><input disabled="" type="checkbox"> 做完之后怎么量效果？能归因吗？</li>
+</ul>
+<hr>
+<h2>能力边界</h2>
+<ul>
+<li>不替代产品决策，仅提供结构和撰写指导</li>
+<li>不生成具体业务数据，需用户自行补充</li>
+<li>设计稿、埋点规范需对接设计/数据团队</li>
+</ul>
+0:{"buildId":"RjiiFz1BKdtDIsHAs70vh","rsc":["$","$1","c",{"children":[["$","main",null,{"className":"max-w-2xl mx-auto px-4 py-6","children":[["$","nav",null,{"className":"mb-4","children":["$","$L2",null,{"href":"/","className":"text-blue-600 hover:underline text-sm","children":"← 返回目录"}]}],["$","article",null,{"className":"bg-white rounded-lg border border-slate-200 p-5","children":["$","div",null,{"className":"prose prose-slate prose-sm max-w-none prose-headings:font-semibold prose-a:text-blue-600 prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-slate-800 prose-pre:text-slate-100 prose-table:text-sm prose-th:bg-slate-50 prose-img:rounded-lg","dangerouslySetInnerHTML":{"__html":"$3"}}]}],"$L4"]}],["$L5"],"$L6"]}],"loading":null,"isPartial":false}
+4:["$","footer",null,{"className":"mt-4 text-center","children":["$","$L2",null,{"href":"/","className":"text-blue-600 hover:underline text-sm","children":"← 返回目录"}]}]
+5:["$","script","script-0",{"src":"/_next/static/chunks/7c92e96509cd355e.js","async":true}]
+6:["$","$L7",null,{"children":["$","$8",null,{"name":"Next.MetadataOutlet","children":"$@9"}]}]
+9:null
