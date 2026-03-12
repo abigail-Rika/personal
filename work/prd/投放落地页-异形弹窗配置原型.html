@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海豚 - 落地页管理 - 异形弹窗配置原型</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f6fa; color: #333; font-size: 13px; }
+
+  /* Header */
+  .header { height: 48px; background: #2c3e50; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; color: #fff; }
+  .header-left { display: flex; align-items: center; gap: 10px; }
+  .header-logo { width: 28px; height: 28px; background: #4a9ff5; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .header-title { font-size: 14px; font-weight: 500; }
+  .header-tag { font-size: 11px; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 3px; }
+  .header-user { font-size: 13px; color: rgba(255,255,255,0.8); }
+
+  /* Toolbar */
+  .toolbar { height: 44px; background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .toolbar-btn { padding: 5px 14px; border: 1px solid #d9d9d9; border-radius: 4px; background: #fff; cursor: pointer; font-size: 13px; color: #333; }
+  .toolbar-btn.active { background: #1890ff; color: #fff; border-color: #1890ff; }
+  .toolbar-btn.save { background: #52c41a; color: #fff; border-color: #52c41a; }
+  .toolbar select { padding: 5px 8px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 13px; }
+
+  /* Main Layout */
+  .main { display: flex; height: calc(100vh - 92px); }
+
+  /* Left Sidebar */
+  .sidebar { width: 180px; background: #fff; border-right: 1px solid #e8e8e8; display: flex; flex-direction: column; }
+  .sidebar-nav { padding: 12px 0; }
+  .sidebar-item { padding: 10px 20px; cursor: pointer; color: #666; font-size: 13px; transition: all 0.2s; }
+  .sidebar-item:hover { color: #1890ff; background: #f0f7ff; }
+  .sidebar-item.active { color: #1890ff; font-weight: 500; border-left: 3px solid #1890ff; padding-left: 17px; }
+  .sidebar-divider { height: 1px; background: #f0f0f0; margin: 4px 16px; }
+  .sidebar-popups { padding: 12px 16px; flex: 1; overflow-y: auto; }
+  .sidebar-popup-label { font-size: 11px; color: #999; margin-bottom: 8px; }
+
+  .popup-card { position: relative; background: #f8f8f8; border: 1px solid #e8e8e8; border-radius: 6px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: border-color 0.2s; }
+  .popup-card:hover, .popup-card.active { border-color: #1890ff; }
+  .popup-card-img { width: 100%; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; }
+  .popup-card-img.irregular { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+  .popup-card-img span { color: #fff; font-size: 11px; opacity: 0.9; }
+  .popup-card-bottom { padding: 6px 8px; display: flex; align-items: center; justify-content: space-between; }
+  .popup-card-type { font-size: 11px; color: #666; }
+  .popup-card-type.tag-irregular { color: #f5576c; font-weight: 500; }
+  .popup-card-close { width: 18px; height: 18px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #999; cursor: pointer; }
+  .popup-card-close:hover { background: #ff4d4f; color: #fff; }
+
+  .add-popup-btn { width: 100%; padding: 8px; border: 1px dashed #d9d9d9; border-radius: 6px; background: #fff; cursor: pointer; font-size: 12px; color: #999; text-align: center; transition: all 0.2s; }
+  .add-popup-btn:hover { border-color: #1890ff; color: #1890ff; }
+
+  /* Center - Phone Preview */
+  .preview-area { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 24px; overflow-y: auto; background: #f0f2f5; }
+  .phone-frame { width: 375px; min-height: 667px; background: #fff; border-radius: 32px; box-shadow: 0 8px 40px rgba(0,0,0,0.12); padding: 12px; position: relative; }
+  .phone-notch { width: 120px; height: 20px; background: #1a1a1a; border-radius: 0 0 16px 16px; margin: 0 auto 8px; }
+  .phone-screen { border-radius: 20px; overflow: hidden; position: relative; background: #fff; min-height: 600px; }
+
+  .page-content { padding: 0; }
+  .page-header-bar { background: #fff; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f0; }
+  .page-header-bar .brand { font-size: 14px; font-weight: 600; color: #333; }
+  .page-header-bar .close-x { font-size: 18px; color: #999; }
+
+  .age-selector { background: linear-gradient(180deg, #fff5f0 0%, #fff 100%); padding: 20px 16px; }
+  .age-selector-title { text-align: center; font-size: 13px; color: #f5576c; margin-bottom: 12px; }
+  .age-btn { display: block; width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ffd4c4; border-radius: 20px; background: #fff; text-align: center; font-size: 13px; color: #333; cursor: pointer; }
+  .age-btn:hover { border-color: #f5576c; color: #f5576c; }
+
+  .landing-section { padding: 16px; }
+  .landing-banner { width: 100%; height: 80px; background: linear-gradient(135deg, #ff6b6b 0%, #ffc107 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 600; }
+
+  .bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 16px; background: #fff; border-top: 1px solid #f0f0f0; display: flex; gap: 10px; }
+  .bottom-bar .price-btn { flex: 1; padding: 10px; border-radius: 20px; text-align: center; font-size: 13px; font-weight: 500; cursor: pointer; }
+  .bottom-bar .price-btn.outline { border: 1px solid #f5576c; color: #f5576c; background: #fff; }
+  .bottom-bar .price-btn.filled { border: none; background: linear-gradient(135deg, #f5576c, #ff8a5c); color: #fff; }
+
+  /* Popup Overlay on Phone */
+  .popup-overlay { position: absolute; top: 32px; left: 12px; right: 12px; bottom: 0; background: rgba(0,0,0,0.5); border-radius: 0 0 20px 20px; display: flex; align-items: center; justify-content: center; z-index: 10; }
+  .popup-irregular { position: relative; width: 260px; }
+  .popup-irregular-img { width: 100%; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 30%, #ffcc80 100%); padding: 24px 20px; text-align: center; }
+  .popup-irregular-img .popup-title { font-size: 16px; font-weight: 700; color: #d32f2f; margin-bottom: 4px; }
+  .popup-irregular-img .popup-sub { font-size: 11px; color: #e65100; margin-bottom: 14px; }
+  .popup-features { text-align: left; margin-bottom: 16px; }
+  .popup-feature-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; color: #333; }
+  .popup-feature-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+  .popup-feature-icon.blue { background: #2196f3; }
+  .popup-feature-icon.green { background: #4caf50; }
+  .popup-feature-icon.orange { background: #ff9800; }
+  .popup-cta { display: inline-block; padding: 10px 40px; background: #f44336; color: #fff; border-radius: 24px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(244,67,54,0.3); }
+  .popup-close-btn { position: absolute; top: -12px; right: -12px; width: 28px; height: 28px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #999; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+
+  /* Right Panel - Config */
+  .config-panel { width: 320px; background: #fff; border-left: 1px solid #e8e8e8; overflow-y: auto; }
+  .config-header { padding: 14px 16px; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; justify-content: space-between; }
+  .config-title { font-size: 14px; font-weight: 600; color: #333; }
+  .config-dropdown { padding: 4px 8px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 12px; }
+
+  .config-hint { padding: 8px 16px; }
+  .config-hint a { font-size: 12px; color: #faad14; text-decoration: none; cursor: pointer; }
+  .config-hint a:hover { text-decoration: underline; }
+
+  .config-body { padding: 16px; }
+  .config-section { margin-bottom: 20px; }
+  .config-label { font-size: 12px; color: #333; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+  .config-label .req { color: #ff4d4f; }
+  .config-label .note { color: #999; font-size: 11px; font-weight: normal; }
+
+  .upload-area { width: 80px; height: 80px; border: 1px dashed #d9d9d9; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; color: #999; transition: border-color 0.2s; }
+  .upload-area:hover { border-color: #1890ff; color: #1890ff; }
+  .upload-icon { font-size: 24px; margin-bottom: 2px; }
+  .upload-text { font-size: 10px; }
+
+  .upload-row { display: flex; gap: 10px; align-items: flex-start; }
+  .upload-preview { width: 80px; height: 80px; border-radius: 6px; overflow: hidden; border: 1px solid #e8e8e8; }
+  .upload-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .upload-preview-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #ff6b6b, #ffc107); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+
+  .size-group { border: 2px solid #ff4d4f; border-radius: 6px; padding: 12px; }
+  .size-row { display: flex; align-items: center; margin-bottom: 8px; }
+  .size-row:last-child { margin-bottom: 0; }
+  .size-row label { font-size: 12px; color: #333; width: 100px; text-align: right; margin-right: 8px; }
+  .size-row label .req { color: #ff4d4f; }
+  .size-row input { width: 80px; padding: 4px 8px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 13px; text-align: center; }
+
+  .bg-note { font-size: 11px; color: #999; line-height: 1.6; padding: 6px 8px; background: #fafafa; border-radius: 4px; margin-bottom: 8px; }
+
+  .config-btn { display: inline-block; padding: 4px 12px; border: 1px solid #1890ff; color: #1890ff; border-radius: 4px; font-size: 12px; cursor: pointer; background: #fff; transition: all 0.2s; }
+  .config-btn:hover { background: #1890ff; color: #fff; }
+
+  .hotzone-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+  .hotzone-table th { text-align: left; padding: 6px 8px; background: #fafafa; border: 1px solid #f0f0f0; color: #999; font-weight: normal; }
+  .hotzone-table td { padding: 6px 8px; border: 1px solid #f0f0f0; }
+
+  .pagination { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 8px; }
+  .pagination span { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 11px; cursor: pointer; color: #999; }
+  .pagination span.current { border-color: #1890ff; color: #1890ff; }
+
+  .toggle-row { display: flex; align-items: center; gap: 8px; margin-top: 16px; }
+  .toggle-label { font-size: 12px; color: #333; }
+  .toggle-switch { width: 36px; height: 20px; background: #1890ff; border-radius: 10px; position: relative; cursor: pointer; }
+  .toggle-switch::after { content: ''; width: 16px; height: 16px; background: #fff; border-radius: 50%; position: absolute; top: 2px; right: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+
+  .proto-badge { position: fixed; bottom: 16px; right: 16px; background: #ff4d4f; color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 500; box-shadow: 0 2px 12px rgba(255,77,79,0.3); z-index: 100; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo">🐬</div>
+    <span class="header-title">海豚 - 落地页管理</span>
+    <span class="header-tag">线上</span>
+  </div>
+  <span class="header-user">jiwenyue</span>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <button class="toolbar-btn active">编辑</button>
+  <button class="toolbar-btn">预览</button>
+  <select>
+    <option>375 x 667 iPhone 6/7/8</option>
+    <option>414 x 896 iPhone XR</option>
+    <option>390 x 844 iPhone 12</option>
+  </select>
+  <button class="toolbar-btn">返回</button>
+  <button class="toolbar-btn save">保存</button>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-nav">
+      <div class="sidebar-item">多媒体</div>
+      <div class="sidebar-item">售卖信息</div>
+      <div class="sidebar-item">售卖入口</div>
+      <div class="sidebar-item">拼团售卖（旧）</div>
+      <div class="sidebar-item">拼团售卖（新）</div>
+      <div class="sidebar-item active">弹窗</div>
+      <div class="sidebar-item">其他</div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-popups">
+      <div class="sidebar-popup-label">已配置弹窗</div>
+
+      <!-- Standard popup card -->
+      <div class="popup-card">
+        <div class="popup-card-img">
+          <span>标准弹窗</span>
+        </div>
+        <div class="popup-card-bottom">
+          <span class="popup-card-type">标准</span>
+          <div class="popup-card-close">×</div>
+        </div>
+      </div>
+
+      <!-- Irregular popup card (NEW) -->
+      <div class="popup-card active">
+        <div class="popup-card-img irregular">
+          <span>异形弹窗</span>
+        </div>
+        <div class="popup-card-bottom">
+          <span class="popup-card-type tag-irregular">异形</span>
+          <div class="popup-card-close">×</div>
+        </div>
+      </div>
+
+      <button class="add-popup-btn">+ 添加弹窗</button>
+    </div>
+  </div>
+
+  <!-- Center - Phone Preview -->
+  <div class="preview-area">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="page-content">
+          <div class="page-header-bar">
+            <span class="close-x">×</span>
+            <span class="brand">海豚AI学</span>
+            <span style="width:18px"></span>
+          </div>
+
+          <div class="age-selector">
+            <div class="age-selector-title">← 请选择年龄 →</div>
+            <button class="age-btn">10-11岁</button>
+            <button class="age-btn">12-13岁</button>
+            <button class="age-btn">14-15岁</button>
+            <button class="age-btn">其他</button>
+          </div>
+
+          <div class="landing-section">
+            <div class="landing-banner">新春学习大作战 🎉</div>
+          </div>
+
+          <div style="height: 120px;"></div>
+        </div>
+
+        <div class="bottom-bar">
+          <div class="price-btn outline">¥99 单独购买</div>
+          <div class="price-btn filled">¥29 去拼团</div>
+        </div>
+
+        <!-- Popup Overlay -->
+        <div class="popup-overlay">
+          <div class="popup-irregular">
+            <div class="popup-close-btn">×</div>
+            <div class="popup-irregular-img">
+              <div class="popup-title">确定要放弃体验</div>
+              <div class="popup-title" style="margin-bottom: 4px;">5天学习计划么？</div>
+              <div class="popup-sub">假期规划先整好，开学没烦恼</div>
+              <div class="popup-features">
+                <div class="popup-feature-item">
+                  <div class="popup-feature-icon blue">▶</div>
+                  <span>2000+ 知识视频</span>
+                </div>
+                <div class="popup-feature-item">
+                  <div class="popup-feature-icon green">✓</div>
+                  <span>2700+ 练习题库</span>
+                </div>
+                <div class="popup-feature-item">
+                  <div class="popup-feature-icon orange">📄</div>
+                  <span>20000+ 全套试卷</span>
+                </div>
+              </div>
+              <div class="popup-cta">立即领取</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel - Config -->
+  <div class="config-panel">
+    <div class="config-header">
+      <span class="config-title">配置栏 - 图片</span>
+      <select class="config-dropdown">
+        <option>1 - 图片</option>
+      </select>
+    </div>
+
+    <div class="config-hint">
+      <a>隐藏了的弹窗，点击这里切换展示 👆</a>
+    </div>
+
+    <div class="config-body">
+
+      <!-- Image Upload -->
+      <div class="config-section">
+        <div class="config-label"><span class="req">*</span> 图片：</div>
+        <div class="upload-row">
+          <div class="upload-area">
+            <div class="upload-icon">⬆</div>
+            <div class="upload-text">上传</div>
+          </div>
+          <div class="upload-preview">
+            <div class="upload-preview-placeholder">已上传</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Render Size -->
+      <div class="config-section">
+        <div class="size-group">
+          <div class="size-row">
+            <label><span class="req">*</span> 弹窗渲染宽度：</label>
+            <input type="text" value="300">
+          </div>
+          <div class="size-row">
+            <label><span class="req">*</span> 弹窗渲染高度：</label>
+            <input type="text" value="395">
+          </div>
+        </div>
+      </div>
+
+      <!-- Background Image -->
+      <div class="config-section">
+        <div class="config-label"><span class="req">*</span> 背景图片：</div>
+        <div class="bg-note">需上传宽高比为「300」:「395」的图片</div>
+        <div class="upload-preview" style="width: 60px; height: 80px;">
+          <div class="upload-preview-placeholder" style="font-size: 9px;">背景图</div>
+        </div>
+      </div>
+
+      <!-- Popup Settings -->
+      <div class="config-section">
+        <div class="config-label" style="margin-bottom: 8px;">
+          <span class="req">*</span> 弹窗设置：
+          <span class="config-btn">配置弹窗</span>
+        </div>
+        <table class="hotzone-table">
+          <thead>
+            <tr>
+              <th>标题</th>
+              <th>热区类型</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>热区1</td>
+              <td>继续支付</td>
+            </tr>
+            <tr>
+              <td>热区2</td>
+              <td>离开</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <span>&lt;</span>
+          <span class="current">1</span>
+          <span>&gt;</span>
+        </div>
+      </div>
+
+      <!-- Preview Toggle -->
+      <div class="toggle-row">
+        <span class="toggle-label">预览：</span>
+        <div class="toggle-switch"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="proto-badge">原型演示 · 非线上页面</div>
+
+</body>
+</html>

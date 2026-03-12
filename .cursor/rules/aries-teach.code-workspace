@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../../aries-teach"
+		},
+		{
+			"path": "../../../aries"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {}
+}

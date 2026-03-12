@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "tableau": {
+      "command": "/Users/jiwenyue/cursorProjects/personal/tools/tableau_mcp/.venv/bin/python",
+      "args": ["/Users/jiwenyue/cursorProjects/personal/tools/tableau_mcp/server.py"]
+    }
+  }
+}
