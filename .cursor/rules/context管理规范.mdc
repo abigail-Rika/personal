@@ -1,0 +1,45 @@
+---
+description: context 文件的管理规范。当新建、修改、review personal/.cursor/rules/ 下的 .mdc context 文件时自动应用。
+alwaysApply: false
+---
+
+## Context 文件清单
+
+`personal/.cursor/rules/` 下以下 `.mdc` 文件是业务 context：
+
+| 文件 | 内容 |
+|------|------|
+| 海豚AI学产品上下文.mdc | 产品概述、课程流程、设备兼容、核心指标、技术架构 |
+| 增长业务上下文.mdc | 增长核心框架、漏斗、组织角色、用户身份状态、术语、工具 |
+| 增长运营与实验.mdc | CC业务、定价SKU、营销基建、用户标签、AB实验沉淀 |
+| AI课产品机制.mdc | 课程结构、题目体系、推题策略、游戏化机制 |
+| 竞品与行业认知.mdc | AI教育赛道竞品分析与差异化定位 |
+
+以下 `.mdc` 文件是 UI/交互规范，不属于业务 context：
+- 海豚App-UI规范.mdc
+- 学习环节-UI规范.mdc
+- 交互设计原则.mdc
+
+以下是协作规则，不属于 context：
+- 协作协议.mdc
+
+## Review 规范
+
+**新建或大幅修改 context 后，必须用 context-builder skill review。**
+
+操作方式：读取 `personal/.cursor/rules/SKILL.md`，按其中的分类体系和 review 方法逐条检查。
+
+### 何时触发 review
+
+1. **新建 context 文件**：写完后自动 review
+2. **大幅补充内容**（新增一个章节或多段信息）：补充完后 review 新增部分
+3. **用户明确要求** review
+4. **小修改**（改几个字、修正笔误）：不需要 review
+
+### Review 执行要点
+
+1. 先分类（A~F），再按分类对应的检查项逐条检查
+2. 区分「事实」和「推测」，推测必须标注
+3. 交叉验证：检查新内容与其他 context 文件是否矛盾
+4. 输出 review 结果时列出发现的问题，由用户决定是否修改
+5. 不要跳过追问——该问的必须问，宁可多确认也不要沉淀错误信息
