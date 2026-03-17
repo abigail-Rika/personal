@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>流量类型 × 用户旅程漏斗</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    padding: 40px 32px;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #999; margin-bottom: 28px; }
+
+  .funnel-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .funnel-table thead th {
+    padding: 14px 10px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    vertical-align: bottom;
+  }
+  .funnel-table thead th:first-child {
+    text-align: left;
+    width: 130px;
+    padding-left: 16px;
+    color: #888;
+    font-size: 12px;
+  }
+  .funnel-table tbody td {
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 1px solid #f5f5f5;
+    vertical-align: middle;
+    font-size: 13px;
+  }
+  .funnel-table tbody td:first-child {
+    text-align: left;
+    padding-left: 16px;
+    font-weight: 500;
+    font-size: 12px;
+    color: #555;
+    background: #fafbfc;
+  }
+  .funnel-table tbody tr:last-child td { border-bottom: none; }
+
+  .ch-header { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .ch-name { font-size: 13px; }
+  .ch-tag { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 400; }
+  .ch-tag-ext { background: #e8f0fe; color: #1a73e8; }
+  .ch-tag-int { background: #e6f4ea; color: #137333; }
+  .ch-tag-pri { background: #fef7e0; color: #b06000; }
+  .ch-detail { font-size: 10px; color: #aaa; font-weight: 400; }
+
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .cell-value { font-size: 18px; font-weight: 700; color: #1a1a2e; letter-spacing: -0.5px; }
+  .cell-value.placeholder { color: #ccc; font-size: 14px; font-weight: 400; }
+  .cell-sub { font-size: 10px; color: #aaa; }
+
+  .bar-wrap { width: 70px; height: 5px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
+  .bar { height: 100%; border-radius: 3px; }
+  .bar-green { background: #10b981; }
+
+  .group-header td {
+    background: #f0f2f5 !important;
+    padding: 7px 10px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #666 !important;
+    letter-spacing: 0.5px;
+  }
+  .group-header td:first-child { padding-left: 16px !important; }
+
+  .stage-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+  .svc-tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .svc-sales { background: #fef0f5; color: #f72585; }
+  .svc-cc { background: #fff8ec; color: #b06000; }
+  .svc-mix { background: #f3f0ff; color: #6d28d9; }
+
+  .volume-row td { padding-top: 14px !important; padding-bottom: 14px !important; }
+  .highlight-row td { background: #f9fafb; }
+
+  .notes {
+    margin-top: 20px;
+    padding: 14px 18px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    font-size: 12px;
+    color: #888;
+    line-height: 1.8;
+  }
+  .notes strong { color: #555; }
+
+  .section-gap { margin-top: 48px; }
+
+  .loc-bar-wrap {
+    width: 100%;
+    max-width: 120px;
+    height: 18px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+  }
+  .loc-bar {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    min-width: 24px;
+  }
+</style>
+</head>
+<body>
+<div style="max-width: 1100px; margin: 0 auto;">
+
+  <!-- ==================== 表1：新客漏斗总览 ==================== -->
+  <h1>新客获客漏斗</h1>
+  <p class="subtitle">新用户从各渠道进入 → 析出为 Leads → 端内旅程 → 转化 &nbsp;|&nbsp; N=15,556</p>
+
+  <table class="funnel-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>
+          <div class="ch-header">
+            <span class="ch-name">电商直播</span>
+            <span class="ch-tag ch-tag-ext">站外下单 · 29元</span>
+            <span class="ch-detail">抖音直播 + 视频号</span>
+          </div>
+        </th>
+        <th>
+          <div class="ch-header">
+            <span class="ch-name">效果广告</span>
+            <span class="ch-tag ch-tag-ext">端外 · 29元</span>
+            <span class="ch-detail">腾讯 + 头条</span>
+          </div>
+        </th>
+        <th>
+          <div class="ch-header">
+            <span class="ch-name">APP 直投</span>
+            <span class="ch-tag ch-tag-int">站内析出 · 9元</span>
+            <span class="ch-detail">头条/华为/ASA等</span>
+          </div>
+        </th>
+        <th>
+          <div class="ch-header">
+            <span class="ch-name">端内自然</span>
+            <span class="ch-tag ch-tag-int">站内析出 · 9元</span>
+            <span class="ch-detail">自然流量</span>
+          </div>
+        </th>
+        <th>
+          <div class="ch-header">
+            <span class="ch-name">私域</span>
+            <span class="ch-tag ch-tag-pri">私域</span>
+            <span class="ch-detail">私域流量</span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- 流量规模 -->
+      <tr class="group-header">
+        <td colspan="6">流量规模</td>
+      </tr>
+      <tr class="volume-row">
+        <td><span class="stage-dot" style="background:#4361ee;"></span>Leads 数</td>
+        <td><div class="cell"><span class="cell-value">8,129</span></div></td>
+        <td><div class="cell"><span class="cell-value">3,637</span></div></td>
+        <td><div class="cell"><span class="cell-value">2,729</span></div></td>
+        <td><div class="cell"><span class="cell-value">924</span></div></td>
+        <td><div class="cell"><span class="cell-value">137</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#4361ee;"></span>占新客总量</td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">52.3%</span><span class="cell-sub">最大渠道</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">23.4%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">17.5%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">5.9%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">0.9%</span></div></td>
+      </tr>
+
+      <!-- 析出 -->
+      <tr class="group-header">
+        <td colspan="6">析出（流量 → Leads）</td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#888;"></span>析出方式</td>
+        <td><div class="cell"><span style="font-size:11px;color:#e63946;font-weight:600;">站外下单→API激活</span><span class="cell-sub">用户可能未装App</span></div></td>
+        <td><div class="cell"><span style="font-size:11px;">端外落地页购买</span></div></td>
+        <td><div class="cell"><span style="font-size:11px;color:#137333;font-weight:500;">站内多点位析出</span><span class="cell-sub">详见下方拆解 ↓</span></div></td>
+        <td><div class="cell"><span style="font-size:11px;color:#137333;font-weight:500;">站内多点位析出</span><span class="cell-sub">详见下方拆解 ↓</span></div></td>
+        <td><div class="cell"><span style="font-size:11px;">留资/购买</span><span class="cell-sub">社群链接</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#4361ee;"></span>析出率</td>
+        <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+      </tr>
+
+      <!-- 用户旅程 -->
+      <tr class="group-header">
+        <td colspan="6">端内用户旅程（Leads → 转化）</td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#7209b7;"></span>加微率</td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">85.09%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#10b981;">92.47%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">76.95%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">74.24%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">88.32%</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#7209b7;"></span>入门测完成率</td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">51.74%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">55.90%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#10b981;">61.60%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#10b981;">59.52%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#ef4444;">40.15%</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#7209b7;"></span>首通率</td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">62.20%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#10b981;">63.51%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">57.42%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#ef4444;">48.05%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#ef4444;">45.26%</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#f72585;"></span>Day1 到习率</td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">72.74%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#10b981;">78.58%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">67.09%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">69.16%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#ef4444;">62.04%</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#f72585;"></span>Day1 完习率</td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">56.00%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#10b981;">61.95%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">46.24%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;">50.87%</span></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:16px;color:#ef4444;">40.88%</span></div></td>
+      </tr>
+
+      <!-- 转化 -->
+      <tr class="group-header">
+        <td colspan="6">转化</td>
+      </tr>
+      <tr class="highlight-row">
+        <td><span class="stage-dot" style="background:#10b981;"></span><strong>转化率</strong></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:22px;">17.01%</span><span class="cell-sub">~1,382 人</span><div class="bar-wrap" style="width:90px;height:7px;"><div class="bar bar-green" style="width:83%"></div></div></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:22px;color:#10b981;">20.51%</span><span class="cell-sub">~746 人</span><div class="bar-wrap" style="width:90px;height:7px;"><div class="bar bar-green" style="width:100%"></div></div></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:22px;">11.73%</span><span class="cell-sub">~320 人</span><div class="bar-wrap" style="width:90px;height:7px;"><div class="bar bar-green" style="width:57%"></div></div></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:22px;">13.96%</span><span class="cell-sub">~129 人</span><div class="bar-wrap" style="width:90px;height:7px;"><div class="bar bar-green" style="width:68%"></div></div></div></td>
+        <td><div class="cell"><span class="cell-value" style="font-size:22px;">15.33%</span><span class="cell-sub">~21 人</span><div class="bar-wrap" style="width:90px;height:7px;"><div class="bar bar-green" style="width:75%"></div></div></div></td>
+      </tr>
+
+      <!-- 承接 -->
+      <tr class="group-header">
+        <td colspan="6">当前承接方式</td>
+      </tr>
+      <tr>
+        <td><span class="stage-dot" style="background:#888;"></span>承接方</td>
+        <td><div class="cell"><span class="svc-tag svc-sales">销售</span><span class="cell-sub">标准单周</span></div></td>
+        <td><div class="cell"><span class="svc-tag svc-sales">销售</span><span class="cell-sub">标准单周</span></div></td>
+        <td><div class="cell"><span class="svc-tag svc-mix">销售/CC</span><span class="cell-sub">按年级分</span></div></td>
+        <td><div class="cell"><span class="svc-tag svc-mix">CC/销售</span><span class="cell-sub">按年级分</span></div></td>
+        <td><div class="cell"><span class="svc-tag svc-cc">CC</span></div></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- ==================== 表2：站内析出点位拆解 ==================== -->
+  <div class="section-gap">
+    <h2>站内析出点位拆解</h2>
+    <p class="subtitle">APP 直投和端内自然两个渠道的用户，在 App 内各位置的析出情况对比</p>
+
+    <table class="funnel-table">
+      <thead>
+        <tr>
+          <th style="width:100px;"></th>
+          <th colspan="4" style="border-bottom: 2px solid #4361ee;">
+            <div class="ch-header">
+              <span class="ch-name">APP 直投</span>
+              <span class="ch-detail">头条 + 其他，合计 2,729 leads</span>
+            </div>
+          </th>
+          <th colspan="4" style="border-bottom: 2px solid #10b981;">
+            <div class="ch-header">
+              <span class="ch-name">端内自然</span>
+              <span class="ch-detail">自然流量，合计 924 leads</span>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>析出点位</th>
+          <th style="font-size:11px;font-weight:500;color:#888;">活跃用户</th>
+          <th style="font-size:11px;font-weight:500;color:#888;">产生 Leads</th>
+          <th style="font-size:11px;font-weight:500;color:#888;">Leads 产生率</th>
+          <th style="font-size:11px;font-weight:500;color:#888;">Leads 占比</th>
+          <th style="font-size:11px;font-weight:500;color:#888;">活跃用户</th>
+          <th style="font-size:11px;font-weight:500;color:#888;">产生 Leads</th>
+          <th style="font-size:11px;font-weight:500;color:#888;">Leads 产生率</th>
+          <th style="font-size:11px;font-weight:500;color:#888;">Leads 占比</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: #f0fdf4;">
+          <td style="background: #e6f4ea !important;">
+            <span class="stage-dot" style="background:#10b981;"></span>
+            <strong>新用户流程</strong>
+          </td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;">18,736</span></div></td>
+          <td><div class="cell"><span style="font-size:16px;font-weight:700;color:#10b981;">2,600</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;color:#10b981;">13.9%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:84%;background:#10b981;">84%</div></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;">7,757</span></div></td>
+          <td><div class="cell"><span style="font-size:16px;font-weight:700;color:#10b981;">910</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;color:#10b981;">11.7%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:75%;background:#10b981;">75%</div></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#7209b7;"></span>计划页</td>
+          <td><div class="cell"><span style="font-size:13px;">18,484</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;">232</span></div></td>
+          <td><div class="cell"><span style="font-size:13px;">1.3%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:7.5%;background:#7209b7;min-width:28px;">7%</div></div></td>
+          <td><div class="cell"><span style="font-size:13px;">8,811</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;">134</span></div></td>
+          <td><div class="cell"><span style="font-size:13px;">1.5%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:11%;background:#7209b7;min-width:30px;">11%</div></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#f59e0b;"></span>我的</td>
+          <td><div class="cell"><span style="font-size:13px;">10,825</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;">131</span></div></td>
+          <td><div class="cell"><span style="font-size:13px;">1.2%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:4.2%;background:#f59e0b;min-width:28px;">4%</div></div></td>
+          <td><div class="cell"><span style="font-size:13px;">6,458</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;">97</span></div></td>
+          <td><div class="cell"><span style="font-size:13px;">1.5%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:8%;background:#f59e0b;min-width:28px;">8%</div></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#4361ee;"></span>资料库</td>
+          <td><div class="cell"><span style="font-size:13px;">9,228</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;">110</span></div></td>
+          <td><div class="cell"><span style="font-size:13px;">1.2%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:3.6%;background:#4361ee;min-width:28px;">4%</div></div></td>
+          <td><div class="cell"><span style="font-size:13px;">5,112</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;">69</span></div></td>
+          <td><div class="cell"><span style="font-size:13px;">1.3%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:5.7%;background:#4361ee;min-width:28px;">6%</div></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#ef4444;"></span>首页</td>
+          <td><div class="cell"><span style="font-size:13px;">22,761</span><span class="cell-sub">活跃最多</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;color:#ef4444;">34</span></div></td>
+          <td><div class="cell"><span style="font-size:13px;color:#ef4444;">0.1%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:1.1%;background:#ef4444;min-width:28px;">1%</div></div></td>
+          <td><div class="cell"><span style="font-size:13px;">9,048</span><span class="cell-sub">活跃第二</span></div></td>
+          <td><div class="cell"><span style="font-size:14px;font-weight:600;color:#ef4444;">~5</span></div></td>
+          <td><div class="cell"><span style="font-size:13px;color:#ef4444;">~0.1%</span></div></td>
+          <td><div class="loc-bar-wrap"><div class="loc-bar" style="width:0.4%;background:#ef4444;min-width:28px;">&lt;1%</div></div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="notes" style="margin-top: 16px;">
+      <strong>核心发现：</strong>两个渠道的 leads 产生高度集中在「新用户流程」（直投 84%、自然 75%）。
+      首页虽然活跃用户最多（直投 22,761 人、自然 9,048 人），但析出几乎为零——广告位曝光率仅 18-23%，点击率不到 6%。
+    </div>
+  </div>
+
+  <!-- ==================== 表3：断课召回漏斗 ==================== -->
+  <div class="section-gap">
+    <h2>断课用户召回漏斗</h2>
+    <p class="subtitle">断课用户通过不同渠道重新成为 Leads → 转化。用户身份为体验断课（限购/非限购）或会员断课。</p>
+
+    <table class="funnel-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>
+            <div class="ch-header">
+              <span class="ch-name">端内召回</span>
+              <span class="ch-tag ch-tag-int">端内触达</span>
+              <span class="ch-detail">回归礼弹窗/计划页/会员页</span>
+            </div>
+          </th>
+          <th>
+            <div class="ch-header">
+              <span class="ch-name">私域召回</span>
+              <span class="ch-tag ch-tag-pri">私域触达</span>
+              <span class="ch-detail">社群/SOP/企微客服</span>
+            </div>
+          </th>
+          <th>
+            <div class="ch-header">
+              <span class="ch-name">转介绍</span>
+              <span class="ch-tag ch-tag-int">口碑</span>
+              <span class="ch-detail">周团 + 邀请</span>
+            </div>
+          </th>
+          <th>
+            <div class="ch-header">
+              <span class="ch-name">端外再获客</span>
+              <span class="ch-tag ch-tag-ext">仅非限购</span>
+              <span class="ch-detail">效果广告/直投触达老用户</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr class="group-header">
+          <td colspan="5">用户身份与析出</td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#888;"></span>覆盖用户</td>
+          <td><div class="cell"><span style="font-size:12px;">断课限购 + 非限购</span><span class="cell-sub">主动回访App的断课用户</span></div></td>
+          <td><div class="cell"><span style="font-size:12px;">断课限购 + 非限购</span><span class="cell-sub">被动触达</span></div></td>
+          <td><div class="cell"><span style="font-size:12px;">老用户推荐的新/老用户</span></div></td>
+          <td><div class="cell"><span style="font-size:12px;">仅断课非限购</span><span class="cell-sub">≥210天，可再购体验课</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#888;"></span>析出方式</td>
+          <td><div class="cell"><span style="font-size:12px;">限购→留资<br>非限购→购买体验课</span></div></td>
+          <td><div class="cell"><span style="font-size:12px;">留资</span></div></td>
+          <td><div class="cell"><span style="font-size:12px;">购买体验课</span></div></td>
+          <td><div class="cell"><span style="font-size:12px;">购买体验课</span><span class="cell-sub">等同新客流程</span></div></td>
+        </tr>
+
+        <tr class="group-header">
+          <td colspan="5">流量规模</td>
+        </tr>
+        <tr class="volume-row">
+          <td><span class="stage-dot" style="background:#ff9e00;"></span>Leads 数</td>
+          <td><div class="cell"><span class="cell-value">118</span><span class="cell-sub">断课召回</span></div></td>
+          <td><div class="cell"><span class="cell-value">26</span><span class="cell-sub">客服咨询</span></div></td>
+          <td><div class="cell"><span class="cell-value">268</span><span class="cell-sub">周团 257 + 邀请 11</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">待拆分</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#4361ee;"></span>析出率</td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        </tr>
+
+        <tr class="group-header">
+          <td colspan="5">端内用户旅程</td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#7209b7;"></span>加微率</td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">61.86%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">65.38%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">59.14%</span><span class="cell-sub">周团数据</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#7209b7;"></span>入门测完成率</td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">33.90%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">11.54%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">25.68%</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#7209b7;"></span>首通率</td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">35.59%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">61.54%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">36.96%</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#f72585;"></span>Day1 到习率</td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">57.63%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">46.15%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">36.19%</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#f72585;"></span>Day1 完习率</td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">37.29%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">15.38%</span></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:16px;">24.51%</span></div></td>
+          <td><div class="cell"><span class="cell-value placeholder">--.--%</span></div></td>
+        </tr>
+
+        <tr class="group-header">
+          <td colspan="5">转化</td>
+        </tr>
+        <tr class="highlight-row">
+          <td><span class="stage-dot" style="background:#10b981;"></span><strong>转化率</strong></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:22px;">14.41%</span><span class="cell-sub">17 人</span><div class="bar-wrap" style="width:80px;height:7px;"><div class="bar bar-green" style="width:74%"></div></div></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:22px;">19.23%</span><span class="cell-sub">5 人</span><div class="bar-wrap" style="width:80px;height:7px;"><div class="bar bar-green" style="width:100%"></div></div></div></td>
+          <td><div class="cell"><span class="cell-value" style="font-size:22px;">15.18%</span><span class="cell-sub">~41 人</span><div class="bar-wrap" style="width:80px;height:7px;"><div class="bar bar-green" style="width:79%"></div></div></div></td>
+          <td><div class="cell"><span class="cell-value placeholder" style="font-size:22px;">--.--%</span></div></td>
+        </tr>
+
+        <tr class="group-header">
+          <td colspan="5">当前承接方式</td>
+        </tr>
+        <tr>
+          <td><span class="stage-dot" style="background:#888;"></span>承接方</td>
+          <td><div class="cell"><span class="svc-tag svc-cc">CC</span><span class="cell-sub">灵活跟进</span></div></td>
+          <td><div class="cell"><span class="svc-tag svc-cc">CC</span></div></td>
+          <td><div class="cell"><span class="svc-tag svc-cc">CC</span></div></td>
+          <td><div class="cell"><span class="svc-tag svc-mix">销售/CC</span><span class="cell-sub">按年级分</span></div></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="notes">
+    <strong>数据来源：</strong>过程指标看板。端内自然 = 用户增长中的「自然流量」子渠道；私域 = 「私域流量」子渠道。<br>
+    <strong>召回漏斗：</strong>端内召回 = 断课召回-非.. (118)；私域召回 = 客服咨询 (26)；转介绍 = 周团(257) + 邀请(11)。转介绍过程数据取周团。<br>
+    <strong>仍待补充：</strong>各渠道析出率、端外再获客渠道数据。
+  </div>
+
+</div>
+</body>
+</html>

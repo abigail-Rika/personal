@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>异形弹窗配置 - 后台原型</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif; background: #f5f7fa; color: #333; }
+
+  .header {
+    height: 56px; background: #fff; border-bottom: 1px solid #e4e7ed;
+    display: flex; align-items: center; padding: 0 24px; gap: 16px;
+  }
+  .header .logo { width: 32px; height: 32px; background: #409eff; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; }
+  .header .title { font-size: 15px; font-weight: 600; color: #303133; }
+  .header .tag { font-size: 12px; background: #f0f9eb; color: #67c23a; padding: 2px 8px; border-radius: 4px; }
+  .header .user { margin-left: auto; font-size: 13px; color: #909399; }
+
+  .main { display: flex; height: calc(100vh - 56px); }
+
+  /* 左侧导航 */
+  .sidebar {
+    width: 120px; background: #fff; border-right: 1px solid #e4e7ed;
+    padding: 16px 0; flex-shrink: 0;
+  }
+  .sidebar .nav-item {
+    padding: 10px 20px; font-size: 13px; color: #606266; cursor: pointer;
+    border-left: 3px solid transparent; transition: all .2s;
+  }
+  .sidebar .nav-item:hover { color: #409eff; background: #f5f7fa; }
+  .sidebar .nav-item.active { color: #409eff; border-left-color: #409eff; font-weight: 600; background: #ecf5ff; }
+
+  /* 中间预览区 */
+  .preview-area {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 24px; overflow-y: auto; background: #f5f7fa;
+  }
+  .preview-toolbar {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+  .btn-group { display: flex; border: 1px solid #dcdfe6; border-radius: 4px; overflow: hidden; }
+  .btn-group .btn {
+    padding: 6px 16px; font-size: 13px; cursor: pointer; border: none;
+    background: #fff; color: #606266; transition: all .2s;
+  }
+  .btn-group .btn.active { background: #409eff; color: #fff; }
+  .device-select {
+    padding: 6px 12px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 13px; color: #606266; background: #fff;
+  }
+  .btn-return {
+    padding: 6px 16px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 13px; background: #fff; color: #606266; cursor: pointer;
+  }
+  .btn-save {
+    padding: 6px 20px; border: none; border-radius: 4px;
+    font-size: 13px; background: #409eff; color: #fff; cursor: pointer; font-weight: 500;
+  }
+
+  .phone-frame {
+    width: 375px; min-height: 500px; background: #fff; border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.1); position: relative; overflow: hidden;
+  }
+  .phone-content { padding: 0; }
+  .phone-content .page-bg {
+    width: 100%; height: 300px; background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; opacity: .5;
+  }
+
+  /* 弹窗预览 - 覆盖在手机上 */
+  .popup-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+  }
+  .popup-preview {
+    width: 280px; position: relative;
+  }
+  .popup-preview img {
+    width: 100%; display: block; border-radius: 0;
+  }
+  .popup-preview .placeholder-img {
+    width: 280px; height: 370px;
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+    border-radius: 16px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; color: #fff; gap: 12px;
+    position: relative; overflow: hidden;
+  }
+  .popup-preview .placeholder-img::before {
+    content: ''; position: absolute; top: -20px; right: -20px;
+    width: 80px; height: 80px; background: rgba(255,255,255,.15); border-radius: 50%;
+  }
+  .popup-preview .placeholder-img .promo-title {
+    font-size: 22px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,.2);
+  }
+  .popup-preview .placeholder-img .promo-sub {
+    font-size: 13px; opacity: .9;
+  }
+  .popup-preview .placeholder-img .promo-items {
+    display: flex; flex-direction: column; gap: 8px; margin-top: 8px;
+  }
+  .popup-preview .placeholder-img .promo-item {
+    display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;
+  }
+  .popup-preview .placeholder-img .promo-item .dot {
+    width: 24px; height: 24px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 12px;
+  }
+  .popup-preview .placeholder-img .promo-btn {
+    margin-top: 16px; padding: 12px 48px; background: #ff3b30;
+    border-radius: 24px; font-size: 16px; font-weight: 700;
+    box-shadow: 0 4px 12px rgba(255,59,48,.4);
+  }
+  .popup-close {
+    position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+    width: 32px; height: 32px; border: 2px solid rgba(255,255,255,.7);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.9); font-size: 16px; cursor: pointer;
+  }
+
+  .hotzone-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  }
+  .hotzone {
+    position: absolute; border: 2px dashed rgba(64,158,255,.8);
+    background: rgba(64,158,255,.08); display: flex; align-items: center;
+    justify-content: center; font-size: 11px; color: #409eff; font-weight: 500;
+  }
+  .hotzone-1 { left: 10%; right: 10%; bottom: 60px; height: 48px; border-radius: 24px; }
+  .hotzone-2 { left: 30%; right: 30%; top: 8px; height: 28px; border-radius: 4px; }
+
+  /* 右侧配置栏 */
+  .config-panel {
+    width: 340px; background: #fff; border-left: 1px solid #e4e7ed;
+    padding: 20px; overflow-y: auto; flex-shrink: 0;
+  }
+  .config-panel .panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .config-panel .panel-title { font-size: 15px; font-weight: 600; color: #303133; }
+  .config-panel .panel-selector {
+    padding: 4px 12px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 12px; color: #606266; background: #fff;
+  }
+  .config-panel .hint-link {
+    font-size: 12px; color: #409eff; cursor: pointer; margin-top: 4px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+  .form-group .label {
+    font-size: 13px; color: #606266; margin-bottom: 8px; display: flex; align-items: center; gap: 4px;
+  }
+  .form-group .label .required { color: #f56c6c; }
+  .form-group .label .tip { font-size: 11px; color: #c0c4cc; margin-left: 4px; }
+
+  .image-upload {
+    width: 100px; height: 100px; border: 1px dashed #dcdfe6; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    color: #c0c4cc; font-size: 28px; transition: border-color .2s; background: #fafafa;
+  }
+  .image-upload:hover { border-color: #409eff; color: #409eff; }
+  .image-upload.has-image {
+    border-style: solid; overflow: hidden; padding: 4px; background: #fff;
+  }
+  .image-upload.has-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+
+  .dimension-row { display: flex; gap: 12px; }
+  .dimension-item { flex: 1; }
+  .dimension-item .dim-label { font-size: 12px; color: #909399; margin-bottom: 4px; }
+  .input-field {
+    width: 100%; padding: 8px 12px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 13px; color: #303133; transition: border-color .2s; outline: none;
+  }
+  .input-field:focus { border-color: #409eff; }
+  .input-hint { font-size: 11px; color: #c0c4cc; margin-top: 4px; }
+
+  .bg-upload-area {
+    border: 1px dashed #dcdfe6; border-radius: 6px; padding: 16px;
+    display: flex; align-items: center; gap: 16px; background: #fafafa;
+  }
+  .bg-upload-area .bg-thumb {
+    width: 80px; height: 106px; border-radius: 4px; overflow: hidden;
+    flex-shrink: 0; background: #eee;
+  }
+  .bg-upload-area .bg-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .bg-upload-area .bg-info { font-size: 12px; color: #909399; line-height: 1.6; }
+  .bg-upload-area .bg-info strong { color: #606266; }
+
+  .popup-config-btn {
+    padding: 8px 16px; border: 1px solid #409eff; border-radius: 4px;
+    background: #fff; color: #409eff; font-size: 13px; cursor: pointer;
+    transition: all .2s; font-weight: 500;
+  }
+  .popup-config-btn:hover { background: #409eff; color: #fff; }
+
+  .hotzone-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  .hotzone-table th {
+    background: #f5f7fa; padding: 8px 12px; text-align: left;
+    border: 1px solid #ebeef5; font-weight: 500; color: #606266;
+  }
+  .hotzone-table td {
+    padding: 8px 12px; border: 1px solid #ebeef5; color: #303133;
+  }
+
+  .toggle-row {
+    display: flex; align-items: center; gap: 8px; margin-top: 20px;
+    padding-top: 16px; border-top: 1px solid #f0f0f0;
+  }
+  .toggle-label { font-size: 13px; color: #606266; }
+  .toggle {
+    width: 44px; height: 22px; border-radius: 11px; background: #409eff;
+    position: relative; cursor: pointer; transition: background .2s;
+  }
+  .toggle .knob {
+    width: 18px; height: 18px; border-radius: 50%; background: #fff;
+    position: absolute; top: 2px; right: 2px; transition: all .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  }
+
+  .divider { height: 1px; background: #ebeef5; margin: 20px 0; }
+
+  .section-title {
+    font-size: 13px; font-weight: 600; color: #303133; margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 2px solid #409eff; display: inline-block;
+  }
+
+  /* 状态标注 */
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
+    border-radius: 12px; font-size: 11px; font-weight: 500;
+  }
+  .status-badge.restored { background: #f0f9eb; color: #67c23a; border: 1px solid #e1f3d8; }
+  .status-badge.current { background: #fef0f0; color: #f56c6c; border: 1px solid #fde2e2; }
+
+  /* 说明区域 */
+  .note-box {
+    background: #fdf6ec; border: 1px solid #faecd8; border-radius: 8px;
+    padding: 16px; margin-bottom: 24px;
+  }
+  .note-box .note-title { font-size: 13px; font-weight: 600; color: #e6a23c; margin-bottom: 8px; }
+  .note-box .note-content { font-size: 12px; color: #909399; line-height: 1.8; }
+
+  /* 对比区域 */
+  .compare-container {
+    display: flex; gap: 32px; padding: 32px; max-width: 1200px; margin: 0 auto;
+  }
+  .compare-card {
+    flex: 1; background: #fff; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .compare-card .card-header {
+    padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .compare-card .card-header h3 { font-size: 15px; }
+  .compare-card .card-body { padding: 0 20px 20px; }
+
+  /* 页面容器 */
+  .page-container { max-width: 100%; }
+
+  /* 标注样式 */
+  .annotation {
+    position: relative; border: 2px solid #f56c6c; border-radius: 6px;
+    padding: 2px; margin: -2px;
+  }
+  .annotation::after {
+    content: attr(data-label); position: absolute; top: -10px; right: -2px;
+    background: #f56c6c; color: #fff; font-size: 10px; padding: 1px 6px;
+    border-radius: 3px; white-space: nowrap;
+  }
+  .annotation.green { border-color: #67c23a; }
+  .annotation.green::after { background: #67c23a; }
+
+  /* Tab 导航 */
+  .page-tabs {
+    display: flex; gap: 0; background: #fff; border-bottom: 2px solid #e4e7ed;
+    padding: 0 32px; position: sticky; top: 0; z-index: 100;
+  }
+  .page-tab {
+    padding: 14px 24px; font-size: 14px; color: #606266; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s;
+    font-weight: 500;
+  }
+  .page-tab:hover { color: #409eff; }
+  .page-tab.active { color: #409eff; border-bottom-color: #409eff; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* 完整后台模拟 */
+  .full-backend { height: 100vh; display: flex; flex-direction: column; }
+  .full-backend .main { flex: 1; overflow: hidden; }
+
+  .page-wrapper { padding: 24px 32px; overflow-y: auto; height: 100%; }
+
+  /* 热区编辑弹窗 */
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,.45); z-index: 1000; align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #fff; border-radius: 12px; width: 720px; max-height: 90vh;
+    box-shadow: 0 8px 32px rgba(0,0,0,.2); display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-header {
+    padding: 16px 24px; border-bottom: 1px solid #ebeef5;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-header h3 { font-size: 16px; font-weight: 600; color: #303133; }
+  .modal-close {
+    width: 28px; height: 28px; border: none; background: #f5f7fa;
+    border-radius: 6px; cursor: pointer; font-size: 16px; color: #909399;
+    display: flex; align-items: center; justify-content: center; transition: all .2s;
+  }
+  .modal-close:hover { background: #fef0f0; color: #f56c6c; }
+  .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+  .modal-footer {
+    padding: 16px 24px; border-top: 1px solid #ebeef5;
+    display: flex; justify-content: flex-end; gap: 12px;
+  }
+  .modal-footer .btn-cancel {
+    padding: 8px 20px; border: 1px solid #dcdfe6; border-radius: 6px;
+    background: #fff; color: #606266; font-size: 13px; cursor: pointer;
+  }
+  .modal-footer .btn-confirm {
+    padding: 8px 20px; border: none; border-radius: 6px;
+    background: #409eff; color: #fff; font-size: 13px; cursor: pointer; font-weight: 500;
+  }
+
+  .hotzone-editor { display: flex; gap: 24px; }
+  .hotzone-canvas-wrap {
+    width: 300px; flex-shrink: 0; position: relative;
+    border: 1px solid #ebeef5; border-radius: 8px; overflow: hidden; background: #fafafa;
+  }
+  .hotzone-canvas-wrap .canvas-label {
+    position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,.5);
+    color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 4px; z-index: 2;
+  }
+  .hotzone-canvas {
+    width: 300px; height: 395px; position: relative;
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+  }
+  .hotzone-rect {
+    position: absolute; border: 2px solid #409eff; background: rgba(64,158,255,.15);
+    cursor: move; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #409eff; font-weight: 600; transition: border-color .2s;
+  }
+  .hotzone-rect:hover { border-color: #66b1ff; background: rgba(64,158,255,.25); }
+  .hotzone-rect.selected { border-color: #f56c6c; background: rgba(245,108,108,.15); }
+  .hotzone-rect .resize-handle {
+    position: absolute; width: 8px; height: 8px; background: #409eff;
+    border: 1px solid #fff; border-radius: 2px;
+  }
+  .hotzone-rect .resize-handle.br { bottom: -4px; right: -4px; cursor: nwse-resize; }
+  .hotzone-rect .resize-handle.bl { bottom: -4px; left: -4px; cursor: nesw-resize; }
+  .hotzone-rect .resize-handle.tr { top: -4px; right: -4px; cursor: nesw-resize; }
+  .hotzone-rect .resize-handle.tl { top: -4px; left: -4px; cursor: nwse-resize; }
+
+  .hotzone-form-area { flex: 1; min-width: 0; }
+  .hotzone-form-area .toolbar {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+  }
+  .hotzone-form-area .toolbar .tip { font-size: 12px; color: #909399; }
+  .btn-add-hotzone {
+    padding: 6px 14px; border: 1px dashed #409eff; border-radius: 6px;
+    background: #ecf5ff; color: #409eff; font-size: 12px; cursor: pointer;
+    font-weight: 500; transition: all .2s;
+  }
+  .btn-add-hotzone:hover { background: #409eff; color: #fff; border-style: solid; }
+
+  .hotzone-card {
+    border: 1px solid #ebeef5; border-radius: 8px; padding: 16px;
+    margin-bottom: 12px; transition: border-color .2s; position: relative;
+  }
+  .hotzone-card:hover { border-color: #c0c4cc; }
+  .hotzone-card.active { border-color: #409eff; box-shadow: 0 0 0 2px rgba(64,158,255,.15); }
+  .hotzone-card .card-top {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+  }
+  .hotzone-card .card-top .hz-name {
+    font-size: 14px; font-weight: 600; color: #303133;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hotzone-card .card-top .hz-name .hz-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #409eff;
+  }
+  .hotzone-card .card-top .hz-delete {
+    font-size: 12px; color: #c0c4cc; cursor: pointer; padding: 2px 6px;
+    border-radius: 4px; transition: all .2s;
+  }
+  .hotzone-card .card-top .hz-delete:hover { color: #f56c6c; background: #fef0f0; }
+
+  .hz-form-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .hz-form-row .hz-label {
+    width: 70px; font-size: 12px; color: #909399; text-align: right; flex-shrink: 0;
+  }
+  .hz-form-row .hz-input {
+    flex: 1; padding: 6px 10px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 12px; color: #303133; outline: none; transition: border-color .2s;
+  }
+  .hz-form-row .hz-input:focus { border-color: #409eff; }
+  .hz-form-row .hz-select {
+    flex: 1; padding: 6px 10px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 12px; color: #303133; background: #fff;
+  }
+  .hz-pos-group { display: flex; gap: 8px; flex: 1; }
+  .hz-pos-item {
+    flex: 1; display: flex; align-items: center; gap: 4px;
+  }
+  .hz-pos-item .pos-label { font-size: 11px; color: #c0c4cc; }
+  .hz-pos-item .pos-input {
+    width: 100%; padding: 5px 6px; border: 1px solid #e4e7ed; border-radius: 3px;
+    font-size: 11px; color: #606266; text-align: center; outline: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部 Tab 切换 -->
+<div class="page-tabs">
+  <div class="page-tab active" onclick="switchTab('restored')">修复后效果（目标态）</div>
+  <div class="page-tab" onclick="switchTab('compare')">修复前 vs 修复后对比</div>
+</div>
+
+<!-- Tab 1: 修复后完整后台 -->
+<div class="tab-content active" id="tab-restored">
+  <div class="full-backend">
+    <div class="header">
+      <div class="logo">🐬</div>
+      <div class="title">海豚 - 落地页管理</div>
+      <div class="tag">线上</div>
+      <div class="user">jiwenyue</div>
+    </div>
+    <div class="main">
+      <!-- 左侧导航 -->
+      <div class="sidebar">
+        <div class="nav-item">多媒体</div>
+        <div class="nav-item">售卖信息</div>
+        <div class="nav-item">售卖入口</div>
+        <div class="nav-item">拼团售卖（旧）</div>
+        <div class="nav-item">拼团售卖（新）</div>
+        <div class="nav-item active">弹窗</div>
+        <div class="nav-item">其他</div>
+      </div>
+
+      <!-- 中间预览 -->
+      <div class="preview-area">
+        <div class="preview-toolbar">
+          <div class="btn-group">
+            <div class="btn active">编辑</div>
+            <div class="btn">预览</div>
+          </div>
+          <select class="device-select">
+            <option>375 x 667 iPhone 6/7/8</option>
+          </select>
+          <button class="btn-return">返回</button>
+          <button class="btn-save">保存</button>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-content">
+            <div class="page-bg">落地页内容区域</div>
+          </div>
+          <!-- 异形弹窗预览 -->
+          <div class="popup-overlay">
+            <div class="popup-preview">
+              <div class="placeholder-img">
+                <div class="promo-title">暑期专属提升</div>
+                <div class="promo-sub">确定要放弃体验吗？</div>
+                <div class="promo-items">
+                  <div class="promo-item"><div class="dot" style="background:#4ecdc4">📚</div> 2000+ 知识视频</div>
+                  <div class="promo-item"><div class="dot" style="background:#ff6b6b">📝</div> 2700+ 练习题库</div>
+                  <div class="promo-item"><div class="dot" style="background:#45b7d1">📄</div> 20000+ 全套试卷</div>
+                </div>
+                <div class="promo-btn">立即领取</div>
+                <div class="hotzone-overlay">
+                  <div class="hotzone hotzone-1">热区1: 继续支付</div>
+                  <div class="hotzone hotzone-2">热区2: 离开</div>
+                </div>
+              </div>
+              <div class="popup-close">✕</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧配置栏 -->
+      <div class="config-panel">
+        <div class="panel-header">
+          <div class="panel-title">配置栏 - 图片</div>
+          <select class="panel-selector">
+            <option>1 - 图片</option>
+          </select>
+        </div>
+        <div class="hint-link">隐藏了的弹窗，点击这里切换展示 👆</div>
+
+        <!-- 图片上传 -->
+        <div class="form-group" style="margin-top: 16px;">
+          <div class="label"><span class="required">*</span> 图片：</div>
+          <div class="image-upload has-image">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92' viewBox='0 0 92 92'%3E%3Crect fill='%23ff9a56' width='92' height='92' rx='8'/%3E%3Ctext x='46' y='50' text-anchor='middle' fill='white' font-size='10' font-family='sans-serif'%3E弹窗素材%3C/text%3E%3C/svg%3E" alt="弹窗图片">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 弹窗浮层尺寸 - 核心恢复项 -->
+        <div class="annotation green" data-label="需恢复">
+          <div class="form-group">
+            <div class="label"><span class="required">*</span> 弹窗浮层宽度：</div>
+            <input class="input-field" type="number" value="300" placeholder="宽度">
+          </div>
+          <div class="form-group">
+            <div class="label"><span class="required">*</span> 弹窗浮层高度：</div>
+            <input class="input-field" type="number" value="395" placeholder="高度">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 背景图片 - 核心恢复项 -->
+        <div class="annotation green" data-label="需恢复">
+          <div class="form-group">
+            <div class="label"><span class="required">*</span> 背景图片：</div>
+            <div class="input-hint" style="margin-bottom: 8px;">需上传宽高比为「300」:「395」的图片</div>
+            <div class="bg-upload-area">
+              <div class="bg-thumb">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='106' viewBox='0 0 80 106'%3E%3Crect fill='%23ff6a00' width='80' height='106' rx='4'/%3E%3Ctext x='40' y='56' text-anchor='middle' fill='white' font-size='9' font-family='sans-serif'%3E背景图%3C/text%3E%3C/svg%3E" alt="背景图">
+              </div>
+              <div class="bg-info">
+                <strong>点击上传背景图片</strong><br>
+                尺寸需与上方宽高比一致<br>
+                支持 PNG/JPG 格式
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 弹窗设置（热区） - 核心恢复项 -->
+        <div class="annotation green" data-label="需恢复">
+          <div class="form-group">
+            <div class="label"><span class="required">*</span> 弹窗设置：</div>
+            <button class="popup-config-btn">配置弹窗</button>
+            <table class="hotzone-table">
+              <thead>
+                <tr><th>标题</th><th>热区类型</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>热区 1</td><td>继续支付</td></tr>
+                <tr><td>热区 2</td><td>离开</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 预览开关 -->
+        <div class="toggle-row">
+          <span class="toggle-label">预览：</span>
+          <div class="toggle"><div class="knob"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tab 2: 对比视图 -->
+<div class="tab-content" id="tab-compare">
+  <div class="page-wrapper">
+    <div class="note-box">
+      <div class="note-title">原型说明</div>
+      <div class="note-content">
+        左侧为当前状态（异形弹窗配置缺失），右侧为修复后目标状态（恢复完整配置项）。<br>
+        绿色标注区域 = 需要恢复的配置项。修复不涉及新功能开发，仅恢复 2025 年 8 月改造前的已有能力。
+      </div>
+    </div>
+
+    <div class="compare-container">
+      <!-- 当前状态 -->
+      <div class="compare-card">
+        <div class="card-header">
+          <h3>当前状态</h3>
+          <span class="status-badge current">异常</span>
+        </div>
+        <div class="card-body">
+          <div class="config-panel" style="width:100%; border:none; padding:0;">
+            <div class="panel-header">
+              <div class="panel-title">配置栏 - 年级选择</div>
+              <select class="panel-selector"><option>1 - 年级选择</option></select>
+            </div>
+
+            <div class="form-group" style="margin-top:16px;">
+              <div class="label"><span class="required">*</span> 图片：</div>
+              <div class="image-upload"><span>+</span></div>
+            </div>
+
+            <div style="padding: 40px 20px; text-align: center; color: #c0c4cc; font-size: 13px; border: 1px dashed #e4e7ed; border-radius: 8px; margin-top: 20px;">
+              <div style="font-size: 32px; margin-bottom: 8px;">⚠️</div>
+              异形弹窗配置项缺失<br><br>
+              <span style="font-size: 12px;">
+                缺少：弹窗浮层宽度/高度<br>
+                缺少：背景图片上传<br>
+                缺少：热区配置<br>
+                缺少：预览开关
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 修复后 -->
+      <div class="compare-card">
+        <div class="card-header">
+          <h3>修复后</h3>
+          <span class="status-badge restored">已恢复</span>
+        </div>
+        <div class="card-body">
+          <div class="config-panel" style="width:100%; border:none; padding:0;">
+            <div class="panel-header">
+              <div class="panel-title">配置栏 - 图片</div>
+              <select class="panel-selector"><option>1 - 图片</option></select>
+            </div>
+            <div class="hint-link">隐藏了的弹窗，点击这里切换展示 👆</div>
+
+            <div class="form-group" style="margin-top: 16px;">
+              <div class="label"><span class="required">*</span> 图片：</div>
+              <div class="image-upload has-image">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92' viewBox='0 0 92 92'%3E%3Crect fill='%23ff9a56' width='92' height='92' rx='8'/%3E%3Ctext x='46' y='50' text-anchor='middle' fill='white' font-size='10' font-family='sans-serif'%3E弹窗素材%3C/text%3E%3C/svg%3E" alt="">
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="annotation green" data-label="恢复项">
+              <div class="form-group">
+                <div class="label"><span class="required">*</span> 弹窗浮层宽度：</div>
+                <input class="input-field" type="number" value="300">
+              </div>
+              <div class="form-group">
+                <div class="label"><span class="required">*</span> 弹窗浮层高度：</div>
+                <input class="input-field" type="number" value="395">
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="annotation green" data-label="恢复项">
+              <div class="form-group">
+                <div class="label"><span class="required">*</span> 背景图片：</div>
+                <div class="input-hint" style="margin-bottom:8px;">需上传宽高比为「300」:「395」的图片</div>
+                <div class="bg-upload-area">
+                  <div class="bg-thumb">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='106' viewBox='0 0 80 106'%3E%3Crect fill='%23ff6a00' width='80' height='106' rx='4'/%3E%3Ctext x='40' y='56' text-anchor='middle' fill='white' font-size='9' font-family='sans-serif'%3E背景图%3C/text%3E%3C/svg%3E" alt="">
+                  </div>
+                  <div class="bg-info">
+                    <strong>点击上传背景图片</strong><br>
+                    尺寸需与宽高比一致
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="annotation green" data-label="恢复项">
+              <div class="form-group">
+                <div class="label"><span class="required">*</span> 弹窗设置：</div>
+                <button class="popup-config-btn">配置弹窗</button>
+                <table class="hotzone-table">
+                  <thead><tr><th>标题</th><th>热区类型</th></tr></thead>
+                  <tbody>
+                    <tr><td>热区 1</td><td>继续支付</td></tr>
+                    <tr><td>热区 2</td><td>离开</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="toggle-row">
+              <span class="toggle-label">预览：</span>
+              <div class="toggle"><div class="knob"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 热区编辑弹窗 -->
+<div class="modal-overlay" id="hotzoneModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>配置弹窗热区</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="hotzone-editor">
+        <!-- 左侧：画布 -->
+        <div class="hotzone-canvas-wrap">
+          <div class="canvas-label">弹窗背景 300 x 395</div>
+          <div class="hotzone-canvas">
+            <!-- 模拟弹窗内容 -->
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:8px;">
+              <div style="font-size:18px;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,.2);">暑期专属提升</div>
+              <div style="font-size:11px;opacity:.8;">确定要放弃体验吗？</div>
+              <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;font-size:12px;">
+                <div>📚 2000+ 知识视频</div>
+                <div>📝 2700+ 练习题库</div>
+                <div>📄 20000+ 全套试卷</div>
+              </div>
+            </div>
+            <!-- 热区1：CTA按钮 -->
+            <div class="hotzone-rect active" id="hz1" style="left:40px;right:40px;bottom:50px;height:44px;border-radius:22px;" onclick="selectHotzone(1)">
+              <span>热区 1</span>
+              <div class="resize-handle tl"></div>
+              <div class="resize-handle tr"></div>
+              <div class="resize-handle bl"></div>
+              <div class="resize-handle br"></div>
+            </div>
+            <!-- 热区2：关闭区域 -->
+            <div class="hotzone-rect" id="hz2" style="left:100px;right:100px;top:6px;height:24px;border-radius:4px;" onclick="selectHotzone(2)">
+              <span>热区 2</span>
+              <div class="resize-handle tl"></div>
+              <div class="resize-handle tr"></div>
+              <div class="resize-handle bl"></div>
+              <div class="resize-handle br"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧：热区属性 -->
+        <div class="hotzone-form-area">
+          <div class="toolbar">
+            <span class="tip">在左侧画布上拖拽调整热区位置和大小</span>
+            <button class="btn-add-hotzone">+ 新增热区</button>
+          </div>
+
+          <!-- 热区1 -->
+          <div class="hotzone-card active" id="hzCard1" onclick="selectHotzone(1)">
+            <div class="card-top">
+              <div class="hz-name"><div class="hz-dot"></div>热区 1</div>
+              <span class="hz-delete">删除</span>
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">标题</span>
+              <input class="hz-input" value="热区 1" placeholder="热区名称">
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">热区类型</span>
+              <select class="hz-select">
+                <option value="pay" selected>继续支付</option>
+                <option value="leave">离开</option>
+                <option value="link">跳转链接</option>
+                <option value="close">关闭弹窗</option>
+              </select>
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">跳转链接</span>
+              <input class="hz-input" value="" placeholder="类型为"跳转链接"时填写目标URL">
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">区域坐标</span>
+              <div class="hz-pos-group">
+                <div class="hz-pos-item">
+                  <span class="pos-label">X</span>
+                  <input class="pos-input" value="40">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">Y</span>
+                  <input class="pos-input" value="301">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">W</span>
+                  <input class="pos-input" value="220">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">H</span>
+                  <input class="pos-input" value="44">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 热区2 -->
+          <div class="hotzone-card" id="hzCard2" onclick="selectHotzone(2)">
+            <div class="card-top">
+              <div class="hz-name"><div class="hz-dot" style="background:#909399;"></div>热区 2</div>
+              <span class="hz-delete">删除</span>
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">标题</span>
+              <input class="hz-input" value="热区 2" placeholder="热区名称">
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">热区类型</span>
+              <select class="hz-select">
+                <option value="pay">继续支付</option>
+                <option value="leave" selected>离开</option>
+                <option value="link">跳转链接</option>
+                <option value="close">关闭弹窗</option>
+              </select>
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">跳转链接</span>
+              <input class="hz-input" value="" placeholder="类型为"跳转链接"时填写目标URL">
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">区域坐标</span>
+              <div class="hz-pos-group">
+                <div class="hz-pos-item">
+                  <span class="pos-label">X</span>
+                  <input class="pos-input" value="100">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">Y</span>
+                  <input class="pos-input" value="6">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">W</span>
+                  <input class="pos-input" value="100">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">H</span>
+                  <input class="pos-input" value="24">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-confirm" onclick="closeModal()">确定</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+document.querySelectorAll('.popup-config-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('hotzoneModal').classList.add('show');
+  });
+});
+
+function closeModal() {
+  document.getElementById('hotzoneModal').classList.remove('show');
+}
+
+function selectHotzone(n) {
+  document.querySelectorAll('.hotzone-rect').forEach(r => r.classList.remove('selected', 'active'));
+  document.querySelectorAll('.hotzone-card').forEach(c => c.classList.remove('active'));
+  const rect = document.getElementById('hz' + n);
+  const card = document.getElementById('hzCard' + n);
+  if (rect) { rect.classList.add('active'); }
+  if (card) { card.classList.add('active'); }
+}
+
+document.getElementById('hotzoneModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+
+</body>
+</html>
