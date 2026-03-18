@@ -1,0 +1,810 @@
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265 根据这个文档，补充到@personal/.cursor/rules/增长业务上下文.mdc 中的 四、CC 业务详解把吧 ，主要是补充下 cc 现在的端内 leads 来源
+</user_query>
+
+assistant:
+[Thinking] The user wants me to read a Confluence page and use its content to update the 增长业务上下文.mdc file. Let me first read the Confluence page using the MCP tool, and also read the current file to understand what needs to be updated.
+先获取 Confluence 页面内容，同时读取当前文件。
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  page: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have both the Confluence page content and the current file. The user wants me to supplement the "四、CC 业务详解" section with information about CC's current in-app leads sources.
+
+From the Confluence document, the relevant information about CC's in-app leads sources is in section "三、现状" → "1、断课老用户站内召回现状" → "站内召回点位、leads 转率梳理". This gives a detailed breakdown of the various touchpoints/entry points for leads, specifically for CC (体验课断课限购 and 体验课断课非限购 users).
+
+
+I'm now extracting the specific leads sources and conversion rates for different user segments, particularly focusing on the touchpoints that feed into the CC business versus the sales routes. I'll organize this data to create a new subsection on in-app leads sources that shows the various entry points and their performance metrics for CC users. 现在看体验课断课非限购用户的数据，首页召回弹窗表现最好，CTR达到25%，leads转率也有8.9%，而计划页的9元解锁功能虽然曝光较少但转化率相对较高。
+
+会员页和优惠券banner的数据量较小，但优惠券banner的leads转率最高达到27.8%。
+
+对于无限购体验课，主要通过购买1元课程或留资两种方式转化，入口分布在资料库、计划页和banner位。而限购体验课则采用不同策略，通过咨询入口引导留资，或以0元课回归礼为抓手，在首页弹窗和我的页面磁铁位置吸引用户领取。
+
+现在我需要在CC业务详解部分补充端内leads来源的完整框架，包括新用户和流失用户的具体转化路径和触点。
+
+我会在基础信息之后、SOP部分之前插入这个新的小节，同时更新待补充清单中对应的项目。
+
+现在我来整理端内leads的详细来源和各个入口的表现数据，包括限购和非限购用户的不同转化路径，以及各点位的周均leads指标。 Looking at the performance metrics for different placements, I'm seeing a significant bottleneck with lapsed users—their ad exposure rate is only around 41% compared to 97% for new users, primarily due to iPad devices not displaying the homepage and content control rules blocking about 30% of impressions.
+
+Now I'm noticing the distinction between sales-driven and CC-driven conversions matters here. For the non-限购 lapsed users, I need to separate out the two pathways—sales conversions are pulling in just 1% with 16 leads, while CC conversions are performing better at 5% with 123 leads. The overall conversion rate across this segment is still quite low at around 5%, and the total dropout rate for lapsed users sits below 3%, which is substantially lower than the 18% we're seeing with new users.
+
+The user is asking me to add information about where CC's current in-app leads are coming from, so I should insert that as a new subsection in the CC section before the SOP guidelines.
+好的，我已经读取了 Confluence 文档和当前文件。文档是你写的"断课老用户增加前测"PRD，里面有详细的端内召回点位和 leads 来源数据。我来把 CC 端内 leads 来源补充进去。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ## 四、CC 业务详解
+
+- **周均人效**：120-150
+- **流量来源**：新用户（小低 + 9 年级）+ 断课老用户
+- **主接渠道**：端内自然流量、直投、部分效果广告（按年级/用户质量分配）
+
+### CC 全流程 SOP
+  new_string: ## 四、CC 业务详解
+
+- **周均人效**：120-150
+- **流量来源**：新用户（小低 + 9 年级）+ 断课老用户
+- **主接渠道**：端内自然流量、直投、部分效果广告（按年级/用户质量分配）
+
+### 端内 Leads 来源
+
+CC 的端内 leads 来自两类用户：新用户和断课老用户。
+
+**新用户（小低 + 9 年级）**：通过端内前测流程析出，前测通过率 80%+，新客整体析出率 ~18%（直投 ~12%）。
+
+**断课老用户**：按是否限购体验课走不同路径，周活跃 ~1.4w（限购 1.1w + 非限购 0.26w），整体析出率不到 3%。
+
+断课老用户的析出路径：
+
+| 用户状态 | 析出方式 | 入口 | 承接方 |
+|---------|---------|------|-------|
+| 限购（已购过体验课） | 留资转化 | 计划页、会员页咨询入口 | CC |
+| | 0 元课领取 | 首页召回弹窗、我的页面磁铁 | CC |
+| 非限购（未购过体验课） | 购买体验课 | 资料库、计划页、banner 位 | 销售 |
+| | 留资转化 | 计划页、会员页咨询入口 | CC |
+
+各点位 leads 表现（周均数据，2024.12-2025.01）：
+
+| 用户身份 | 入口 | 曝光数 | CTR | 周均 leads | leads 转率 |
+|---------|------|--------|-----|-----------|-----------|
+| 断课限购 | 首页-召回弹窗 | 3370 | 20% | 193 | 5.7% |
+| | 计划页-底部 banner | 11429* | 4.6% | 83 | 0.72% |
+| | 会员页-咨询横幅 | 1838 | 8% | 49 | 2.7% |
+| | 会员页-优惠券咨询 | 143 | 26.9% | 38 | 26.9% |
+| | 首页-banner | 3657 | 1.6% | 19 | 0.5% |
+| 断课非限购(CC) | 首页-召回弹窗 | 989 | 25% | 88 | 8.9% |
+| | 优惠券 banner | 68 | 27.8% | 19 | 27.8% |
+| | 会员页-banner | 571 | 5.6% | 12 | 2.1% |
+| | 计划页-9 元解锁 | 620 | 19.3% | 8 | 1.4% |
+| | 首页-banner | 1050 | 1.3% | 5 | 0.5% |
+
+*计划页底部 banner 曝光数不分用户身份
+
+断课老用户析出瓶颈：
+1. **广告位曝光率低**（~41% vs 新用户 97%）：PAD 不展示首页致首页广告位无效（~40%）、秒开关 APP（~25%）
+2. **广告位 CTR 低**：「免费」「0 元」等营销文案引发防备，用户需主动点击才能进入析出场景
+3. **入口分散**：仅 ~50% 断课活跃用户有广告位曝光，能否进入析出场景取决于用户对营销场景的排斥程度
+
+改进方向（断课用户增加前测，2026.1 启动 AB）：用前测问答替代营销弹窗，提升曝光率（目标 80%）和参与感，前测通过后展示落地页引导留资。
+
+### CC 全流程 SOP
+
+[Tool result] StrReplace
+
+assistant:
+同时把"待补充"里对应的项标记为已完成。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: - [ ] 端内 leads 析出入口详细清单
+  new_string: - [x] 端内 leads 析出入口详细清单（已补充至「四、CC 业务详解 → 端内 Leads 来源」）
+
+[Tool result] StrReplace
+
+assistant:
+已补充完成，主要新增了「端内 Leads 来源」小节，包含：
+
+1. **新用户 leads 来源**：前测流程析出，析出率 ~18%
+2. **断课老用户的析出路径**：按限购/非限购分别走留资、0 元课、购买体验课等不同路径，标注了各路径的承接方（CC vs 销售）
+3. **各点位 leads 表现**：周均数据表格，覆盖首页弹窗、banner、计划页、会员页等所有入口的曝光、CTR、leads 数和转率
+4. **析出瓶颈**：广告位曝光率低（41% vs 97%）、CTR 低、入口分散
+5. **改进方向**：断课前测 AB 实验（你的 PRD）
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://aries-bi.zhenguanyu.com/views/CCleads/1_1
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://aries-bi.zhenguanyu.com/views/CCleads/1_1 读一下这个 tableau 面板呢
+</user_query>
+
+assistant:
+[Thinking] The user wants me to read a Tableau dashboard. The URL is `https://aries-bi.zhenguanyu.com/views/CCleads/1_1`. Let me try to find this workbook/view using the Tableau MCP tools.
+
+First, I need to find the resource ID. The URL path suggests the workbook is "CCleads" and the view is "1_1". Let me try to get the resource ID.
+先查找这个 Tableau 视图的资源 ID。
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CCleads
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CC leads
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: view
+  resource_name: 1_1
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Thinking] The exact name isn't matching. Let me try different variations or search more broadly. The URL path is `/views/CCleads/1_1`. In Tableau, the URL structure is typically `/views/{workbook_name}/{view_name}`. Let me try searching with different name patterns.
+精确名称没匹配上，试试用中文名或其他变体搜索。
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CC leads
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: view
+  resource_name: 1/1
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Thinking] Let me try to look at projects or list workbooks to find the right one. Maybe I can download the workbook using a different approach, or try the Tableau filter mapping skill to see if there's a mapping for this dashboard.
+
+Actually, wait - the URL is from aries-bi.zhenguanyu.com which might be a different Tableau server than what's configured in MCP. Let me check what product/server the MCP is configured for.
+
+Looking at the MCP tools, they have a `product` parameter that defaults to "Aries". The URL `aries-bi.zhenguanyu.com` seems to match the Aries product. 
+
+I should try a broader search in case the workbook name uses Chinese characters or has different formatting, and maybe fetch the URL directly to see what information I can extract from it.
+让我试试直接通过项目列表或其他方式定位这个看板。
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CCleads
+  product: Aries
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CC Leads
+  product: Aries
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Thinking] Let me try searching with the Tableau filter mapping skill which might have info about this dashboard. Actually, let me look at the skill file to see if there's a mapping.
+
+Alternatively, maybe I should try other product lines or check if there's a way to list all workbooks. Let me try to use the `get_projects` to see if there's a project that might help me navigate.
+
+Actually, let me re-read the URL: `https://aries-bi.zhenguanyu.com/views/CCleads/1_1`
+
+In Tableau Server, the URL format is typically:
+`/views/{WorkbookName}/{ViewName}`
+
+
+So the workbook is "CCleads" and the view is "1_1", though the actual server name might differ from the URL encoding. Let me try `get_resource_id` with the view path, or maybe experiment with the other available products like ClassUpOld and ClassUp. I could also attempt a WebFetch to see if the URL reveals anything, though it's likely behind SSO. One more angle - the workbook name might be in Chinese characters.
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CC leads
+  product: ClassUp
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CCleads
+  product: ClassUp
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Thinking] ClassUp product is not reachable. Let me try to check if there's a skill that has a mapping for this dashboard. Let me look at the tableau-filter-mapping skill.
+
+Actually, let me try a different approach - maybe the workbook name on the Tableau server doesn't match the URL exactly. Let me try to read the tableau filter mapping skill to see if there's any reference.
+
+Actually, looking at the filter mapping skill path: `/Users/jiwenyue/cursorProjects/aries/.cursor/skills/tableau-filter-mapping/SKILL.md` - this might have info about this specific view.
+
+Actually, let me just check if the Tableau MCP is actually configured to connect to `aries-bi.zhenguanyu.com`. The fact that the default product "Aries" connects to some server and searches there but can't find "CCleads" suggests either the name is different or it's on a different server.
+
+
+Let me query the available projects to see what's actually there.
+[Tool call] project-2-personal-tableau-get_projects
+  product: Aries
+
+[Tool result] project-2-personal-tableau-get_projects
+
+assistant:
+[Thinking] The tool has a dependency issue. Let me try to get the view image directly if I can figure out the view ID somehow. Let me try a different approach - maybe I can use the Tableau filter mapping skill that might reference this dashboard.
+
+Actually, let me try reading the filter mapping skill to see if it has the view or workbook IDs for CC leads.
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/.cursor/skills/tableau-filter-mapping/SKILL.md
+
+[Tool result] Read
+
+assistant:
+[Tool call] Glob
+  glob_pattern: **/filter_mappings.md
+  target_directory: /Users/jiwenyue/cursorProjects/aries
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/.cursor/skills/tableau-filter-mapping/references/filter_mappings.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] The filter mapping doesn't have a mapping for the "CC leads" workbook/view. Let me try a different approach - maybe I can search for the workbook ID or view ID by trying different name variations. The URL `CCleads` in Tableau often corresponds to a workbook name that might have spaces or different casing.
+
+Let me try some more variations, or try to use the Tableau extract_datasources to see if there's a datasource related to CC leads.
+
+Actually, looking at the URL more carefully: `https://aries-bi.zhenguanyu.com/views/CCleads/1_1`
+
+The URL path suggests:
+
+
+- Workbook URL name: `CCleads`  
+- View URL name: `1_1`
+
+I've tried the obvious variations like "CCleads", "CC leads", "CC Leads" without success. The `get_resource_id` function does exact name matching, so the actual workbook name on the server might be something entirely different - maybe it uses Chinese characters or a completely different format than what appears in the URL.
+
+I could try guessing the ID format or attempting to access it through WebFetch, but that would hit the SSO login wall. I think I need to be upfront with the user that I can't locate this workbook through the API without knowing its exact name, and I'll need their help to identify it.
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CC leads析出
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CC leads 析出
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CCLeads
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: cc leads
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Thinking] I'm unable to find the workbook by name. The Tableau API `get_resource_id` does exact name matching, and the workbook's display name on the server might be completely different from the URL slug "CCleads".
+
+Let me be honest with the user - I can't locate this workbook through the Tableau API because the display name doesn't match any of my guesses based on the URL. I should ask the user for the actual workbook name or try to see if there's another way.
+
+Actually, wait - let me check if the view name "1_1" in the URL could give us a clue. The view name "1_1" is unusual. 
+
+In Tableau, URL view names are sanitized versions of the display name, so "1_1" might represent something like "1/1" or "1.1" in the actual view name. I've tried various approaches to search for this, but I think I need to ask the user directly for the workbook's actual display name since I can't reliably guess it from the URL.
+抱歉，通过 Tableau API 按名称搜索了多种变体（CCleads、CC leads、CC Leads、cc leads 等），都没有匹配到这个工作簿。URL 中的 `CCleads` 是 Tableau 的 URL slug，实际的工作簿显示名可能完全不同。
+
+你能帮我确认一下这个看板在 Tableau 上的实际名称吗？或者你直接告诉我看板里展示了什么数据，我也可以帮你整理。
+
+user:
+<user_query>
+叫leads产生底表
+</user_query>
+
+assistant:
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: leads产生底表
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: Leads产生底表
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: leads 产生底表
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: Leads 产生底表
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: LEADS产生底表
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Thinking] Still can't find it. The `get_resource_id` tool does exact matching. The URL was `CCleads/1_1` and the user says the workbook is called "leads产生底表". There might be a mismatch between the URL slug and the actual display name, or the display name might have slightly different formatting.
+
+Let me try a few more variations - maybe with different characters or spacing.
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: leads产生 底表
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: workbook
+  resource_name: CC leads产生底表
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+[Thinking] I'm still unable to find it. The exact name matching is making this difficult. Let me try to extract datasources to see if there's something related, or try to use the view search instead of workbook search.
+
+Actually, let me try searching for it as a view instead of a workbook.
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: view
+  resource_name: leads产生底表
+[Tool call] project-2-personal-tableau-get_resource_id
+  resource_type: view
+  resource_name: Leads产生底表
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+[Tool result] project-2-personal-tableau-get_resource_id
+
+assistant:
+还是没匹配到。Tableau API 是精确匹配名称，一个字符不对都找不到。你能帮我确认下这个看板在 Tableau 里显示的**完整名称**吗？可以在 Tableau 页面左上角看到。
+
+user:
+[Image]
+<image_files>
+The following images were provdied by the user and saved to the workspace for future use:
+1. /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/assets/image-523327d3-cfaf-4f5e-8c88-e36c176723bc.png
+
+These images can be copied for use in other locations.
+</image_files>
+<user_query>
+你自己看看吧，我截图给你了
+</user_query>
+
+assistant:
+[Thinking] The user sent a screenshot of the Tableau dashboard. Let me analyze it carefully.
+
+From the screenshot I can see:
+
+**Breadcrumb path**: 浏览 / 海豚 / ... / CCleads产生看板 / CC_leads产生看板
+
+**Title**: leads产生底表
+
+**The dashboard shows a table with columns**:
+- 维度1 (Date)
+- 维度2 (Type: 购买/留资)
+- 维度3 (Channel: 端内/私域)
+- 维度4 (Specific source/入口)
+- 落地页曝光用户数
+
+
+- 落地页点击用户数
+- 落地页点击率
+- 表单曝光用户数
+- 表单点击用户数
+
+**Right side filters**:
+- 维度1_参数: 周
+- 维度2_参数: 渠道大类
+- 维度3_参数: 一级渠道
+- 维度4_参数: 二级渠道
+- 日期: (全部)
+- 周
+- 月
+- 渠道大类: (全部)
+- 一级渠道: (全部)
+- 二级渠道: (全部)
+- 年级: (全部)
+- 学校: (全部)
+- 中小学: (全部)
+- 城市等级: (全部)
+- 用户身份: (全部)
+
+现在看一下2026年1月12日这周的数据行，按购买渠道和端内分类展示各个弹窗和banner的点击情况，包括曝光数、点击数和转化率。
+
+自然流量这边的表现差异比较大，从会员页挽留弹窗的50%到资料库的8.5%不等。再往下看留资到私域的数据，企微客服发送留资页的转化率最高达到85.7%，而社群留资页的转化率相对较低。
+
+继续看留资到端内的各个入口，会员页咨询入口和计划页自回入口的转化率都在5%左右，但老用户回归礼的几个渠道表现明显更好，特别是banner的51%转化率。
+
+现在看到优惠券引导入口没有数据，然后进入2026年1月5日的购买到端内数据，各个断课非限购的弹窗和banner形式的转化率在25%到50%之间，自然流量的会员页挽留弹窗也有33.3%的转化。
+
+继续看自然流量的其他入口，首页弹窗50%、首页banner 37.5%、找页面磁铁33.3%，新用户流程虽然量大但转化率只有18.8%，资料库19.4%。再看留资到私域的数据，私域客服和企微客服的转化率都很高，分别是81.8%和79.7%，但社群留资页的转化率只有15%。 Looking at the fourth dimension, it's the specific entry point or source within each channel. So the dashboard is structured by week, lead type, channel, and then the exact touchpoint where users engaged. This gives me a much clearer picture of where CC leads are actually coming from across both in-app and private domain channels compared to what was documented before. I see the dashboard covers both 购买 and 留资 conversion paths across private domain and in-app channels, which is more comprehensive than what the PRD showed. Since the user specifically asked for in-app leads sources for CC, I should restructure this section to capture all the entry points from the dashboard while keeping the focus on what they requested.
+看到了，这个看板叫 **CC_leads产生看板**，工作簿名是 **CCleads产生看板**，视图名是 **leads产生底表**。
+
+从截图里能看出完整的 CC leads 来源结构，比之前 Confluence PRD 里的数据更全面。我来把端内 leads 来源部分更新得更完整。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  offset: 92
+  limit: 50
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ### 端内 Leads 来源
+
+CC 的端内 leads 来自两类用户：新用户和断课老用户。
+
+**新用户（小低 + 9 年级）**：通过端内前测流程析出，前测通过率 80%+，新客整体析出率 ~18%（直投 ~12%）。
+
+**断课老用户**：按是否限购体验课走不同路径，周活跃 ~1.4w（限购 1.1w + 非限购 0.26w），整体析出率不到 3%。
+
+断课老用户的析出路径：
+
+| 用户状态 | 析出方式 | 入口 | 承接方 |
+|---------|---------|------|-------|
+| 限购（已购过体验课） | 留资转化 | 计划页、会员页咨询入口 | CC |
+| | 0 元课领取 | 首页召回弹窗、我的页面磁铁 | CC |
+| 非限购（未购过体验课） | 购买体验课 | 资料库、计划页、banner 位 | 销售 |
+| | 留资转化 | 计划页、会员页咨询入口 | CC |
+
+各点位 leads 表现（周均数据，2024.12-2025.01）：
+
+| 用户身份 | 入口 | 曝光数 | CTR | 周均 leads | leads 转率 |
+|---------|------|--------|-----|-----------|-----------|
+| 断课限购 | 首页-召回弹窗 | 3370 | 20% | 193 | 5.7% |
+| | 计划页-底部 banner | 11429* | 4.6% | 83 | 0.72% |
+| | 会员页-咨询横幅 | 1838 | 8% | 49 | 2.7% |
+| | 会员页-优惠券咨询 | 143 | 26.9% | 38 | 26.9% |
+| | 首页-banner | 3657 | 1.6% | 19 | 0.5% |
+| 断课非限购(CC) | 首页-召回弹窗 | 989 | 25% | 88 | 8.9% |
+| | 优惠券 banner | 68 | 27.8% | 19 | 27.8% |
+| | 会员页-banner | 571 | 5.6% | 12 | 2.1% |
+| | 计划页-9 元解锁 | 620 | 19.3% | 8 | 1.4% |
+| | 首页-banner | 1050 | 1.3% | 5 | 0.5% |
+
+*计划页底部 banner 曝光数不分用户身份
+
+断课老用户析出瓶颈：
+1. **广告位曝光率低**（~41% vs 新用户 97%）：PAD 不展示首页致首页广告位无效（~40%）、秒开关 APP（~25%）
+2. **广告位 CTR 低**：「免费」「0 元」等营销文案引发防备，用户需主动点击才能进入析出场景
+3. **入口分散**：仅 ~50% 断课活跃用户有广告位曝光，能否进入析出场景取决于用户对营销场景的排斥程度
+
+改进方向（断课用户增加前测，2026.1 启动 AB）：用前测问答替代营销弹窗，提升曝光率（目标 80%）和参与感，前测通过后展示落地页引导留资。
+  new_string: ### CC Leads 来源全景
+
+CC leads 按转化方式分**购买**和**留资**两类，按渠道分**端内**和**私域**。数据看板：[CC_leads产生看板](https://aries-bi.zhenguanyu.com/views/CCleads/1_1)
+
+#### 端内 — 购买转化（用户直接购买体验课）
+
+| 用户身份 | 入口 | 说明 |
+|---------|------|------|
+| 自然流量（新用户） | 新用户流程 | 前测流程析出，最大量级入口（周曝光 ~665，点击率 ~19%） |
+| | 资料库 | 周曝光 ~134，点击率 ~19% |
+| | 找页面磁铁 | 周曝光 ~57，点击率 ~33% |
+| | 首页 banner | 周曝光 ~8，点击率 ~38% |
+| | 首页弹窗 | 小量级 |
+| | 会员页挽留弹窗 | 小量级 |
+| 断课非限购 | 资料库 | 周曝光 ~38，点击率 ~8% |
+| | 会员页挽留弹窗 | 小量级 |
+| | 首页弹窗 | 小量级 |
+| | 首页 banner | 小量级 |
+
+#### 端内 — 留资转化（用户留资成为 leads）
+
+| 入口 | 落地页曝光 | 点击率 | 表单曝光 | 表单点击 | 说明 |
+|------|----------|--------|---------|---------|------|
+| 计划页自回入口 | ~6307 | ~6% | ~384 | ~175 | 量级最大，但点击率低 |
+| 会员页咨询入口 | ~3203 | ~6% | — | — | 量级大，点击率低 |
+| 老用户回归礼-首页弹窗 | ~624 | ~40% | ~250 | ~190 | 点击率高，是断课限购用户最有效的留资入口 |
+| 老用户回归礼-我资源位 | ~119 | ~43% | ~51 | ~37 | 点击率高 |
+| 老用户回归礼-banner | ~49 | ~51% | ~24 | ~14 | 量级小但点击率最高 |
+| 优惠券引导入口 | — | — | — | — | 当前无量级 |
+
+#### 私域 — 留资转化
+
+| 入口 | 落地页曝光 | 点击率 | 说明 |
+|------|----------|--------|------|
+| 私域社群留资页 | ~1275 | ~16% | 私域最大量级入口 |
+| 私域SOP留资 | ~179 | ~29% | |
+| 私域企微客服发送留资页 | ~74 | ~80% | 量级小但点击率极高 |
+| 私域客服发送留资页 | ~11 | ~82% | |
+| CC老带新 | ~3 | 100% | 量级极小 |
+
+#### 端内 Leads 来源总结
+
+**按用户身份的析出路径**：
+
+| 用户状态 | 析出方式 | 主要入口 | 承接方 |
+|---------|---------|---------|-------|
+| 新用户（自然流量） | 购买体验课 | 新用户前测流程、资料库、找页面磁铁 | CC（小低+9年级）/ 销售 |
+| 断课限购（已购过体验课） | 留资转化 | 老用户回归礼弹窗/资源位、计划页自回入口、会员页咨询 | CC |
+| 断课非限购（未购过体验课） | 购买体验课 | 资料库、会员页挽留弹窗 | 销售 |
+| | 留资转化 | 计划页、会员页咨询入口 | CC |
+
+**断课老用户析出瓶颈**（整体析出率不到 3%，周活跃 ~1.4w）：
+1. **广告位曝光率低**（~41% vs 新用户 97%）：PAD 不展示首页致首页广告位无效（~40%）、秒开关 APP（~25%）
+2. **广告位 CTR 低**：「免费」「0 元」等营销文案引发防备，用户需主动点击才能进入析出场景
+3. **入口分散**：仅 ~50% 断课活跃用户有广告位曝光
+
+**改进方向**（断课用户增加前测，2026.1 启动 AB）：用前测问答替代营销弹窗，提升曝光率（目标 80%）和参与感，前测通过后展示落地页引导留资。
+
+[Tool result] StrReplace
+
+assistant:
+已更新。现在「CC Leads 来源全景」覆盖了看板里的完整结构：
+
+1. **端内-购买转化**：新用户（新用户流程、资料库、找页面磁铁等）+ 断课非限购用户（资料库、弹窗等）
+2. **端内-留资转化**：计划页自回入口（量级最大但 CTR 低）、会员页咨询、老用户回归礼系列（CTR 高）、优惠券引导
+3. **私域-留资转化**：社群留资页（量级最大）、SOP 留资、企微客服留资页（CTR 极高）、CC 老带新
+
+数据用的是看板截图里 2026-01-05 那周的近似值。后续如果需要拉最新数据，告诉我看板的精确名称我可以直接通过 API 获取。
+
+user:
+<user_query>
+你知道这个 agent 是用来构建@personal/.cursor/rules/增长业务上下文.mdc 的嘛
+</user_query>
+
+assistant:
+[Thinking] The user is asking if I understand that this agent/conversation is being used to build/construct the 增长业务上下文.mdc file. They're clarifying the purpose of our interaction - it's essentially a knowledge-building session where we're incrementally adding business context to this rule file.
+
+Let me confirm that I understand this.
+知道。这个对话的目的就是帮你把增长业务的上下文知识逐步沉淀到 `增长业务上下文.mdc` 里，让它成为一个完整的业务知识库，这样后续其他对话在涉及增长策略、PRD、转化、CC 等话题时可以自动加载这个 rule 作为背景知识。
+
+目前已经补充了 CC 端内 leads 来源的完整结构。你接着给我素材（Confluence 文档、Tableau 看板、截图、口述都行），我继续往里填。
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380  这个是海豚的用户标签体系
+</user_query>
+
+assistant:
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  page: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+assistant:
+[Thinking] This is a comprehensive document about the Dolphin (海豚) user tag system. The user wants me to add this information to the 增长业务上下文.mdc file. 
+
+Let me think about what the most relevant information is for the growth business context file. The document covers:
+
+1. **User Tags (用户标签)**: User lifecycle stages (会员在读, 体验在读, 会员断课, 体验断课, 注册用户), user identity by channel (sales vs CC), grade info, behavioral tags
+2. **Business Tags (业务标签)**: Activation channel, boarding status, period, sales service stages, assistant service stages
+
+
+3. **Activity Tags (活动标签)**: Promotions and referral sharing mechanics
+4. **User Groups (群组)**: Tag combinations that create targeting segments for different scenarios like purchase restrictions, entry points, and recall campaigns
+
+For the growth business context file, I need to focus on the user lifecycle model and its state transitions, how these tags combine into targeting groups for various entry points, the purchase restriction logic that governs who can buy, and which user groups are most critical for growth initiatives. Let me check where this fits in the current file structure.
+
+I see there's already a brief mention of user tags in the infrastructure section with a table showing that R&D uses the Orion tag platform while private domain operations use WeChat Work tags that are migrating to the emon platform. I should either expand this section or create a dedicated one that captures the lifecycle states, the Sales vs CC identity distinction, the purchase restriction mechanics, and the key targeting groups that drive growth decisions. Looking at the existing structure with sections on product overview, growth funnel and metrics, and user groups, I think this warrants a more comprehensive treatment. 我需要更谨慎地考虑范围——用户既然提到了海豚的用户标签体系，我应该把重点放在对增长PM最相关的内容上。我会整理用户生命周期模型、关键标签分类、限购逻辑和重要的目标人群，然后决定是在现有的基建能力部分中扩展，还是作为独立章节插入。
+内容很丰富。这是海豚完整的用户标签体系，包括用户生命周期、销售/CC 身份标签、行为标签、业务标签，以及基于标签组合的群组配置（限购逻辑、各入口人群圈定等）。我把核心内容整理进去。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  offset: 253
+  limit: 120
+
+[Tool result] Read
+
+assistant:
+现在把用户标签体系作为新的一节插入，放在六和七之间，后续章节顺序调整。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ---
+
+## 七、关键术语速查
+  new_string: ---
+
+## 七、用户标签体系
+
+[标签体系文档](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380) | 研发侧：Orion 标签平台 | 私域侧：企微标签 → 运营能效平台(emon)
+
+### 用户生命周期（aries_user_identify）
+
+用户在系统中的核心身份标签，驱动所有入口展示、限购判断和人群圈定。
+
+```
+注册用户(REGISTER_USER)
+    ↓ 购买体验课 / leads 激活
+体验在读(TRIAL)  ←→  销售体验在读(SALES_TRIAL) / CC体验在读(CC_TRIAL)
+    ↓ 出班或囤量池释放
+体验断课(TRIAL_OVERDUE)  ←→  销售体验断课 / CC体验断课
+    ↓ 购买正式会员
+会员在读(VIP)  →  销售已转化(SALES_TRANSFORMED) / CC已转化(CC_TRANSFORMED)
+    ↓ 到期或退费（过保护期后）
+会员断课(VIP_OVERDUE)
+```
+
+状态刷新触发事件：leads 激活、会员购买、出班/囤量池释放、退款、会员到期。
+
+注意：
+- 体验在读用户退款后仍标记为「体验在读」，出班后才变「体验断课」
+- 会员断课 = 到期过保护期 或 退费过保护期（全额退费不用过保护期）
+- 销售/CC 身份标签独立于生命周期标签，购买会员后在渠道身份视角始终为「已转化」
+
+### 体验课限购逻辑
+
+限购判断决定用户看到的入口和析出路径，是增长产品的核心规则之一。
+
+**不限购条件**（同时满足）：
+1. 用户不是体验在读 / 会员在读 / 会员断课
+2. 最近一次购买 CC 或销售体验课的时间 无值 或 距今 ≥ 210 天
+
+即：注册用户、体验断课用户，且距上次购买体验课超过 210 天（约 7 个月），才可再次购买体验课。
+
+### 关键用户属性标签
+
+| 标签 | 标签key | 说明 |
+|------|---------|------|
+| 用户真实年级 | aries_real_grade | 1~9，来源：售卖页/前测/留资落地页/工作台手动更新，每年暑假自动升级 |
+| 用户学习年级 | aries_user_grade | 1~9，来源：前测/App个人信息切换，每年暑假自动升级 |
+| 注册渠道 | aries:registerKeyfrom | 注册 keyfrom 前 4 级 |
+| 回归渠道 | aries:comeBackKeyfrom | 回归 keyfrom 前 4 级 |
+| 距最近购买体验课天数 | aries:lastedBuyTrialSpendDays | 用于限购判断 |
+| 距最近 leads 激活天数 | aries:lastedTrialActivateSpendDays / lastedCCActivateSpendDays | 分销售/CC |
+| 距最近断课天数 | lastedSalesOverdueSpendDays / lastedCCOverdueSpendDays / lastedVIPOverdueSpendDays | 分销售/CC/会员 |
+| 用户分层 | user_layering | 高意向用户分层触达（OrganicNewUser_Attend_and_VipShow 等），每日定时刷新 |
+| 到课 | attendClass | 有任意到课行为后打标 |
+
+### 业务标签（工作台同步）
+
+| 标签 | 说明 |
+|------|------|
+| 激活渠道 | 转介绍/推广/客服/App/导流/私域/直播/其他，再次激活时更新 |
+| 住宿 | 住宿/走读，来源：销售工作台或助理问卷 |
+| 期次 | 班课期次或 1v1 体验周，再次激活时更新 |
+| 体验课购买次数 | trialPurchaseTimes，用于识别多次购买用户 |
+| 用户阶段（助理） | 服务期/续费期，续费期细分续1~续5（续1=到期当月） |
+| 用户分层（助理） | SABC，每月1日更新 |
+| 销售服务节点 | 首通→入门测→D1到习→D2到习→反馈→抢购→转化 |
+| 助理服务节点 | 首触→首访→学情沟通→续费沟通 |
+
+### 常用人群群组
+
+群组 = 多个标签条件组合圈定的人群包，用于端内入口展示、AB 实验分流等。
+
+| 场景 | 群组 | 圈选逻辑 |
+|------|------|---------|
+| 前测/资源位入口（自然流量） | organic_GradeNotNine | 注册用户 + 年级非9 |
+| 前测/资源位入口（直投） | aries_trial_app-zt_abtest | 注册用户 + 注册/回归keyfrom为直投渠道 |
+| 断课非限购入口 | xg_GradeNotNine | 体验断课 + 距上次购买体验课≥210天 + 真实年级有值 |
+| 计划页体验周入口 | nature/zt/xg_planPageTrial | 注册用户或体验断课 + 距上次购买≥210天 + 年级非1/2/3/9 |
+| 会员页召回入口 | nature/zt/trial/vip_vipPageRecall | 注册用户 或 体验断课 或 会员断课 |
+| 计划页召回入口 | planPage_recall | 注册/体验断课/会员断课 + 最近CC激活≥120天 + 最近断课>7天 |
+| 留资召回入口 | aries_trial_zt_recall | 进入通用落地页→小程序加私域客服微信→私域析出为CC leads |
+
+年级限制说明：1/2/3/9 年级的体验课 leads 分配给 CC（定制体验课），体验周入口展示的是销售体验课大纲，因此排除这些年级。
+
+---
+
+## 八、关键术语速查
+
+[Tool result] StrReplace
+
+assistant:
+后续章节编号也需要调整。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ## 八、工具与后台索引
+  new_string: ## 九、工具与后台索引
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ## 九、待补充
+  new_string: ## 十、待补充
+
+[Tool result] StrReplace
+
+assistant:
+已新增「七、用户标签体系」，包含：
+
+1. **用户生命周期状态机**：注册→体验在读→体验断课→会员在读→会员断课，以及销售/CC 独立身份视角
+2. **体验课限购逻辑**：不限购条件（非在读/会员 + 距上次购买≥210天），这个是增长产品最核心的规则之一
+3. **关键用户属性标签**：真实年级、学习年级、注册/回归渠道、距离各关键事件天数、用户分层等
+4. **业务标签**：激活渠道、服务节点（销售/助理）、续费期分级等
+5. **常用人群群组**：前测入口、断课非限购入口、召回入口等的群组圈选逻辑，以及年级限制的原因
+
+原来的七~九顺延为八~十。

@@ -1,0 +1,362 @@
+user:
+<user_query>
+@/Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-03/af7b2b48bdc99938718706562e539e07/销售转化数据分析-使用指南.md 这个帮我搞一下
+</user_query>
+
+assistant:
+[Thinking] The user wants me to look at a file. Let me read it first to understand what they need.
+[Tool call] Read
+  path: /Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-03/af7b2b48bdc99938718706562e539e07/销售转化数据分析-使用指南.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] The user wants me to help with this file - it's a "Sales Conversion Data Analysis - User Guide" document. Let me understand what they want:
+
+This is a guide document that was shared via WeChat Work (企业微信), and the user wants me to "搞一下" (handle/set up) it. Given the context, I think they want me to:
+
+1. Set up the skill in their Cursor environment, OR
+2. Save this document to a proper location in their workspace
+
+Let me think about what makes sense. The document describes a "sales-conversion-analysis" skill for Cursor. It has:
+- MCP configuration for dbpaas
+
+
+- Database table structures
+- Chrome API endpoints
+- Analysis workflow
+- Installation script
+
+The user said "帮我搞一下" which is pretty vague. Given the document content, the most likely interpretation is they want to set this up as a skill in their Cursor environment. Looking at the document, it outlines the installation steps: put the `sales-conversion-analysis` folder into `~/.cursor/skills/`, run the install script, and restart Cursor. But the user only has the MD file, not the full skill folder, so they probably want me to create the skill structure based on this document and help them set it up.
+
+Let me think about what they're actually asking for. The document describes both a skill directory approach and a simpler approach, and since they're asking casually for help with "this," they likely want me to either create the proper skill structure or help them configure the MCP setup. Given that they already have `.cursor/mcp.json` open, I should check what's already configured and then either create the skill folder structure or add the necessary MCP configuration to get this sales conversion analysis capability working in their Cursor environment.
+这是一份销售转化数据分析的 Cursor Skill 使用指南。我来帮你把它搭建成一个可用的 Skill，并配好 MCP。
+
+先看下你现有的 MCP 配置和 skills 目录情况。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/mcp.json
+[Tool call] Glob
+  glob_pattern: *
+  target_directory: /Users/jiwenyue/.cursor/skills
+[Tool call] Glob
+  glob_pattern: *
+  target_directory: /Users/jiwenyue/.cursor/skills-cursor
+
+[Tool result] Read
+
+[Tool result] Glob
+
+[Tool result] Glob
+
+assistant:
+[Thinking] Now I see the situation:
+1. The personal workspace's `.cursor/mcp.json` has tableau but not dbpaas
+2. There's no `~/.cursor/skills/` directory (or it's empty)
+3. The user's cursor skills are in `~/.cursor/skills-cursor/`
+
+I also need to check the global `~/.cursor/mcp.json` since that's where the dbpaas config should go (the guide says `~/.cursor/mcp.json`).
+[Tool call] Shell
+  command: cat ~/.cursor/mcp.json 2>/dev/null || echo "FILE_NOT_FOUND"
+  description: Check global cursor mcp.json
+
+[Tool result] Shell
+
+assistant:
+[Thinking] Now I have the full picture:
+
+1. Global `~/.cursor/mcp.json` has `tutor-wb-mcp-1.0` and `motiff`, but no `dbpaas`
+2. Personal workspace's `.cursor/mcp.json` has `tableau`
+3. No `~/.cursor/skills/` directory exists (it's empty)
+
+I need to:
+1. Add `dbpaas` to the global `~/.cursor/mcp.json`
+2. Create the skill directory structure at `~/.cursor/skills/sales-conversion-analysis/`
+3. Create the SKILL.md file
+
+
+4. Set up the dbpaas MCP configuration and create the skill so it's ready to use
+
+Let me work through this step by step.
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"在全局 ~/.cursor/mcp.json 中添加 dbpaas MCP 配置","status":"in_progress"},{"id":"2","content":"创建 ~/.cursor/skills/sales-conversion-analysis/ 目录结构和 SKILL.md","status":"pending"}]
+  merge: false
+
+[Tool result] TodoWrite
+
+assistant:
+[Thinking] Now let me do both tasks. First, I'll add the dbpaas MCP to the global config, and then create the skill.
+
+For the MCP config, I need to add `dbpaas` to the existing `~/.cursor/mcp.json` which already has `tutor-wb-mcp-1.0` and `motiff`.
+
+For the skill, I should create a proper SKILL.md that follows the conventions in the aries-teach CLAUDE.md. The skill should contain the actionable instructions for the AI to perform sales conversion analysis.
+
+Let me also note - the document contains sensitive tokens. I should still include them since they're needed for the MCP config, but I'll note that to the user.
+
+
+I need to use the StrReplace tool to update the mcp.json file at the full path since it's outside the workspace, adding the dbpaas configuration to the existing MCPs.
+现在做两件事：配 MCP + 创建 Skill。
+
+**第一步：添加 dbpaas MCP 配置**
+[Tool call] StrReplace
+  path: /Users/jiwenyue/.cursor/mcp.json
+  old_string:   "mcpServers": {
+    "tutor-wb-mcp-1.0": {
+  new_string:   "mcpServers": {
+    "dbpaas": {
+      "type": "streamable-http",
+      "url": "http://ai-gateway.zhenguanyu.com/openapi/v1/service/mcp",
+      "headers": {
+        "Authorization": "Bearer e31887db-f159-4ce3-a807-804f8f87ae46",
+        "Console-Refreshtoken": "AcGzndqMWfXLJiRzXsfjHfOWAkKMhkjB",
+        "X-Service-Id": "6d010146-3ec5-41b5-a5c6-54c867e11e45"
+      }
+    },
+    "tutor-wb-mcp-1.0": {
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"1","status":"completed"},{"id":"2","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+**第二步：创建 Skill**
+[Tool call] Shell
+  command: mkdir -p ~/.cursor/skills/sales-conversion-analysis
+  description: Create skill directory
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Shell
+  command: mkdir -p ~/.cursor/skills/sales-conversion-analysis
+  description: Create skill directory
+  required_permissions: ["all"]
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/.cursor/skills/sales-conversion-analysis/SKILL.md
+  contents: ---
+name: sales-conversion-analysis
+description: 销售转化数据分析——按 issue/班期维度，分析首通前行为、微信沟通、学习行为对转化率的影响
+trigger_keywords: ["转化分析", "销售分析", "issue分析", "班期分析", "转化数据"]
+---
+
+# 销售转化数据分析
+
+## 身份与职责
+
+你是销售转化数据分析师，能够使用 dbpaas MCP（数据库查询）和 Chrome API（内部接口），对指定 issue/班期的销售转化进行多维度交叉分析。
+
+## 核心能力
+
+- 按 issue 维度拉取通话记录、微信消息、学习状态、沟通记录
+- 分析首通前加微/微信沟通/学习行为对转化率的影响
+- 控制首通时长后计算净效应，识别辛普森悖论
+- 输出带样本量、典型案例、实操建议的完整分析报告
+
+## 使用前提
+
+1. **dbpaas MCP 已配置**：`~/.cursor/mcp.json` 中有 `dbpaas` 条目
+2. **Chrome 已登录**：浏览器打开 `https://siam.zhenguanyu.com` 并保持 tab 打开
+3. **Python 3.8+** 可用
+
+---
+
+## 数据源
+
+| 能力 | 数据源 | 说明 |
+|------|--------|------|
+| 通话记录 | DB `aries_tutor_user.tutor_call_record` | 时长、时间、状态 |
+| 微信消息（按天） | DB `aries_statistics.wx_chat_msg_day_stat` | 每日粒度，可严格筛首通前 |
+| 微信班期汇总 | DB `aries_statistics.class_user_wx_chat_msg_stat` | user_id ↔ vid 映射 |
+| 学习时间线 | DB `aries_statistics.user_day_study_status` | 每日学习状态 |
+| 沟通记录 | DB `aries_tutor_user.communication_record` | 类型、方式、内容 |
+| 转化与丰富字段 | Chrome API `team-students/v2` | 转化、加微时间、AI 等级、家长会等 |
+
+---
+
+## 数据库表结构
+
+### 库：aries_tutor_user
+
+**tutor_call_record**（外呼记录）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| ytk_user_id | bigint | 学生 ID（不是 user_id） |
+| issue_id | bigint | 期 ID |
+| start_time | bigint | 开始时间 **Unix 秒** |
+| duration | int | 通话时长 **秒** |
+| status | tinyint | 1=成功 |
+
+**communication_record**（沟通记录）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| user_id | bigint | 用户 ID |
+| issue_id | bigint | 期 ID |
+| communication_type | tinyint | 类型（1首触 2催习 等） |
+| communication_method | tinyint | 方式（1微信 2视频 3电话） |
+| dbctime | datetime | 创建时间 |
+
+### 库：aries_statistics
+
+**wx_chat_msg_day_stat**（微信每日统计，首通前分析核心表）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| remote_id | bigint | 老师企微 ID |
+| vid | bigint | 用户微信 ID |
+| tutor_msg_count / user_msg_count | int | 当天老师/用户消息数 |
+| user_last_msg_time / tutor_last_msg_time | bigint | 最后消息时间 **毫秒** |
+| day_start_time | bigint | 当天 0 点 **毫秒** |
+
+需与 **class_user_wx_chat_msg_stat**（含 user_id、issue_id、vid）JOIN 得到 user_id；JOIN 后按 (user_id, day_start_ms) 去重。
+
+**user_day_study_status**（每日学习状态）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| user_id | bigint | 用户 ID |
+| issue_id | bigint | 期 ID |
+| day_no | int | 第几天 |
+| status | tinyint | 学习状态 |
+
+### 时间戳约定
+
+- `tutor_call_record.start_time`：**秒**
+- `wx_chat_msg_day_stat` 内时间字段：**毫秒**
+- 比较时：`call_start_time * 1000` 再与微信时间比较
+
+---
+
+## Chrome API 端点
+
+- **Base**：`https://aries.zhenguanyu.com`（不是 siam 域名）
+- **认证**：用 Chrome 当前 tab 的 Cookie，无需在请求里写 Cookie
+
+### 团队带班列表（核心）
+
+```
+POST https://aries.zhenguanyu.com/aries-admin-server-tutor/api/student-list/team-students/v2
+Content-Type: application/json
+
+Body: { "issueId": 804, "pageNum": 1, "pageSize": 200, "sortColumn": "addIssueTime", "sortDirection": "DESC" }
+```
+
+响应列表在：`data.data.trialStudentVO.dataList`。
+常用字段：`uid`、`transformed`、`addWx`、`firstAddWxTime`、`aiLevel`、`grade`、`studyDays`、`wxChatStatVO`（全周期）、`userParentMeetingLiveDataVO`。
+
+### 微信聊天消息内容（single-chat）
+
+**前提**：`remoteId`、`vid` 需从 DB 表 `aries_statistics.class_user_wx_chat_msg_stat` 查。
+
+```
+GET .../api/chat-history/single-chat?userId={user_id}&remoteId={remote_id}&vid={vid}&pageNum=1&pageSize=200
+```
+
+**响应**：根级别为 **`chatMessages`** 数组（不是 `data.list`）。每条元素含：`content.content`（文案）、`content.contentType`（TEXT/SYSTEM 等）、`senderRemoteId`/`receiverRemoteId`、`createdTime`（秒）。
+
+### 其他常用
+
+| 用途 | 方法 | URL |
+|------|------|-----|
+| 期数列表 | GET | `/aries-admin-server-tutor/api/issue/findNormalIssue` |
+| 用户详情 | GET | `/aries-admin-server-tutor/api/user/detail/query?account={userId或手机号}` |
+| 沟通记录 | GET | `/aries-admin-server-tutor/api/communication/list?userId={id}&pageNum=1&pageSize=200` |
+| 当前用户（验登录） | GET | `/aries-admin-server-tutor/api/mock/current` |
+
+---
+
+## 分析工作流
+
+### 1. 确认范围
+
+向用户确认：issue_id、分析维度（首通前行为/微信/学习/综合）、是否控制变量（如首通时长）。
+
+### 2. 从 DB 拉数据
+
+- 首通记录：`tutor_call_record`，筛 `status=1 AND duration >= 300`（>=5分钟）
+- 微信每日：`wx_chat_msg_day_stat` JOIN `class_user_wx_chat_msg_stat`，按首通时间筛首通前
+- 学习状态：`user_day_study_status`
+- 沟通记录：`communication_record`
+- **sql_query 必传 `readTimeout: 30` 和 `limitNum`**
+
+### 3. 从 Chrome API 拉数据
+
+- `team-students/v2` 分页拿转化、加微时间等
+- 响应在 `data.data.trialStudentVO.dataList`
+
+### 4. 融合与分析
+
+- 按首通时间戳严格筛「首通前」行为
+- 微信每日 JOIN 结果按 `(user_id, day_start_ms)` 去重
+- 按首通时长分桶做控制变量分析
+
+### 5. 输出
+
+- 样本概况（总人数、转化率、各维度分布）
+- 因素排名（各因素对转化的影响力排序）
+- 分维度表格（加微/未加微 × 转化/未转化等交叉表）
+- 典型案例（带用户 ID 的代表性案例）
+- 实操建议
+
+---
+
+## 关键踩坑
+
+| 问题 | 处理 |
+|------|------|
+| `wxChatStatVO` 是全周期汇总 | 不做首通前分析用，首通前必须用 DB `wx_chat_msg_day_stat` |
+| 微信每日 JOIN 重复 | 按 (user_id, day_start_ms) 去重 |
+| `sql_query` 报错 | 必须传 `readTimeout`（如 30） |
+| API 返回结构 | `data.data.trialStudentVO.dataList`，不是 `data.data.records` |
+| 加微信与转化 | 存在辛普森悖论，需控制首通时长后看，约 +18~24pp |
+| `conversation/list` 常返回空 | 拿微信消息正文用 DB 取 remote_id+vid 再调 single-chat |
+
+---
+
+## 能力边界
+
+**可以做**：
+- 按 issue 维度的转化因素分析
+- 首通前行为与转化的关系
+- 控制变量后的净效应估计
+- 典型案例提取
+
+**不能做**：
+- 跨 issue 的长期趋势分析（需额外数据源）
+- 因果推断（只能做相关性分析）
+- 实时数据监控（每次需手动触发）
+
+
+[Tool result] Write
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"2","status":"completed"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+搞定了，做了两件事：
+
+**1. dbpaas MCP 已配置**
+在 `~/.cursor/mcp.json` 里加了 `dbpaas` 条目（和你已有的 `tutor-wb-mcp-1.0`、`motiff` 并列），Token 直接从文档里搬过来的。
+
+**2. Skill 已创建**
+在 `~/.cursor/skills/sales-conversion-analysis/SKILL.md` 里，把文档中的数据源、表结构、API 端点、分析工作流、踩坑点都整理成了标准 Skill 格式。触发词是「转化分析」「销售分析」「issue分析」等。
+
+**你还需要做的：**
+- **重启 Cursor**，让 dbpaas MCP 生效
+- **Chrome 登录** `https://siam.zhenguanyu.com` 并保持 tab 打开
+- 之后在对话里说「帮我分析 issue XXX 的转化数据」就能用了
+
+注意：文档里的 Authorization Token 有过期风险，到时候如果 `sql_query` 返回 401，找维护这份文档的同学要新 Token 更新一下 `~/.cursor/mcp.json` 就行。

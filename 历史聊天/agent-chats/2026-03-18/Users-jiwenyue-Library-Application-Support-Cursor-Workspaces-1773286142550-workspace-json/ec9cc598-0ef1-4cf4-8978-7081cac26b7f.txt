@@ -1,0 +1,633 @@
+user:
+<user_query>
+我想做一个 ai 生成简历的网站，你先帮我搞个文档，我来写具体 prd
+</user_query>
+
+assistant:
+[Thinking] The user wants to create a website for AI-generated resumes and wants me to help create a document first, then they'll write the specific PRD.
+
+Let me first read the PRD writer skill to see if it's relevant, and also check the personal workspace structure.
+
+Actually, the user said "你先帮我搞个文档，我来写具体 prd" - they want me to create a document/outline first, and they'll write the detailed PRD themselves. This sounds like they want a project document or initial planning doc for an AI resume generation website.
+
+Let me check the personal workspace's project structure and the PRD-related skills.
+好，先看一下你现有的项目目录结构和 PRD 相关的 skill。
+[Tool call] Glob
+  glob_pattern: work/projects/*.md
+  target_directory: /Users/jiwenyue/cursorProjects/personal
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-writer/SKILL.md
+
+[Tool result] Glob
+
+[Tool result] Read
+
+assistant:
+[Thinking] The user wants to build an AI resume generation website as a side project. They want me to create a document first, and they'll write the detailed PRD themselves. 
+
+Looking at their existing projects, there's already an "AI求职模板副业.md" file. Let me check if that has relevant content.
+
+This is a personal side project, not a work project at their company. So I should create a project document in `work/projects/` to help them think through the idea before writing the full PRD.
+
+Let me check the existing AI求职模板副业.md file first.
+看到你已经有一个相关文件了，先看一下。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/AI求职模板副业.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] I see. The user previously planned to make Notion templates with AI prompts for job seekers. Now they want to pivot to building an actual AI resume generation website. This is a different and more ambitious project.
+
+They want me to create a document first - a project document/outline that they can use as a base to write the detailed PRD. Since this is a side project (not their day job at 海豚AI学), I should create a project doc in `work/projects/`.
+
+Let me create a project document that outlines:
+1. The idea and vision
+2. Key questions to answer
+3. A rough structure they can fill in for the PRD
+
+
+4. The core features and user flow they'll need to think through for a full website
+看到了，之前你规划的是 Notion 模板方案，现在想升级成一个网站。方向变了不少，我帮你建一个项目文档，把关键问题列出来，你在上面填具体 PRD 内容。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/AI简历生成网站.md
+  contents: # AI 简历生成网站 — 项目文档
+
+> 创建时间：2026-03-07
+> 状态：构思阶段
+> 前置参考：[AI求职模板副业.md](AI求职模板副业.md) — 之前的 Notion 模板方案，现升级为独立网站
+
+---
+
+## 一、从 Notion 模板到网站：为什么要升级？
+
+之前规划的是 Notion 模板 + prompt 的方案，现在考虑做成网站。需要先想清楚：
+
+- [ ] Notion 模板方案的局限是什么？（手动复制 prompt、体验割裂、无法自动化？）
+- [ ] 做成网站后，核心体验差异在哪？（一键生成、实时预览、直接导出？）
+- [ ] 开发成本和时间投入能接受吗？（对比 Notion 模板几天就能上线）
+- [ ] 商业模式有什么变化？（按次付费 / 订阅 / 免费+增值？）
+
+---
+
+## 二、产品定义
+
+### 一句话描述
+
+> [填写：用一句话说清楚这个产品是什么、给谁用、解决什么问题]
+
+### 目标用户
+
+| 维度 | 描述 |
+|------|------|
+| 人群画像 | [谁会用？之前定的是互联网产品经理，是否扩大？] |
+| 使用场景 | [什么时候用？找工作、转行、升职？] |
+| 核心痛点 | [用户现在怎么做？为什么不好用？] |
+| 付费意愿 | [愿意花多少钱？一次性还是持续？] |
+
+### 核心功能（MVP）
+
+> 先列 MVP 必须有的，后面再想扩展
+
+- [ ] 功能1：
+- [ ] 功能2：
+- [ ] 功能3：
+- [ ] ...
+
+### 差异化卖点
+
+> 市面上已有不少 AI 简历工具（如 Kickresume、Resume.io、智联 AI 简历等），我们的差异在哪？
+
+- [ ] 竞品调研结论：[列出看过的竞品和它们的问题]
+- [ ] 我的差异化切口：[为什么用户选我不选它们？]
+
+---
+
+## 三、用户体验设计
+
+### 用户动线
+
+> 从进入网站到拿到简历，用户经历哪些步骤？
+
+```
+步骤1：[进入首页 → ...]
+步骤2：[...]
+步骤3：[...]
+步骤4：[...]
+步骤5：[导出/下载]
+```
+
+### 关键页面
+
+| 页面 | 核心功能 | 备注 |
+|------|----------|------|
+| 首页/落地页 | | |
+| 信息填写页 | | |
+| 简历生成/编辑页 | | |
+| 模板选择页 | | |
+| 导出/下载页 | | |
+
+---
+
+## 四、技术方案（初步）
+
+> 不用写很细，先想清楚大方向
+
+### 需要回答的问题
+
+- [ ] AI 能力用什么？（直接调 OpenAI API / Claude API / 其他？）
+- [ ] 前端用什么？（Next.js / 纯静态？）
+- [ ] 需要后端吗？（纯前端 + API 调用 vs 有后端服务）
+- [ ] 简历导出格式？（PDF / Word / 在线链接？）
+- [ ] 数据存储？（用户信息存哪？要不要账号体系？）
+- [ ] 部署方案？（Vercel / 其他？）
+
+### 成本预估
+
+| 项目 | 预估 |
+|------|------|
+| AI API 调用成本 | [每次生成大约多少钱？] |
+| 服务器/部署 | [月成本？] |
+| 域名 | [年费？] |
+| 其他 | |
+
+---
+
+## 五、商业模式
+
+- [ ] 定价策略：[免费试用 + 付费导出？按次？订阅？]
+- [ ] 支付方式：[微信/支付宝？Stripe？]
+- [ ] 目标客单价：
+- [ ] 目标月收入：
+- [ ] 盈亏平衡需要多少用户：
+
+---
+
+## 六、里程碑规划
+
+| 阶段 | 时间 | 目标 | 产出 |
+|------|------|------|------|
+| 调研定位 | | 确定做什么、怎么差异化 | 产品定义 |
+| MVP 开发 | | 核心功能可用 | 可体验的网站 |
+| 内测优化 | | 找人试用、修 bug | 稳定版本 |
+| 上线冷启动 | | 获取首批用户 | 上线 + 推广内容 |
+| 迭代 | 持续 | 根据数据和反馈优化 | |
+
+---
+
+## 七、风险和待决事项
+
+| 风险/问题 | 影响 | 应对 |
+|-----------|------|------|
+| AI 生成质量不稳定 | 用户体验差 | [怎么保证？] |
+| 竞品太多 | 获客难 | [差异化策略？] |
+| 开发周期太长 | 错过窗口 | [MVP 范围控制？] |
+| API 成本高于预期 | 利润薄 | [控制策略？] |
+| [其他] | | |
+
+---
+
+## 备注
+
+- 本文档是项目框架，具体 PRD 内容由文悦自己填写
+- 填完后可以用 prd-review 做一轮预审
+- 与之前的 Notion 模板方案不冲突，可以并行或择一
+
+
+[Tool result] Write
+
+assistant:
+文档建好了，在 `work/projects/AI简历生成网站.md`。
+
+几个要点：
+
+1. **和之前 Notion 模板方案的关系**：文档开头留了一个问题让你先想清楚——为什么要从模板升级成网站，两者的成本和收益差别很大
+2. **结构**：按产品定义、用户体验、技术方案、商业模式、里程碑、风险六块组织，每块都留了具体要回答的问题
+3. **MVP 思路**：核心功能那里留空让你填，建议先控制在 3-5 个功能以内
+
+你先填内容，填完后可以用 prd-review 帮你做一轮预审。
+
+user:
+<user_query>
+这两个文档不要放在这个位置，放在 thought 或者 diary 比较隐私不公开的位置吧
+</user_query>
+
+assistant:
+[Thinking] The user wants to move two documents to a more private location. The two documents are:
+1. `work/projects/AI求职模板副业.md` - the earlier Notion template plan
+2. `work/projects/AI简历生成网站.md` - the one I just created
+
+They want these in `thoughts/` or `diary/` since those are more private. Let me move them to `thoughts/` since these are side project ideas/plans, which fits better under "thoughts" than "diary".
+明白，副业项目放 `thoughts/` 更合适。帮你挪过去。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/AI求职模板副业.md
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/AI简历生成网站.md
+[Tool call] Glob
+  glob_pattern: thoughts/*.md
+  target_directory: /Users/jiwenyue/cursorProjects/personal
+
+[Tool result] Read
+
+[Tool result] Read
+
+[Tool result] Glob
+
+assistant:
+`thoughts/` 目录还不存在，帮你建好并把两个文件挪过去。
+[Tool call] Shell
+  command: mkdir -p /Users/jiwenyue/cursorProjects/personal/thoughts
+  description: Create thoughts directory
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/thoughts/AI求职模板副业.md
+  contents: # AI 求职/面试 Notion 模板 — 执行计划
+
+> 启动时间：2026-03 W11（等 W10 的 Prompt 学习有体感后再动手）
+> 目标：4 月中前完成 MVP 并冷启动
+
+---
+
+## Phase 1：调研和定位（W11，3.9-3.15）
+
+**目标**：确定做什么、卖给谁、怎么差异化
+
+- [ ] 竞品调研：小红书/即刻搜"AI 简历模板""AI 面试模板"，记录 10 个竞品的定价、功能、评价
+- [ ] 找差异化切口：初步方向是"互联网产品经理求职"，验证这个人群是否够垂直、需求是否够强
+- [ ] 确定模板包含的模块（初步规划）：
+  - 职位 JD 分析 prompt
+  - 简历针对性优化 prompt
+  - 求职信生成 prompt
+  - 面试高频问题预测 + STAR 回答生成 prompt
+  - 面试复盘 prompt
+- [ ] 输出一份 1 页的产品定义（目标用户、核心卖点、定价策略）
+
+**产出**：产品定义文档，存到本目录下
+
+---
+
+## Phase 2：Prompt 设计与打磨（W12-W13，3.16-3.29）
+
+**目标**：写出 5 个核心 prompt，每个跑通 10+ 次测试
+
+### 第 1 周（W12）：写初版 prompt
+
+- [ ] 自己先当用户：用 ChatGPT 走一遍求职全流程（选一个虚拟的 PM 岗位），记录哪些环节 AI 最有帮助
+- [ ] 写 5 个核心 prompt 的初版
+- [ ] 每个 prompt 至少跑 3 遍，记录问题
+
+### 第 2 周（W13）：迭代优化
+
+- [ ] 用 W10 学到的技巧优化（chain-of-thought、CO-STAR 等）
+- [ ] 每个 prompt 用 3 种不同背景的虚拟用户测试（应届生 / 3 年经验 / 转行），确保泛化性
+- [ ] 找 1-2 个朋友试用，收集反馈
+- [ ] 迭代至少 2 轮
+
+**产出**：5 个经过验证的 prompt + 测试记录
+
+---
+
+## Phase 3：Notion 模板搭建（W14，3.30-4.5）
+
+**目标**：把 prompt 包装成好看、好用的 Notion 模板
+
+- [ ] 设计模板结构和用户动线（填信息 → 选场景 → 复制 prompt → 粘贴到 ChatGPT → 得到结果）
+- [ ] 搭建 Notion 页面，包含：
+  - 使用说明（截图 + 步骤，3 分钟上手）
+  - 个人信息采集区（引导式填写）
+  - 5 个 prompt 模块（带使用场景说明）
+  - FAQ
+- [ ] 自己从头走一遍完整流程，确保体验顺畅
+- [ ] 设定价格（建议 29.9-39.9）
+
+**产出**：可售卖的 Notion 模板
+
+---
+
+## Phase 4：冷启动和分发（W15 起，4.6+）
+
+**目标**：获得前 50 个付费用户
+
+### 内容准备
+
+- [ ] 写 2-3 篇小红书帖子：
+  - "我用 AI 帮自己重写了简历，面试通过率翻倍"（效果对比帖）
+  - "产品经理求职，这 5 个 AI 指令够用了"（干货帖）
+  - 模板使用教程帖
+- [ ] 准备 1 个使用效果的前后对比案例（最好是真实的）
+
+### 分发渠道
+
+- [ ] 小红书：主阵地，发效果帖 + 评论区引流
+- [ ] 即刻：AI 圈子，分享制作过程和思考
+- [ ] V2EX / 少数派：技术社区，侧重"怎么做"的分享
+- [ ] 朋友圈：第一批种子用户
+
+### 售卖方式
+
+- [ ] 确定交付平台（Gumroad / 小报童 / 面包多，选一个）
+- [ ] 设置购买链接
+- [ ] 前 20 名可以给个早鸟价（19.9）
+
+**产出**：上架 + 首批用户反馈
+
+---
+
+## Phase 5：迭代（持续）
+
+- [ ] 根据用户反馈优化 prompt
+- [ ] 考虑扩展更多场景（技术岗、设计岗、运营岗）
+- [ ] 如果效果好，考虑做付费社群（求职互助 + prompt 更新）
+
+---
+
+## 时间线总览
+
+```
+W10 (3.2-3.8)   Prompt 学习（已在计划中，不额外加）
+W11 (3.9-3.15)  调研和定位
+W12 (3.16-3.22) 写初版 prompt
+W13 (3.23-3.29) 迭代优化 prompt
+W14 (3.30-4.5)  搭建 Notion 模板
+W15+ (4.6-)     冷启动和分发
+```
+
+## 关键原则
+
+1. **先学再做**：W10 的 Prompt 学习是前置条件，不要跳过
+2. **自己先用**：每个 prompt 必须自己当用户跑过，不好用的不上架
+3. **小步验证**：Phase 2 结束时找朋友试用，如果反馈差就调整方向，不要等到做完才发现
+4. **不要贪多**：MVP 就 5 个 prompt，够用就行，后续根据反馈加
+
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/thoughts/AI简历生成网站.md
+  contents: # AI 简历生成网站 — 项目文档
+
+> 创建时间：2026-03-07
+> 状态：构思阶段
+> 前置参考：[AI求职模板副业.md](AI求职模板副业.md) — 之前的 Notion 模板方案，现升级为独立网站
+
+---
+
+## 一、从 Notion 模板到网站：为什么要升级？
+
+之前规划的是 Notion 模板 + prompt 的方案，现在考虑做成网站。需要先想清楚：
+
+- [ ] Notion 模板方案的局限是什么？（手动复制 prompt、体验割裂、无法自动化？）
+- [ ] 做成网站后，核心体验差异在哪？（一键生成、实时预览、直接导出？）
+- [ ] 开发成本和时间投入能接受吗？（对比 Notion 模板几天就能上线）
+- [ ] 商业模式有什么变化？（按次付费 / 订阅 / 免费+增值？）
+
+---
+
+## 二、产品定义
+
+### 一句话描述
+
+> [填写：用一句话说清楚这个产品是什么、给谁用、解决什么问题]
+
+### 目标用户
+
+| 维度 | 描述 |
+|------|------|
+| 人群画像 | [谁会用？之前定的是互联网产品经理，是否扩大？] |
+| 使用场景 | [什么时候用？找工作、转行、升职？] |
+| 核心痛点 | [用户现在怎么做？为什么不好用？] |
+| 付费意愿 | [愿意花多少钱？一次性还是持续？] |
+
+### 核心功能（MVP）
+
+> 先列 MVP 必须有的，后面再想扩展
+
+- [ ] 功能1：
+- [ ] 功能2：
+- [ ] 功能3：
+- [ ] ...
+
+### 差异化卖点
+
+> 市面上已有不少 AI 简历工具（如 Kickresume、Resume.io、智联 AI 简历等），我们的差异在哪？
+
+- [ ] 竞品调研结论：[列出看过的竞品和它们的问题]
+- [ ] 我的差异化切口：[为什么用户选我不选它们？]
+
+---
+
+## 三、用户体验设计
+
+### 用户动线
+
+> 从进入网站到拿到简历，用户经历哪些步骤？
+
+```
+步骤1：[进入首页 → ...]
+步骤2：[...]
+步骤3：[...]
+步骤4：[...]
+步骤5：[导出/下载]
+```
+
+### 关键页面
+
+| 页面 | 核心功能 | 备注 |
+|------|----------|------|
+| 首页/落地页 | | |
+| 信息填写页 | | |
+| 简历生成/编辑页 | | |
+| 模板选择页 | | |
+| 导出/下载页 | | |
+
+---
+
+## 四、技术方案（初步）
+
+> 不用写很细，先想清楚大方向
+
+### 需要回答的问题
+
+- [ ] AI 能力用什么？（直接调 OpenAI API / Claude API / 其他？）
+- [ ] 前端用什么？（Next.js / 纯静态？）
+- [ ] 需要后端吗？（纯前端 + API 调用 vs 有后端服务）
+- [ ] 简历导出格式？（PDF / Word / 在线链接？）
+- [ ] 数据存储？（用户信息存哪？要不要账号体系？）
+- [ ] 部署方案？（Vercel / 其他？）
+
+### 成本预估
+
+| 项目 | 预估 |
+|------|------|
+| AI API 调用成本 | [每次生成大约多少钱？] |
+| 服务器/部署 | [月成本？] |
+| 域名 | [年费？] |
+| 其他 | |
+
+---
+
+## 五、商业模式
+
+- [ ] 定价策略：[免费试用 + 付费导出？按次？订阅？]
+- [ ] 支付方式：[微信/支付宝？Stripe？]
+- [ ] 目标客单价：
+- [ ] 目标月收入：
+- [ ] 盈亏平衡需要多少用户：
+
+---
+
+## 六、里程碑规划
+
+| 阶段 | 时间 | 目标 | 产出 |
+|------|------|------|------|
+| 调研定位 | | 确定做什么、怎么差异化 | 产品定义 |
+| MVP 开发 | | 核心功能可用 | 可体验的网站 |
+| 内测优化 | | 找人试用、修 bug | 稳定版本 |
+| 上线冷启动 | | 获取首批用户 | 上线 + 推广内容 |
+| 迭代 | 持续 | 根据数据和反馈优化 | |
+
+---
+
+## 七、风险和待决事项
+
+| 风险/问题 | 影响 | 应对 |
+|-----------|------|------|
+| AI 生成质量不稳定 | 用户体验差 | [怎么保证？] |
+| 竞品太多 | 获客难 | [差异化策略？] |
+| 开发周期太长 | 错过窗口 | [MVP 范围控制？] |
+| API 成本高于预期 | 利润薄 | [控制策略？] |
+| [其他] | | |
+
+---
+
+## 备注
+
+- 本文档是项目框架，具体 PRD 内容由文悦自己填写
+- 填完后可以用 prd-review 做一轮预审
+- 与之前的 Notion 模板方案不冲突，可以并行或择一
+
+
+[Tool result] Write
+
+[Tool result] Write
+
+assistant:
+文件已经写到 `thoughts/` 了，删掉原来 `work/projects/` 下的。
+[Tool call] Delete
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/AI求职模板副业.md
+[Tool call] Delete
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/AI简历生成网站.md
+
+[Tool result] Delete
+
+[Tool result] Delete
+
+assistant:
+搞定。两个文件都挪到了 `thoughts/` 下：
+
+- `thoughts/AI求职模板副业.md` — 之前的 Notion 模板执行计划
+- `thoughts/AI简历生成网站.md` — 刚建的网站项目文档
+
+两个文件之间有互相引用，链接也是对的。你可以直接在 `AI简历生成网站.md` 上填内容了。
+
+user:
+<user_query>
+如果说notion 模板和网站其实在功能上是一致的，但是网站的 token 消耗数和成本应该是更高的，思考：
+1.notion 模板是否可以实现除我本人之外用户的操作
+2.notion 模板的交互性和网站的差异
+请注意：我并没有使用过 notion 模板
+</user_query>
+
+assistant:
+[Thinking] The user is asking me to help them think through two questions about Notion templates vs a website for their AI resume generation side project. They haven't used Notion templates before, so they need me to explain the practical differences. Let me provide an honest, concrete analysis.
+
+Key questions:
+1. Can Notion templates work for other users (not just the creator)?
+2. What are the interaction differences between Notion templates and a website?
+
+Let me think through this carefully.
+
+**Notion Template Distribution Model:**
+- You create a Notion template, users "duplicate" it to their own Notion workspace
+- Users need a Notion account (free tier works)
+- Once duplicated, users have full edit access to their own copy
+
+
+- The template itself is static—just pre-written prompts and structure that users manually work through, copying prompts into ChatGPT or Claude and pasting results back into Notion
+- This means there's no real automation or AI integration happening; it's essentially a nicely formatted prompt collection that requires manual copying between tools
+- Users must have a Notion account, and any updates you make to the original template won't reach people who've already duplicated it
+- The workflow is read instructions, copy prompt, switch to ChatGPT, paste, get results, paste back—it's clunky and repetitive compared to a website where everything happens in one place
+
+The user seems to think these two approaches are functionally equivalent, but they're actually quite different. A Notion template is just a static prompt repository that requires manual ChatGPT usage, while a website would have integrated AI that generates results directly without leaving the page. That's a fundamental difference in how the tool actually works, not just how it's packaged.
+这两个问题很关键，直接决定你该走哪条路。我帮你拆清楚。
+
+---
+
+**1. Notion 模板能不能让其他用户用？**
+
+可以，但有前提条件和限制：
+
+- 你做好模板后，发布一个「Duplicate」链接，用户点击就能复制一份到自己的 Notion 工作区
+- 用户**必须有 Notion 账号**（免费版就行），这是硬门槛
+- 复制后，那份模板就是用户自己的了，你无法更新它——你后续优化了 prompt，老用户拿不到新版本
+- 你也看不到用户的使用数据（用了几次、哪个 prompt 用得多）
+
+所以结论是：**能用，但用户需要有 Notion 账号，且你和用户之间没有任何连接**。
+
+---
+
+**2. 交互性差异——这才是核心分歧**
+
+你说「功能上是一致的」，其实不是。两者的交互模式完全不同：
+
+**Notion 模板的实际使用流程：**
+
+```
+打开 Notion → 读说明 → 找到对应 prompt → 手动填入自己的信息 → 
+复制整段 prompt → 打开 ChatGPT/Claude → 粘贴 → 等结果 → 
+复制结果 → 粘贴回 Notion（或别处）
+```
+
+本质上，Notion 模板就是一个**精心组织的 prompt 合集 + 使用说明书**。AI 能力不在 Notion 里，在用户自己的 ChatGPT 里。
+
+**网站的使用流程：**
+
+```
+打开网站 → 填表单 → 点「生成」→ 看结果 → 导出 PDF
+```
+
+AI 能力内置在你的网站里，用户不需要自己去找 ChatGPT。
+
+**核心差异总结：**
+
+| 维度 | Notion 模板 | 网站 |
+|------|------------|------|
+| 用户门槛 | 要有 Notion 账号 + 要有 ChatGPT 账号 | 打开浏览器就行 |
+| 操作步骤 | 5-6 步，跨两个工具 | 2-3 步，一站式 |
+| AI 成本 | 用户自己的 ChatGPT 额度（你零成本） | 你承担 API 费用 |
+| 开发成本 | 几天搞定 | 至少 1-2 周 |
+| 体验上限 | 受限于 Notion 的表单/页面能力 | 完全自定义 |
+| 用户数据 | 看不到 | 能看到 |
+| 版本更新 | 推不到老用户 | 即时生效 |
+
+---
+
+**所以你真正要想的问题是：**
+
+Notion 模板的 AI 成本是**用户自己承担的**（他们用自己的 ChatGPT），而网站是**你承担的**（你调 API）。你之前说「网站的 token 消耗和成本更高」——准确地说，不是更高，是**从零变成了你的成本**。
+
+这意味着两条路的商业逻辑不一样：
+- **Notion 模板**：卖的是 prompt 设计能力，一锤子买卖，利润率 100%
+- **网站**：卖的是 AI 服务，每次使用你都有成本，需要定价覆盖 API 费用
+
+建议你在 `AI简历生成网站.md` 的第一章「为什么要升级」里把这些想法记下来，先想清楚再决定走哪条路。要不要我帮你更新到文档里？
+
+user:
+<user_query>
+我已经更新了网站的文档，目前阶段我们还是先做 notion 吧哈哈
+</user_query>
+
+assistant:
+好，那就先搞 Notion 模板，成本低、见效快，先跑通再说。
+
+按你之前 `AI求职模板副业.md` 的计划，W11（3.9-3.15）就是调研定位阶段，明天正好开始。需要帮你推进哪一步的时候随时说。

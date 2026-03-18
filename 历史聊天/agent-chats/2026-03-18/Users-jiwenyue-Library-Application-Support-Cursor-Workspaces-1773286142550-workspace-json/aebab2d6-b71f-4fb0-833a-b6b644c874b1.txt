@@ -1,0 +1,1068 @@
+user:
+[Image]
+<image_files>
+The following images were provdied by the user and saved to the workspace for future use:
+1. /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/assets/image-af0188ec-f142-4f40-a1a2-c084fb9f41bf.png
+
+These images can be copied for use in other locations.
+</image_files>
+<user_query>
+根据我的情况，这是 gemini 给我生成的副业建议，其中绿色框的两个是我比较感兴趣的，帮我评估下可行性以及实际操作
+</user_query>
+
+assistant:
+[Thinking] The user is asking me to evaluate the feasibility and practical steps for two side business ideas highlighted in green boxes from a Gemini-generated suggestion image. Let me look at the image carefully.
+
+The two green-highlighted ideas are:
+
+1. **"AI求职/面试" Notion模板** (AI Job/Interview Notion Template)
+   - Product: A Notion page with pre-set ChatGPT prompts. Users just copy the prompts, fill in their info, and generate personalized resumes, cover letters, and interview Q&A responses.
+   - Your work: Design template structure, craft "foolproof" prompts that users can use immediately.
+   
+2. **针对电商卖家的"AI视觉管家"** (AI Visual Butler for E-commerce Sellers)
+   - The second idea targets small e-commerce sellers on platforms like Taobao and Pinduoduo who lack resources for professional models and designers. The service would bundle AI-generated product photography, copywriting, and marketing materials into tiered packages, with pricing around 599 yuan per product set.
+
+Now I'm thinking about how these align with the user's background as a growth product manager at 海豚AI.
+
+学 (Dolphin AI Learning under 猿辅导). Given his experience with product requirements, data-driven experiments, and AI tools, I should evaluate which idea leverages his existing strengths and network. Let me check his skill map and current projects to see what resources and expertise he actually has available.
+先了解下你的技能背景和当前工作状态，以便更准确地评估。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/todos.md
+[Tool call] Glob
+  glob_pattern: skill-map.md
+  target_directory: /Users/jiwenyue/cursorProjects/personal
+
+[Tool result] Read
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have a good understanding of the user's background:
+
+1. **Role**: Growth product manager at 海豚AI学 (under 猿辅导)
+2. **Skills**: 
+   - Prompt engineering: beginner (20%)
+   - AI tool usage: intermediate (50%)
+   - Knowledge system: starting (30%)
+   - Good at task delegation and information architecture
+   - Daily Cursor user, familiar with AI workflows
+3. **Current workload**: Quite busy with main job - multiple urgent tasks
+4. **Strengths**: Task delegation awareness, information architecture sensitivity, product thinking
+
+Now let me evaluate the two green-highlighted ideas:
+
+
+The first idea is a Notion template for job seekers with pre-built ChatGPT prompts for resumes, cover letters, and interview preparation—mostly requiring template design and prompt crafting. The second is an AI visual services platform targeting small e-commerce sellers on Taobao and Pinduoduo, bundling AI-generated product photos, descriptions, and marketing materials at fixed price points. Let me assess how each aligns with the user's current situation and capabilities.
+
+For the Notion template, the appeal is clear: it leverages his growing prompt engineering skills, requires minimal upfront investment, and plays to his strength in product thinking and simplifying complex processes. The work can scale gradually without demanding huge time commitments, and there's potential for passive income once it's built. However, the market is already crowded with similar templates, his prompt engineering is still foundational, and he'd need genuine expertise in job seeking to create truly valuable prompts. The revenue potential is also capped.
+
+The e-commerce services idea taps into real demand from sellers who need visual content, and the per-project pricing could generate meaningful revenue. But this approach demands significant operational overhead—managing client relationships, handling multiple AI tools, and delivering consistent quality across different service types.
+结合你的背景（增长产品经理、Prompt 工程入门期、日常工作较忙）,对两个方向做个评估。
+
+---
+
+## 方向一：AI 求职/面试 Notion 模板
+
+### 可行性：较高
+
+**与你能力的匹配度**
+
+| 维度 | 评估 |
+|------|------|
+| 核心技能要求 | Prompt 设计 + 产品包装——前者你在学，后者是你本职 |
+| 学习成本 | 低。不需要新工具链，Notion + ChatGPT 你都熟 |
+| 时间投入 | 前期集中 2-3 周设计，之后近乎零维护 |
+| 启动资金 | 几乎为零 |
+
+**实际优势**
+
+- 你的核心能力是**把复杂流程封装成用户可直接使用的东西**——这正是 Notion 模板在做的事
+- 做模板的过程就是在练 Prompt 工程，和你 W10 的学习计划完全重叠，不算额外负担
+- 你有产品经理的用户视角，能设计出"真正好用"的模板，而不是堆砌 prompt
+
+**实际风险**
+
+- **竞争已经很激烈**。小红书/即刻搜"AI 简历模板"，同类产品非常多，你需要找到差异化切入点
+- **你的 Prompt 水平还在 20%**，做出来的 prompt 质量可能不够硬。建议先把 W10 的 chain-of-thought 对比实验做完，有体感后再动手
+- **客单价低**，Notion 模板常见定价 9.9-49.9，需要走量才有收入
+
+### 如果要做，具体怎么操作
+
+**第 1 步：选品和差异化（1 周）**
+
+先调研，不要急着做。看看市面上已有的模板覆盖了什么，哪些场景被忽略了。
+
+建议的差异化方向：
+- **垂直人群**：不做通用求职，做"互联网产品经理求职模板"——你懂这个行业，prompt 能写得更精准
+- **全流程**：不只是简历生成，而是"职位分析 → 简历定制 → 面试准备 → 复盘"的完整链路
+- **你自己用过且有效的**：先自己用 prompt 做一套求职材料，验证好用再卖
+
+**第 2 步：设计模板（1-2 周）**
+
+核心模块：
+1. 个人信息采集区（引导用户填写经历、技能、目标岗位）
+2. 3-5 个精心调试的 Prompt（简历优化、求职信生成、面试问题预测、STAR 回答生成）
+3. 使用说明（截图+步骤，降低门槛）
+
+关键：每个 prompt 都要跑 10+ 次测试，确保对不同输入都能出合格结果。
+
+**第 3 步：分发和冷启动（持续）**
+
+- 小红书发使用效果对比帖（改前 vs 改后）
+- 即刻/V2EX 等社区分享制作过程
+- 定价建议：29.9-39.9（太低显廉价，太高没竞争力）
+
+---
+
+## 方向二：电商卖家 AI 视觉管家
+
+### 可行性：较低（对你当前情况而言）
+
+**核心问题**
+
+| 维度 | 评估 |
+|------|------|
+| 核心技能要求 | Stable Diffusion / Midjourney 图像生成——你完全没接触过 |
+| 学习成本 | 高。AI 生图的工作流（模型选择、LoRA 训练、ControlNet、后期处理）学习曲线陡 |
+| 时间投入 | **服务型业务**，每单都要花时间交付，无法自动化 |
+| 启动资金 | 需要 GPU 算力（云端或本地显卡），月成本几百到上千 |
+
+**为什么不适合你现阶段**
+
+1. **技能距离太远**。你现在的 AI 能力集中在文本层（Prompt、Cursor），图像生成是完全不同的技术栈，从零到能交付商用品质，保守估计 2-3 个月全力学习
+2. **是劳动密集型的**。每个客户的产品不同，需要单独调参、生图、修图。你主业已经很忙（看你的 todos，紧急任务不少），很难再挤出稳定的服务交付时间
+3. **客户管理成本高**。电商卖家对交付速度和效果要求高，售后沟通多，容易占用大量精力
+4. **质量控制难**。AI 生图的结果不稳定，商用场景对细节要求严格（手指、光影、产品细节），返工率高
+
+**如果非要做的建议**：等 Notion 模板跑起来、Prompt 能力到 50%+ 之后，再考虑图像方向。到时候可以从"商品描述文案"这个文本切口先介入电商圈子，再逐步拓展到视觉。
+
+---
+
+## 总结建议
+
+| | Notion 模板 | AI 视觉管家 |
+|--|------------|------------|
+| 推荐度 | **先做这个** | 暂时搁置 |
+| 理由 | 能力匹配、时间可控、和学习计划协同 | 技能断层大、时间不可控 |
+| 预期收入 | 低（月几百到千）但被动 | 高但要持续投入时间 |
+| 核心价值 | 练 Prompt + 建立副业感觉 | — |
+
+我的建议是：**先做 Notion 模板，把它当成 Prompt 工程的实战项目**。它的核心价值不只是赚钱，而是让你在真实场景中练 Prompt 设计、练产品包装、练冷启动——这些能力积累下来，后面做任何 AI 副业都用得上。
+
+需要我帮你把这个评估存到 `knowledge/` 或 `thoughts/` 里吗？或者帮你拆一个 Notion 模板项目的执行计划？
+
+user:
+<user_query>
+评估存到thoughts 里吧，然后帮我拆一下执行计划
+</user_query>
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/thoughts/2026-03-06-副业方向评估.md
+  contents: # 副业方向评估
+
+> 2026-03-06，基于 Gemini 生成的副业建议，挑了两个感兴趣的方向做可行性分析
+
+---
+
+## 方向一：AI 求职/面试 Notion 模板（推荐先做）
+
+### 是什么
+
+一个 Notion 页面，嵌入预设好的 ChatGPT 指令。用户复制指令、填入自己的信息，就能生成个性化的简历、求职信、面试问题回答。
+
+### 为什么适合我
+
+- 核心技能是 Prompt 设计 + 产品包装，前者在学，后者是本职
+- 学习成本低，不需要新工具链
+- 时间投入可控：前期集中 2-3 周，之后近乎零维护
+- 和 W10 的 Prompt 学习计划完全重叠，不算额外负担
+- 启动资金几乎为零
+
+### 风险
+
+- 竞争激烈，同类 Notion 模板已经很多，需要差异化
+- 当前 Prompt 水平 20%，做出的 prompt 质量可能不够硬
+- 客单价低（9.9-49.9），需要走量
+
+### 差异化思路
+
+- 垂直人群：不做通用求职，做"互联网产品经理求职模板"——我懂这个行业
+- 全流程：职位分析 → 简历定制 → 面试准备 → 复盘，不只是单点工具
+- 自己先用过验证有效，再卖
+
+### 预期
+
+- 收入：月几百到千，被动收入
+- 核心价值不只是赚钱，而是练 Prompt、练产品包装、练冷启动
+
+---
+
+## 方向二：电商卖家 AI 视觉管家（暂时搁置）
+
+### 是什么
+
+为淘宝/拼多多小卖家提供一站式 AI 视觉服务：AI 模特图、商品描述、营销海报。按项目打包收费（如一套商品图+文案=599元）。
+
+### 为什么现在不适合
+
+- 技能距离太远：AI 生图（Stable Diffusion / Midjourney）完全没接触过，从零到商用品质保守 2-3 个月全力学习
+- 服务型业务，每单都要花时间交付，无法自动化，主业已经很忙
+- 客户管理成本高，电商卖家对交付速度和效果要求严格
+- 需要 GPU 算力，有持续成本
+
+### 未来可能的切入方式
+
+等 Prompt 能力到 50%+ 后，先从"商品描述文案"这个文本切口介入电商圈子，再逐步拓展到视觉。
+
+---
+
+## 结论
+
+先做 Notion 模板，把它当成 Prompt 工程的实战项目。核心价值是能力积累，不是短期变现。
+
+
+[Tool result] Write
+
+assistant:
+评估已存到 `thoughts/2026-03-06-副业方向评估.md`。下面拆执行计划。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/AI求职模板副业.md
+  contents: # AI 求职/面试 Notion 模板 — 执行计划
+
+> 启动时间：2026-03 W11（等 W10 的 Prompt 学习有体感后再动手）
+> 目标：4 月中前完成 MVP 并冷启动
+
+---
+
+## Phase 1：调研和定位（W11，3.9-3.15）
+
+**目标**：确定做什么、卖给谁、怎么差异化
+
+- [ ] 竞品调研：小红书/即刻搜"AI 简历模板""AI 面试模板"，记录 10 个竞品的定价、功能、评价
+- [ ] 找差异化切口：初步方向是"互联网产品经理求职"，验证这个人群是否够垂直、需求是否够强
+- [ ] 确定模板包含的模块（初步规划）：
+  - 职位 JD 分析 prompt
+  - 简历针对性优化 prompt
+  - 求职信生成 prompt
+  - 面试高频问题预测 + STAR 回答生成 prompt
+  - 面试复盘 prompt
+- [ ] 输出一份 1 页的产品定义（目标用户、核心卖点、定价策略）
+
+**产出**：产品定义文档，存到本目录下
+
+---
+
+## Phase 2：Prompt 设计与打磨（W12-W13，3.16-3.29）
+
+**目标**：写出 5 个核心 prompt，每个跑通 10+ 次测试
+
+### 第 1 周（W12）：写初版 prompt
+
+- [ ] 自己先当用户：用 ChatGPT 走一遍求职全流程（选一个虚拟的 PM 岗位），记录哪些环节 AI 最有帮助
+- [ ] 写 5 个核心 prompt 的初版
+- [ ] 每个 prompt 至少跑 3 遍，记录问题
+
+### 第 2 周（W13）：迭代优化
+
+- [ ] 用 W10 学到的技巧优化（chain-of-thought、CO-STAR 等）
+- [ ] 每个 prompt 用 3 种不同背景的虚拟用户测试（应届生 / 3 年经验 / 转行），确保泛化性
+- [ ] 找 1-2 个朋友试用，收集反馈
+- [ ] 迭代至少 2 轮
+
+**产出**：5 个经过验证的 prompt + 测试记录
+
+---
+
+## Phase 3：Notion 模板搭建（W14，3.30-4.5）
+
+**目标**：把 prompt 包装成好看、好用的 Notion 模板
+
+- [ ] 设计模板结构和用户动线（填信息 → 选场景 → 复制 prompt → 粘贴到 ChatGPT → 得到结果）
+- [ ] 搭建 Notion 页面，包含：
+  - 使用说明（截图 + 步骤，3 分钟上手）
+  - 个人信息采集区（引导式填写）
+  - 5 个 prompt 模块（带使用场景说明）
+  - FAQ
+- [ ] 自己从头走一遍完整流程，确保体验顺畅
+- [ ] 设定价格（建议 29.9-39.9）
+
+**产出**：可售卖的 Notion 模板
+
+---
+
+## Phase 4：冷启动和分发（W15 起，4.6+）
+
+**目标**：获得前 50 个付费用户
+
+### 内容准备
+
+- [ ] 写 2-3 篇小红书帖子：
+  - "我用 AI 帮自己重写了简历，面试通过率翻倍"（效果对比帖）
+  - "产品经理求职，这 5 个 AI 指令够用了"（干货帖）
+  - 模板使用教程帖
+- [ ] 准备 1 个使用效果的前后对比案例（最好是真实的）
+
+### 分发渠道
+
+- [ ] 小红书：主阵地，发效果帖 + 评论区引流
+- [ ] 即刻：AI 圈子，分享制作过程和思考
+- [ ] V2EX / 少数派：技术社区，侧重"怎么做"的分享
+- [ ] 朋友圈：第一批种子用户
+
+### 售卖方式
+
+- [ ] 确定交付平台（Gumroad / 小报童 / 面包多，选一个）
+- [ ] 设置购买链接
+- [ ] 前 20 名可以给个早鸟价（19.9）
+
+**产出**：上架 + 首批用户反馈
+
+---
+
+## Phase 5：迭代（持续）
+
+- [ ] 根据用户反馈优化 prompt
+- [ ] 考虑扩展更多场景（技术岗、设计岗、运营岗）
+- [ ] 如果效果好，考虑做付费社群（求职互助 + prompt 更新）
+
+---
+
+## 时间线总览
+
+```
+W10 (3.2-3.8)   Prompt 学习（已在计划中，不额外加）
+W11 (3.9-3.15)  调研和定位
+W12 (3.16-3.22) 写初版 prompt
+W13 (3.23-3.29) 迭代优化 prompt
+W14 (3.30-4.5)  搭建 Notion 模板
+W15+ (4.6-)     冷启动和分发
+```
+
+## 关键原则
+
+1. **先学再做**：W10 的 Prompt 学习是前置条件，不要跳过
+2. **自己先用**：每个 prompt 必须自己当用户跑过，不好用的不上架
+3. **小步验证**：Phase 2 结束时找朋友试用，如果反馈差就调整方向，不要等到做完才发现
+4. **不要贪多**：MVP 就 5 个 prompt，够用就行，后续根据反馈加
+
+
+[Tool result] Write
+
+assistant:
+都搞定了：
+
+- 评估存在 `thoughts/2026-03-06-副业方向评估.md`
+- 执行计划存在 `work/projects/AI求职模板副业.md`
+
+计划的核心逻辑是：**W10 先把 Prompt 学习做了（你已有计划），W11 开始调研定位，W12-W13 写 prompt 并打磨，W14 搭 Notion 模板，W15 冷启动**。预计 4 月初可以上架。
+
+几个建议：
+
+1. **不要跳过 W10 的 Prompt 学习**。chain-of-thought 对比实验做完后，你对 prompt 质量的判断力会上一个台阶，直接影响模板的核心竞争力
+2. **差异化建议走"产品经理求职"这个垂直方向**。你自己就是 PM，写出来的 prompt 天然比通用模板精准，而且这个人群付费意愿不低
+3. **Phase 2 结束时是关键检查点**——找朋友试用后，如果反馈说"和直接问 ChatGPT 差别不大"，就需要重新想差异化，不要硬往下推
+
+user:
+<user_query>
+好的，但是其实我没有太理解chain-of-thought这一些，可以具体给我讲一下吗？每一步需要做什么。要符合我的设定（初中学历、爱学习、在做产品经理）
+</user_query>
+
+assistant:
+[Thinking] The user wants me to explain chain-of-thought and other prompt techniques in a way that's accessible to someone with a middle school education level, who is eager to learn, and works as a product manager. Let me read his current prompt learning plan first to understand what he already has planned.
+先看下你现有的学习计划，确保讲解和它衔接上。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+  offset: 67
+  limit: 12
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/todos.md
+  offset: 26
+  limit: 6
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Tool call] Glob
+  glob_pattern: prd-review/SKILL.md
+  target_directory: /Users/jiwenyue/cursorProjects/personal
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/SKILL.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have a good understanding of the user's context. Let me explain chain-of-thought and the related prompt techniques in a way that's accessible and tied to his actual work. He has a middle school education background, is a self-learner, and works as a product manager. I should:
+
+1. Explain chain-of-thought in plain, relatable language
+2. Use his actual prd-review as the example
+3. Show concrete before/after comparisons
+4. Give step-by-step instructions for the W10 experiment
+
+Let me also explain CO-STAR briefly since that's in his learning plan too.
+
+I should write this directly in response, not save to a file (unless he asks). This is a teaching moment.
+好，用你熟悉的东西来讲，不讲理论，直接讲"是什么""为什么有用""你怎么用"。
+
+---
+
+## Chain-of-thought 到底是什么
+
+**一句话版本**：不要让 AI 直接给答案，而是让它先一步步想清楚，再给答案。
+
+**生活类比**：
+
+你让一个实习生 review 你的 PRD，你有两种交代方式：
+
+**方式 A**（没有 chain-of-thought）：
+> "帮我看看这个 PRD，给我评审意见。"
+
+实习生拿到后直接开始写意见，想到哪写到哪，可能漏掉重要维度，可能前后矛盾。
+
+**方式 B**（有 chain-of-thought）：
+> "帮我看看这个 PRD。先把你要检查的维度列出来，然后逐个维度分析，最后再给总结论。"
+
+实习生先理清思路，再一步步检查，输出质量明显更好。
+
+**本质就是这么简单**：告诉 AI "先想再答"，而不是"直接答"。
+
+---
+
+## 你的 prd-review 改造实验，具体怎么做
+
+### 第 1 步：复制一份 prd-review
+
+你不需要改原版，复制一份来改就行。我帮你讲清楚改哪里、怎么改。
+
+### 第 2 步：找到要改的地方
+
+看你现在的 prd-review，Step 4 的指令是这样的：
+
+```92:109:/Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/SKILL.md
+#### v1 Review：问题分析与方案方向
+
+核心判断：**问题值得做吗？方向对吗？**
+
+| # | 维度 | 核心问题 | 🟢快速验证 | 🔵完整方案 |
+|---|------|---------|-----------|-----------|
+| 1 | **用户视角** | 需求从用户出发吗？... |
+// ... 9 个维度的表格 ...
+```
+
+现在的写法是给了一张表，然后让 AI 直接按表输出。AI 看完表就开始写报告，脑子里的过程是：
+
+> "嗯，用户视角...我写一段。问题定义...我再写一段。"——逐条填空。
+
+### 第 3 步：加入 chain-of-thought
+
+在 Step 4 的表格**之后**，加一段这样的指令：
+
+```markdown
+**Review 思考过程（必须先完成再写报告）：**
+
+在输出正式报告之前，先完成以下思考：
+
+1. 用一句话概括这个 PRD 要解决什么问题
+2. 用一句话概括它打算怎么解决
+3. 作为领导，我第一反应会挑战什么？（列出 2-3 个直觉疑问）
+4. 逐个过 9 个维度，每个维度用一句话记录：这个维度 PRD 写了什么、够不够、缺什么
+5. 基于以上思考，给出门禁判断
+
+把上述思考过程写在报告最前面的「Review 思考过程」区块中。
+```
+
+**就这么多。** 核心改动就是加了这一段。
+
+### 为什么这样改会更好
+
+没加之前，AI 的"思考"是隐式的——它脑子里过了一遍就直接写了，你看不到也控制不了。
+
+加了之后：
+
+1. **AI 被迫先建立全局理解**（第 1、2 步），不会一上来就陷入细节
+2. **AI 被迫先暴露直觉判断**（第 3 步），这往往是最有价值的——领导 review PRD 也是先有直觉，再找依据
+3. **AI 逐维度做了预判**（第 4 步），正式写报告时就不是"填空"，而是有判断地写
+4. **你能看到它的思路**，如果思路就歪了，你能及时纠正，不用等它写完一大堆再发现不对
+
+### 第 4 步：对比实验
+
+1. 找一份你之前写过的 PRD（你熟悉内容，能判断 review 质量）
+2. 用**原版** prd-review 跑一遍，保存结果
+3. 用**改造版**跑一遍，保存结果
+4. 对比两份输出，重点看：
+   - 哪个更**抓到重点**？（是不是一上来就点到了核心问题）
+   - 哪个**建议更具体**？（是泛泛说"分析不够深"，还是告诉你具体补什么）
+   - 哪个**遗漏更少**？（是不是每个维度都认真看了）
+5. 把对比发现记到 `knowledge/tech/` 里
+
+---
+
+## CO-STAR 又是什么
+
+CO-STAR 是一个检查清单，帮你写 prompt 时不漏东西。6 个字母代表 6 个维度：
+
+| 字母 | 含义 | 大白话 | 你的 prd-review 里有没有 |
+|------|------|--------|----------------------|
+| **C** - Context | 背景 | 你在什么情况下用这个 prompt？ | 有。"从 Confluence 拉取 PRD" |
+| **O** - Objective | 目标 | 你想让 AI 做什么？ | 有。"以产品 Leader 视角预审" |
+| **S** - Style | 风格 | 用什么方式表达？ | 部分有。"引用原文佐证" |
+| **T** - Tone | 语气 | 什么态度？ | 有。"帮 PM 变强，不是挑刺" |
+| **A** - Audience | 受众 | 输出给谁看？ | 隐含的（给你自己看），没明确写 |
+| **R** - Response | 格式 | 输出长什么样？ | 有。Step 5 的报告模板 |
+
+**怎么用它**：不是要你按 CO-STAR 重写 prompt，而是写完之后用它过一遍，看有没有漏了哪个维度。比如你的 prd-review 其实写得不错，CO-STAR 6 个维度基本都覆盖了，只有 **A（受众）** 没有显式写——可以加一句"输出面向 PRD 作者本人，用教练式语气而非评审式语气"，让 AI 的口吻更稳定。
+
+---
+
+## 总结：你本周（W10）要做的事，一共 4 步
+
+1. **复制 prd-review**，加上面那段 chain-of-thought 指令
+2. **找一份你的老 PRD**，用原版和改造版各跑一遍
+3. **对比两份输出**，记录差异和感受，存到 `knowledge/tech/`
+4. **用 CO-STAR 检查 prd-writer**，看 6 个维度哪些有、哪些缺，记下来
+
+不用看论文、不用看教程，做完这 4 步你就有体感了。
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265 这是我的一个 prd，用@personal/work/prd/prd-review/SKILL copy.md 帮我 review 下，并输出
+</user_query>
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/SKILL copy.md
+
+[Tool result] Read
+
+assistant:
+好，按 SKILL copy.md 的流程来。先拉取 PRD 内容。
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  page: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265
+  pageId: 1023450265
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+assistant:
+[Thinking] I now have the full PRD content. Let me follow the SKILL copy.md workflow to review this PRD.
+
+**Step 2: Identify Version**
+The title is "断课老用户增加前测". The version log shows v5.1 and v5.2. So this is a v5 document (main feature design).
+
+Wait, but the standard naming format is `产品名X.X-{159版本}-{副版本}`. This PRD title doesn't follow that format. But the version log says "v5.1" and "v5.2", which suggests this is a v5 (主功能稿). Actually, looking at the content, it has background, target estimation, current status, design thinking, and detailed requirements with UI/interaction specs - this is clearly a v5 level document.
+ 
+Looking more closely at the structure, I see it includes background analysis and problem framing alongside the interaction design and prototypes. The version log indicates v5.1 and v5.2, so I should treat this as a v5 review, though it incorporates some v1-level content about problem analysis and strategic direction. also comment on v1-level concerns if I see any.
+
+Now I'm identifying the PRD type and review depth. This is a quick-validation experiment since it's an AB test with limited exposure across churned users and low rollback risk. The review should be standard depth given that it affects a subset of users through an experimental questionnaire flow, though I should note it's ultimately designed to impact lead conversion metrics.
+
+Following the chain-of-thought framework, the core problem is that churned users have very low reactivation rates because ad exposure is limited and engagement is low. The solution is to add a pre-test questionnaire when these users open the app, which increases coverage and creates more meaningful interaction compared to relying on scattered ad placements.
+
+But I need to challenge some assumptions here. The 50-70% completion rate for the pre-test is based on new user data at 80%+, but churned users have a completely different mindset—they've already had a negative experience. Will adding a questionnaire right when they open the app actually push them away further? And I'm not sure if 10% of traffic is enough to reach statistical significance in a reasonable timeframe.
+
+Now let me evaluate this against the v5 review dimensions, starting with scenario authenticity. 程走得通
+2. 交互逻辑自洽 - 各功能点正常逻辑是否清晰
+3. 与v1方向一致 - 交互方案是否忠实v1方向
+4. 设计一致性 - 是否复用已有组件
+5. 交互层待决策点
+
+这份文档既包含v1层面的内容，也有v5的内容，既然标注为v5，我应该采取这样的方式：先快速过一遍v1的评估（因为内容已经在这里），然后重点关注v5的交互审查。
+
+现在开始深入分析这份PRD。从v1层面看，问题分析比较扎实——用户分段的数据拆解清晰，有70份用户录屏研究支撑，准确指出了召回率低的原因是广告曝光仅41%，竞品分析也到位。不过有个核心假设需要更多验证：前测效果优于广告位这个逻辑，用新用户前测80%+通过率来类比可能不够充分。
+
+还有几个问题值得标记：50%-70%的前测通过率假设看起来有点乐观，这个数据从何而来？AB实验设计上，我再仔细看了一遍，其实分组还是合理的——第一组测3题前测加营销落地页，第二组测1题前测加营销落地页，第三组只有营销落地页，对照组保持现状，这样能同时验证多个假设。另外文档里只提到了"体验课断课限购"这一类用户。
+
+但我注意到一个矛盾的地方：AB测试只针对限购用户，可是前面的分析里同时包含了限购和非限购用户，为什么要排除非限购的？再看用户流程，打开应用→欢迎页面停留3秒→回答问卷→看落地页→点击领取免费计划→跳转到添加微信页面，这个流程本身没问题，但有些细节不清楚——比如用户在问卷中途强制关闭应用会怎样，还有那个"关闭后90天不再展示"的规则是按实验组还是全局生效的。关于冷启动逻辑，文档说"用户没有断课前测落地页关闭按钮或者领取按钮点击的，冷启动进入断课前测"，这意味着每次打开应用都会看到前测。
+
+看交互设计的细节，第一题默认显示用户当前年级是个不错的体验，第二题根据答案分支到不同的第三题也很清晰，按钮状态管理也合理。不过第一题的设计有点奇怪——如果用户真的改了年级，这个信息怎么传给后端，会不会影响后续的学习计划？
+
+从v1的目标来看，想通过前测增加广告曝光和点击率，v5的交互设计通过让前测成为用户首先看到的内容来实现这一点，方向是一致的。还需要检查一下整体的设计一致性。
+
+另外要确认一下应用里是否有类似的问卷流程，这样可以复用相同的组件模式。有几个问题需要澄清：登陆页的文案在不同实验组之间有差异，这是有意为之还是应该统一控制？第二个实验组说"前测答题（1 个题目）"，但题目详情部分没有明确说明要给这个组展示哪个题目。还有luban配置的结构需要更多细节说明。
+
+现在开始写审查报告。另外要注意这份PRD标记为v5，但包含了大量v1的内容（背景、目标估算、分析），这样其实没问题——可能是个综合文档，但通常v5应该引用已批准的v1，而不是把它全部包含进来。
+
+这个PRD属于快速验证型。
+
+因为是AB实验，成本低、可逆转，所以审查深度应该是标准review。
+
+现在开始起草审查报告。还要记得把思考链放在报告开头，这是SKILL copy.md里的要求。
+
+由于这是v5，我应该重点关注v5的审查维度，但也会标记v1层面的问题，因为它们同样相关。
+
+现在整理我的审查思路：问题是断课老用户的析出率只有3%，主要原因是广告曝光率低（41%）且点击率低，所以需要一个更有效的召回路径。方案是在用户打开APP时加入前测问卷，通过更高的覆盖率（目标80%）和更有参与感的互动方式来提升析出率，同时用AB实验验证效果。
+
+但领导可能会质疑几个地方：前测通过率假设（50%-70%）的依据不够充分，因为断课用户和新用户的心理状态不同；实验组2只有1个题目，具体是哪个题目PRD没有说清楚；还有3个实验组的设置需要进一步说明。
+
+现在快速扫描一下整个方案的完整性：主流程基本可行，但冷启动逻辑和app被杀死后的行为这些交互细节还需要补充；问题分支逻辑清晰，但实验组2的单题方案缺少交互说明；与v1保持一致；需要确认是否复用新用户前测的组件；还有几个明确的决策点需要敲定。总体来看，这个方案可以推进，但要注意这些细节问题。
+
+现在开始整理正式的评审报告。
+PRD 内容拿到了，是"断课老用户增加前测"，版本为 v5。现在按 SKILL copy.md 的流程开始 review。
+
+**版本识别**：v5（版本日志标记 v5.1/v5.2）
+**PRD 类型**：🟢 快速验证型（AB 实验，流量可控，可回滚）
+**Review 深度**：标准 review（实验阶段，非全量上线）
+
+下面输出 review 报告并存档。
+[Tool call] Shell
+  command: ls /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/
+  description: Check prd-review directory structure
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/reviews/断课老用户增加前测_review_20260306.md
+  contents: # PRD Review：断课老用户增加前测
+
+> 版本：v5 | PRD 类型：🟢快速验证 | Review 深度：标准 | 日期：2026-03-06
+
+---
+
+## Review 思考过程
+
+1. **问题概括**：断课老用户析出率只有 3%，主因是广告曝光率低（41%）且 CTR 低，缺少一条有效的主动召回路径。
+
+2. **方案概括**：在断课用户打开 APP 时用前测问卷替代分散的广告位，通过更高覆盖率（目标 80%）和更有参与感的互动方式提升析出率，用 AB 实验验证效果。
+
+3. **领导第一反应会挑战什么**：
+   - 前测通过率 50%-70% 的假设哪来的？断课用户和新用户心理状态不同，新用户前测 80%+ 不能直接类比
+   - 实验组 2 说"1 个题目"，具体展示哪个题？PRD 没写
+   - 3 个实验组的落地页文案不同（个性化 vs 通用 vs 寒假礼包），这是不是混淆变量？
+
+4. **v5 维度快速扫描**：
+   - 场景还原：主流程走得通，但冷启动逻辑、app kill 后的行为有模糊
+   - 交互逻辑自洽：3 题版本逻辑清晰，1 题版本没有交互说明
+   - 与 v1 一致：一致
+   - 设计一致性：需确认是否复用新用户前测组件
+   - 待决策点：有几个需要明确的点
+
+5. **门禁判断**：⚠️ 方向对，但有几处交互细节必须补充后才能交付开发
+
+---
+
+## 门禁判断
+
+**⚠️ 需要补充后可推进到 v9**
+
+方向没问题——用前测替代分散广告位来提升曝光和参与度，逻辑成立。但有 **3 个交互层面的硬伤** 必须在进 v9 前补齐（见下文维度 1、2），否则研发会卡你。
+
+---
+
+## 各维度评价
+
+### 1. 场景还原
+
+- **判断**：⚠️
+- **评价**：3 题版本的主流程（打开 APP → 欢迎页 3s → 3 道题 → 落地页 → 领取 → 加微）走得通，但有以下场景没有说清楚：
+
+  **a) 实验组 2（1 题版本）的完整流程缺失。** PRD 只在 AB 表格里提了一句"前测答题（1 个题目）"，但没有说明：展示哪个题？是固定展示问题 2 还是随机？欢迎页还有吗？落地页文案和实验组 1 一样吗？——研发看到这里会停下来问你。
+
+  **b) 用户中途退出的处理不完整。** PRD 写了"叉掉后 90 天内不再展示"，但没有区分几种退出场景：
+  - 欢迎页期间退出（还没答题）→ 下次进 APP 重新展示？
+  - 答到第 2 题退出 → 下次是从头开始还是接着上次的？
+  - 直接 kill APP → 算不算"叉掉"？
+
+  **c) 与现有召回弹窗的冲突。** 现在断课用户已经有首页召回弹窗（CTR 20-25%），加了前测后，弹窗还展示吗？如果都展示，用户打开 APP 先看前测再看弹窗，体验会比较重。PRD 没有说明前测和现有弹窗的优先级关系。
+
+- **领导可能会问**："实验组 2 的 1 题到底是哪题？你自己想清楚了吗？"
+- **改进思路**：
+  1. 补一张实验组 2 的完整交互流程图，明确哪个题、欢迎页有没有、落地页文案
+  2. 补一个"中途退出"的状态表：每种退出场景对应什么处理策略
+  3. 加一段说明前测与现有召回弹窗的关系——建议前测展示期间屏蔽首页召回弹窗，避免双重打扰
+
+### 2. 交互逻辑自洽
+
+- **判断**：⚠️
+- **评价**：3 题版本的分支逻辑清晰（Q2 选择 → 分叉到 Q3.1/Q3.2），这部分没问题。但有两个逻辑点需要确认：
+
+  **a) 问题 1 的年级变更结果如何处理。** PRD 说"默认压中用户年级"，用户可以改。但改完之后呢？这个信息只影响落地页文案（"x 年级"），还是会回写到用户档案？如果用户把年级从 3 改成 5，后续 CC 联系时看到的是新年级还是老年级？
+
+  **b) 前测答题数据的上报和使用。** 用户选了"基础巩固"+"跟不上学习进度"，这些信息除了影响落地页展示，会传递给 CC 吗？如果 CC 拿到了这些信息，在外呼时就能更有针对性。PRD 的数据需求部分只有埋点曝光/点击，没有提到答题结果的上报和流转。
+
+- **领导可能会问**："用户的答题数据 CC 能看到吗？如果 CC 都不知道用户选了什么，那这些题不就白问了？"
+- **改进思路**：
+  1. 明确年级变更是否回写用户档案，加一行说明
+  2. 在数据需求部分补充：用户的答题选择结果需要上报，并关联到 leads 信息，CC 外呼时可见。这是一个能显著提升 CC 转化效率的点，值得做
+
+### 3. 与 v1 方向一致
+
+- **判断**：✅
+- **评价**：v1 的核心方向是"增加一个主动的、有参与感的召回路径来提升析出率"，v5 的前测流程设计完整地落实了这个方向。问题设计参考了 CC 挖需话术和竞品，节奏合理（欢迎语 → 现状归类 → 痛点唤起）。
+
+### 4. 设计一致性
+
+- **判断**：⚠️
+- **评价**：APP 内已有新用户前测流程，断课用户前测应该尽量复用同一套组件（问题卡片、选项按钮、进度条等），避免重复开发。PRD 没有明确说明是复用还是新做。另外，luban 配置结构只提了"以上问题的文案可在 luban 配置"，但没有给出具体的配置 schema，研发可能需要你补充。
+- **改进思路**：加一句说明复用新用户前测的前端组件，差异点在于文案和跳转逻辑。luban 配置 schema 可以放在 v9 细化。
+
+### 5. 交互层待决策点
+
+- **判断**：⚠️
+- **评价**：以下几个点 PRD 没有明确决策：
+  1. **实验周期和置信度**：PRD 提到"需要商分估算一下"，但 v5 阶段应该有个初步的结论——按 10% 流量大概需要跑多久能出结果？这会影响后续排期
+  2. **落地页文案的差异是有意为之还是疏忽**：实验组 1 是个性化文案（含年级+学习目标），实验组 3 是通用文案（"寒假提升礼包"），这个差异如果是有意的，应该说明原因；如果不是，应该统一，否则无法干净地归因"前测"这个变量的效果
+  3. **"寒假"过期后的文案更新**：PRD 自己也提到"这个文案随着特殊时段过去需要更换"，但没有给出替换方案。现在已经 3 月了，寒假早过了，如果实验还在跑，用户看到"寒假提升礼包"会觉得奇怪
+
+---
+
+## 修改优先级
+
+| 优先级 | 事项 | 预计工时 |
+|--------|------|---------|
+| **P0（必须改）** | 补充实验组 2（1 题版本）的完整交互流程 | 30 分钟 |
+| **P0（必须改）** | 补充中途退出的各种场景处理策略 | 20 分钟 |
+| **P1（强烈建议）** | 明确前测与现有召回弹窗的优先级关系 | 10 分钟 |
+| **P1（强烈建议）** | 补充答题结果上报给 CC 的数据流转说明 | 20 分钟 |
+| **P2（建议）** | 统一或说明各实验组落地页文案差异的原因 | 10 分钟 |
+| **P2（建议）** | 更新"寒假"过期后的替代文案方案 | 10 分钟 |
+| **P2（建议）** | 确认是否复用新用户前测组件 | 5 分钟 |
+
+## 给你的建议
+
+**做得好的地方**：
+- 问题分析扎实。70 个用户录音抽样 + 分点位数据拆解 + 竞品分析，能看出来做了大量前期工作。
+- AB 实验设计考虑了 CC 人效承接，从 33% 调到 20% 流量，说明你有全链路思维，不是只看自己的漏斗。
+- 前测问题的迭代过程（从"问身份+成绩"到"现状归类+价值展示+痛点唤起"）记录在 PRD 里，这个很好，让 reviewer 能看到你的思考路径。
+
+**核心提升点**：
+- **实验组之间的差异要干干净净**。现在实验组 1/2/3 除了"有没有前测""题目多少"之外，落地页文案也不同，这会让你后续归因变得困难。如果实验结论是"实验组 1 效果最好"，你没法说清楚是因为前测答题的参与感，还是因为个性化落地页文案更吸引人。建议要么统一文案，要么把文案差异作为明确的第二层实验变量写清楚。
+- **v5 的核心是让研发能直接做**。你的 3 题版本写得很清楚，但 1 题版本几乎是空白。如果我是研发，看到"前测答题（1 个题目）"这一句话，会直接找你问：哪个题、什么交互、什么跳转。v5 的目标是研发看完能直接排期，不需要再和你对齐。
+
+
+[Tool result] Write
+
+assistant:
+Review 报告已存档到 `prd-review/reviews/断课老用户增加前测_review_20260306.md`。
+
+---
+
+**门禁结论：⚠️ 方向对，补几个点后可以交付开发。**
+
+最关键的 3 个问题：
+
+1. **实验组 2（1 题版本）没有交互说明**——展示哪个题、流程怎么走、落地页文案是什么，PRD 里一句话都没有。研发看到会直接卡住问你。
+
+2. **用户中途退出的处理没写清楚**——欢迎页退出 vs 答到一半退出 vs kill APP，分别怎么处理？下次进来从头开始还是接着上次的？"90 天不再展示"的触发条件到底是什么？
+
+3. **各实验组的落地页文案不同，会干扰归因**——实验组 1 是个性化文案（年级+学习目标），实验组 3 是"寒假提升礼包"。如果实验组 1 效果好，你说不清是"前测答题"好还是"个性化文案"好。建议统一文案，或者把文案差异作为独立变量明确写出来。
+
+另外一个**强烈建议加的点**：用户的答题选择（"基础巩固""跟不上学习进度"等）应该上报并关联到 leads 信息，让 CC 外呼时能看到。否则用户费劲答了 3 道题，CC 打电话过去还是盲聊，题就白问了。这个点做了能直接提升 CC 转化效率。
+
+以上补充预计 1-2 小时搞定，都不涉及方向性改动。
+
+user:
+<user_query>
+再用@personal/work/prd/prd-review/SKILL.md 这个 skill review一遍并输出
+</user_query>
+
+assistant:
+[Thinking] The user wants me to review the same PRD using the original SKILL.md (without chain-of-thought), so they can compare the two outputs. This is exactly the W10 prompt comparison experiment they planned. Let me read the original SKILL.md and do the review.
+
+I already read it earlier, let me re-read it to make sure I follow it exactly.
+好，用原版 SKILL.md 再跑一遍，方便你对比。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/SKILL.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I need to review the same PRD using the original SKILL.md (without chain-of-thought). The PRD content was already fetched earlier. Let me follow the original SKILL.md workflow exactly:
+
+Step 1: Already got the PRD content
+Step 2: Identify version - v5
+Step 3: PRD type - 🟢 快速验证型, standard review
+Step 4: v5 Review - go through the 5 dimensions
+Step 5: Output report
+Step 6: Save
+
+The key difference from SKILL copy.md is there's no chain-of-thought section. I should just directly write the review report following the template.
+
+
+Now I'm going to write out the review report directly, comparing what the original SKILL.md produces against the copy version to see where they diverge.
+PRD 内容已经拿过了，直接按原版 SKILL.md 的流程 review。
+
+**Step 2**：版本 v5（版本日志 v5.1/v5.2）
+**Step 3**：🟢 快速验证型 | 标准 review
+
+直接输出报告。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/reviews/断课老用户增加前测_review_原版_20260306.md
+  contents: # PRD Review：断课老用户增加前测
+
+> 版本：v5 | PRD 类型：🟢快速验证 | Review 深度：标准 | 日期：2026-03-06
+
+## 门禁判断
+
+**⚠️ 需在 v5 上修改（方向没变）**
+
+交互设计整体可行，但实验组 2 的交互方案缺失，且有几处细节需要补充才能交付研发。
+
+## 各维度评价
+
+### 1. 场景还原
+
+- **判断**：⚠️
+- **评价**：主流程为"用户打开 APP → 欢迎页（3s）→ 答题（3 题）→ 落地页 → 点击领取 → 跳转加微页"，整体走得通。但 PRD 中提到 AB 实验有 3 个实验组，实验组 2 为"前测答题（1 个题目）+营销落地页"，没有说明具体展示哪道题目以及对应的交互流程。此外，用户中途退出（如答到一半退出、kill APP）的处理逻辑未说明。
+- **领导可能会问**："实验组 2 的 1 题方案研发怎么做？你自己写清楚了吗？"
+- **改进思路**：补一份实验组 2 的交互流程，包含：展示哪个题目、是否有欢迎页、落地页文案内容。补充各种退出场景的处理策略。
+
+### 2. 交互逻辑自洽
+
+- **判断**：⚠️
+- **评价**：3 题版本的分支逻辑清晰——问题 2 选"基础巩固"跳 Q3.1，选"拓展拔高"跳 Q3.2，没有逻辑断裂。按钮状态（未选中不可点击 + toast 提醒）也合理。但有两个点不清楚：1）问题 1 用户修改年级后，这个信息是否回写用户档案；2）用户的答题选择是否上报并传递给 CC，PRD 的数据需求部分只写了曝光和点击的埋点，没有答题结果的上报。
+- **领导可能会问**："用户答的内容 CC 看得到吗？"
+- **改进思路**：明确年级变更的处理方式。在数据需求中增加答题结果上报的说明，并关联到 leads 信息供 CC 使用。
+
+### 3. 与 v1 方向一致
+
+- **判断**：✅
+- **评价**：v1 方向是通过前测流程提升断课用户的广告曝光率和参与度，进而提升析出率。v5 的交互设计——欢迎语引入 → 问题归类用户现状 → 痛点唤起 → 落地页转化——忠实落实了这个方向。
+
+### 4. 设计一致性
+
+- **判断**：⚠️
+- **评价**：APP 中已有新用户前测流程，应复用相同的前端组件（问题卡片、选项按钮、进度指示等）。PRD 未说明是复用还是重新开发。另外 PRD 提到"文案可在 luban 配置"但未给出配置结构。
+- **领导可能会问**："这个和新用户前测是同一套组件吗？"
+- **改进思路**：明确复用新用户前测组件，说明差异点。luban 配置 schema 可在 v9 补充。
+
+### 5. 交互层待决策点
+
+- **判断**：⚠️
+- **评价**：以下待决策点需要明确：
+  1. 前测流程与现有首页召回弹窗的关系——两者是否同时展示？如果都展示，用户体验偏重
+  2. 各实验组落地页文案不同（实验组 1 个性化文案 vs 实验组 3 "寒假提升礼包"），是有意设计还是未统一？会影响实验归因
+  3. 实验周期预估——10% 流量跑多久能置信？PRD 写了"需要商分估算"但没有结论
+- **改进思路**：说明前测和弹窗的优先级关系。统一落地页文案或明确文案差异是独立变量。补充实验周期的初步预估。
+
+## 修改优先级
+
+1. **实验组 2 交互流程补充**（必须）
+2. **中途退出处理策略**（必须）
+3. **前测与召回弹窗的关系说明**（建议）
+4. **答题结果上报给 CC**（建议）
+5. **落地页文案统一或说明差异原因**（建议）
+
+## 给你的建议
+
+问题分析做得比较扎实，数据拆解到了分点位粒度，用户调研也做了 70 个样本，这些是好的。AB 实验考虑了 CC 人效承接、调整了流量比例，说明有全链路意识。主要需要加强的是 v5 的交互完整度——每个实验组都应该有完整的交互说明，让研发看完能直接排期。
+
+
+[Tool result] Write
+
+assistant:
+原版 review 已存档到 `断课老用户增加前测_review_原版_20260306.md`。
+
+---
+
+现在两份都出来了，你可以打开对比看看。我帮你总结一下**两版的核心差异**，也就是 chain-of-thought 带来了什么变化：
+
+| 对比维度 | 原版 SKILL.md | SKILL copy.md（加了 chain-of-thought） |
+|----------|--------------|--------------------------------------|
+| 有没有思考过程 | 没有，直接进报告 | 有。开头用 5 步把"这个 PRD 在说什么""领导会挑战什么"先想清楚了 |
+| 抓重点的能力 | 发现的问题基本一样，但展开比较平均，没有明显的优先级感 | 一上来就点出"3 个交互硬伤"，读的人一眼知道最该改什么 |
+| 建议的具体程度 | 改进思路偏概括——"补一份交互流程""明确处理方式" | 更具体——比如退出场景拆成了 3 种情况，落地页文案问题解释了为什么会干扰归因 |
+| "给你的建议"部分 | 比较简短，主要在说"做得好"和"需要加强" | 更有层次——肯定了什么、核心问题是什么、具体示范了"如果是我会怎么想" |
+| 修改优先级 | 有排序但没有时间估计 | 加了预估工时，更可操作 |
+
+**体感总结**：两版发现的问题大致相同，但 chain-of-thought 版本的**重点更突出、建议更具体、更像一个有经验的人在和你对话**，而不是逐条填空。
+
+这就是你 W10 对比实验的第一手结果。如果感觉有收获，可以把这个对比发现记到 `knowledge/tech/` 里。
+
+user:
+<user_query>
+你的界面颜色能改吗？我想改一个比较护眼的颜色
+</user_query>
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/.cursor/skills-cursor/update-cursor-settings/SKILL.md
+
+[Tool result] Read
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/Library/Application Support/Cursor/User/settings.json
+
+[Tool result] Read
+
+assistant:
+[Thinking] The user wants to change the color theme to something more eye-friendly. Currently they don't have a theme set (so they're using the default). Let me suggest some eye-friendly themes.
+
+For eye-friendly / low eye strain themes, some popular options built into Cursor/VSCode:
+- "Default Dark Modern" - the default dark theme
+- "Solarized Dark" - classic low-contrast dark theme, well-known for being easy on the eyes
+- "Solarized Light" - light version, also easy on the eyes
+- "Quiet Light" - a very soft light theme
+
+For dark themes that are gentle on the eyes, I should suggest options. Let me ask the user what they prefer - dark or light - and give them options.
+
+
+I'll use the AskQuestion tool to find out whether they'd prefer a dark or light theme before recommending specific options.
+可以改。Cursor 自带了几个护眼主题，你偏好哪种风格？
+[Tool call] AskQuestion
+
+[Tool result] AskQuestion
+
+assistant:
+[Tool call] AskQuestion
+  questions: [{"id":"theme_style","prompt":"你偏好哪种风格的护眼主题？","options":[{"id":"solarized_dark","label":"Solarized Dark - 经典护眼暗色，低对比度，长时间看不累"},{"id":"solarized_light","label":"Solarized Light - 护眼浅色，偏暖色调"},{"id":"quiet_light","label":"Quiet Light - 柔和浅色，对比度很低"},{"id":"dark_modern","label":"Default Dark Modern - 默认深色，比较通用"},{"id":"other","label":"其他 - 我自己说想要什么感觉"}]}]
+
+[Tool result] AskQuestion
+
+assistant:
+好，Solarized Dark 是经典护眼主题，对比度低、色温偏暖，长时间使用很舒服。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/Library/Application Support/Cursor/User/settings.json
+  old_string: {
+    "window.commandCenter": true,
+    "git.autofetch": true,
+    "git.confirmSync": false
+}
+  new_string: {
+    "window.commandCenter": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "workbench.colorTheme": "Solarized Dark"
+}
+
+[Tool result] StrReplace
+
+assistant:
+已经切换到 Solarized Dark 主题了，应该立即生效。如果觉得太暗或太亮，随时告诉我换别的。
+
+user:
+<user_query>
+有点丑。。。
+</user_query>
+
+assistant:
+[Tool call] AskQuestion
+  questions: [{"id":"theme_alt","prompt":"Solarized Dark 确实偏复古，换个试试？","options":[{"id":"github_dark","label":"GitHub Dark Default - GitHub 风格深色，干净现代"},{"id":"one_dark","label":"One Dark Pro - Atom 经典主题，很多人用，色彩舒服"},{"id":"dracula","label":"Dracula - 偏紫色调深色，辨识度高"},{"id":"catppuccin","label":"Catppuccin Mocha - 最近很火的柔和深色，色彩温暖"},{"id":"night_owl","label":"Night Owl - 专门为低光环境设计的护眼主题"},{"id":"back_default","label":"算了换回默认的"}]}]
+
+[Tool result] AskQuestion
+
+assistant:
+[Tool call] Shell
+  command: ls "$HOME/.vscode/extensions" "$HOME/.cursor/extensions" 2>/dev/null | grep -i github-theme
+  description: Check if GitHub theme extension installed
+
+[Tool result] Shell
+
+assistant:
+GitHub Dark 需要先装扩展。帮你装一下。
+[Tool call] Shell
+  command: cursor --install-extension GitHub.github-vscode-theme
+  description: Install GitHub theme extension
+  required_permissions: ["full_network"]
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Shell
+  command: which code 2>/dev/null; ls /usr/local/bin/cursor /Applications/Cursor.app/Contents/Resources/app/bin/cursor 2>/dev/null; ls "$HOME/.cursor/extensions/" 2>/dev/null | head -20
+  description: Find Cursor CLI and extensions
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Shell
+  command: /Applications/Cursor.app/Contents/Resources/app/bin/cursor --install-extension GitHub.github-vscode-theme
+  description: Install GitHub theme via Cursor CLI
+  required_permissions: ["full_network"]
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Shell
+  command: /Applications/Cursor.app/Contents/Resources/app/bin/cursor --install-extension GitHub.github-vscode-theme
+  description: Install GitHub theme (no sandbox)
+  required_permissions: ["all"]
+
+[Tool result] Shell
+
+assistant:
+装好了，切换主题。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/Library/Application Support/Cursor/User/settings.json
+  old_string: "workbench.colorTheme": "Solarized Dark"
+  new_string: "workbench.colorTheme": "GitHub Dark Default"
+
+[Tool result] StrReplace
+
+assistant:
+换成 GitHub Dark Default 了，应该已经生效。这个主题比 Solarized Dark 现代很多，配色干净、对比度适中，长时间看也不累。不满意再换。
+
+user:
+<user_query>
+白色的字儿对比度好强，会对眼睛不好吗
+</user_query>
+
+assistant:
+[Thinking] The user finds the white text in GitHub Dark Default has too high contrast and is worried about eye strain. I can adjust this by either:
+
+1. Switching to a lower contrast theme
+2. Or tweaking the editor's foreground color to be a softer white/gray
+
+Let me suggest some options. GitHub Dark Dimmed is a lower contrast version of GitHub Dark that might be perfect for this.
+确实，GitHub Dark Default 的白色文字是纯白（#ffffff），对比度偏高，长时间看容易疲劳。
+
+GitHub 主题有个低对比度版本叫 **GitHub Dark Dimmed**，文字是柔和的灰白色，专门为减轻眼睛负担设计的。你装的扩展已经包含了这个变体，直接切。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/Library/Application Support/Cursor/User/settings.json
+  old_string: "workbench.colorTheme": "GitHub Dark Default"
+  new_string: "workbench.colorTheme": "GitHub Dark Dimmed"
+
+[Tool result] StrReplace
+
+assistant:
+换成 GitHub Dark Dimmed 了。背景稍微浅一点、文字从纯白变成柔和灰白，对比度降低但不影响可读性。看看感觉怎么样。
+
+user:
+<user_query>
+✅
+</user_query>
+
+assistant:
+好，这个主题就留着了。

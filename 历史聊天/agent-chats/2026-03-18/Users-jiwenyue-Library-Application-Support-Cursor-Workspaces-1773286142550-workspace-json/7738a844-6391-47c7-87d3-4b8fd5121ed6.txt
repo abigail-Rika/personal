@@ -1,0 +1,702 @@
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265  这是我的产品 prd，里面包含了从1 稿需求分析、商业分析到最终 9 稿交付研发的内容。这个文档将会成为后续需求的模板
+</user_query>
+
+assistant:
+<think>
+The user is sharing a Confluence page link that contains their product PRD document. They're saying it includes content from draft 1 (requirement analysis, business analysis) through draft 9 (final delivery to R&D). They mention this document will become a template for future requirements.
+
+The user seems to be informing me about this document and its purpose rather than asking me to do something specific. Let me fetch the content from this Confluence page to understand what they're referring to and potentially help them better.
+
+I have access to the MCP tool `mcp_tutor-wb-mcp-1_0_get_confluence_content` which can get Confluence page content. Let me use it to fetch the content from this page.
+</think>
+正在获取该 Confluence 页面内容以了解 PRD 结构。
+
+[Tool call] mcp_tutor-wb-mcp-1_0_get_confluence_content
+  page: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265
+  pageId: 1023450265
+
+[Tool result] mcp_tutor-wb-mcp-1_0_get_confluence_content
+
+assistant:
+<think>
+The output was written to a file. Let me read it to understand the full structure of the PRD document.
+</think>
+
+
+[Tool call] Read
+  path: /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/agent-tools/c49d9293-cb72-4a57-8e86-c354fd267dbe.txt
+
+[Tool result] Read
+
+assistant:
+<think>
+I've successfully fetched the Confluence page content. The user has shared a comprehensive PRD document for "断课老用户增加前测" (Adding pre-test for churned experienced users). Let me summarize the structure and content of this document for the user.
+
+The document appears to be a complete PRD from draft 1 through draft 9, covering:
+
+1. **一、背景** (Background) - Business context, user data, funnel analysis
+2. **二、目标测算** (Target Estimation) - Conservative and aggressive scenarios
+3. **三、现状** (Current State) - 
+   - Site recall status for churned users
+   - User needs analysis (user research, data analysis)
+4. **四、设计思路** (Design Approach) - 
+   - Problem design
+   - UI and interaction design
+   - Competitor research
+5. **五、需求详情** (Requirements Details) - 
+   - Display rules
+   - Process flow
+   - AB experiment design
+6. **六、数据需求** (Data Requirements) - 
+   - Tracking events
+   - Keyfrom
+
+The user mentioned this document will become a template for future requirements. So they're informing me about:
+1. The document structure/content
+2. Its purpose as a template for future PRDs
+
+I should provide a summary and offer to help them create a template or skill based on this structure. Since they said "这个文档将会成为后续需求的模板", they might want me to extract the template structure for future use. Let me summarize what I've learned and offer assistance.
+</think>
+我已获取并阅读该 Confluence PRD 文档，核心结构如下。
+
+---
+
+## PRD 文档结构概览
+
+该文档是一份完整的「断课老用户增加前测」产品需求文档，覆盖从需求分析到研发交付的完整链路，大致分为 6 个部分：
+
+| 章节 | 内容 | 作用 |
+|------|------|------|
+| **一、背景** | 业务背景、用户数据（周活 3.4w）、断课用户漏斗（析出率、转化率）、问题诊断 | 需求价值与动机 |
+| **二、目标测算** | 保守/激进两种收益预估、关键指标（leads 数、正式会员数）、收益测算表 | 量化目标与投入产出 |
+| **三、现状** | 站内召回现状、召回点位与转化率、用户调研（断课/召回原因）、站内行为数据 | 现状与问题根因 |
+| **四、设计思路** | 问题设计（欢迎语+题目逻辑）、CC 挖需话术、竞品分析（叫叫、洋葱、keep）、AB 实验设计 | 方案与设计依据 |
+| **五、需求详情** | 展示规则、流程、UI 交互、问题配置、落地页、AB 实验分组 | 研发可直接执行的方案 |
+| **六、数据需求** | 埋点事件、keyfrom 约定 | 数据与效果评估 |
+
+---
+
+## 作为模板的适用性
+
+该文档具备较清晰的模板特征：
+
+1. **从业务到研发的链路**：背景 → 目标 → 现状 → 设计 → 需求 → 数据
+2. **多稿迭代的痕迹**：包含版本 log、废弃/调整思路、expand 区等
+3. **可复用的内容类型**：用户调研、竞品分析、AB 实验设计、埋点规范等
+
+---
+
+## 后续可以做的协助
+
+可以为你做以下几类事：
+
+1. **提炼 PRD 模板**：按上述结构整理成可复用的 Markdown 模板，放在 `.claude/skills/` 或 `templates/` 下
+2. **创建 PRD 编写 Skill**：在 `.claude/skills/` 中增加一个 skill，用于指导按该模板撰写新 PRD
+3. **仅作记录**：把该文档信息记录在项目文档或 README 中，供后续参考
+
+你可以告诉我更倾向哪种方式，或直接说「创建 PRD 模板」/「创建 PRD skill」等具体需求。
+
+user:
+<user_query>
+
+我觉得 1 和 2 都可以做
+</user_query>
+
+assistant:
+<think>
+The user wants both options:
+1. Create a PRD template - extract the structure into a reusable Markdown template
+2. Create a PRD writing skill - add a skill in .claude/skills/ that guides writing new PRDs following this template
+
+Let me plan this out:
+
+1. **PRD Template**: I'll create a template file in `.claude/skills/` or create a new skill directory. Based on the project structure, the template could go in:
+   - `.claude/skills/prd-template/` as a new skill with templates
+   - Or in a `templates/` folder at project root
+
+2. **PRD Skill**: I'll create a new skill in `.claude/skills/prd-writer/` or similar that:
+   - Contains the template structure
+   - Provides guidance on how to fill each section
+   - Can be activated when users need to write PRDs
+
+Let me create:
+1. A skill directory: `.claude/skills/prd-writer/`
+2. SKILL.md - the skill definition with guidance on how to write PRDs
+3. templates/PRD_TEMPLATE.md - the actual template file
+
+Actually, looking at the CLAUDE.md structure again:
+- Each skill has: SKILL.md, examples/, optionally templates/, test-cases.md, CHANGELOG.md
+
+So I'll create:
+1. `.claude/skills/prd-writer/SKILL.md` - defines the skill
+2. `.claude/skills/prd-writer/templates/PRD_TEMPLATE.md` - the template
+3. `.claude/skills/prd-writer/examples/` - at least one example (could reference the Confluence document as the example)
+
+Let me do this.
+</think>
+正在创建 PRD 模板和 PRD 编写 skill。
+
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"创建 PRD 模板文件 templates/PRD_TEMPLATE.md","status":"in_progress"},{"id":"2","content":"创建 prd-writer skill (SKILL.md + 示例)","status":"pending"}]
+  merge: false
+[Tool call] LS
+  target_directory: /Users/jiwenyue/aries-teach/.claude/skills
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/.claude/skills/answer-generator/SKILL.md
+  limit: 80
+
+[Tool result] TodoWrite
+
+[Tool result] LS
+
+[Tool result] Read
+
+assistant:
+<think>
+Good, I have a clear picture of the skill structure. Let me create:
+
+1. PRD template - extracted from the Confluence document structure
+2. prd-writer skill - with SKILL.md and example
+
+I'll create the skill folder structure:
+- .claude/skills/prd-writer/SKILL.md
+- .claude/skills/prd-writer/templates/PRD_TEMPLATE.md
+- .claude/skills/prd-writer/examples/断课老用户前测.md (reference example)
+
+Let me write the template first based on the Confluence document structure I extracted.
+</think>
+
+
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/templates/PRD_TEMPLATE.md
+  contents: # 【需求名称】产品需求文档
+
+> 本模板基于「断课老用户增加前测」PRD 提炼，适用于从需求分析到研发交付的完整产品需求撰写。
+
+---
+
+## 版本更新 log
+
+| 版本 | 更新内容 | 更新时间 |
+|------|----------|----------|
+| v0.1 | 创建文档 | YYYY-MM-DD |
+
+---
+
+## 一、背景
+
+### 1.1 业务背景
+
+- 当前业务/产品所处阶段
+- 核心数据概览（用户规模、关键指标）
+- 本次需求要解决的核心问题
+
+### 1.2 问题诊断
+
+- 现状数据与漏斗分析
+- 问题归因（可配合图表）
+- 机会点与切入方向
+
+---
+
+## 二、目标测算
+
+### 2.1 收益目标
+
+- 主要关注的指标（如 leads 数、转化率、GMV 等）
+- 收益测算表或链接
+
+### 2.2 目标设定
+
+- 【保守】预期目标及假设
+- 【激进】乐观目标及假设
+- 关键假设说明
+
+---
+
+## 三、现状
+
+### 3.1 现状梳理
+
+- 当前链路/流程
+- 相关点位与转化数据
+- 竞品或历史方案参考
+
+### 3.2 用户/需求分析
+
+**调研结论**（如有）：
+
+- 抽样调研/访谈发现
+- 用户核心诉求与痛点
+- 未转化/流失原因归类
+
+**数据分析**（如有）：
+
+- 用户行为数据
+- 漏斗转化数据
+- 关键结论
+
+---
+
+## 四、设计思路
+
+### 4.1 方案设计
+
+- 核心设计思路
+- 着力点与变量说明
+- 方案对比（如有多种方案）
+
+### 4.2 问题/流程设计（如适用）
+
+- 问题结构设计
+- 逻辑分支与跳转
+- 文案与配置说明
+
+### 4.3 竞品/参考
+
+- 竞品方案
+- 可借鉴点
+- 差异化设计
+
+### 4.4 实验设计（如适用）
+
+- AB 实验分组
+- 变量定义
+- 流量占比
+- 实验预期与关注指标
+
+---
+
+## 五、需求详情
+
+> 本节为研发可直接执行的需求规格，需明确、可验收。
+
+### 5.1 展示规则
+
+- 展示人群
+- 触发时机
+- 展示限制（频次、冷却期等）
+
+### 5.2 流程说明
+
+- 页面/步骤流程
+- 交互逻辑
+- 异常/边界处理
+
+### 5.3 UI 与交互
+
+- 设计稿链接
+- 关键页面截图
+- 文案配置项（支持 luban 等配置的需说明）
+
+### 5.4 实验分组（如适用）
+
+- 各实验组变量与流量
+- 对应展示差异
+
+---
+
+## 六、数据需求
+
+### 6.1 埋点需求
+
+| 页面/模块 | 事件类型 | 事件名称 | 备注 |
+|----------|----------|----------|------|
+|          | 曝光/点击 |          |      |
+
+### 6.2 渠道标识（keyfrom 等）
+
+| 实验组/渠道 | keyfrom 或标识 |
+|------------|----------------|
+|            |                |
+
+---
+
+## 附录
+
+- 相关文档链接
+- 数据表/石墨链接
+- 设计稿链接
+
+
+[Tool result] Write
+
+assistant:
+<think>
+Good, template is created. Now let me create the SKILL.md for the prd-writer skill and an example file.
+</think>
+
+
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"创建 PRD 模板文件 templates/PRD_TEMPLATE.md","status":"completed"},{"id":"2","content":"创建 prd-writer skill (SKILL.md + 示例)","status":"in_progress"}]
+  merge: true
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/SKILL.md
+  contents: ---
+name: prd-writer
+description: 指导撰写完整的产品需求文档，从需求分析到研发交付。当用户提到「写PRD」「产品需求」「需求文档」时激活
+trigger_keywords: ["写PRD", "产品需求", "需求文档", "PRD模板", "需求分析", "交付研发"]
+---
+
+# PRD 撰写技能
+
+## 身份与职责
+
+你是**产品需求文档撰写助手**，帮助产品/教研同学产出结构完整、逻辑清晰、可交付研发的 PRD。
+
+### 核心能力
+
+- 按标准结构组织 PRD 内容
+- 指导各章节的撰写要点和深度
+- 检查需求完整性（背景、目标、现状、设计、详情、数据）
+- 确保「需求详情」可被研发直接执行
+
+### 工作原则
+
+- **文档先行**：先搭结构再填内容，避免边做边写导致遗漏
+- **数据驱动**：背景、目标、现状需有数据支撑
+- **可验收性**：需求详情需明确、可验收，避免模糊表述
+- **迭代记录**：重要变更记录在版本 log 中
+
+---
+
+## 标准 PRD 结构
+
+PRD 应包含以下六大部分，且顺序建议保持不变：
+
+| 章节 | 核心问题 | 撰写要点 |
+|------|----------|----------|
+| **一、背景** | 为什么要做？ | 业务数据、问题诊断、机会点 |
+| **二、目标测算** | 做了能带来什么？ | 收益目标、保守/激进测算、关键假设 |
+| **三、现状** | 现在是什么样？ | 现状梳理、用户调研、数据分析 |
+| **四、设计思路** | 打算怎么做？ | 方案设计、竞品参考、实验设计 |
+| **五、需求详情** | 具体要做什么？ | 展示规则、流程、UI、可配置项 |
+| **六、数据需求** | 如何衡量效果？ | 埋点、keyfrom、关注指标 |
+
+---
+
+## 各章节撰写标准
+
+### 一、背景
+
+**必须包含**：
+- 当前业务/产品所处阶段
+- 核心数据（用户规模、关键指标）
+- 本次要解决的核心问题
+- 问题归因（最好有数据支撑）
+
+**可选**：
+- 漏斗图、趋势图
+- 用户分层说明
+
+### 二、目标测算
+
+**必须包含**：
+- 主要关注的指标
+- 至少一套收益测算（保守或激进）
+- 关键假设说明
+
+**可选**：
+- 链接到石墨等测算表
+- 多套测算对比
+
+### 三、现状
+
+**必须包含**：
+- 当前链路/流程
+- 相关点位与转化数据
+
+**可选**：
+- 用户调研结论（断课原因、召回动机等）
+- 用户行为数据分析
+- 竞品/历史方案参考
+
+### 四、设计思路
+
+**必须包含**：
+- 核心设计思路
+-  principales 方案说明
+
+**可选**：
+- 问题/流程设计（如前测题目结构）
+- 竞品分析
+- AB 实验设计（分组、变量、流量、预期）
+
+### 五、需求详情
+
+**必须包含**：
+- 展示人群、触发时机、展示限制
+- 流程说明（页面/步骤）
+- 设计稿链接或关键截图
+
+**建议**：
+- 文案、配置项单独列出，标明是否支持 luban 等配置
+- 异常/边界情况说明
+- 实验组差异（如有 AB）
+
+**质量标准**：研发阅读后能直接开发，无需反复沟通澄清
+
+### 六、数据需求
+
+**必须包含**：
+- 埋点事件表（页面、事件类型、事件名称）
+- 渠道/实验标识（keyfrom 等）
+
+---
+
+## 使用方式
+
+1. **新建 PRD**：基于 `templates/PRD_TEMPLATE.md` 创建文档，按章节填写
+2. **评审检查**：用本文档的「各章节撰写标准」做自查
+3. **迭代更新**：变更时同步更新版本 log
+
+---
+
+## 模板位置
+
+- 模板文件：`.claude/skills/prd-writer/templates/PRD_TEMPLATE.md`
+- 参考示例：`.claude/skills/prd-writer/examples/`
+
+---
+
+## 能力边界
+
+- 不替代产品决策，仅提供结构和撰写指导
+- 不生成具体业务数据，需用户自行补充
+- 设计稿、埋点规范需对接设计/数据团队
+
+
+[Tool result] TodoWrite
+
+[Tool result] Write
+
+assistant:
+<think>
+I notice a typo in the SKILL.md: "principales" should be "主要" or "核心" - let me fix that. Also need to create the example file.
+</think>
+
+
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/SKILL.md
+  old_string: -  principales 方案说明
+  new_string: - 主要方案说明
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/examples/断课老用户前测.md
+  contents: # 示例：断课老用户增加前测 PRD
+
+> 本示例对应 Confluence 文档：https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1023450265
+
+## 输入
+
+产品同学需要撰写「断课老用户增加前测」的产品需求，从需求分析到交付研发。
+
+## 执行过程
+
+1. 基于 PRD 模板搭建文档结构
+2. 按六大部分依次填充：背景、目标测算、现状、设计思路、需求详情、数据需求
+3. 背景部分：梳理周活数据、断课用户漏斗、析出率/转化率问题
+4. 现状部分：梳理站内召回点位、用户调研结论（断课原因、召回动机）
+5. 设计部分：问题设计（欢迎语+3题）、竞品参考（叫叫、洋葱、keep）、AB 实验设计
+6. 需求详情：展示规则、流程、问题配置、落地页、实验分组
+7. 数据需求：埋点表、keyfrom
+
+## 输出
+
+详见 Confluence 完整文档。核心结构如下：
+
+| 章节 | 本案例关键内容 |
+|------|----------------|
+| 一、背景 | 周活 3.4w，断课老用户析出率<3%，转化率 5%；广告曝光率 41% vs 97% |
+| 二、目标测算 | 保守：广告曝光率 80%，正式会员 +31/周；激进：+56/周 |
+| 三、现状 | 召回点位梳理、用户调研（断课原因：价格 25.7%、科目不全 14.3% 等） |
+| 四、设计思路 | 欢迎语+2~3 题、CC 挖需话术、竞品结构、AB 实验 3 组 |
+| 五、需求详情 | 展示人群、冷启动逻辑、欢迎页→问题流程→落地页、luban 配置 |
+| 六、数据需求 | 欢迎页/问题/落地页埋点、recallTest-1/2/3 keyfrom |
+
+## 备注
+
+- 该文档是「从 1 稿需求分析到 9 稿交付研发」的完整模板
+- AB 实验设计需考虑 cc 人效，流量占比从 33% 调整为 2/2/6
+- 问题文案支持 luban 配置，便于后续迭代
+
+
+[Tool result] StrReplace
+
+[Tool result] Write
+
+assistant:
+<think>
+Now I should add the prd-writer skill to the available skills in the project. Let me check if there's a place where skills are registered - looking at the agent_skills in the initial message, they seem to be auto-discovered from the .claude/skills/ folder. So the skill should be automatically available.
+
+Let me also add a CHANGELOG.md for the prd-writer skill to follow project conventions, and optionally a README. Let me check the board-component-generator for reference.
+</think>
+
+
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/CHANGELOG.md
+  contents: # Changelog
+
+## [0.1.0] - 2026-02-12
+
+### Added
+- 新增 prd-writer skill，支持从需求分析到研发交付的 PRD 撰写指导
+- 新增 PRD_TEMPLATE.md 模板，提取自「断课老用户增加前测」文档结构
+- 新增示例：断课老用户前测
+
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/CLAUDE.md
+  offset: 1
+  limit: 50
+
+[Tool result] Write
+
+[Tool result] Read
+
+assistant:
+<think>
+I need to add the prd-writer skill to the "现有 Skills/Agents" section in CLAUDE.md. Let me search for that section.
+</think>
+
+
+[Tool call] Grep
+  pattern: 现有 Skills|answer-quality-checker
+  path: /Users/jiwenyue/aries-teach/CLAUDE.md
+  -B: 1
+  -A: 3
+
+[Tool result] Grep
+
+assistant:
+<think>
+I should add the prd-writer skill to the existing skills section. Let me read that section to get the exact format.
+</think>
+
+
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/CLAUDE.md
+  offset: 568
+  limit: 35
+
+[Tool result] Read
+
+assistant:
+<think>
+I'll add the prd-writer skill to the existing skills section. I'll add it after answer-quality-checker.
+</think>
+
+
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/CLAUDE.md
+  old_string: **answer-quality-checker** (Agent):
+- **功能**: 质检标答质量并给出等级和建议
+- **位置**: `.claude/agents/answer-quality-checker.md`
+- **调用**: Task 工具,subagent_type="answer-quality-checker"
+- **输入**: 完整标答内容
+- **输出**: A/B/C 等级 + 改进建议
+- **用途**: 被 answer-generator 自动调用,或独立质检
+
+### 团队协作方式
+  new_string: **answer-quality-checker** (Agent):
+- **功能**: 质检标答质量并给出等级和建议
+- **位置**: `.claude/agents/answer-quality-checker.md`
+- **调用**: Task 工具,subagent_type="answer-quality-checker"
+- **输入**: 完整标答内容
+- **输出**: A/B/C 等级 + 改进建议
+- **用途**: 被 answer-generator 自动调用,或独立质检
+
+**prd-writer** (Skill):
+- **功能**: 指导撰写完整的产品需求文档,从需求分析到研发交付
+- **位置**: `.claude/skills/prd-writer/`
+- **触发**: "写PRD"、"产品需求"、"需求文档"
+- **输入**: 需求背景、业务目标
+- **输出**: 结构完整的 PRD(背景、目标、现状、设计、需求详情、数据)
+- **特点**: 提供 PRD 模板和撰写标准,参考「断课老用户增加前测」文档结构
+
+### 团队协作方式
+[Tool call] TodoWrite
+  todos: [{"id":"2","content":"创建 prd-writer skill (SKILL.md + 示例)","status":"completed"}]
+  merge: true
+
+[Tool result] StrReplace
+
+[Tool result] TodoWrite
+
+assistant:
+<think>
+All done. Let me provide a summary to the user.
+</think>
+已完成，当前包含以下内容：
+
+---
+
+## 1. PRD 模板
+
+**位置**：`.claude/skills/prd-writer/templates/PRD_TEMPLATE.md`
+
+标准六章结构：
+- 一、背景（业务背景、问题诊断）
+- 二、目标测算（收益目标、保守/激进假设）
+- 三、现状（现状梳理、用户调研、数据分析）
+- 四、设计思路（方案设计、竞品、实验设计）
+- 五、需求详情（展示规则、流程、UI、实验分组）
+- 六、数据需求（埋点、keyfrom）
+
+---
+
+## 2. prd-writer Skill
+
+**位置**：`.claude/skills/prd-writer/`
+
+| 文件 | 说明 |
+|------|------|
+| `SKILL.md` | 技能定义、各章节撰写要求、使用方式 |
+| `templates/PRD_TEMPLATE.md` | 可直接复用的 PRD 模板 |
+| `examples/断课老用户前测.md` | 以断课老用户前测为示例的参考文档 |
+| `CHANGELOG.md` | 变更记录 |
+
+**触发方式**：提到「写PRD」「产品需求」「需求文档」「PRD模板」等时激活。  
+**用法**：读取 `SKILL.md` 按指引撰写，或直接基于 `PRD_TEMPLATE.md` 新建文档。
+
+---
+
+## 3. 项目文档更新
+
+已在 `CLAUDE.md` 的「现有 Skills/Agents」中补充 prd-writer 说明。
+
+---
+
+之后写新 PRD 时，可以说「帮我写一个 XXX 的 PRD」或「用 PRD 模板起草 XXX 需求」，我会按 prd-writer 技能和模板协助你完成。

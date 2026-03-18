@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>流量分类与评级现状</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text2: #555;
+    --text3: #888;
+    --accent: #3b5bdb;
+    --accent-light: #e7ecff;
+    --green: #2b8a3e;
+    --green-bg: #ebfbee;
+    --orange: #e67700;
+    --orange-bg: #fff4e6;
+    --red: #c92a2a;
+    --red-bg: #fff5f5;
+    --blue: #1971c2;
+    --blue-bg: #e7f5ff;
+    --border: #e9ecef;
+    --S: #3b5bdb;
+    --A: #2b8a3e;
+    --B: #e67700;
+    --C: #c92a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 40px 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--text3);
+  }
+  .header .purpose {
+    margin-top: 16px;
+    font-size: 16px;
+    color: var(--text2);
+    background: var(--accent-light);
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 8px;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 16px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .card-note {
+    font-size: 13px;
+    color: var(--text3);
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    background: #f1f3f5;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8f9fa; }
+
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pct { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Grade badges */
+  .grade {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+  }
+  .grade-S { background: var(--S); }
+  .grade-A { background: var(--B); }
+  .grade-B { background: var(--C); }
+
+  /* Bar chart */
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .bar-label {
+    width: 80px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: right;
+    padding-right: 12px;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: #f1f3f5;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    transition: width 0.6s ease;
+    min-width: 40px;
+  }
+  .bar-value {
+    width: 100px;
+    text-align: right;
+    font-size: 13px;
+    color: var(--text2);
+    padding-left: 10px;
+    flex-shrink: 0;
+  }
+
+  /* Stacked bar for grade distribution */
+  .stacked-bar {
+    display: flex;
+    height: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+  }
+  .stacked-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    cursor: default;
+  }
+  .stacked-legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .stacked-legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  /* Highlight box */
+  .highlight-box {
+    background: var(--blue-bg);
+    border-left: 4px solid var(--blue);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .highlight-box strong { color: var(--blue); }
+
+  /* Two columns */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 768px) {
+    .cols { grid-template-columns: 1fr; }
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    font-size: 13px;
+    color: var(--text3);
+  }
+
+  .conversion-highlight {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .conversion-highlight.high { color: var(--green); }
+  .conversion-highlight.mid { color: var(--orange); }
+  .conversion-highlight.low { color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>流量分类与评级现状</h1>
+    <div class="subtitle">数据范围：3.2 周 + 3.9 周（两周合计） · 增长产品</div>
+    <div class="purpose">目的：针对不同质量的流量，找寻更合理的承接路径</div>
+  </div>
+
+  <!-- Section 1: 流量分类 -->
+  <div class="section">
+    <div class="section-title">一、流量分类</div>
+
+    <!-- 新用户 -->
+    <div class="card">
+      <div class="card-title" style="font-size:18px; margin-bottom:4px;">新用户</div>
+      <p style="font-size:14px; color:var(--text2); margin-bottom:16px;">维度一：按 Leads 来源渠道</p>
+      <table>
+        <thead>
+          <tr><th>渠道</th><th>析出方式</th><th class="pct">体验课价格</th><th class="num">Leads 数</th><th class="pct">占比</th><th class="pct">转化率</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>电商直播</strong></td>
+            <td>站外下单→API激活（抖音直播+视频号）</td>
+            <td class="pct">29元</td>
+            <td class="num">8,129</td>
+            <td class="pct">51.4%</td>
+            <td class="pct"><span class="conversion-highlight high">17.01%</span></td>
+          </tr>
+          <tr>
+            <td><strong>效果广告</strong></td>
+            <td>端外落地页购买（腾讯+头条）</td>
+            <td class="pct">29元</td>
+            <td class="num">3,637</td>
+            <td class="pct">23.0%</td>
+            <td class="pct"><span class="conversion-highlight high">20.51%</span></td>
+          </tr>
+          <tr>
+            <td><strong>APP 直投</strong></td>
+            <td>站内多点位析出（头条/华为/ASA等）</td>
+            <td class="pct">9元</td>
+            <td class="num">2,729</td>
+            <td class="pct">17.3%</td>
+            <td class="pct"><span class="conversion-highlight low">11.73%</span></td>
+          </tr>
+          <tr>
+            <td><strong>端内自然</strong></td>
+            <td>站内多点位析出（自然流量）</td>
+            <td class="pct">9元</td>
+            <td class="num">924</td>
+            <td class="pct">5.8%</td>
+            <td class="pct"><span class="conversion-highlight mid">13.96%</span></td>
+          </tr>
+          <tr>
+            <td><strong>私域</strong></td>
+            <td>留资/购买（企微+社群）</td>
+            <td class="pct">1元</td>
+            <td class="num">137</td>
+            <td class="pct">0.9%</td>
+            <td class="pct"><span class="conversion-highlight mid">15.33%</span></td>
+          </tr>
+          <tr>
+            <td><strong>转介绍</strong></td>
+            <td>购买体验课（周团+邀请）</td>
+            <td class="pct">混合</td>
+            <td class="num">268</td>
+            <td class="pct">1.7%</td>
+            <td class="pct"><span class="conversion-highlight mid">15.18%</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card-note">新客渠道合计 15,824 Leads。转介绍仅取周团数据（257 Leads），邀请样本过小（10 Leads）。</div>
+    </div>
+
+    <div class="card">
+      <p style="font-size:14px; color:var(--text2); margin-bottom:16px;">维度二：同一渠道内按析出点位区分（仅适用于站内析出渠道：APP 直投、端内自然）</p>
+      <div class="cols">
+        <div>
+          <div style="font-weight:600; margin-bottom:10px; font-size:15px;">APP 直投-头条</div>
+          <table>
+            <thead><tr><th>析出点位</th><th class="num">Leads</th><th class="pct">占比</th><th class="pct">转化率</th></tr></thead>
+            <tbody>
+              <tr style="background:#ebfbee;"><td><strong>我的</strong></td><td class="num">101</td><td class="pct">4%</td><td class="pct" style="color:var(--green);font-weight:700;">18.8%</td></tr>
+              <tr style="background:#ebfbee;"><td><strong>计划页</strong></td><td class="num">186</td><td class="pct">7%</td><td class="pct" style="color:var(--green);font-weight:700;">16.7%</td></tr>
+              <tr><td>资料库</td><td class="num">85</td><td class="pct">3%</td><td class="pct">14.1%</td></tr>
+              <tr><td>新用户前测</td><td class="num">2,344</td><td class="pct">85%</td><td class="pct" style="color:var(--red);">11.8%</td></tr>
+              <tr><td>首页</td><td class="num">30</td><td class="pct">1%</td><td class="pct">10.0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div style="font-weight:600; margin-bottom:10px; font-size:15px;">端内自然</div>
+          <table>
+            <thead><tr><th>析出点位</th><th class="num">Leads</th><th class="pct">占比</th><th class="pct">转化率</th></tr></thead>
+            <tbody>
+              <tr style="background:#ebfbee;"><td><strong>我的</strong></td><td class="num">97</td><td class="pct">8%</td><td class="pct" style="color:var(--green);font-weight:700;">19.6%</td></tr>
+              <tr style="background:#ebfbee;"><td><strong>计划页</strong></td><td class="num">134</td><td class="pct">11%</td><td class="pct" style="color:var(--green);font-weight:700;">17.9%</td></tr>
+              <tr><td>新用户前测</td><td class="num">910</td><td class="pct">74%</td><td class="pct" style="color:var(--red);">13.4%</td></tr>
+              <tr><td>资料库</td><td class="num">69</td><td class="pct">6%</td><td class="pct">10.1%</td></tr>
+              <tr><td>首页</td><td class="num">14</td><td class="pct">1%</td><td class="pct">7.1%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-top:16px;">
+        <strong>核心发现：主动浏览析出 &gt; 前测流程析出</strong><br>
+        「我的」「计划页」析出的用户转化率 <strong style="color:var(--green);">17-20%</strong>，与 29 元效果广告/电商直播同档；
+        前测析出的用户转化率 <strong style="color:var(--red);">11-13%</strong>，是最低档之一。<br>
+        <span style="color:var(--text2);">前测是强引导漏斗，用户被"推"着走到购买页；而「我的」「计划页」用户是自己主动找到购买入口的。</span>
+      </div>
+    </div>
+
+    <!-- 召回用户 -->
+    <div class="card">
+      <div class="card-title" style="font-size:18px; margin-bottom:4px;">召回用户</div>
+      <p style="font-size:14px; color:var(--text2); margin-bottom:16px;">按用户身份分类</p>
+      <table>
+        <thead>
+          <tr><th>类型</th><th>说明</th><th class="num">活跃用户</th><th class="num">Leads 数</th><th class="pct">Leads 产生率</th><th class="pct">转化率</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>体验断课-限购</td><td>距上次购买 &lt;210天，不能再购买体验课</td><td class="num">18,309</td><td class="num">1,036</td><td class="pct">5.7%</td><td class="pct">5.3%</td></tr>
+          <tr><td>体验断课-非限购</td><td>距上次购买 ≥210天，可再次购买</td><td class="num">6,024</td><td class="num">396</td><td class="pct">6.6%</td><td class="pct">7.1%</td></tr>
+          <tr><td>会员断课</td><td>会员到期/退费过保护期</td><td class="num">4,740</td><td class="num">87</td><td class="pct">1.8%</td><td class="pct">14.6%</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px;">
+        <div style="font-weight:600; margin-bottom:8px; font-size:14px;">CC 补量来源：大模型/条件圈选</div>
+        <p style="font-size:13px; color:var(--text2); margin-bottom:10px;">CC 主动留资渠道量不足时，通过行为信号圈选用户补充 leads 池：</p>
+        <table>
+          <thead><tr><th>圈选条件</th><th class="num">周均人数</th><th class="pct">转化率（随机）</th><th class="pct">转化率（模型Top50%）</th></tr></thead>
+          <tbody>
+            <tr><td>浏览会员购买页</td><td class="num">~330</td><td class="pct">1.46%</td><td class="pct">2.10%</td></tr>
+            <tr><td>当日学习时长&gt;10min</td><td class="num">~450</td><td class="pct">1.56%</td><td class="pct">2.84%</td></tr>
+          </tbody>
+        </table>
+        <div class="card-note">圈选 leads 转化率（1.5-2.8%）远低于正常渠道（11-20%），本质是从已有用户中挖掘弱意向信号。模型打分可提升约 1 倍，周均可供量约 1,326 人。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: 质量分级 -->
+  <div class="section">
+    <div class="section-title">二、质量分级</div>
+
+    <div class="card">
+      <div class="card-title">分级逻辑</div>
+      <div style="font-size:14px; line-height:1.8; color: var(--text2);">
+        <strong style="color:var(--text);">核心原则：用「服务介入前」的信号定义质量，用转化率验证。</strong><br>
+        转化率 = leads 本身质量 × 承接方式效果。如果用转化率定义质量，就把承接方式的影响也算进去了，无法区分"leads 质量差"还是"服务没跟上"。
+      </div>
+      <table style="margin-top:16px;">
+        <thead><tr><th>维度</th><th>信号</th><th>逻辑</th></tr></thead>
+        <tbody>
+          <tr><td>付费意愿</td><td>体验课价格（29元 &gt; 9元 &gt; 1元 &gt; 0元）</td><td>更高价格 = 更强购买意向</td></tr>
+          <tr><td>获取方式</td><td>主动购买 &gt; 主动浏览析出 &gt; 前测引导析出 &gt; 被动圈选</td><td>主动行为越多 = 意向越强</td></tr>
+          <tr><td>购买场景</td><td>落地页主动购买 &gt; 直播间冲动下单 &gt; 站内流程引导</td><td>同价格下，主动搜索购买的意向高于冲动场景</td></tr>
+          <tr><td>前置行为</td><td>加微+入门测完成组合（2.6x 转化差异）</td><td>服务介入前的行为深度，反映用户投入程度</td></tr>
+          <tr><td>信任信号</td><td>是否有熟人推荐</td><td>转介绍有「信任溢价」</td></tr>
+          <tr><td>用户状态</td><td>新用户 vs 断课用户</td><td>断课用户已流失过一次，转化难度更高</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">质量等级定义</div>
+
+      <!-- Stacked bar -->
+      <div class="stacked-bar">
+        <div class="stacked-seg" style="width:66.3%; background:var(--S);">S · 66.3%</div>
+        <div class="stacked-seg" style="width:17.9%; background:var(--B);">A · 17.9%</div>
+        <div class="stacked-seg" style="width:15.8%; background:var(--C);">B · 15.8%</div>
+      </div>
+      <div class="stacked-legend">
+        <span><i class="legend-dot" style="background:var(--S);"></i>S 高质量</span>
+        <span><i class="legend-dot" style="background:var(--B);"></i>A 中等质量</span>
+        <span><i class="legend-dot" style="background:var(--C);"></i>B 低质量</span>
+      </div>
+
+      <table style="margin-top:20px;">
+        <thead>
+          <tr>
+            <th style="width:60px;">等级</th>
+            <th>定义</th>
+            <th>对应 Leads</th>
+            <th class="num">两周量</th>
+            <th class="pct">占比</th>
+            <th class="pct">转化率验证</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="grade grade-S">S</span></td>
+            <td>高价主动购买（29元），或中价+主动浏览析出，或有信任信号</td>
+            <td>效果广告、电商直播、直投/自然「我的」「计划页」</td>
+            <td class="num">~12,541</td>
+            <td class="pct">66.3%</td>
+            <td class="pct" style="color:var(--green);font-weight:600;">15-21% ✓</td>
+          </tr>
+          <tr><td colspan="6" style="padding:2px 14px; border-bottom:none;"><span style="font-size:12px; color:var(--text3);">含转介绍 267 Leads（15.18%），量小但有信任溢价，归入 S 级</span></td></tr>
+          <tr>
+            <td><span class="grade grade-A">A</span></td>
+            <td>中价+前测引导析出，或低价获取</td>
+            <td>直投/自然前测析出、私域</td>
+            <td class="num">~3,391</td>
+            <td class="pct">17.9%</td>
+            <td class="pct" style="color:var(--orange);">11-15%</td>
+          </tr>
+          <tr>
+            <td><span class="grade grade-B">B</span></td>
+            <td>无主动行为，被动圈选或断课回流</td>
+            <td>断课-限购/非限购、大模型圈选</td>
+            <td class="num">~2,992</td>
+            <td class="pct">15.8%</td>
+            <td class="pct" style="color:var(--red);">3-7%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card-note">全量 Leads 合计约 18,924（新客 15,824 + 召回/圈选 3,100）。会员断课 87 Leads（14.6%）量太小暂不定级。私域 137 Leads 待与私域团队沟通后再定。</div>
+    </div>
+  </div>
+
+  <!-- Section 3: 转化率验证 -->
+  <div class="section">
+    <div class="section-title">三、用转化率验证分级</div>
+    <p class="section-desc">用实际转化率反向验证上述分级是否合理：预期 S 最高、A 中等、B 最低。</p>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th style="width:60px;">等级</th><th>预期</th><th>转化率验证</th><th style="width:60px;">结论</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="grade grade-S">S</span></td>
+            <td>最高</td>
+            <td>效果广告 <strong>20.51%</strong>、电商直播 <strong>17.01%</strong>、「我的」<strong>18-20%</strong>、「计划页」<strong>17-18%</strong>、转介绍 <strong>15.18%</strong></td>
+            <td style="color:var(--green);font-weight:600;">✓ 通过</td>
+          </tr>
+          <tr>
+            <td><span class="grade grade-A">A</span></td>
+            <td>中等</td>
+            <td>直投前测 <strong>11.8%</strong>、自然前测 <strong>13.4%</strong>、私域 <strong>15.33%</strong></td>
+            <td style="color:var(--orange);font-weight:600;">⚠️</td>
+          </tr>
+          <tr><td colspan="4" style="padding:2px 14px; border-bottom:none;"><span style="font-size:12px; color:var(--text3);">私域 15.33% 偏高于 A 级预期，待与私域团队沟通后确认是否调级</span></td></tr>
+          <tr>
+            <td><span class="grade grade-B">B</span></td>
+            <td>最低</td>
+            <td>断课-限购 <strong>5.3%</strong>、断课-非限购 <strong>7.1%</strong>、大模型圈选 <strong>~2.8%</strong></td>
+            <td style="color:var(--green);font-weight:600;">✓ 通过</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box" style="margin-top:16px;">
+        <strong>关键发现：「主动浏览析出」是被低估的高质量信号</strong><br>
+        直投/自然中通过「我的」「计划页」主动浏览后析出的 leads，转化率 17-20%，与 29 元效果广告/电商直播同一水平。<br>
+        这些用户虽然只付了 9 元体验课，但主动浏览行为表明购买意愿与 29 元用户相当。
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: 承接方式现状 -->
+  <div class="section">
+    <div class="section-title">四、承接方式（现状）</div>
+
+    <div class="card">
+      <div class="card-title">承接规则</div>
+      <table>
+        <thead>
+          <tr><th>流量类型</th><th>年级</th><th>承接方</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>电商直播</td><td>全年级</td><td>销售（标单）</td><td>不分年级</td></tr>
+          <tr><td>效果广告</td><td>全年级</td><td>销售（标单）</td><td>不分年级</td></tr>
+          <tr><td>APP 直投</td><td>1/2/3/9</td><td>CC</td><td rowspan="2">按年级分配</td></tr>
+          <tr><td>APP 直投</td><td>4~8</td><td>销售（直投专组）</td></tr>
+          <tr><td>端内自然</td><td>1/2/3/9</td><td>CC</td><td rowspan="2">按年级分配</td></tr>
+          <tr><td>端内自然</td><td>4~8</td><td>销售（标单）</td></tr>
+          <tr><td>私域</td><td>全年级</td><td>CC</td><td></td></tr>
+          <tr><td>转介绍</td><td>全年级</td><td>CC</td><td></td></tr>
+          <tr><td>召回流量</td><td>全年级</td><td>CC</td><td>含断课召回、大模型圈选</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">承接资源差异</div>
+      <div class="cols">
+        <div style="background:var(--accent-light); border-radius:8px; padding:16px;">
+          <div style="font-weight:700; font-size:15px; color:var(--accent); margin-bottom:10px;">销售（标准单周）</div>
+          <div style="font-size:14px; line-height:2;">
+            周均人效：<strong>35-40</strong> 人<br>
+            跟进形式：固定周期进量、标准化流程<br>
+            体验课流程：统一课程内容<br>
+            服务深度：<strong>更深入，周期更长</strong>
+          </div>
+        </div>
+        <div style="background:#fff4e6; border-radius:8px; padding:16px;">
+          <div style="font-weight:700; font-size:15px; color:var(--orange); margin-bottom:10px;">CC</div>
+          <div style="font-size:14px; line-height:2;">
+            周均人效：<strong>120-150</strong> 人<br>
+            跟进形式：随时进量、灵活跟进<br>
+            体验课流程：沟通学情后定制课包<br>
+            服务深度：<strong>更灵活，断课转化~3天</strong>
+          </div>
+        </div>
+      </div>
+      <div class="card-note">销售人效 35-40/周 vs CC 人效 120-150/周，单个销售承接成本约为 CC 的 3-4 倍。</div>
+    </div>
+  </div>
+
+  <!-- Section 5: 错配分析 -->
+  <div class="section">
+    <div class="section-title">五、错配分析</div>
+    <p class="section-desc">将质量等级（基于服务介入前信号）与当前承接方式对照。高质量 leads 用了低成本服务 = <strong style="color:var(--red);">低配</strong>；低质量 leads 占了高成本服务 = <strong style="color:var(--orange);">高配</strong>。</p>
+
+    <div class="card">
+      <div class="card-title">质量等级 × 当前承接方式 对照</div>
+      <table>
+        <thead>
+          <tr><th>Leads</th><th style="width:50px;">等级</th><th>承接方</th><th class="num">两周量</th><th class="pct">转化率</th><th>判断</th></tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--green-bg);">
+            <td>效果广告</td><td><span class="grade grade-S">S</span></td><td>销售（标单）</td><td class="num">3,637</td><td class="pct">20.51%</td><td style="color:var(--green);">✓ 匹配</td>
+          </tr>
+          <tr style="background:var(--green-bg);">
+            <td>电商直播</td><td><span class="grade grade-S">S</span></td><td>销售（标单）</td><td class="num">8,129</td><td class="pct">17.01%</td><td style="color:var(--green);">✓ 匹配</td>
+          </tr>
+          <tr style="background:var(--green-bg);">
+            <td>直投/自然「我的」「计划页」4-8年级</td><td><span class="grade grade-S">S</span></td><td>销售</td><td class="num">~250</td><td class="pct">17-20%</td><td style="color:var(--green);">✓ 匹配</td>
+          </tr>
+          <tr style="background:var(--red-bg);">
+            <td>直投/自然「我的」「计划页」1/2/3/9年级</td><td><span class="grade grade-S">S</span></td><td>CC</td><td class="num">~258</td><td class="pct">17-20%</td><td style="color:var(--red);font-weight:600;">⚠️ 低配</td>
+          </tr>
+          <tr style="background:var(--orange-bg);">
+            <td>直投/自然 前测析出 4-8年级</td><td><span class="grade grade-A">A</span></td><td>销售</td><td class="num">~2,734</td><td class="pct">11-13%</td><td style="color:var(--orange);font-weight:600;">⚠️ 高配</td>
+          </tr>
+          <tr style="background:var(--green-bg);">
+            <td>直投/自然 前测析出 1/2/3/9年级</td><td><span class="grade grade-A">A</span></td><td>CC</td><td class="num">~520</td><td class="pct">11-13%</td><td style="color:var(--green);">✓ 匹配</td>
+          </tr>
+          <tr>
+            <td>私域</td><td><span class="grade grade-A">A</span></td><td>CC</td><td class="num">137</td><td class="pct">15.33%</td><td style="color:var(--text3);">待定</td>
+          </tr>
+          <tr style="background:var(--orange-bg);">
+            <td>断课-限购</td><td><span class="grade grade-B">B</span></td><td>CC</td><td class="num">1,036</td><td class="pct">5.3%</td><td style="color:var(--orange);font-weight:600;">⚠️ 资源浪费</td>
+          </tr>
+          <tr style="background:var(--orange-bg);">
+            <td>断课-非限购</td><td><span class="grade grade-B">B</span></td><td>CC</td><td class="num">396</td><td class="pct">7.1%</td><td style="color:var(--orange);font-weight:600;">⚠️ 资源浪费</td>
+          </tr>
+          <tr style="background:var(--orange-bg);">
+            <td>大模型圈选</td><td><span class="grade grade-B">B</span></td><td>CC</td><td class="num">~1,560</td><td class="pct">~2.8%</td><td style="color:var(--orange);font-weight:600;">⚠️ 资源浪费</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 错配详情 -->
+    <div class="card" style="border-left: 4px solid var(--red);">
+      <div class="card-title" style="color:var(--red);">错配 1：S 级 leads 被低配（S → CC）</div>
+      <div style="font-size:14px; line-height:1.8;">
+        <strong>涉及：</strong>直投/自然「我的」「计划页」析出，1/2/3/9 年级，~258 Leads/两周<br>
+        <strong>问题：</strong>转化率 17-20%，与效果广告/电商直播同档，但因年级被分给了 CC<br>
+        <strong>根因：</strong>分配规则只看「渠道 + 年级」，没看「析出点位」
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 4px solid var(--orange);">
+      <div class="card-title" style="color:var(--orange);">错配 2：A 级 leads 被高配（A → 销售）</div>
+      <div style="font-size:14px; line-height:1.8;">
+        <strong>涉及：</strong>直投/自然前测析出，4-8 年级，~2,734 Leads/两周<br>
+        <strong>问题：</strong>转化率 11-13%，是前测漏斗批量捕获的，但因年级 4-8 全部进了销售<br>
+        <strong>影响：</strong>销售人效 35-40/周，用在 11% 转化率的 leads 上效率不高
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 4px solid var(--orange);">
+      <div class="card-title" style="color:var(--orange);">错配 3：B 级 leads 大量消耗 CC 资源</div>
+      <div style="font-size:14px; line-height:1.8; margin-bottom:16px;">
+        <strong>涉及：</strong>断课 + 大模型圈选，~2,992 Leads/两周，占全量 15.8%<br>
+        <strong>问题：</strong>转化率 2.8-7.1%，占了 CC 承接量的绝大部分，CC 整体人头转化率被拉低至 3.9%
+      </div>
+      <div style="font-weight:600; font-size:14px; margin-bottom:10px;">B 级应该怎么承接？</div>
+      <table>
+        <thead><tr><th>B 级细分</th><th class="num">两周量</th><th class="pct">转化率</th><th>可能的替代方案</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>断课-非限购</td><td class="num">396</td><td class="pct">7.1%</td>
+            <td>CC 轻触达（缩短跟进到 1-2 天），或自助+AI 推送优惠券</td>
+          </tr>
+          <tr>
+            <td>断课-限购</td><td class="num">1,036</td><td class="pct">5.3%</td>
+            <td>自助+AI 为主，CC 只跟进有明确回应的用户</td>
+          </tr>
+          <tr>
+            <td>大模型圈选</td><td class="num">~1,560</td><td class="pct">~2.8%</td>
+            <td>不再分配 CC，纯自助+AI 触达，用户主动咨询才转人工</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="highlight-box" style="margin-top:12px;">
+        <strong>核心思路：B 级不是不跟进，而是用更轻量的方式跟进。</strong><br>
+        把 CC 人力从"主动外呼低意向用户"释放出来，转投到 S 级 leads 上。
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    流量类型承接形式梳理 · 2026.03
+  </div>
+
+</div>
+
+</body>
+</html>

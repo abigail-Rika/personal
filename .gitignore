@@ -3,10 +3,7 @@ diary/
 thoughts/
 
 # 网站查看器（暂停使用）
-_site/node_modules/
-_site/.next/
-_site/.vercel/
-_site/.env.local
+_site/
 
 # 日志文件
 *.log

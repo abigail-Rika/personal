@@ -1,0 +1,978 @@
+user:
+<user_query>
+@personal/skills/skill-map.md 你已经很久没有对我进行 Ai 评估了
+</user_query>
+
+assistant:
+[Thinking] The user is asking me to update their AI skill assessment. Let me first read the current skill-map.md to understand the current state and then provide an updated assessment.
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] The last assessment was on 2026-03-02 (W09), and now it's 2026-03-18, which would be W12. So it's been about 2.5 weeks since the last assessment. Let me look at what the user has been doing in their personal space since then to make an informed assessment.
+
+I need to check:
+1. Recent activity in the personal space (new files, changes)
+2. Any new skills created
+3. Knowledge base development
+4. Any prompt engineering experiments
+5. Data analysis work
+6. Recent agent transcripts for context on what they've been doing
+
+Let me search for recent changes and activities.
+上次评估是 W09（3月2日），现在已经 W12 了，确实隔了快三周。让我先看看你这段时间在 personal 空间里做了什么，再给出客观评估。
+[Tool call] Shell
+  command: cd /Users/jiwenyue/cursorProjects/personal && git log --since="2026-03-02" --oneline --all --name-only 2>/dev/null | head -80
+  description: Check recent git activity since last assessment
+[Tool call] Glob
+  glob_pattern: **/*.md
+  target_directory: /Users/jiwenyue/cursorProjects/personal/knowledge
+
+[Tool result] Shell
+
+[Tool result] Glob
+
+assistant:
+[Thinking] Interesting! Let me dig deeper into what happened:
+
+1. There are a LOT of new skills in `.agents/skills/` - these look like growth marketing skills
+2. There's a `knowledge/tech/tableau-mcp-初体验.md` file - this is new since W09!
+3. There's work analysis on 流量类型承接形式梳理
+4. There's PRD work (投放落地页配置修复)
+5. There's a PRD review
+6. There's an HTML file for 流量承接全景图
+
+Let me check more details on these changes.
+[Tool call] Shell
+  command: cd /Users/jiwenyue/cursorProjects/personal && git log --since="2026-03-02" --oneline --all --name-only 2>/dev/null | tail -200
+  description: Check more git activity
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/knowledge/tech/tableau-mcp-初体验.md
+
+[Tool result] Shell
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now let me gather more evidence. I need to look at:
+
+1. The `.agents/skills/` directory - a massive batch of new skills appeared
+2. The new PRD review (投放落地页配置修复)
+3. The 流量类型承接形式梳理 analysis work
+4. The AI分享 project
+5. Recent work in aries-teach (the AI sharing presentation)
+6. The `.cursor/rules/` context files
+
+Let me check a few key things.
+[Tool call] Shell
+  command: cd /Users/jiwenyue/cursorProjects/personal && git log --since="2026-03-02" --oneline --all -- '*.md' ':!_site/*' ':!.agents/*' 2>/dev/null
+  description: Check meaningful md changes excluding site
+[Tool call] Glob
+  glob_pattern: "**/*.mdc"
+  target_directory: /Users/jiwenyue/cursorProjects/personal/.cursor/rules
+
+[Tool result] Shell
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Shell
+  command: cd /Users/jiwenyue/cursorProjects/personal && git log --since="2026-03-02" --oneline --all -- "*.md" --not -- "_site/*" 2>/dev/null
+  description: Check meaningful md changes
+[Tool call] Glob
+  glob_pattern: **/*.mdc
+  target_directory: /Users/jiwenyue/cursorProjects/personal/.cursor
+
+[Tool result] Shell
+
+[Tool result] Glob
+
+assistant:
+[Thinking] Interesting! There are now 11 `.mdc` rule files in the personal space. Let me check what happened since the last assessment in more detail. Let me look at some key files:
+
+1. The AI分享 project (about Context Engineering)
+2. The 流量类型承接形式梳理 analysis
+3. The new PRD review
+4. The .agents/skills/ directory
+5. The .cursor/rules/ context files
+
+Let me check git log with more detail on the recent commits.
+[Tool call] Shell
+  command: cd /Users/jiwenyue/cursorProjects/personal && git log --since="2026-03-02" --format="%h %s" --name-only -- "*.md" | head -80
+  description: Detailed recent changes with files
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/AI分享-产品经理就是Context-Engineer.md
+
+[Tool result] Shell
+
+[Tool result] Read
+
+assistant:
+[Thinking] Excellent! Now I have a very clear picture. Let me also check:
+1. The analysis work
+2. The new PRD review
+3. The .cursor/rules context files - how many were created and when
+4. The .agents/skills directory - how many skills
+[Tool call] Shell
+  command: ls -la /Users/jiwenyue/cursorProjects/personal/.agents/skills/ 2>/dev/null | wc -l && echo "---" && ls /Users/jiwenyue/cursorProjects/personal/.agents/skills/ 2>/dev/null
+  description: Count new skills in .agents directory
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/reviews/投放落地页配置修复_review_20260317.md
+
+[Tool result] Shell
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now let me also check the analysis work and the context rules to get a complete picture.
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/analysis/流量类型承接形式梳理.md
+  limit: 40
+[Tool call] Shell
+  command: cd /Users/jiwenyue/cursorProjects/personal && git log --since="2026-03-02" --format="%h %ad %s" --date=short -- ".cursor/rules/*.mdc" 2>/dev/null
+  description: Check when context rules were created
+
+[Tool result] Read
+
+[Tool result] Shell
+
+assistant:
+[Thinking] Now I have a very comprehensive picture of what happened since W09. Let me summarize the evidence:
+
+**W09 (Mar 2) → W12 (Mar 18) — 2.5 weeks of changes:**
+
+1. **Context Rules (.cursor/rules/)**: Created 11 .mdc context files between Mar 9-16. These include:
+   - 协作协议.mdc
+   - 海豚AI学产品上下文.mdc
+   - AI课产品机制.mdc
+   - 增长业务上下文.mdc
+   - 增长运营与实验.mdc
+   - 增长业务方.mdc
+   - 海豚App-UI规范.mdc
+   - 学习环节-UI规范.mdc
+   - 交互设计原则.mdc
+   - 竞品与行业认知.mdc
+   - context管理规范.mdc
+
+This is a massive shift—going from zero context rules to eleven in just over a week, and even establishing a management framework for them. This demonstrates a sophisticated grasp of persistent context as a foundational concept, treating rules as permanently active knowledge that shapes all subsequent work.
+
+Beyond just accumulating rules, he's built meta-level infrastructure: a dedicated skill for reviewing and validating context files to ensure quality control. He's also tackled complex business problems with structured rigor—breaking down lead quality analysis into clear grading frameworks and error-detection logic, all developed collaboratively with AI. The PRD work shows he's iterating on outputs through review cycles, treating each artifact as something to refine rather than finalize on the first pass.
+
+His 25-30 minute presentation on "PM as Context Engineer" represents a conceptual breakthrough: the realization that a PM's core competency isn't documentation but context construction. This frames his entire body of work differently—not as scattered projects but as a coherent philosophy about how product thinking intersects with AI capabilities. The marketing skills directory he created contains roughly 33 templates, though they appear auto-generated with uniform structure rather than hand-crafted, which he recognizes as more about leveraging AI for templates than developing personal expertise. He's also built a Next.js personal site with authentication, a solid technical undertaking, though his knowledge base remains sparse with just one file so far.
+
+Looking at his progress across dimensions: his context engineering work shows dramatic improvement—11 markdown files systematizing how he structures prompts and context rules, exactly aligned with what was recommended. The prd-review skill demonstrates meta-level quality control, and he's actively using it in his workflow. However, the auto-generated agent skills don't quite match the bar of independently designing something from scratch. His prompt engineering rating jumps significantly because of the systematic context building, though he hasn't yet explicitly practiced techniques like chain-of-thought or few-shot examples. His AI tool integration is clearly working—context rules are embedded in his daily process, he's doing complex data analysis with AI assistance, and he's maintaining a consistent PRD writing and review workflow.
+
+The Tableau MCP is still marked as needing verification, but his overall trajectory from user to builder is unmistakable. What's interesting is that his context rules essentially function as his knowledge management system—they're systematic, categorized, and actively reviewed—even though the knowledge/ directory itself remains sparse. His presentation draft and analysis work represent structured knowledge synthesis. This suggests context engineering deserves recognition as its own dimension now, given how central it's become to his practice.
+现在信息收集完毕。你这三周变化很大，让我客观评估。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+  old_string: # AI 工程技能地图
+
+> 评估周期：每周一次
+> 最近评估：2026-03-02（W09）
+> 评估依据：与 AI 的实际协作记录
+> 说明：仅评估个人主导的实践（personal 空间），aries-teach/aries 由团队搭建，属于使用者角色
+
+---
+
+## 技能矩阵
+
+### 1. Prompt 工程
+
+| 子技能 | 等级 | 观察依据 |
+|--------|------|----------|
+| Skill 结构设计 | ★★☆☆☆ | 在 personal 空间创建了 prd-writer 和 prd-review 两个 skill，结构参考了团队规范。能跑通，但更多是在已有模板上填充，尚未从零设计过 |
+| 行为指令编写 | ★★☆☆☆ | prd-review 的角色定位写得不错（"产品 Leader 视角"），说明有场景意识。但整体还是靠直觉写，缺少对 prompt 技巧的系统认知 |
+| 示例与测试 | ★☆☆☆☆ | prd-writer 有示例，但没有形成"测试 → 对比 → 迭代"的习惯 |
+| 高级技巧 | ☆☆☆☆☆ | 尚未接触 chain-of-thought、self-verification、few-shot 优化等 |
+
+**当前水平：入门期**
+你能在现有框架下创建可用的 skill，说明理解了 skill 的"是什么"和"怎么用"。但在 prompt 本身的设计技巧上，还在直觉驱动阶段。
+
+### 2. AI 工具使用与集成
+
+| 子技能 | 等级 | 观察依据 |
+|--------|------|----------|
+| Cursor 日常使用 | ★★★☆☆ | 高频使用 Cursor 处理日常工作（待办、日记、复盘、PRD），交互自然流畅 |
+| 任务委托意识 | ★★★★☆ | 很擅长识别"这件事可以交给 AI"——记录待办、搭建提醒、评审 PRD、组织信息，委托范围广且合理 |
+| 自动化搭建 | ★★☆☆☆ | 刚开始探索（工作日报提醒是第一个），对 launchd/脚本等基础设施有了初步认知 |
+| MCP / 外部工具 | ★☆☆☆☆ | 团队配置了 Tableau MCP，但个人尚未主动跑通数据分析流程 |
+
+**当前水平：中级（使用层）**
+你是一个优秀的 AI 工具使用者——使用频率高、场景判断准、委托边界清晰。这是非常重要的基础。
+
+### 3. 个人知识体系
+
+| 子技能 | 等级 | 观察依据 |
+|--------|------|----------|
+| 信息架构设计 | ★★★☆☆ | personal 空间的目录分层清晰（work/diary/reviews/knowledge/skills），并且会主动审视和优化命名（plans → roadmap） |
+| 知识沉淀习惯 | ★★☆☆☆ | 有日记和复盘的框架，但 knowledge/ 目录尚空，沉淀还没真正跑起来 |
+| 流程标准化 | ★★☆☆☆ | prd-writer → prd-review 的流水线意识很好，但其他工作流还没有类似的标准化设计 |
+
+**当前水平：起步期，但方向感很好**
+你对"信息应该怎么组织"有天然的敏感度（今天的目录命名讨论就是例证），这个素质在后续搭建更复杂的 AI 工作流时会很有用。
+
+---
+
+## 综合评估
+
+```
+Prompt 工程       ████░░░░░░░░░░░░░░░░  20%  入门
+AI 工具使用       ██████████░░░░░░░░░░  50%  中级（使用层）
+知识体系建设      ██████░░░░░░░░░░░░░░  30%  起步
+```
+
+**核心优势**：任务委托意识 + 信息架构敏感度。你天然知道"什么该交给 AI"以及"信息该怎么组织"，这两个素质是很多技术背景的人反而缺的。
+
+**当前阶段定位**：从"AI 工具的熟练使用者"向"AI 工作流的搭建者"过渡中。
+
+**最大的杠杆点**：Prompt 工程基础。这是从"使用者"跨到"搭建者"的核心门槛。一旦掌握基本的 prompt 设计技巧，你现有的场景意识和架构能力会立刻发挥更大价值。
+
+---
+
+## 下阶段学习路径
+
+### 本周：建立 prompt 技巧的体感（W10）
+
+1. **做一次 prompt 对比实验**
+   - 挑你最熟悉的 prd-review，复制一份做改造
+   - 加入一个技巧：让 AI 先列出评审维度，再逐条评审（chain-of-thought）
+   - 用同一份 PRD 跑两个版本，直观感受差异
+   - 把对比结果记录到 `knowledge/tech/` 里
+
+2. **了解一个 prompt 框架**
+   - 推荐先看 CO-STAR（Context-Objective-Style-Tone-Audience-Response）
+   - 用它重新审视你写的 prd-writer，看哪些维度是你直觉覆盖了的，哪些遗漏了
+
+### 近两周：跑通一个完整的 AI 自动化流程（W10-W11）
+
+3. **Tableau 数据分析端到端**（todos 里已有这个任务）
+   - 这不只是"用工具"，更是体验"AI + 外部数据源"的完整流程
+   - 关注：哪些环节你需要引导 AI、哪些它能自主完成
+
+### 本月：从使用者到搭建者的跨越（W10-W13）
+
+4. **独立设计一个新 skill**（不参考现有模板）
+   - 选一个你工作中重复做的事情
+   - 从零思考：角色定义 → 输入输出 → 行为边界 → 示例
+   - 这是检验 prompt 工程能力的最佳方式
+
+5. **给 knowledge/ 目录注入第一批内容**
+   - 把学习过程中的发现记下来
+   - 不需要很长，每条 3-5 句话就够
+
+---
+
+## 评估历史
+
+| 日期 | 周次 | 主要变化 |
+|------|------|----------|
+| 2026-03-02 | W09 | 首次评估。修正基线：仅基于 personal 空间的个人实践，排除团队搭建的 aries-teach/aries |
+  new_string: # AI 工程技能地图
+
+> 评估周期：每周一次
+> 最近评估：2026-03-18（W12）
+> 评估依据：与 AI 的实际协作记录
+> 说明：仅评估个人主导的实践（personal 空间），aries-teach/aries 由团队搭建，属于使用者角色
+
+---
+
+## 技能矩阵
+
+### 1. Prompt 工程
+
+| 子技能 | 等级 | 变化 | 观察依据 |
+|--------|------|------|----------|
+| Skill 结构设计 | ★★★☆☆ | +1 | 创建了 context 管理规范 skill（`.cursor/rules/SKILL.md`），具备"对不同类型 context 用不同方法 review"的分类意识。这个 skill 是从实际痛点出发设计的，不再是套模板 |
+| 行为指令编写 | ★★★☆☆ | +1 | 11 个 .mdc context 规则文件覆盖产品上下文、UI 规范、增长业务、竞品认知等，每个都有明确的触发条件和适用范围。协作协议里"用效果语言不用技术术语""卡点即沟通"等指令写得具体可执行 |
+| 示例与测试 | ★★☆☆☆ | +1 | prd-review 已形成持续使用习惯（3/17 又做了一次投放落地页 review），产出质量稳定。但"测试 → 对比 → 迭代"的闭环还没有显性化 |
+| 高级技巧 | ★☆☆☆☆ | +1 | 协作协议中"三层信息源互补（PRD→UI→代码）""输出理解→PM纠偏→沉淀为知识"体现了 chain-of-thought 式的分步推理设计。但这是直觉产物，还没有作为有意识的 prompt 技巧来运用 |
+
+**当前水平：初级实践者**
+从"套模板"跨到了"从痛点出发设计"。最大的变化是 context 规则体系——你用 11 个 .mdc 文件构建了一套"给 AI 的长期记忆"，这本质上就是 prompt 工程中最有价值的部分：persistent context management。你还没有系统学过 prompt 技巧，但已经在实践中摸到了其中最核心的一个。
+
+### 2. AI 工具使用与集成
+
+| 子技能 | 等级 | 变化 | 观察依据 |
+|--------|------|------|----------|
+| Cursor 日常使用 | ★★★★☆ | +1 | Cursor 已成为主力工作工具，覆盖 PRD 写作、PRD review、数据分析、项目管理、演讲准备。使用密度从"日常记录"升级到"核心工作流" |
+| 任务委托意识 | ★★★★☆ | — | 保持高水平。流量承接分析、投放落地页 PRD 等复杂任务都准确识别了 AI 能做什么、自己需要判断什么 |
+| 自动化搭建 | ★★☆☆☆ | — | 没有新的自动化产出。个人站点（_site/）是一次技术搭建尝试，但不属于工作流自动化 |
+| MCP / 外部工具 | ★★☆☆☆ | +1 | Tableau MCP 虽然还没跑通完整的端到端分析流程，但在流量承接分析中已经开始用 AI 做结构化数据分析，说明"AI + 数据"的协作模式在建立中 |
+
+**当前水平：中高级（使用→搭建过渡中）**
+最显著的变化：你开始用 AI 做"有分析深度的工作"，而不仅仅是"记录和整理"。流量承接分析的方法论设计（先定义质量→再验证→找错配→提建议）完全是你自己的思路，AI 帮你执行和组织。
+
+### 3. 个人知识体系
+
+| 子技能 | 等级 | 变化 | 观察依据 |
+|--------|------|------|----------|
+| 信息架构设计 | ★★★★☆ | +1 | context 规则体系的设计水平很高：按"产品上下文/UI 规范/增长业务/竞品认知"分类，每个文件有明确的 description 和触发条件。这不是简单堆砌，是有组织的知识架构 |
+| 知识沉淀习惯 | ★★★☆☆ | +1 | context 规则就是沉淀的载体——11 个 .mdc 文件把散落在脑子里的业务知识变成了 AI 可读的结构化信息。但 `knowledge/` 目录仍然只有 1 个文件，"学到的东西"的沉淀还没跟上 |
+| 流程标准化 | ★★★☆☆ | +1 | 协作协议定义了"迭代类需求先理解现状"的标准流程（PRD→UI→代码三层互补），context 管理有了 review 规范。从"只有 PRD 流水线"扩展到了更多工作流 |
+
+**当前水平：成长期**
+你找到了知识沉淀的正确载体——不是往 `knowledge/` 里写学习笔记，而是把业务知识直接变成 AI 的 context 规则。这比我上次建议的"每条 3-5 句话记到 knowledge/"有价值得多。
+
+### 4. Context Engineering（新增维度）
+
+| 子技能 | 等级 | 观察依据 |
+|--------|------|----------|
+| Context 分层设计 | ★★★★☆ | 11 个 .mdc 文件形成了清晰的 context 层级：always_applied（协作协议）→ agent_requestable（按需加载的业务 context）→ skill（可复用能力）。这种分层意识是 context engineering 的核心 |
+| 隐性知识显性化 | ★★★☆☆ | 把"PM 怎么和 AI 协作"的经验抽象成了协作协议（不擅自降级、编码前自检、用效果语言），把业务 know-how 变成了结构化规则。但有些规则还偏"应然"，需要通过实际使用验证和迭代 |
+| Context 质量管理 | ★★★☆☆ | 创建了 context 管理规范 skill，有分类、review、交叉校验的意识。但这个 skill 本身还没有经过多轮实际使用和迭代 |
+| 认知与方法论 | ★★★★☆ | "产品经理就是 Context Engineer"的分享大纲展现了深度的反思和抽象能力——从实践中提炼出"PM 不生产功能，PM 生产 context"的洞察，并且能把这个认知体系化地表达出来 |
+
+**当前水平：形成中的核心能力**
+这个维度是你过去三周最大的突破。你不仅在"做" context engineering，而且开始"理解"它、"教"它。从实践（写 context 规则）→ 反思（协作协议）→ 抽象（分享大纲），形成了完整的认知闭环。
+
+---
+
+## 综合评估
+
+```
+Prompt 工程        ██████░░░░░░░░░░░░░░  30%  初级实践者  ↑ (+10%)
+AI 工具使用        ████████████░░░░░░░░  60%  中高级      ↑ (+10%)
+知识体系建设       ████████░░░░░░░░░░░░  40%  成长期      ↑ (+10%)
+Context Engineering ██████████░░░░░░░░░░  50%  核心能力形成中（新增）
+```
+
+**核心优势更新**：Context Engineering 能力正在成为你最强的差异化优势。你天然具备的"任务委托意识 + 信息架构敏感度"，在过去三周通过 context 规则体系的搭建，从直觉进化成了可复用的方法论。
+
+**当前阶段定位**：已经跨过了"AI 工具熟练使用者"阶段，正式进入"AI 工作流搭建者"。标志是：你开始为 AI 构建持久化的知识体系（context 规则），而不只是一次性地给它提需求。
+
+**最大的杠杆点更新**：~~Prompt 工程基础~~ → **Context 规则的实战验证与迭代**。你已经搭建了 11 个 context 规则，下一步是通过真实工作场景验证它们是否真的让 AI 输出变好了，哪些规则有用、哪些是冗余的、哪些需要补充。这比"学 prompt 技巧"对你更有价值，因为你已经在用自己的方式做 prompt 工程了。
+
+---
+
+## 需要诚实说的几个点
+
+1. **`.agents/skills/` 里的 33 个增长类 skill** —— 这些看起来是批量生成的模板（结构高度一致、都有 evals/references），不算个人 prompt 工程实践。拥有不等于掌握，关键看你是否真的用它们跑过任务、迭代过内容。
+2. **`knowledge/` 目录仍然只有 1 个文件** —— context 规则是一种知识沉淀，但"学到了什么"的显性记录还是缺位。你的分享大纲（Context Engineer）里有很多好洞察，但没有沉淀到知识库里。
+3. **Tableau MCP 还停留在"待验证"** —— 这个从 W09 就在 todo 里了。不是说一定要做，而是如果决定不做就从 todo 里删掉，别让它一直挂着。
+
+---
+
+## 下阶段建议
+
+### 短期：把分享做好（本周 W12）
+
+1. **完善"产品经理就是 Context Engineer"分享**
+   - Part 3 的例子已经有了很好的素材（流量承接分析、投放落地页 review、context 规则搭建），挑 2-3 个你讲得最来劲的展开
+   - Part 4 的"AI 教会了我什么"——你现在可以补了：你学会了"把隐性知识变成持久化的 context"，这件事同时提升了你给 AI 和给团队构建 context 的能力
+   - 做完分享后，把核心内容沉淀到 `knowledge/` 里
+
+### 中期：验证和迭代 context 规则（W13-W14）
+
+2. **给 context 规则做一次"有没有用"的回顾**
+   - 11 个 .mdc 文件，哪些你发现 AI 确实用到了、哪些是摆设？
+   - 哪些场景下 AI 的输出因为有 context 规则而明显变好了？能举出具体例子吗？
+   - 这个过程本身就是一次高质量的知识沉淀
+
+3. **挑 1-2 个 context 规则做深度迭代**
+   - 不要追求数量，追求"这个规则真的让我的工作效率提升了"
+   - 迭代过程记录下来，这就是你的 prompt 工程案例
+
+### 长期：从"个人工具"到"可传播的方法论"
+
+4. **把 context engineering 的实践变成可复用的东西**
+   - 你已经有了方法论认知（分享大纲）、有了实践产出（context 规则体系）、有了管理工具（context 管理规范 skill）
+   - 下一步是：能不能帮团队里另一个人也搭建起类似的 context 体系？如果能，说明你的方法论真的成熟了
+
+---
+
+## 评估历史
+
+| 日期 | 周次 | 主要变化 |
+|------|------|----------|
+| 2026-03-18 | W12 | 三周跨越式进展：搭建了 11 个 context 规则、创建 context 管理规范 skill、完成流量承接深度分析、持续使用 prd-review 工作流、准备"PM 即 Context Engineer"分享。新增 Context Engineering 评估维度。从"使用者"正式进入"搭建者"阶段 |
+| 2026-03-02 | W09 | 首次评估。修正基线：仅基于 personal 空间的个人实践，排除团队搭建的 aries-teach/aries |
+
+[Tool result] StrReplace
+
+assistant:
+评估更新完毕。说几个关键结论：
+
+**最大的变化**：你过去三周做的事情，让我需要新增一个评估维度——Context Engineering。11 个 .mdc 规则文件 + context 管理规范 skill + "PM 就是 Context Engineer"的分享大纲，形成了从实践到认知的完整闭环。这不是"学了一个技巧"，是找到了一条属于你自己的 AI 能力发展路径。
+
+**四个维度全部上涨**：Prompt 工程 20%→30%，AI 工具使用 50%→60%，知识体系 30%→40%，Context Engineering 新增 50%。
+
+**诚实提醒三件事**：
+1. `.agents/skills/` 里批量生成的 33 个增长 skill 我没有计入评估，拥有模板不等于掌握了 prompt 工程
+2. `knowledge/` 目录还是只有 1 个文件，你的好洞察（分享大纲里那些）没有沉淀下来
+3. Tableau MCP 从 W09 挂到现在，要么做要么删，别让它一直躺在 todo 里
+
+user:
+<user_query>
+你要不要拆开，把每次的评估都生成一个评估结果，然后有个索引（类似 skill） 记录每次评估结果
+</user_query>
+
+assistant:
+[Thinking] The user wants to restructure the skill assessment system. Instead of one big file that gets overwritten each time, they want:
+
+1. Each assessment as a separate file (like skill examples)
+2. An index file that links to each assessment
+
+This makes sense - it preserves history better and keeps each assessment as a complete snapshot.
+
+Let me plan the structure:
+
+```
+skills/
+├── skill-map.md          # Index file - overview + links to each assessment
+├── assessments/
+│   ├── 2026-W09.md       # First assessment
+│   └── 2026-W12.md       # Current assessment
+```
+
+Let me read the current file to understand what to split out.
+好主意。每次评估是一个完整快照，覆盖写会丢失细节。拆成独立文件 + 索引更合理。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+
+[Tool result] Read
+
+assistant:
+[Tool call] Shell
+  command: mkdir -p /Users/jiwenyue/cursorProjects/personal/skills/assessments
+  description: Create assessments directory
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W09.md
+  contents: # AI 技能评估：W09（2026-03-02）
+
+> 类型：首次评估
+> 基线说明：仅基于 personal 空间的个人实践，排除团队搭建的 aries-teach/aries
+
+---
+
+## 综合评估
+
+```
+Prompt 工程       ████░░░░░░░░░░░░░░░░  20%  入门
+AI 工具使用       ██████████░░░░░░░░░░  50%  中级（使用层）
+知识体系建设      ██████░░░░░░░░░░░░░░  30%  起步
+```
+
+**阶段定位**：从"AI 工具的熟练使用者"向"AI 工作流的搭建者"过渡中。
+
+**核心优势**：任务委托意识 + 信息架构敏感度。天然知道"什么该交给 AI"以及"信息该怎么组织"，这两个素质是很多技术背景的人反而缺的。
+
+**最大杠杆点**：Prompt 工程基础。这是从"使用者"跨到"搭建者"的核心门槛。
+
+---
+
+## 技能矩阵
+
+### 1. Prompt 工程
+
+| 子技能 | 等级 | 观察依据 |
+|--------|------|----------|
+| Skill 结构设计 | ★★☆☆☆ | 在 personal 空间创建了 prd-writer 和 prd-review 两个 skill，结构参考了团队规范。能跑通，但更多是在已有模板上填充，尚未从零设计过 |
+| 行为指令编写 | ★★☆☆☆ | prd-review 的角色定位写得不错（"产品 Leader 视角"），说明有场景意识。但整体还是靠直觉写，缺少对 prompt 技巧的系统认知 |
+| 示例与测试 | ★☆☆☆☆ | prd-writer 有示例，但没有形成"测试 → 对比 → 迭代"的习惯 |
+| 高级技巧 | ☆☆☆☆☆ | 尚未接触 chain-of-thought、self-verification、few-shot 优化等 |
+
+**当前水平：入门期**
+能在现有框架下创建可用的 skill，说明理解了 skill 的"是什么"和"怎么用"。但在 prompt 本身的设计技巧上，还在直觉驱动阶段。
+
+### 2. AI 工具使用与集成
+
+| 子技能 | 等级 | 观察依据 |
+|--------|------|----------|
+| Cursor 日常使用 | ★★★☆☆ | 高频使用 Cursor 处理日常工作（待办、日记、复盘、PRD），交互自然流畅 |
+| 任务委托意识 | ★★★★☆ | 很擅长识别"这件事可以交给 AI"——记录待办、搭建提醒、评审 PRD、组织信息，委托范围广且合理 |
+| 自动化搭建 | ★★☆☆☆ | 刚开始探索（工作日报提醒是第一个），对 launchd/脚本等基础设施有了初步认知 |
+| MCP / 外部工具 | ★☆☆☆☆ | 团队配置了 Tableau MCP，但个人尚未主动跑通数据分析流程 |
+
+**当前水平：中级（使用层）**
+一个优秀的 AI 工具使用者——使用频率高、场景判断准、委托边界清晰。
+
+### 3. 个人知识体系
+
+| 子技能 | 等级 | 观察依据 |
+|--------|------|----------|
+| 信息架构设计 | ★★★☆☆ | personal 空间的目录分层清晰（work/diary/reviews/knowledge/skills），并且会主动审视和优化命名（plans → roadmap） |
+| 知识沉淀习惯 | ★★☆☆☆ | 有日记和复盘的框架，但 knowledge/ 目录尚空，沉淀还没真正跑起来 |
+| 流程标准化 | ★★☆☆☆ | prd-writer → prd-review 的流水线意识很好，但其他工作流还没有类似的标准化设计 |
+
+**当前水平：起步期，但方向感很好**
+对"信息应该怎么组织"有天然的敏感度，这个素质在后续搭建更复杂的 AI 工作流时会很有用。
+
+---
+
+## 建议的学习路径
+
+1. 做一次 prompt 对比实验（chain-of-thought）
+2. 了解一个 prompt 框架（CO-STAR）
+3. 跑通 Tableau 数据分析端到端流程
+4. 独立设计一个新 skill（不参考现有模板）
+5. 给 knowledge/ 目录注入第一批内容
+
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W12.md
+  contents: # AI 技能评估：W12（2026-03-18）
+
+> 距上次评估：3 周（W09 → W12）
+> 评估依据：git 提交记录、文件变更、实际产出
+
+---
+
+## 综合评估
+
+```
+Prompt 工程        ██████░░░░░░░░░░░░░░  30%  初级实践者      ↑ (+10%)
+AI 工具使用        ████████████░░░░░░░░  60%  中高级          ↑ (+10%)
+知识体系建设       ████████░░░░░░░░░░░░  40%  成长期          ↑ (+10%)
+Context Engineering ██████████░░░░░░░░░░  50%  核心能力形成中  （新增）
+```
+
+**阶段定位**：已经跨过"AI 工具熟练使用者"阶段，正式进入"AI 工作流搭建者"。标志是：开始为 AI 构建持久化的知识体系（context 规则），而不只是一次性地给它提需求。
+
+**核心优势**：Context Engineering 能力正在成为最强的差异化优势。天然具备的"任务委托意识 + 信息架构敏感度"，通过 context 规则体系的搭建，从直觉进化成了可复用的方法论。
+
+**最大杠杆点**：Context 规则的实战验证与迭代。已搭建 11 个 context 规则，下一步是验证哪些真的让 AI 输出变好了、哪些是冗余的。
+
+---
+
+## 本期关键变化
+
+### 三周做了什么
+
+1. **搭建 context 规则体系**：从 0 到 11 个 .mdc 规则文件（3/9 - 3/16），覆盖协作协议、产品上下文、UI 规范、增长业务、竞品认知、交互设计原则等
+2. **创建 context 管理规范 skill**：对不同类型 context 用不同方法 review 的元级工具
+3. **完成流量承接深度分析**：用 AI 做结构化数据分析（S/A/B/C 分级 → 转化率验证 → 错配识别），方法论设计完全是自己的思路
+4. **持续使用 prd-review 工作流**：3/17 完成投放落地页配置修复的 PRD review
+5. **准备"PM 即 Context Engineer"分享**：从实践中提炼出方法论认知，形成 25-30 分钟的分享大纲
+
+### 没做到的
+
+1. `.agents/skills/` 里的 33 个增长类 skill 是批量生成的模板，不算个人 prompt 工程实践
+2. `knowledge/` 目录仍然只有 1 个文件，"学到了什么"的显性记录缺位
+3. Tableau MCP 从 W09 挂到现在未完成
+
+---
+
+## 技能矩阵
+
+### 1. Prompt 工程
+
+| 子技能 | 等级 | 变化 | 观察依据 |
+|--------|------|------|----------|
+| Skill 结构设计 | ★★★☆☆ | +1 | 创建了 context 管理规范 skill（`.cursor/rules/SKILL.md`），具备"对不同类型 context 用不同方法 review"的分类意识。这个 skill 是从实际痛点出发设计的，不再是套模板 |
+| 行为指令编写 | ★★★☆☆ | +1 | 11 个 .mdc context 规则文件覆盖产品上下文、UI 规范、增长业务、竞品认知等，每个都有明确的触发条件和适用范围。协作协议里"用效果语言不用技术术语""卡点即沟通"等指令写得具体可执行 |
+| 示例与测试 | ★★☆☆☆ | +1 | prd-review 已形成持续使用习惯（3/17 又做了一次投放落地页 review），产出质量稳定。但"测试 → 对比 → 迭代"的闭环还没有显性化 |
+| 高级技巧 | ★☆☆☆☆ | +1 | 协作协议中"三层信息源互补（PRD→UI→代码）""输出理解→PM纠偏→沉淀为知识"体现了 chain-of-thought 式的分步推理设计。但这是直觉产物，还没有作为有意识的 prompt 技巧来运用 |
+
+**当前水平：初级实践者**
+从"套模板"跨到了"从痛点出发设计"。最大的变化是 context 规则体系——用 11 个 .mdc 文件构建了一套"给 AI 的长期记忆"，这本质上就是 prompt 工程中最有价值的部分：persistent context management。还没有系统学过 prompt 技巧，但已经在实践中摸到了其中最核心的一个。
+
+### 2. AI 工具使用与集成
+
+| 子技能 | 等级 | 变化 | 观察依据 |
+|--------|------|------|----------|
+| Cursor 日常使用 | ★★★★☆ | +1 | Cursor 已成为主力工作工具，覆盖 PRD 写作、PRD review、数据分析、项目管理、演讲准备。使用密度从"日常记录"升级到"核心工作流" |
+| 任务委托意识 | ★★★★☆ | — | 保持高水平。流量承接分析、投放落地页 PRD 等复杂任务都准确识别了 AI 能做什么、自己需要判断什么 |
+| 自动化搭建 | ★★☆☆☆ | — | 没有新的自动化产出。个人站点（_site/）是一次技术搭建尝试，但不属于工作流自动化 |
+| MCP / 外部工具 | ★★☆☆☆ | +1 | Tableau MCP 虽然还没跑通完整的端到端分析流程，但在流量承接分析中已经开始用 AI 做结构化数据分析，说明"AI + 数据"的协作模式在建立中 |
+
+**当前水平：中高级（使用→搭建过渡中）**
+最显著的变化：开始用 AI 做"有分析深度的工作"，而不仅仅是"记录和整理"。流量承接分析的方法论设计（先定义质量→再验证→找错配→提建议）完全是自己的思路，AI 帮执行和组织。
+
+### 3. 个人知识体系
+
+| 子技能 | 等级 | 变化 | 观察依据 |
+|--------|------|------|----------|
+| 信息架构设计 | ★★★★☆ | +1 | context 规则体系的设计水平很高：按"产品上下文/UI 规范/增长业务/竞品认知"分类，每个文件有明确的 description 和触发条件。这不是简单堆砌，是有组织的知识架构 |
+| 知识沉淀习惯 | ★★★☆☆ | +1 | context 规则就是沉淀的载体——11 个 .mdc 文件把散落在脑子里的业务知识变成了 AI 可读的结构化信息。但 `knowledge/` 目录仍然只有 1 个文件，"学到的东西"的沉淀还没跟上 |
+| 流程标准化 | ★★★☆☆ | +1 | 协作协议定义了"迭代类需求先理解现状"的标准流程（PRD→UI→代码三层互补），context 管理有了 review 规范。从"只有 PRD 流水线"扩展到了更多工作流 |
+
+**当前水平：成长期**
+找到了知识沉淀的正确载体——不是往 `knowledge/` 里写学习笔记，而是把业务知识直接变成 AI 的 context 规则。
+
+### 4. Context Engineering（新增维度）
+
+| 子技能 | 等级 | 观察依据 |
+|--------|------|----------|
+| Context 分层设计 | ★★★★☆ | 11 个 .mdc 文件形成了清晰的 context 层级：always_applied（协作协议）→ agent_requestable（按需加载的业务 context）→ skill（可复用能力）。这种分层意识是 context engineering 的核心 |
+| 隐性知识显性化 | ★★★☆☆ | 把"PM 怎么和 AI 协作"的经验抽象成了协作协议（不擅自降级、编码前自检、用效果语言），把业务 know-how 变成了结构化规则。但有些规则还偏"应然"，需要通过实际使用验证和迭代 |
+| Context 质量管理 | ★★★☆☆ | 创建了 context 管理规范 skill，有分类、review、交叉校验的意识。但这个 skill 本身还没有经过多轮实际使用和迭代 |
+| 认知与方法论 | ★★★★☆ | "产品经理就是 Context Engineer"的分享大纲展现了深度的反思和抽象能力——从实践中提炼出"PM 不生产功能，PM 生产 context"的洞察，并且能把这个认知体系化地表达出来 |
+
+**当前水平：形成中的核心能力**
+这个维度是过去三周最大的突破。不仅在"做" context engineering，而且开始"理解"它、"教"它。从实践（写 context 规则）→ 反思（协作协议）→ 抽象（分享大纲），形成了完整的认知闭环。
+
+---
+
+## 下阶段建议
+
+### 短期（W12）
+
+- 完善"产品经理就是 Context Engineer"分享，挑 2-3 个最有感觉的例子展开
+- 做完分享后，把核心内容沉淀到 `knowledge/` 里
+
+### 中期（W13-W14）
+
+- 给 context 规则做一次"有没有用"的回顾：哪些 AI 确实用到了、哪些是摆设？
+- 挑 1-2 个 context 规则做深度迭代，追求"真的让工作效率提升了"
+
+### 长期
+
+- 把 context engineering 实践变成可复用的东西：能不能帮团队里另一个人也搭建起类似的 context 体系？
+
+
+[Tool result] Write
+
+[Tool result] Write
+
+assistant:
+现在把 `skill-map.md` 改成索引文件。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+  contents: # AI 工程技能地图
+
+> 评估周期：每周一次
+> 评估依据：与 AI 的实际协作记录
+> 说明：仅评估个人主导的实践（personal 空间），aries-teach/aries 由团队搭建，属于使用者角色
+
+---
+
+## 最新状态（W12 · 2026-03-18）
+
+```
+Prompt 工程        ██████░░░░░░░░░░░░░░  30%  初级实践者
+AI 工具使用        ████████████░░░░░░░░  60%  中高级
+知识体系建设       ████████░░░░░░░░░░░░  40%  成长期
+Context Engineering ██████████░░░░░░░░░░  50%  核心能力形成中
+```
+
+**阶段定位**：已进入"AI 工作流搭建者"阶段。标志：开始为 AI 构建持久化知识体系（context 规则），而不只是一次性提需求。
+
+**核心优势**：Context Engineering —— 从直觉进化成可复用的方法论。
+
+**最大杠杆点**：Context 规则的实战验证与迭代。
+
+---
+
+## 评估历史
+
+| 日期 | 周次 | 阶段定位 | 关键变化 | 详情 |
+|------|------|----------|----------|------|
+| 2026-03-18 | W12 | AI 工作流搭建者 | 搭建 11 个 context 规则、创建 context 管理规范 skill、完成流量承接深度分析、持续使用 prd-review、准备"PM 即 Context Engineer"分享。新增 Context Engineering 维度 | [assessments/2026-W12.md](assessments/2026-W12.md) |
+| 2026-03-02 | W09 | 使用者→搭建者过渡 | 首次评估。修正基线：仅基于 personal 空间个人实践 | [assessments/2026-W09.md](assessments/2026-W09.md) |
+
+---
+
+## 成长曲线
+
+```
+        W09     W12
+Prompt   20% ──→ 30%  (+10%)
+工具     50% ──→ 60%  (+10%)
+知识     30% ──→ 40%  (+10%)
+Context   —  ──→ 50%  (新增)
+```
+
+---
+
+## 评估维度说明
+
+| 维度 | 评估什么 |
+|------|----------|
+| Prompt 工程 | Skill 结构设计、行为指令编写、示例与测试、高级技巧 |
+| AI 工具使用与集成 | Cursor 日常使用、任务委托意识、自动化搭建、MCP/外部工具 |
+| 个人知识体系 | 信息架构设计、知识沉淀习惯、流程标准化 |
+| Context Engineering | Context 分层设计、隐性知识显性化、Context 质量管理、认知与方法论 |
+
+
+[Tool result] Write
+
+assistant:
+搞定。现在的结构：
+
+```
+skills/
+├── skill-map.md              # 索引：最新状态 + 成长曲线 + 历次评估链接
+└── assessments/
+    ├── 2026-W09.md            # 首次评估完整快照
+    └── 2026-W12.md            # 本次评估完整快照
+```
+
+索引文件保持轻量——一眼看到当前水平和成长趋势。每次评估的完整分析（技能矩阵、观察依据、建议）都在独立文件里，不会被覆盖。下次评估时新建一个 `2026-WXX.md`，再更新索引就行。
+
+user:
+<user_query>
+补充一下，目前aries 里面的这个@aries/团队-增长空间，也是我在维护的 
+</user_query>
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/README.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I need to understand the full scope of what's in this directory to assess its significance for the skill evaluation.
+[Tool call] Shell
+  command: cd /Users/jiwenyue/cursorProjects/aries/团队-增长 && find . -name "*.md" -not -path "./_*" 2>/dev/null | sort
+  description: List all md files in growth team space
+[Tool call] Glob
+  glob_pattern: **/*"
+  target_directory: /Users/jiwenyue/cursorProjects/aries/团队-增长/context
+
+[Tool result] Shell
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/context/README.md
+[Tool call] Shell
+  command: cd /Users/jiwenyue/cursorProjects/aries && git log --since="2026-03-02" --oneline -- "团队-增长/" 2>/dev/null
+  description: Check git history of growth team space
+
+[Tool result] Read
+
+[Tool result] Shell
+
+assistant:
+[Thinking] This is significant. The aries/团队-增长 space adds more evidence to the assessment:
+
+1. **Information architecture**: He designed a clear team space structure (项目归档/AB实验/数据探查/context/) with templates, classification rules, and naming conventions
+2. **Context engineering at team level**: He's already doing what I suggested as a "long-term goal" — building a context system for the team, not just himself. The context/ directory has a review workflow, file specs, metadata requirements
+3. **Knowledge management maturity**: The "所有进入此目录的 context 都必须经过 review，不沉淀未验证的信息" principle shows quality consciousness
+
+
+4. **Analytical work**: He's conducting various ad-hoc analyses like user recording analysis from trial course dropouts and in-app access patterns for users who haven't added WeChat
+
+But wait — the original assessment rule was to only evaluate personal-driven practices, since aries-teach/aries were team-built. He's clarifying that 团队-增长 is actually his own work, not something the team built. This shifts what I should be evaluating. I need to update the W12 assessment and index accordingly, since this changes the scope of what counts as his individual contribution.
+
+Looking at the implications: his knowledge system should be rated higher since he built team-level templates and categorization with a review process. Context Engineering jumps significantly — he's already scaling his personal context approach to team-level in the aries context directory, which was exactly what I'd suggested as a long-term goal. Information Architecture stays at ★★★★ but with stronger evidence now. Plus there's more data exploration work happening across different analyses.
+
+Let me revise both assessment files to reflect this.
+这个很重要，改变了评估范围。你在 aries 里搭建的这个增长团队空间，不是"使用别人搭好的东西"，是你自己设计的——目录结构、分类规则、模板、context 管理流程都是你的产出。
+
+而且 context/ 目录的设计（review 流程 + 元数据规范 + 质量检查清单）说明你已经在做我评估报告里列为"长期目标"的事：**把 context engineering 从个人工具推广到团队级别**。
+
+让我更新评估。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W12.md
+  old_string: > 距上次评估：3 周（W09 → W12）
+> 评估依据：git 提交记录、文件变更、实际产出
+  new_string: > 距上次评估：3 周（W09 → W12）
+> 评估依据：git 提交记录、文件变更、实际产出
+> 评估范围修正：personal 空间 + aries/团队-增长/（个人主导搭建和维护的团队空间）
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W12.md
+  old_string: ### 三周做了什么
+
+1. **搭建 context 规则体系**：从 0 到 11 个 .mdc 规则文件（3/9 - 3/16），覆盖协作协议、产品上下文、UI 规范、增长业务、竞品认知等
+2. **创建 context 管理规范 skill**：对不同类型 context 用不同方法 review 的元级工具
+3. **完成流量承接深度分析**：用 AI 做结构化数据分析（S/A/B/C 分级 → 转化率验证 → 错配识别），方法论设计完全是自己的思路
+4. **持续使用 prd-review 工作流**：3/17 完成投放落地页配置修复的 PRD review
+5. **准备"PM 即 Context Engineer"分享**：从实践中提炼出方法论认知，形成 25-30 分钟的分享大纲
+
+### 没做到的
+
+1. `.agents/skills/` 里的 33 个增长类 skill 是批量生成的模板，不算个人 prompt 工程实践
+2. `knowledge/` 目录仍然只有 1 个文件，"学到了什么"的显性记录缺位
+3. Tableau MCP 从 W09 挂到现在未完成
+  new_string: ### 三周做了什么
+
+1. **搭建 context 规则体系**：从 0 到 11 个 .mdc 规则文件（3/9 - 3/16），覆盖协作协议、产品上下文、UI 规范、增长业务、竞品认知等
+2. **创建 context 管理规范 skill**：对不同类型 context 用不同方法 review 的元级工具
+3. **完成流量承接深度分析**：用 AI 做结构化数据分析（S/A/B/C 分级 → 转化率验证 → 错配识别），方法论设计完全是自己的思路
+4. **持续使用 prd-review 工作流**：3/17 完成投放落地页配置修复的 PRD review
+5. **准备"PM 即 Context Engineer"分享**：从实践中提炼出方法论认知，形成 25-30 分钟的分享大纲
+6. **搭建增长团队空间**（aries/团队-增长/）：独立设计了完整的团队知识空间，包括：
+   - 目录结构设计（项目归档/AB实验/数据探查/context/ 四级分类 + 选择标准）
+   - 三套归档模板（项目、实验、数据探查各一套）
+   - 团队级 context 管理体系：review 流程 + 元数据规范 + 质量检查清单 + "所有进入的 context 必须经过 review"原则
+   - 已归档 2 个项目、1 个 AB 实验、3 个数据探查、5 个 context 文件
+
+### 没做到的
+
+1. `.agents/skills/` 里的 33 个增长类 skill 是批量生成的模板，不算个人 prompt 工程实践
+2. `knowledge/` 目录仍然只有 1 个文件，"学到了什么"的显性记录缺位
+3. Tableau MCP 从 W09 挂到现在未完成
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W12.md
+  offset: 24
+  limit: 20
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W12.md
+  old_string: 5. **准备"PM 即 Context Engineer"分享**：从实践中提炼出方法论认知，形成 25-30 分钟的分享大纲
+
+### 没做到的
+  new_string: 5. **准备"PM 即 Context Engineer"分享**：从实践中提炼出方法论认知，形成 25-30 分钟的分享大纲
+6. **搭建增长团队空间**（aries/团队-增长/）：独立设计了完整的团队知识空间，包括：
+   - 目录结构设计（项目归档/AB实验/数据探查/context/ 四级分类 + 选择标准）
+   - 三套归档模板（项目、实验、数据探查各一套）
+   - 团队级 context 管理体系：review 流程 + 元数据规范 + 质量检查清单 + "所有进入的 context 必须经过 review"原则
+   - 已归档 2 个项目、1 个 AB 实验、3 个数据探查、5 个 context 文件
+
+### 没做到的
+
+[Tool result] StrReplace
+
+assistant:
+现在更新受影响的评分。团队空间主要影响知识体系和 Context Engineering 两个维度。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W12.md
+  old_string: | 信息架构设计 | ★★★★☆ | +1 | context 规则体系的设计水平很高：按"产品上下文/UI 规范/增长业务/竞品认知"分类，每个文件有明确的 description 和触发条件。这不是简单堆砌，是有组织的知识架构 |
+| 知识沉淀习惯 | ★★★☆☆ | +1 | context 规则就是沉淀的载体——11 个 .mdc 文件把散落在脑子里的业务知识变成了 AI 可读的结构化信息。但 `knowledge/` 目录仍然只有 1 个文件，"学到的东西"的沉淀还没跟上 |
+| 流程标准化 | ★★★☆☆ | +1 | 协作协议定义了"迭代类需求先理解现状"的标准流程（PRD→UI→代码三层互补），context 管理有了 review 规范。从"只有 PRD 流水线"扩展到了更多工作流 |
+
+**当前水平：成长期**
+找到了知识沉淀的正确载体——不是往 `knowledge/` 里写学习笔记，而是把业务知识直接变成 AI 的 context 规则。
+  new_string: | 信息架构设计 | ★★★★☆ | +1 | 两套架构设计互相印证：personal 空间的 .mdc 规则体系 + aries/团队-增长 的四级目录结构（项目归档/AB实验/数据探查/context）。团队空间还设计了分类选择标准（"有 PRD 有开发→项目、核心是验证假设→AB实验、回答业务问题→数据探查"），说明不只是自己用得舒服，还在考虑团队的认知成本 |
+| 知识沉淀习惯 | ★★★★☆ | +2 | 两个层面的沉淀同时在跑：个人层面 11 个 .mdc context 规则 + 团队层面已归档 2 个项目、1 个 AB 实验、3 个数据探查。团队空间的模板设计保证了沉淀的标准化。`knowledge/` 目录仍然只有 1 个文件，但实际的知识沉淀已经通过 context 规则和项目归档在发生 |
+| 流程标准化 | ★★★★☆ | +2 | 多套标准化流程：PRD 写作→review 流水线、context 的 review+搬运流程（"个人空间创建→AI review→验证通过→搬运到团队目录"）、项目/实验/分析的归档模板。从"只有 PRD 流水线"跨到了体系化的流程设计 |
+
+**当前水平：体系化阶段**
+知识沉淀不再是"我应该记点什么"的焦虑感，而是通过 context 规则和团队归档模板，让沉淀自然发生在工作流程中。核心跨越是：从"个人知识管理"扩展到了"团队知识管理"。
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W12.md
+  old_string: | Context 分层设计 | ★★★★☆ | 11 个 .mdc 文件形成了清晰的 context 层级：always_applied（协作协议）→ agent_requestable（按需加载的业务 context）→ skill（可复用能力）。这种分层意识是 context engineering 的核心 |
+| 隐性知识显性化 | ★★★☆☆ | 把"PM 怎么和 AI 协作"的经验抽象成了协作协议（不擅自降级、编码前自检、用效果语言），把业务 know-how 变成了结构化规则。但有些规则还偏"应然"，需要通过实际使用验证和迭代 |
+| Context 质量管理 | ★★★☆☆ | 创建了 context 管理规范 skill，有分类、review、交叉校验的意识。但这个 skill 本身还没有经过多轮实际使用和迭代 |
+| 认知与方法论 | ★★★★☆ | "产品经理就是 Context Engineer"的分享大纲展现了深度的反思和抽象能力——从实践中提炼出"PM 不生产功能，PM 生产 context"的洞察，并且能把这个认知体系化地表达出来 |
+
+**当前水平：形成中的核心能力**
+这个维度是过去三周最大的突破。不仅在"做" context engineering，而且开始"理解"它、"教"它。从实践（写 context 规则）→ 反思（协作协议）→ 抽象（分享大纲），形成了完整的认知闭环。
+  new_string: | Context 分层设计 | ★★★★☆ | 多层级 context 体系：个人空间 always_applied（协作协议）→ agent_requestable（按需加载的业务 context）→ skill（可复用能力）；团队空间 context/ 目录（经过 review 的共享 context）。个人→团队的分层说明已经在考虑"谁的 context、给谁用"的问题 |
+| 隐性知识显性化 | ★★★★☆ | 两个层面都在做：个人层面把协作经验变成协作协议，团队层面把项目经验变成归档文档（完习激励抽奖、加微页实验等）。团队空间的 context 文件要求标注元数据（来源、review 状态、维护人），说明不仅在做显性化，还在考虑可追溯性 |
+| Context 质量管理 | ★★★★☆ | 不只是有意识，已经落地了完整的质量管控机制：团队 context 目录要求"所有进入的 context 必须经过 review"、有 5 项检查清单（分类正确性、事实/推测区分、数据标注来源口径时间、与已有 context 无矛盾、术语一致性）。这是生产级别的质量管理 |
+| 认知与方法论 | ★★★★☆ | "产品经理就是 Context Engineer"的分享大纲展现了深度的反思和抽象能力——从实践中提炼出"PM 不生产功能，PM 生产 context"的洞察，并且能把这个认知体系化地表达出来 |
+
+**当前水平：已形成核心能力**
+过去三周最大的突破不仅是"做"和"理解"，而是**已经在推广**。团队空间的搭建说明你自然地完成了"个人工具→团队基础设施"的跨越——上次评估里列为"长期目标"的事，你已经在做了。
+
+[Tool result] StrReplace
+
+assistant:
+现在更新综合评分和进度条。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/assessments/2026-W12.md
+  old_string: ```
+Prompt 工程        ██████░░░░░░░░░░░░░░  30%  初级实践者      ↑ (+10%)
+AI 工具使用        ████████████░░░░░░░░  60%  中高级          ↑ (+10%)
+知识体系建设       ████████░░░░░░░░░░░░  40%  成长期          ↑ (+10%)
+Context Engineering ██████████░░░░░░░░░░  50%  核心能力形成中  （新增）
+```
+
+**阶段定位**：已经跨过"AI 工具熟练使用者"阶段，正式进入"AI 工作流搭建者"。标志是：开始为 AI 构建持久化的知识体系（context 规则），而不只是一次性地给它提需求。
+
+**核心优势**：Context Engineering 能力正在成为最强的差异化优势。天然具备的"任务委托意识 + 信息架构敏感度"，通过 context 规则体系的搭建，从直觉进化成了可复用的方法论。
+
+**最大杠杆点**：Context 规则的实战验证与迭代。已搭建 11 个 context 规则，下一步是验证哪些真的让 AI 输出变好了、哪些是冗余的。
+  new_string: ```
+Prompt 工程        ██████░░░░░░░░░░░░░░  30%  初级实践者      ↑ (+10%)
+AI 工具使用        ████████████░░░░░░░░  60%  中高级          ↑ (+10%)
+知识体系建设       ██████████░░░░░░░░░░  50%  体系化阶段      ↑ (+20%)
+Context Engineering ████████████░░░░░░░░  60%  已形成核心能力  （新增）
+```
+
+**阶段定位**：已经跨过"AI 工作流搭建者"的入门期，进入"搭建者 + 推广者"阶段。标志是：不仅为自己构建 context 体系，还在为团队搭建知识基础设施。
+
+**核心优势**：Context Engineering 已经是最强的差异化能力。从个人 context 规则 → 团队知识空间 → 方法论分享，形成了实践-抽象-推广的完整闭环。
+
+**最大杠杆点**：验证 context 的实际效果。搭建已经很扎实，下一步是量化"有 context vs 没 context"对 AI 产出质量的差异，用数据说话。
+
+[Tool result] StrReplace
+
+assistant:
+最后同步索引文件。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+  old_string: > 说明：仅评估个人主导的实践（personal 空间），aries-teach/aries 由团队搭建，属于使用者角色
+  new_string: > 说明：评估个人主导的实践（personal 空间 + aries/团队-增长/）
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+  old_string: ```
+Prompt 工程        ██████░░░░░░░░░░░░░░  30%  初级实践者
+AI 工具使用        ████████████░░░░░░░░  60%  中高级
+知识体系建设       ████████░░░░░░░░░░░░  40%  成长期
+Context Engineering ██████████░░░░░░░░░░  50%  核心能力形成中
+```
+
+**阶段定位**：已进入"AI 工作流搭建者"阶段。标志：开始为 AI 构建持久化知识体系（context 规则），而不只是一次性提需求。
+
+**核心优势**：Context Engineering —— 从直觉进化成可复用的方法论。
+
+**最大杠杆点**：Context 规则的实战验证与迭代。
+  new_string: ```
+Prompt 工程        ██████░░░░░░░░░░░░░░  30%  初级实践者
+AI 工具使用        ████████████░░░░░░░░  60%  中高级
+知识体系建设       ██████████░░░░░░░░░░  50%  体系化阶段
+Context Engineering ████████████░░░░░░░░  60%  已形成核心能力
+```
+
+**阶段定位**："搭建者 + 推广者"。不仅为自己构建 context 体系，还在为团队搭建知识基础设施。
+
+**核心优势**：Context Engineering —— 从个人规则到团队基础设施，实践-抽象-推广的完整闭环。
+
+**最大杠杆点**：验证 context 的实际效果，用数据说话。
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+  old_string: | 2026-03-18 | W12 | AI 工作流搭建者 | 搭建 11 个 context 规则、创建 context 管理规范 skill、完成流量承接深度分析、持续使用 prd-review、准备"PM 即 Context Engineer"分享。新增 Context Engineering 维度 | [assessments/2026-W12.md](assessments/2026-W12.md) |
+  new_string: | 2026-03-18 | W12 | 搭建者+推广者 | 11 个 context 规则 + 增长团队空间（含 context 管理体系）+ 流量承接分析 + prd-review 持续使用 + "PM 即 Context Engineer"分享。新增 Context Engineering 维度 | [assessments/2026-W12.md](assessments/2026-W12.md) |
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/skills/skill-map.md
+  old_string: ```
+        W09     W12
+Prompt   20% ──→ 30%  (+10%)
+工具     50% ──→ 60%  (+10%)
+知识     30% ──→ 40%  (+10%)
+Context   —  ──→ 50%  (新增)
+```
+  new_string: ```
+        W09     W12
+Prompt   20% ──→ 30%  (+10%)
+工具     50% ──→ 60%  (+10%)
+知识     30% ──→ 50%  (+20%)
+Context   —  ──→ 60%  (新增)
+```
+
+[Tool result] StrReplace
+
+assistant:
+更新完毕。团队空间的加入主要影响了两个维度：
+
+- **知识体系建设** 40%→50%（+10%）：团队空间的归档模板和 context 搬运流程说明知识沉淀已经从"个人习惯"升级到"团队基础设施"
+- **Context Engineering** 50%→60%（+10%）：context 质量管理从"有意识"升级到"已落地"——团队 context 目录的 5 项 review 检查清单是生产级别的质量管控
+
+最让我调整判断的是这个：上次评估我把"帮团队搭建 context 体系"放在长期目标里，结果你已经在做了。所以阶段定位也从"搭建者"调整为"搭建者 + 推广者"。
