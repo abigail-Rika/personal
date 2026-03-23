@@ -1,0 +1,513 @@
+user:
+[Image]
+[Image]
+<image_files>
+The following images were provdied by the user and saved to the workspace for future use:
+1. /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/assets/_______165e0d9f-4c76-451f-95d1-5ef9269c3b53-18ea8616-b3fc-4cbc-9621-7a17955eafa6.png
+2. /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/assets/_______0fa3771f-ae7e-4eae-9615-28fb9d6578d7-8d31d46b-383e-44cb-8e84-7b8319d83e63.png
+
+These images can be copied for use in other locations.
+</image_files>
+<user_query>
+高小盈 3-4 11:15
+老师，咱们抖店云的短信发送已经恢复了，有几件事需要您帮忙确认下： 1、短信发送的频次、时间点和数量分别是多少； 2、咱们现在短信发送的时候是不是把【已退款】的订单筛选掉了呢；
+
+莫森宇 3-4 11:19
+“高小盈： 发送频次是说。分别在用户下单后多久、哪个时间点发送短信，会发送多少条短信” ------ 1，我看看，看有个配置的，我梳理下给你
+
+莫森宇 3-4 11:20
+2 咱们现在短信发送的时候是不是把【已退款】的订单筛选掉了呢； 退款了的订单还是发的，直到激活，这块没修改过，是有问题么，我可以确认下。
+
+高小盈 3-4 11:24
+因为之前我们是这样的 a、修改虚拟商品后，我们是「用户下单立刻发送一条提醒兑换的，下单后2分钟发送一条催兑换的」 b、已退款用户不发送短信  然后今天有用户2号下的单且当天已退款，今天还有收到短信，所以我们得确认下这个
+
+高小盈 3-4 11:48
+“高小盈： 因为之前我们是这样的 a、修改虚拟商品后，我们是「用户下单立刻发送一条提醒兑换的，下单后2分钟发送一条催兑换的」 b、已退款用户不发送短信  然后今天有用户2号下的单且当天已退款，今天还有收到短信，所以我们得确认下这个” ------ OK 这个是诉求哈
+莫森宇 3-4 12:07
+[图片] [图片]
+
+高小盈 3-4 12:10
+是改完了么
+
+莫森宇 3-4 12:11
+这是现状嘿嘿。
+
+高小盈 3-4 12:12
+那要不直接改呢[捂脸]哈哈哈哈
+
+莫森宇 3-4 12:12
+等下午丰哥看下@周瑞丰  诉求1目前满足，诉求2不满足
+
+周瑞丰 3-4 14:16
+需要改吗
+
+高小盈 3-4 14:17
+关于短信的两个需求是要的
+
+以上是电商直播群的一段聊天记录，其中莫森宇发的两个图片我已经补上，帮我整理一下这个需求的背景和我需要做什么
+
+</user_query>
+
+assistant:
+[Thinking] The user wants me to analyze a chat conversation from a work group chat about SMS sending issues with their e-commerce platform (抖店云/Douyin Store Cloud). They've also provided two images that show the current SMS sending timeline and a note about refunded users still receiving SMS.
+
+Let me read the images and understand the context:
+
+**Image 1** shows a complete SMS timeline after user payment:
+- Assumes user pays during daytime on D0 (before 20:00) and never activates
+- 11 SMS messages total, spanning 7 days (D0-D6)
+- Various trigger mechanisms and templates
+
+**Image 2** shows the refund user issue:
+
+
+- After refund, mainStatus changes to 21/22/39, but ariesOrderId remains 0
+- All 11 SMS trigger logics only check ariesOrderId ≠ 0, not refund status
+- So refunded users continue receiving activation reminder SMS during D0-D6
+
+Now I'm seeing what the user (文悦/Jiwenyue) needs to do based on this conversation. The operations person (高小盈) asked about SMS sending frequency, timing, quantity, and whether refunded orders are filtered out. The developer (莫森宇) confirmed the current state: 11 SMS messages are being sent, but the system doesn't actually filter out refunded users because the trigger logic only checks if ariesOrderId exists, not whether the order was refunded.
+
+高小盈 has two requirements: the SMS frequency/timing/quantity is already working as expected, but refunded users should not receive SMS, which is currently not being handled. 周瑞丰 asked if this needs to be changed, and 高小盈 confirmed both requirements need to be met.
+根据聊天记录和两张图片，整理如下：
+
+---
+
+## 背景
+
+抖店云的短信发送功能恢复后，高小盈提了两个确认点：
+
+1. **短信发送的频次、时间点和数量是多少？**
+2. **已退款的订单是否被过滤掉了？**
+
+莫森宇梳理了现状（即你贴的两张图），结论是：
+
+- **诉求 1 已满足**：现有短信策略清晰，共 11 条短信，覆盖 D0~D6，7 天持续催激活
+- **诉求 2 不满足**：退款用户仍然会收到短信
+
+---
+
+## 现状问题
+
+根据莫森宇发的图：
+
+**短信时间线**（假设用户 D0 白天支付、一直不激活）：
+- D0：支付后立即 1 条 + 2 分钟后 1 条 + 20:00 1 条 = **3 条**
+- D1~D2：每天 07:00 抖音通知 + 20:00 抖店短信 = 每天 **2 条**
+- D3~D6：每天 20:00 抖店短信 = 每天 **1 条**
+- **总计最多 11 条，持续 7 天**
+
+**退款用户的 bug**：
+- 退款后 `mainStatus` 会变成 21/22/39，但 `ariesOrderId` 仍为 0
+- 所有短信触发逻辑（RedemptionNotifyReminder、DouyinSmsNotifyReminder、DouDianSendSmsJob）**只检查 `ariesOrderId ≠ 0`，不检查退款状态**
+- 导致退款用户在 D0~D6 期间仍然持续收到催激活短信
+
+高小盈反馈的实际 case：用户 3 月 2 日下单当天已退款，3 月 4 日仍收到了短信。
+
+---
+
+## 你需要做什么
+
+高小盈已明确「两个需求都要」，周瑞丰（丰哥）也已介入：
+
+1. **推动修复退款用户仍发短信的问题** — 让研发在短信触发逻辑中增加退款状态校验（检查 `mainStatus` 是否为 21/22/39），退款用户不再发送短信
+2. **确认修复范围** — 需要和莫森宇/丰哥确认：是所有 11 条短信的触发链路都加退款校验，还是只改部分（建议全部加）
+3. **确认存量处理** — 已退款但还在 D0~D6 窗口期内的用户，是否需要立即停发（还是只改增量逻辑）
+
+需要我帮你把这个整理成一个正式的需求描述或者加到待办里吗？
+
+user:
+<user_query>
+整理成需求描述并加到 todos 中
+</user_query>
+
+assistant:
+先看一下当前的 todos 文件。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/todos.md
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/work/todos.md
+  old_string: ### 4. 电商短信——发送时机和人群调整
+- **TODO**：周一和业务方对齐需求
+- **状态**：⏳ 周一对齐
+  new_string: ### 4. 电商短信——退款用户停发短信
+- **背景**：3.4 高小盈反馈，抖店云短信恢复后发现两个问题：(1) 短信发送频次/时间点/数量需确认；(2) 已退款用户仍收到催激活短信。莫森宇确认现状——共 11 条短信覆盖 D0~D6，但触发逻辑只校验 `ariesOrderId ≠ 0`，不检查退款状态（mainStatus 21/22/39），导致退款用户持续收到短信。高小盈明确两个诉求都要，丰哥已介入。
+- **需求**：
+  1. 所有短信触发链路增加退款状态校验，退款用户不再发送短信
+  2. 确认存量处理方案——已退款但仍在 D0~D6 窗口期的用户是否需立即停发
+- **TODO**：和丰哥/莫森宇确认修复范围和排期，跟进上线
+- **状态**：🔥 需求已明确，待研发排期
+
+[Tool result] StrReplace
+
+assistant:
+已更新。待办第 4 条从之前的「周一对齐」更新为完整的需求描述，包含：
+
+- **背景**：问题来源、现状 bug（退款用户仍收到短信的根因是只校验 `ariesOrderId`，不检查退款状态）
+- **需求**：两点——全链路加退款校验 + 确认存量处理方案
+- **TODO**：和丰哥/莫森宇确认修复范围和排期
+- **状态**：需求已明确，待研发排期
+
+user:
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039595114
+梳理了个 prd，帮我 review 
+</user_query>
+
+assistant:
+[Thinking] The user wants me to review a PRD. They've provided a Confluence link. Let me first fetch the Confluence content, and also read the prd-review SKILL.md to follow the review process.
+先获取 PRD 内容和 review skill。
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 1039595114
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/SKILL.md
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have both the PRD content and the review skill. Let me follow the skill's workflow:
+
+1. **Step 1**: Already done - fetched the Confluence content
+2. **Step 2**: Identify version - The title is "抖店云退款用户收到短信问题修复" - no version number in the title. This seems like a v1 level document (problem analysis and solution direction), but it's quite short. I need to determine the version. Given no version indicator, I should ask the user... but actually, looking at the content, this is a bug fix, not a typical PRD. It has background, current status, and requirements - more like a v5 level since it already has specific implementation requirements. But actually, it's more like a v1 since it's defining the problem and solution direction.
+
+
+3. **Step 3**: PRD Type - This is clearly a 🟢 快速验证型 (quick fix): it's a bug fix with low development complexity, short dev cycle (likely ≤1 week), and low failure cost since it can be rolled back. I'll apply standard review depth.
+
+4. **Step 4**: Now I need to check the review-checklist.md to see what detailed criteria apply here.
+读取详细的 review checklist。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/review-checklist.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have all the information needed. Let me follow the review skill workflow:
+
+**Step 2: Version identification**
+Title: "抖店云退款用户收到短信问题修复" - no version number. This is essentially a bug fix PRD, more like a v1 (problem + solution direction). It doesn't have v5 level interaction design.
+
+**Step 3: PRD Type & Review Depth**
+- Type: 🟢 快速验证型 - This is a bug fix, short dev cycle, low failure cost, can be rolled back
+- Review depth: Standard - doesn't directly impact core business metrics, simple scope
+  
+**Step 4: Review**
+
+Looking at the user perspective, the PRD approaches this from a technical angle rather than centering on user experience, though the core issue is straightforward—refunded users shouldn't be getting activation SMS. The problem statement is solid with a concrete example from 3/2 orders that were refunded the same day but still triggered SMS on 3/4, and the solution direction is clearly correct with no apparent side effects. The main gap is that it could articulate the user experience impact more explicitly.
+
+The root cause is well-identified: the trigger only validates that `ariesOrderId ≠ 0` without checking refund status flags like `mainStatus` 21/22/39, which is a straightforward technical fix. However, the benefits aren't quantified—we know this reduces complaints and SMS costs while preventing confusion for refunded users, but there's no data on how many users are actually affected. Adding the refund status check directly addresses the root cause, so this is the right approach. For a bug fix of this type, competitive analysis and solution comparisons aren't necessary.
+
+The evaluation plan for verifying the fix is completely missing—I need to define how we'll test this and what metrics to monitor post-deployment. There are also unresolved decision points: the exact `mainStatus` values (21/22/39) need confirmation since that information came secondhand, and we need to verify that immediately stopping SMS for existing refunded orders is actually feasible before committing to it.
+
+Beyond that, I'm noticing several gaps: no assessment of how many users this impacts, no testing strategy outlined, and the mechanism for canceling already-scheduled SMS jobs isn't explained. The 11-SMS timeline was borrowed from context but should be validated rather than assumed. I should also clarify whether we need to handle users who've already activated their services to keep the scope manageable, and most importantly, I need to understand why `ariesOrderId` stays at 0 after refund—is that always the case for unactivated users regardless of refund status, or is there something specific about the refund flow that causes this?
+按 review skill 走完流程，输出评审报告并存档。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/reviews/抖店云退款用户短信停发_review_20260310.md
+  contents: # PRD Review：抖店云退款用户收到短信问题修复
+
+> 版本：v1 | PRD 类型：🟢快速验证（bug 修复） | Review 深度：标准 | 日期：2026-03-10
+
+## 门禁判断
+
+⚠️ 方向正确，但有 2 个阻塞点需要补充后才能交付研发：
+1. **退款状态值未确认**——PRD 原文写了"mainStatus 是否为 21/22/39← cur 老师说的，不包准"，这是核心逻辑，不能带着"不包准"交给研发
+2. **缺少验证方案**——修完之后怎么确认 fix 生效了？
+
+## 各维度评价
+
+### 1. 用户视角
+- **判断**：⚠️
+- **评价**：PRD 从技术/业务视角描述（"短信恢复后发现问题"），没有从用户感受出发。实际上用户体验很差——已经退款了还天天收到催激活短信，容易产生负面情绪甚至投诉。这一点值得写进去，因为它能让研发理解"为什么这个 bug 值得优先修"。
+- **领导可能会问**：有用户投诉吗？退款用户收到短信后有没有差评或二次投诉？
+- **改进思路**：开头加一句用户视角的问题描述，比如"用户已退款，仍在 7 天内持续收到催激活短信，造成困扰"。如果有实际投诉数据就附上。
+
+### 2. 问题定义
+- **判断**：✅
+- **评价**：问题清晰——退款用户仍收到催激活短信。有实际 case 佐证（3 月 2 日下单当天退款，3 月 4 日仍收到短信）。作为 bug 修复，这个粒度够了。
+
+### 3. 问题分析
+- **判断**：✅
+- **评价**：根因分析到位——触发逻辑只校验 `ariesOrderId ≠ 0`，不检查退款状态。三个触发组件（RedemptionNotifyReminder、DouyinSmsNotifyReminder、DouDianSendSmsJob）都有这个问题。这部分是莫森宇梳理的，技术根因明确。
+
+### 4. 收益判断
+- **判断**：⚠️
+- **评价**：PRD 没有写收益。虽然 bug 修复的收益"显然"是止损，但缺少量级感知。
+- **领导可能会问**：每天有多少退款用户在收到无效短信？短信成本浪费了多少？
+- **改进思路**：补一个简单的影响面估算——日均退款订单量 × 最多 11 条 = 浪费的短信量。不需要很精确，有量级感知就行。
+
+### 5. 是否直击根本
+- **判断**：✅
+- **评价**：在触发逻辑中加退款状态校验，直接解决根因，方案和问题复杂度匹配。
+
+### 6. 竞品/行业参照
+- **判断**：N/A
+- 这是内部 bug 修复，不需要竞品参照。
+
+### 7. 方案路线对比
+- **判断**：N/A
+- bug 修复方案唯一（在触发处加校验），不需要对比。
+
+### 8. 效果评估思路
+- **判断**：❌
+- **评价**：完全缺失。修完之后怎么知道 fix 生效了？
+- **改进思路**：至少要有：
+  1. **测试方案**：找一个已退款的测试订单，验证不再触发短信
+  2. **线上验证**：上线后监控退款用户的短信发送量，确认降为 0
+  3. **观察周期**：建议观察 7 天（覆盖一个完整的 D0~D6 周期）
+
+### 9. 待决策点
+- **判断**：⚠️
+- **评价**：PRD 暴露了一个关键未决项（mainStatus 的值"不包准"），态度诚实，但这个不能带着模糊上线。此外还有隐藏的待决策点没提出来。
+- **隐藏的模糊点**：
+  1. **存量处理的"立即停发"怎么实现？**——D1~D6 的短信是通过 ReminderJob/DouDianSendSmsJob 定时触发的，"立即停发"是指改完逻辑后自然生效（因为每次触发前都会重新校验），还是需要额外清理已经排入队列的任务？这个需要和研发确认。
+  2. **用户激活后是否也应该停发？**——现状描述是"一直不激活"的场景。如果用户在 D0 退款但 D3 又重新下单并激活了呢？虽然不在本次修复范围内，但值得确认边界。
+
+## 修改优先级
+
+1. **【必须】确认 mainStatus 退款状态值**——找莫森宇/丰哥确认具体值，去掉"不包准"，这是开发的前置条件
+2. **【必须】补效果验证方案**——至少写明测试方案和线上观察指标
+3. **【建议】补影响面数据**——日均退款量 × 短信条数，给优先级判断提供依据
+4. **【建议】和研发确认"存量立即停发"的实现方式**——是逻辑修改后自然生效，还是需要额外操作
+
+## 给你的建议
+
+PRD 整体结构清晰，现状梳理和根因分析都不错（特别是把 11 条短信时间线和触发机制写清楚了，这让研发能快速理解改哪里）。
+
+核心提升点：**bug 修复类 PRD 容易写成"现状 + 改法"就完了**，但领导关心的不只是"改不改"，还有"改完怎么验证"和"影响面多大"。加上这两块，PRD 就完整了。
+
+另外，"不包准"这种表述虽然真实，但出现在正式 PRD 里会让评审人觉得你没做完功课。建议改成"待研发侧确认具体状态值"——意思一样，但呈现出来是"我知道这里需要确认，已经安排了"，而不是"我也不确定"。
+
+
+[Tool result] Write
+
+assistant:
+Review 已完成并存档到 `prd/prd-review/reviews/抖店云退款用户短信停发_review_20260310.md`。
+
+---
+
+**门禁结论：⚠️ 方向没问题，补两个点就能交付研发。**
+
+核心要改的：
+
+1. **mainStatus 退款状态值必须确认**——"不包准"不能出现在交付给研发的 PRD 里，找莫森宇确认后改成确定值
+2. **补效果验证方案**——修完怎么知道 fix 生效了？至少要有测试方案（找退款测试订单验证）和线上观察指标（退款用户短信发送量降为 0，观察 7 天）
+
+建议补的：
+
+3. 加一句影响面估算（日均退款量 × 11 条 = 浪费短信量），给优先级判断提供量级感知
+4. 和研发确认"存量立即停发"的实现方式——是改完逻辑自然生效，还是需要额外清理排队任务
+
+另外一个小建议：PRD 里"cur 老师说的，不包准"换成"待研发侧确认具体状态值"——意思一样，但显得你安排了确认动作，而不是"我也吃不准"。
+
+user:
+<user_query>
+归档吧
+</user_query>
+
+assistant:
+[Thinking] The user wants to archive something. Based on the context, they're likely referring to archiving the "抖店云退款用户短信停发" PRD review we just did, or possibly the PRD itself. But wait - looking at the aries project structure, there's a `团队-增长/项目归档/` directory. Let me check what the archive template looks like and what projects exist there.
+
+Actually, looking at the recently viewed files, the user has `投放落地页配置修复.md` open and `_template.md` for project archiving. But in the context of our conversation, we've been working on the 抖店云退款用户短信 issue. 
+
+Let me look at the archive template to see what format and information I need to use when archiving this project.
+先看一下归档模板和现有归档的结构。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/项目归档/_template.md
+[Tool call] Glob
+  glob_pattern: **/团队-增长/项目归档/*/
+  target_directory: /Users/jiwenyue/cursorProjects/aries
+
+[Tool result] Read
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Glob
+  glob_pattern: **/团队-增长/项目归档/**/*.md
+  target_directory: /Users/jiwenyue/cursorProjects/aries
+
+[Tool result] Glob
+
+assistant:
+看一个已有归档作为参考。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/项目归档/断课老用户前测/断课老用户增加前测.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I understand the archive format. The user wants to archive the "抖店云退款用户短信停发" project. Let me create the archive based on the information we have from the conversation.
+
+This is a bug fix project, so the template needs some adaptation - it's not an AB experiment, it's a fix. Let me create the archive file.
+[Tool call] Shell
+  command: mkdir -p "/Users/jiwenyue/cursorProjects/aries/团队-增长/项目归档/抖店云退款用户短信停发"
+  description: Create archive directory
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/项目归档/抖店云退款用户短信停发/抖店云退款用户短信停发.md
+  contents: # 抖店云退款用户短信停发
+
+> 状态：🔥 进行中（待研发排期） | 上线时间：待定
+
+## 项目简介
+
+修复退款用户仍收到催激活短信的 bug——在短信触发逻辑中增加退款状态校验，退款用户不再发送短信。
+
+- PRD：[Confluence](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039595114)
+
+## 背景与目标
+
+**背景**：
+
+抖店云短信恢复后，高小盈反馈已退款用户仍收到催激活短信。莫森宇确认根因：所有短信触发逻辑（RedemptionNotifyReminder、DouyinSmsNotifyReminder、DouDianSendSmsJob）只校验 `ariesOrderId ≠ 0`，不检查退款状态（`mainStatus` 21/22/39）。
+
+实际 case：用户 3 月 2 日下单当天退款，3 月 4 日仍收到短信。
+
+**现状短信策略**（D0 白天支付、一直不激活）：
+
+| 时间段 | 短信数 | 说明 |
+|--------|--------|------|
+| D0 | 3 条 | 支付后立即 + 2分钟后 + 20:00 |
+| D1~D2 | 每天 2 条 | 07:00 抖音通知 + 20:00 抖店短信 |
+| D3~D6 | 每天 1 条 | 20:00 抖店短信 |
+| **总计** | **最多 11 条** | **持续 7 天** |
+
+**目标**：退款用户在 D0~D6 期间不再收到催激活短信。
+
+## 方案摘要
+
+1. 所有 11 条短信的触发链路增加退款状态校验（检查 `mainStatus`）
+2. 存量处理：已退款但仍在 D0~D6 窗口期的用户立即停发
+
+## 验证方式
+
+- [ ] 找已退款测试订单验证不再触发短信
+- [ ] 上线后监控退款用户短信发送量，确认降为 0
+- [ ] 观察 7 天（覆盖完整 D0~D6 周期）
+
+## 数据结果
+
+> 上线后填入
+
+## 待关注
+
+- [ ] 确认 mainStatus 退款状态的具体值（PRD 中写"不包准"，需研发侧确认）
+- [ ] 和研发确认"存量立即停发"的实现方式——改完逻辑后自然生效 or 需额外清理队列任务
+- [ ] 补影响面数据：日均退款订单量 × 最多 11 条 = 浪费的短信量
+
+## 相关资料
+
+| 资料 | 链接 |
+|------|------|
+| PRD | [Confluence](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039595114) |
+| PRD Review | `personal/work/prd/prd-review/reviews/抖店云退款用户短信停发_review_20260310.md` |
+
+
+[Tool result] Write
+
+assistant:
+已归档到 `aries/团队-增长/项目归档/抖店云退款用户短信停发/`。
+
+状态标记为「进行中，待研发排期」，待关注事项里保留了 review 中提到的 3 个阻塞/待确认项。上线后回来填数据结果就行。
+
+user:
+<user_query>
+不要归档到 aries 啊，我说归档的时候是指放到 personal 里
+</user_query>
+
+assistant:
+[Tool call] Shell
+  command: mkdir -p "/Users/jiwenyue/cursorProjects/personal/work/projects"
+  description: Ensure projects directory exists
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/项目归档/抖店云退款用户短信停发/抖店云退款用户短信停发.md
+
+[Tool result] Read
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/projects/抖店云退款用户短信停发.md
+  contents: # 抖店云退款用户短信停发
+
+> 状态：🔥 进行中（待研发排期） | 上线时间：待定
+
+## 项目简介
+
+修复退款用户仍收到催激活短信的 bug——在短信触发逻辑中增加退款状态校验，退款用户不再发送短信。
+
+- PRD：[Confluence](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039595114)
+
+## 背景与目标
+
+**背景**：
+
+抖店云短信恢复后，高小盈反馈已退款用户仍收到催激活短信。莫森宇确认根因：所有短信触发逻辑（RedemptionNotifyReminder、DouyinSmsNotifyReminder、DouDianSendSmsJob）只校验 `ariesOrderId ≠ 0`，不检查退款状态（`mainStatus` 21/22/39）。
+
+实际 case：用户 3 月 2 日下单当天退款，3 月 4 日仍收到短信。
+
+**现状短信策略**（D0 白天支付、一直不激活）：
+
+| 时间段 | 短信数 | 说明 |
+|--------|--------|------|
+| D0 | 3 条 | 支付后立即 + 2分钟后 + 20:00 |
+| D1~D2 | 每天 2 条 | 07:00 抖音通知 + 20:00 抖店短信 |
+| D3~D6 | 每天 1 条 | 20:00 抖店短信 |
+| **总计** | **最多 11 条** | **持续 7 天** |
+
+**目标**：退款用户在 D0~D6 期间不再收到催激活短信。
+
+## 方案摘要
+
+1. 所有 11 条短信的触发链路增加退款状态校验（检查 `mainStatus`）
+2. 存量处理：已退款但仍在 D0~D6 窗口期的用户立即停发
+
+## 验证方式
+
+- [ ] 找已退款测试订单验证不再触发短信
+- [ ] 上线后监控退款用户短信发送量，确认降为 0
+- [ ] 观察 7 天（覆盖完整 D0~D6 周期）
+
+## 数据结果
+
+> 上线后填入
+
+## 待关注
+
+- [ ] 确认 mainStatus 退款状态的具体值（PRD 中写"不包准"，需研发侧确认）
+- [ ] 和研发确认"存量立即停发"的实现方式——改完逻辑后自然生效 or 需额外清理队列任务
+- [ ] 补影响面数据：日均退款订单量 × 最多 11 条 = 浪费的短信量
+
+## 相关资料
+
+| 资料 | 链接 |
+|------|------|
+| PRD | [Confluence](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039595114) |
+| PRD Review | `work/prd/prd-review/reviews/抖店云退款用户短信停发_review_20260310.md` |
+
+[Tool call] Delete
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/项目归档/抖店云退款用户短信停发/抖店云退款用户短信停发.md
+
+[Tool result] Write
+
+[Tool result] Delete
+
+assistant:
+[Tool call] Shell
+  command: rmdir "/Users/jiwenyue/cursorProjects/aries/团队-增长/项目归档/抖店云退款用户短信停发"
+  description: Remove empty aries archive directory
+
+[Tool result] Shell
+
+assistant:
+搞定。已从 aries 删除，移到 `personal/work/projects/抖店云退款用户短信停发.md`。PRD Review 的引用路径也改成了 personal 内的相对路径。

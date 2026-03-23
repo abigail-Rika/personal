@@ -1,0 +1,241 @@
+user:
+<user_query>
+这个项目是如何运作的？
+</user_query>
+
+assistant:
+[Thinking] The user is asking how this project works. Let me explore the project structure to give a comprehensive answer.
+让我先了解一下项目的整体结构。
+[Tool call] Shell
+  command: find /Users/jiwenyue/aries-teach -type f -not -path '*/.git/*' | head -60
+  description: List all project files
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/README.md
+
+[Tool result] Read
+
+assistant:
+这个项目的运作方式如下:
+
+---
+
+## 项目定位
+
+**aries-teach** 是教研AI组的 **prompt/skill/agent 管理仓库**，不是常规的代码项目。它的核心目的是管理和迭代各类 AI 能力模块，服务于海豚AI学（猿辅导旗下）的小学数学AI课程内容生产。
+
+---
+
+## 核心概念：Skill 与 Agent
+
+项目围绕两类 AI 能力模块运作：
+
+### 1. Skill（能力增强模块）
+
+- 存放在 `.claude/skills/` 目录下，每个 skill 一个独立目录
+- 核心文件是 `SKILL.md`，本质上是一个结构化的 prompt
+- 当用户在对话中提到特定关键词时，AI 会读取对应的 `SKILL.md` 来"激活"这个能力
+- **工作方式**：用户说"帮我生成标答" → AI 读取 `answer-generator/SKILL.md` → 按照里面的指令执行
+
+目前有 **8 个 Skills**：
+
+| Skill | 用途 |
+|---|---|
+| `answer-generator` | 自动生成标准答案 |
+| `board-component-generator` | 生成教学板书指令 |
+| `prd-writer` | 撰写产品需求文档 |
+| `git-commit-helper` | 辅助 Git 提交 |
+| `git-push-review` | 辅助推送和发起 review |
+| `git-branch-creator` | 创建规范命名的分支 |
+| `git-branch-switcher` | 安全切换分支 |
+| `git-mr-updater` | 响应 MR 评审意见 |
+
+### 2. Agent（独立任务处理单元）
+
+- 存放在 `.claude/agents/` 目录下
+- 通过 `Task` 工具作为子代理调用，能独立完成复杂任务
+- 目前有 1 个 Agent：`answer-quality-checker`，用于质检标答质量并给出 A/B/C 等级
+
+---
+
+## 运作流程
+
+```
+用户提需求 → AI 识别关键词 → 读取对应 SKILL.md → 按 prompt 执行任务
+                                                    ↓
+                                             （如需质检）
+                                                    ↓
+                                        调用 Agent 做子任务
+```
+
+举个例子：用户说"生成这道选择题的标答"：
+1. AI 识别到"生成标答"关键词
+2. 读取 `answer-generator/SKILL.md` 获取生成标答的完整指令
+3. 按照 skill 中定义的流程和格式要求生成标答
+4. 自动调用 `answer-quality-checker` agent 进行质检
+5. 返回标答 + 质检结果
+
+---
+
+## 质量保障机制
+
+每个 skill 目录下都包含：
+- **`examples/`** — 真实的输入输出案例，既是文档也是测试基准
+- **`CHANGELOG.md`** — 变更记录，追踪迭代历史
+- **`templates/`**（可选）— 标准化的输出模板
+
+---
+
+## 本质总结
+
+这个项目本质上是一个 **"AI 能力仓库"**：把各种专业能力封装成结构化的 prompt 文件，通过 Git 管理版本和迭代，用示例驱动测试和质量保证。团队成员（教研老师和 AI 工程师）通过在 Cursor/Claude 中与这些 skill 交互来完成日常的内容生产工作。
+
+user:
+<user_query>
+如果我想要新建一个仓库，需要怎么做呢
+</user_query>
+
+assistant:
+[Thinking] The user is asking how to create a new repository similar to this one (aries-teach). They want to know how to set up a new prompt/skill/agent management repository from scratch.
+
+Let me think about what's needed based on my understanding of this project's structure.
+你是说新建一个类似 aries-teach 这样的 **prompt/skill/agent 管理仓库**，对吗？
+
+基于这个项目的结构和规范，以下是从零搭建的完整步骤：
+
+---
+
+## 1. 初始化仓库
+
+```bash
+mkdir my-ai-repo && cd my-ai-repo
+git init
+```
+
+## 2. 创建核心目录结构
+
+```bash
+mkdir -p .claude/agents
+mkdir -p .claude/skills
+```
+
+这两个目录是整个仓库的核心：
+- `.claude/agents/` — 放独立的 agent 定义文件（`.md`）
+- `.claude/skills/` — 放 skill 模块，每个 skill 一个子目录
+
+## 3. 创建 `CLAUDE.md`（最关键的文件）
+
+这是 AI 的"操作手册"，放在仓库根目录。它定义了：
+- AI 的身份和目标（你希望 AI 扮演什么角色）
+- 仓库的管理哲学和质量标准
+- 目录结构规范
+- Skill/Agent 的开发规范
+- 项目特定的业务上下文
+- Git 提交规范
+- 交互风格
+
+可以参考 aries-teach 的 `CLAUDE.md` 作为模板，替换成你自己的业务场景。
+
+## 4. 创建 `README.md`
+
+简要说明项目用途、现有能力列表、使用方式。
+
+## 5. 创建 `.gitignore`
+
+```gitignore
+.DS_Store
+*.swp
+*.swo
+```
+
+## 6. 开发第一个 Skill
+
+```bash
+mkdir -p .claude/skills/my-first-skill/examples
+```
+
+然后创建以下文件：
+
+| 文件 | 作用 | 必需 |
+|---|---|---|
+| `SKILL.md` | Skill 的 prompt 定义 | 是 |
+| `examples/case-1.md` | 示例1 | 是（至少2个） |
+| `examples/case-2.md` | 示例2 | 是 |
+| `CHANGELOG.md` | 变更记录 | 推荐 |
+| `templates/` | 输出模板 | 可选 |
+
+`SKILL.md` 的基本结构：
+
+```markdown
+---
+name: my-first-skill
+description: 一句话描述功能
+---
+
+# Skill 标题
+
+## 身份与职责
+你是...
+
+## 核心能力
+- 能力1
+- 能力2
+
+## 工作流程
+1. 第一步
+2. 第二步
+
+## 输出规范
+[定义输出格式]
+
+## 能力边界
+[说明不能做什么]
+```
+
+## 7. 开发第一个 Agent（可选）
+
+在 `.claude/agents/` 下创建一个 `.md` 文件：
+
+```markdown
+---
+name: my-agent
+description: 一句话描述
+tools: [Read, Grep, Shell]
+model: sonnet
+---
+
+# Agent 标题
+
+## Agent 定位与能力
+...
+```
+
+## 8. 提交初始版本
+
+```bash
+git add .
+git commit -m "[feat] 初始化项目结构"
+```
+
+---
+
+## 总结：最小可用仓库只需要 3 样东西
+
+```
+my-ai-repo/
+├── CLAUDE.md                    ← AI 的操作手册
+├── .claude/
+│   └── skills/
+│       └── my-first-skill/
+│           ├── SKILL.md         ← 第一个能力定义
+│           └── examples/
+│               └── example-1.md ← 至少一个示例
+└── README.md                    ← 项目说明
+```
+
+**`CLAUDE.md` 是灵魂文件**，它决定了 AI 在这个仓库里怎么思考和工作。建议先花时间把这个文件写好，再逐步添加 skills 和 agents。
+
+需要我帮你实际创建一个新仓库吗？告诉我你的业务场景，我可以帮你定制 `CLAUDE.md` 和第一个 skill。

@@ -1,0 +1,1411 @@
+user:
+<user_query>
+@personal/work/prd/投放落地页配置修复.md 这个需求需要再细化一点，比如需求 1 里面，需要增加一些后台的原型，你可以用 html 或者是其他方式做。做成什么样子，我记得我好像发送过给你，如果你不记得了，可以再问我要
+</user_query>
+
+assistant:
+[Thinking] The user wants me to refine the PRD at `personal/work/prd/投放落地页配置修复.md`, specifically for requirement 1, adding some backend prototype/wireframes. They mention they might have shared what it should look like before, and if I don't remember, I should ask.
+
+Let me first read the current PRD file to understand the content.
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/投放落地页配置修复.md
+
+[Tool result] Read
+
+assistant:
+我看了这份 PRD 的内容。需求 1 关于恢复异形弹窗功能，你提到需要增加后台配置的原型。
+
+我翻了一下历史对话，没有找到你之前发过的后台原型相关的截图或描述。你方便再发一下吗？比如：
+
+1. 后台配置页面现在长什么样（截图）
+2. 你期望修复后的配置入口应该是什么样的（或者以前可用时的截图）
+
+有了这些参考，我可以用 HTML 做一个后台原型页面出来，嵌入到 PRD 里。
+
+user:
+[Image]
+[Image]
+<image_files>
+The following images were provdied by the user and saved to the workspace for future use:
+1. /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/assets/image-60b7ec9b-4b40-44f2-a97c-de6abd32761b.png
+2. /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/assets/_______bc73e170-cda4-4d90-8043-85fd510c903e-2e8d8b5d-95bd-48e2-b192-6b55b1e8e292.png
+
+These images can be copied for use in other locations.
+</image_files>
+<user_query>
+p1 是现在的样子，p2 是之前的
+</user_query>
+
+assistant:
+[Thinking] Let me analyze the two screenshots:
+
+**P1 (current state)**: The landing page config backend showing:
+- Left sidebar with sections: 多媒体, 售卖信息, 售卖入口, 拼团售卖(旧), 拼团售卖(新), 弹窗, 其他
+- "弹窗" (popup) section is selected, showing two popup cards with images and a "展开" (expand) button
+- Center area shows a phone preview (375x667 iPhone 6/7/8) with the landing page
+- Right side shows "配置栏 - 年级选择" with some config options
+
+
+- Comparing this to the previous working state where the popup was rendering correctly with specific dimensions (300x395) and showing promotional content like "数物英暑期专属提升"
+- The current version is missing the full configuration panel for the irregularly-shaped popup, including the width/height settings, background image upload, and hot zone mapping for interactive areas
+- I need to build an HTML prototype that restores this configuration interface to show what the backend should display
+
+, then update the PRD to reference it
+
+Building the backend config prototype...
+明白了。P1 是当前状态——弹窗配置区没有异形弹窗的配置项；P2 是之前可用时的状态——右侧有完整的异形弹窗配置面板（宽高设置、背景图片上传、热区配置、预览开关）。
+
+我来做两件事：
+1. 基于 P2 的样式做一个 HTML 后台原型
+2. 把原型和更详细的配置说明补充到 PRD 里
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"创建异形弹窗后台配置原型 HTML","status":"in_progress"},{"id":"2","content":"更新 PRD 需求1，补充后台配置说明和原型引用","status":"pending"}]
+  merge: false
+
+[Tool result] TodoWrite
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/assets/异形弹窗配置原型.html
+  contents: <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>异形弹窗配置 - 后台原型</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif; background: #f5f7fa; color: #333; }
+
+  .header {
+    height: 56px; background: #fff; border-bottom: 1px solid #e4e7ed;
+    display: flex; align-items: center; padding: 0 24px; gap: 16px;
+  }
+  .header .logo { width: 32px; height: 32px; background: #409eff; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; }
+  .header .title { font-size: 15px; font-weight: 600; color: #303133; }
+  .header .tag { font-size: 12px; background: #f0f9eb; color: #67c23a; padding: 2px 8px; border-radius: 4px; }
+  .header .user { margin-left: auto; font-size: 13px; color: #909399; }
+
+  .main { display: flex; height: calc(100vh - 56px); }
+
+  /* 左侧导航 */
+  .sidebar {
+    width: 120px; background: #fff; border-right: 1px solid #e4e7ed;
+    padding: 16px 0; flex-shrink: 0;
+  }
+  .sidebar .nav-item {
+    padding: 10px 20px; font-size: 13px; color: #606266; cursor: pointer;
+    border-left: 3px solid transparent; transition: all .2s;
+  }
+  .sidebar .nav-item:hover { color: #409eff; background: #f5f7fa; }
+  .sidebar .nav-item.active { color: #409eff; border-left-color: #409eff; font-weight: 600; background: #ecf5ff; }
+
+  /* 中间预览区 */
+  .preview-area {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 24px; overflow-y: auto; background: #f5f7fa;
+  }
+  .preview-toolbar {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+  .btn-group { display: flex; border: 1px solid #dcdfe6; border-radius: 4px; overflow: hidden; }
+  .btn-group .btn {
+    padding: 6px 16px; font-size: 13px; cursor: pointer; border: none;
+    background: #fff; color: #606266; transition: all .2s;
+  }
+  .btn-group .btn.active { background: #409eff; color: #fff; }
+  .device-select {
+    padding: 6px 12px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 13px; color: #606266; background: #fff;
+  }
+  .btn-return {
+    padding: 6px 16px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 13px; background: #fff; color: #606266; cursor: pointer;
+  }
+  .btn-save {
+    padding: 6px 20px; border: none; border-radius: 4px;
+    font-size: 13px; background: #409eff; color: #fff; cursor: pointer; font-weight: 500;
+  }
+
+  .phone-frame {
+    width: 375px; min-height: 500px; background: #fff; border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.1); position: relative; overflow: hidden;
+  }
+  .phone-content { padding: 0; }
+  .phone-content .page-bg {
+    width: 100%; height: 300px; background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; opacity: .5;
+  }
+
+  /* 弹窗预览 - 覆盖在手机上 */
+  .popup-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+  }
+  .popup-preview {
+    width: 280px; position: relative;
+  }
+  .popup-preview img {
+    width: 100%; display: block; border-radius: 0;
+  }
+  .popup-preview .placeholder-img {
+    width: 280px; height: 370px;
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+    border-radius: 16px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; color: #fff; gap: 12px;
+    position: relative; overflow: hidden;
+  }
+  .popup-preview .placeholder-img::before {
+    content: ''; position: absolute; top: -20px; right: -20px;
+    width: 80px; height: 80px; background: rgba(255,255,255,.15); border-radius: 50%;
+  }
+  .popup-preview .placeholder-img .promo-title {
+    font-size: 22px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,.2);
+  }
+  .popup-preview .placeholder-img .promo-sub {
+    font-size: 13px; opacity: .9;
+  }
+  .popup-preview .placeholder-img .promo-items {
+    display: flex; flex-direction: column; gap: 8px; margin-top: 8px;
+  }
+  .popup-preview .placeholder-img .promo-item {
+    display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;
+  }
+  .popup-preview .placeholder-img .promo-item .dot {
+    width: 24px; height: 24px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 12px;
+  }
+  .popup-preview .placeholder-img .promo-btn {
+    margin-top: 16px; padding: 12px 48px; background: #ff3b30;
+    border-radius: 24px; font-size: 16px; font-weight: 700;
+    box-shadow: 0 4px 12px rgba(255,59,48,.4);
+  }
+  .popup-close {
+    position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+    width: 32px; height: 32px; border: 2px solid rgba(255,255,255,.7);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.9); font-size: 16px; cursor: pointer;
+  }
+
+  .hotzone-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  }
+  .hotzone {
+    position: absolute; border: 2px dashed rgba(64,158,255,.8);
+    background: rgba(64,158,255,.08); display: flex; align-items: center;
+    justify-content: center; font-size: 11px; color: #409eff; font-weight: 500;
+  }
+  .hotzone-1 { left: 10%; right: 10%; bottom: 60px; height: 48px; border-radius: 24px; }
+  .hotzone-2 { left: 30%; right: 30%; top: 8px; height: 28px; border-radius: 4px; }
+
+  /* 右侧配置栏 */
+  .config-panel {
+    width: 340px; background: #fff; border-left: 1px solid #e4e7ed;
+    padding: 20px; overflow-y: auto; flex-shrink: 0;
+  }
+  .config-panel .panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .config-panel .panel-title { font-size: 15px; font-weight: 600; color: #303133; }
+  .config-panel .panel-selector {
+    padding: 4px 12px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 12px; color: #606266; background: #fff;
+  }
+  .config-panel .hint-link {
+    font-size: 12px; color: #409eff; cursor: pointer; margin-top: 4px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+  .form-group .label {
+    font-size: 13px; color: #606266; margin-bottom: 8px; display: flex; align-items: center; gap: 4px;
+  }
+  .form-group .label .required { color: #f56c6c; }
+  .form-group .label .tip { font-size: 11px; color: #c0c4cc; margin-left: 4px; }
+
+  .image-upload {
+    width: 100px; height: 100px; border: 1px dashed #dcdfe6; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    color: #c0c4cc; font-size: 28px; transition: border-color .2s; background: #fafafa;
+  }
+  .image-upload:hover { border-color: #409eff; color: #409eff; }
+  .image-upload.has-image {
+    border-style: solid; overflow: hidden; padding: 4px; background: #fff;
+  }
+  .image-upload.has-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+
+  .dimension-row { display: flex; gap: 12px; }
+  .dimension-item { flex: 1; }
+  .dimension-item .dim-label { font-size: 12px; color: #909399; margin-bottom: 4px; }
+  .input-field {
+    width: 100%; padding: 8px 12px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 13px; color: #303133; transition: border-color .2s; outline: none;
+  }
+  .input-field:focus { border-color: #409eff; }
+  .input-hint { font-size: 11px; color: #c0c4cc; margin-top: 4px; }
+
+  .bg-upload-area {
+    border: 1px dashed #dcdfe6; border-radius: 6px; padding: 16px;
+    display: flex; align-items: center; gap: 16px; background: #fafafa;
+  }
+  .bg-upload-area .bg-thumb {
+    width: 80px; height: 106px; border-radius: 4px; overflow: hidden;
+    flex-shrink: 0; background: #eee;
+  }
+  .bg-upload-area .bg-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .bg-upload-area .bg-info { font-size: 12px; color: #909399; line-height: 1.6; }
+  .bg-upload-area .bg-info strong { color: #606266; }
+
+  .popup-config-btn {
+    padding: 8px 16px; border: 1px solid #409eff; border-radius: 4px;
+    background: #fff; color: #409eff; font-size: 13px; cursor: pointer;
+    transition: all .2s; font-weight: 500;
+  }
+  .popup-config-btn:hover { background: #409eff; color: #fff; }
+
+  .hotzone-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  .hotzone-table th {
+    background: #f5f7fa; padding: 8px 12px; text-align: left;
+    border: 1px solid #ebeef5; font-weight: 500; color: #606266;
+  }
+  .hotzone-table td {
+    padding: 8px 12px; border: 1px solid #ebeef5; color: #303133;
+  }
+
+  .toggle-row {
+    display: flex; align-items: center; gap: 8px; margin-top: 20px;
+    padding-top: 16px; border-top: 1px solid #f0f0f0;
+  }
+  .toggle-label { font-size: 13px; color: #606266; }
+  .toggle {
+    width: 44px; height: 22px; border-radius: 11px; background: #409eff;
+    position: relative; cursor: pointer; transition: background .2s;
+  }
+  .toggle .knob {
+    width: 18px; height: 18px; border-radius: 50%; background: #fff;
+    position: absolute; top: 2px; right: 2px; transition: all .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  }
+
+  .divider { height: 1px; background: #ebeef5; margin: 20px 0; }
+
+  .section-title {
+    font-size: 13px; font-weight: 600; color: #303133; margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 2px solid #409eff; display: inline-block;
+  }
+
+  /* 状态标注 */
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
+    border-radius: 12px; font-size: 11px; font-weight: 500;
+  }
+  .status-badge.restored { background: #f0f9eb; color: #67c23a; border: 1px solid #e1f3d8; }
+  .status-badge.current { background: #fef0f0; color: #f56c6c; border: 1px solid #fde2e2; }
+
+  /* 说明区域 */
+  .note-box {
+    background: #fdf6ec; border: 1px solid #faecd8; border-radius: 8px;
+    padding: 16px; margin-bottom: 24px;
+  }
+  .note-box .note-title { font-size: 13px; font-weight: 600; color: #e6a23c; margin-bottom: 8px; }
+  .note-box .note-content { font-size: 12px; color: #909399; line-height: 1.8; }
+
+  /* 对比区域 */
+  .compare-container {
+    display: flex; gap: 32px; padding: 32px; max-width: 1200px; margin: 0 auto;
+  }
+  .compare-card {
+    flex: 1; background: #fff; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .compare-card .card-header {
+    padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .compare-card .card-header h3 { font-size: 15px; }
+  .compare-card .card-body { padding: 0 20px 20px; }
+
+  /* 页面容器 */
+  .page-container { max-width: 100%; }
+
+  /* 标注样式 */
+  .annotation {
+    position: relative; border: 2px solid #f56c6c; border-radius: 6px;
+    padding: 2px; margin: -2px;
+  }
+  .annotation::after {
+    content: attr(data-label); position: absolute; top: -10px; right: -2px;
+    background: #f56c6c; color: #fff; font-size: 10px; padding: 1px 6px;
+    border-radius: 3px; white-space: nowrap;
+  }
+  .annotation.green { border-color: #67c23a; }
+  .annotation.green::after { background: #67c23a; }
+
+  /* Tab 导航 */
+  .page-tabs {
+    display: flex; gap: 0; background: #fff; border-bottom: 2px solid #e4e7ed;
+    padding: 0 32px; position: sticky; top: 0; z-index: 100;
+  }
+  .page-tab {
+    padding: 14px 24px; font-size: 14px; color: #606266; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s;
+    font-weight: 500;
+  }
+  .page-tab:hover { color: #409eff; }
+  .page-tab.active { color: #409eff; border-bottom-color: #409eff; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* 完整后台模拟 */
+  .full-backend { height: 100vh; display: flex; flex-direction: column; }
+  .full-backend .main { flex: 1; overflow: hidden; }
+
+  .page-wrapper { padding: 24px 32px; overflow-y: auto; height: 100%; }
+</style>
+</head>
+<body>
+
+<!-- 顶部 Tab 切换 -->
+<div class="page-tabs">
+  <div class="page-tab active" onclick="switchTab('restored')">修复后效果（目标态）</div>
+  <div class="page-tab" onclick="switchTab('compare')">修复前 vs 修复后对比</div>
+</div>
+
+<!-- Tab 1: 修复后完整后台 -->
+<div class="tab-content active" id="tab-restored">
+  <div class="full-backend">
+    <div class="header">
+      <div class="logo">🐬</div>
+      <div class="title">海豚 - 落地页管理</div>
+      <div class="tag">线上</div>
+      <div class="user">jiwenyue</div>
+    </div>
+    <div class="main">
+      <!-- 左侧导航 -->
+      <div class="sidebar">
+        <div class="nav-item">多媒体</div>
+        <div class="nav-item">售卖信息</div>
+        <div class="nav-item">售卖入口</div>
+        <div class="nav-item">拼团售卖（旧）</div>
+        <div class="nav-item">拼团售卖（新）</div>
+        <div class="nav-item active">弹窗</div>
+        <div class="nav-item">其他</div>
+      </div>
+
+      <!-- 中间预览 -->
+      <div class="preview-area">
+        <div class="preview-toolbar">
+          <div class="btn-group">
+            <div class="btn active">编辑</div>
+            <div class="btn">预览</div>
+          </div>
+          <select class="device-select">
+            <option>375 x 667 iPhone 6/7/8</option>
+          </select>
+          <button class="btn-return">返回</button>
+          <button class="btn-save">保存</button>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-content">
+            <div class="page-bg">落地页内容区域</div>
+          </div>
+          <!-- 异形弹窗预览 -->
+          <div class="popup-overlay">
+            <div class="popup-preview">
+              <div class="placeholder-img">
+                <div class="promo-title">暑期专属提升</div>
+                <div class="promo-sub">确定要放弃体验吗？</div>
+                <div class="promo-items">
+                  <div class="promo-item"><div class="dot" style="background:#4ecdc4">📚</div> 2000+ 知识视频</div>
+                  <div class="promo-item"><div class="dot" style="background:#ff6b6b">📝</div> 2700+ 练习题库</div>
+                  <div class="promo-item"><div class="dot" style="background:#45b7d1">📄</div> 20000+ 全套试卷</div>
+                </div>
+                <div class="promo-btn">立即领取</div>
+                <div class="hotzone-overlay">
+                  <div class="hotzone hotzone-1">热区1: 继续支付</div>
+                  <div class="hotzone hotzone-2">热区2: 离开</div>
+                </div>
+              </div>
+              <div class="popup-close">✕</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧配置栏 -->
+      <div class="config-panel">
+        <div class="panel-header">
+          <div class="panel-title">配置栏 - 图片</div>
+          <select class="panel-selector">
+            <option>1 - 图片</option>
+          </select>
+        </div>
+        <div class="hint-link">隐藏了的弹窗，点击这里切换展示 👆</div>
+
+        <!-- 图片上传 -->
+        <div class="form-group" style="margin-top: 16px;">
+          <div class="label"><span class="required">*</span> 图片：</div>
+          <div class="image-upload has-image">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92' viewBox='0 0 92 92'%3E%3Crect fill='%23ff9a56' width='92' height='92' rx='8'/%3E%3Ctext x='46' y='50' text-anchor='middle' fill='white' font-size='10' font-family='sans-serif'%3E弹窗素材%3C/text%3E%3C/svg%3E" alt="弹窗图片">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 弹窗浮层尺寸 - 核心恢复项 -->
+        <div class="annotation green" data-label="需恢复">
+          <div class="form-group">
+            <div class="label"><span class="required">*</span> 弹窗浮层宽度：</div>
+            <input class="input-field" type="number" value="300" placeholder="宽度">
+          </div>
+          <div class="form-group">
+            <div class="label"><span class="required">*</span> 弹窗浮层高度：</div>
+            <input class="input-field" type="number" value="395" placeholder="高度">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 背景图片 - 核心恢复项 -->
+        <div class="annotation green" data-label="需恢复">
+          <div class="form-group">
+            <div class="label"><span class="required">*</span> 背景图片：</div>
+            <div class="input-hint" style="margin-bottom: 8px;">需上传宽高比为「300」:「395」的图片</div>
+            <div class="bg-upload-area">
+              <div class="bg-thumb">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='106' viewBox='0 0 80 106'%3E%3Crect fill='%23ff6a00' width='80' height='106' rx='4'/%3E%3Ctext x='40' y='56' text-anchor='middle' fill='white' font-size='9' font-family='sans-serif'%3E背景图%3C/text%3E%3C/svg%3E" alt="背景图">
+              </div>
+              <div class="bg-info">
+                <strong>点击上传背景图片</strong><br>
+                尺寸需与上方宽高比一致<br>
+                支持 PNG/JPG 格式
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 弹窗设置（热区） - 核心恢复项 -->
+        <div class="annotation green" data-label="需恢复">
+          <div class="form-group">
+            <div class="label"><span class="required">*</span> 弹窗设置：</div>
+            <button class="popup-config-btn">配置弹窗</button>
+            <table class="hotzone-table">
+              <thead>
+                <tr><th>标题</th><th>热区类型</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>热区 1</td><td>继续支付</td></tr>
+                <tr><td>热区 2</td><td>离开</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 预览开关 -->
+        <div class="toggle-row">
+          <span class="toggle-label">预览：</span>
+          <div class="toggle"><div class="knob"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tab 2: 对比视图 -->
+<div class="tab-content" id="tab-compare">
+  <div class="page-wrapper">
+    <div class="note-box">
+      <div class="note-title">原型说明</div>
+      <div class="note-content">
+        左侧为当前状态（异形弹窗配置缺失），右侧为修复后目标状态（恢复完整配置项）。<br>
+        绿色标注区域 = 需要恢复的配置项。修复不涉及新功能开发，仅恢复 2025 年 8 月改造前的已有能力。
+      </div>
+    </div>
+
+    <div class="compare-container">
+      <!-- 当前状态 -->
+      <div class="compare-card">
+        <div class="card-header">
+          <h3>当前状态</h3>
+          <span class="status-badge current">异常</span>
+        </div>
+        <div class="card-body">
+          <div class="config-panel" style="width:100%; border:none; padding:0;">
+            <div class="panel-header">
+              <div class="panel-title">配置栏 - 年级选择</div>
+              <select class="panel-selector"><option>1 - 年级选择</option></select>
+            </div>
+
+            <div class="form-group" style="margin-top:16px;">
+              <div class="label"><span class="required">*</span> 图片：</div>
+              <div class="image-upload"><span>+</span></div>
+            </div>
+
+            <div style="padding: 40px 20px; text-align: center; color: #c0c4cc; font-size: 13px; border: 1px dashed #e4e7ed; border-radius: 8px; margin-top: 20px;">
+              <div style="font-size: 32px; margin-bottom: 8px;">⚠️</div>
+              异形弹窗配置项缺失<br><br>
+              <span style="font-size: 12px;">
+                缺少：弹窗浮层宽度/高度<br>
+                缺少：背景图片上传<br>
+                缺少：热区配置<br>
+                缺少：预览开关
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 修复后 -->
+      <div class="compare-card">
+        <div class="card-header">
+          <h3>修复后</h3>
+          <span class="status-badge restored">已恢复</span>
+        </div>
+        <div class="card-body">
+          <div class="config-panel" style="width:100%; border:none; padding:0;">
+            <div class="panel-header">
+              <div class="panel-title">配置栏 - 图片</div>
+              <select class="panel-selector"><option>1 - 图片</option></select>
+            </div>
+            <div class="hint-link">隐藏了的弹窗，点击这里切换展示 👆</div>
+
+            <div class="form-group" style="margin-top: 16px;">
+              <div class="label"><span class="required">*</span> 图片：</div>
+              <div class="image-upload has-image">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92' viewBox='0 0 92 92'%3E%3Crect fill='%23ff9a56' width='92' height='92' rx='8'/%3E%3Ctext x='46' y='50' text-anchor='middle' fill='white' font-size='10' font-family='sans-serif'%3E弹窗素材%3C/text%3E%3C/svg%3E" alt="">
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="annotation green" data-label="恢复项">
+              <div class="form-group">
+                <div class="label"><span class="required">*</span> 弹窗浮层宽度：</div>
+                <input class="input-field" type="number" value="300">
+              </div>
+              <div class="form-group">
+                <div class="label"><span class="required">*</span> 弹窗浮层高度：</div>
+                <input class="input-field" type="number" value="395">
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="annotation green" data-label="恢复项">
+              <div class="form-group">
+                <div class="label"><span class="required">*</span> 背景图片：</div>
+                <div class="input-hint" style="margin-bottom:8px;">需上传宽高比为「300」:「395」的图片</div>
+                <div class="bg-upload-area">
+                  <div class="bg-thumb">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='106' viewBox='0 0 80 106'%3E%3Crect fill='%23ff6a00' width='80' height='106' rx='4'/%3E%3Ctext x='40' y='56' text-anchor='middle' fill='white' font-size='9' font-family='sans-serif'%3E背景图%3C/text%3E%3C/svg%3E" alt="">
+                  </div>
+                  <div class="bg-info">
+                    <strong>点击上传背景图片</strong><br>
+                    尺寸需与宽高比一致
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="annotation green" data-label="恢复项">
+              <div class="form-group">
+                <div class="label"><span class="required">*</span> 弹窗设置：</div>
+                <button class="popup-config-btn">配置弹窗</button>
+                <table class="hotzone-table">
+                  <thead><tr><th>标题</th><th>热区类型</th></tr></thead>
+                  <tbody>
+                    <tr><td>热区 1</td><td>继续支付</td></tr>
+                    <tr><td>热区 2</td><td>离开</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="toggle-row">
+              <span class="toggle-label">预览：</span>
+              <div class="toggle"><div class="knob"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+</script>
+
+</body>
+</html>
+
+
+[Tool result] Write
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"创建异形弹窗后台配置原型 HTML","status":"completed"},{"id":"2","content":"更新 PRD 需求1，补充后台配置说明和原型引用","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+现在更新 PRD，在需求 1 里补充后台配置的详细说明和原型引用。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/投放落地页配置修复.md
+  old_string: | v0.2 | 补充影响说明、需求优先级、效果观察 | 2026-03-10 |
+  new_string: | v0.2 | 补充影响说明、需求优先级、效果观察 | 2026-03-10 |
+| v0.3 | 需求1补充后台配置原型和详细配置项说明 | 2026-03-17 |
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/投放落地页配置修复.md
+  old_string: **预期修复结果**：
+
+- 落地页配置后台恢复异形弹窗配置入口
+- 投放团队可上传自定义图片，配置异形弹窗
+- 弹窗在手机端展示正常，无裁切、拉伸、透明区域异常等问题
+- 弹窗触发逻辑与改造前一致（用户尝试离开页面时触发）
+
+**验收标准**：
+
+- [ ] 后台可正常配置异形弹窗（上传图片、设置点击区域/跳转链接）
+- [ ] 手机端访问落地页，触发条件满足时异形弹窗正常弹出
+- [ ] 弹窗展示与上传图片一致，无白底、无矩形边框
+- [ ] 关闭弹窗交互正常
+- [ ] 不影响现有标准弹窗功能
+  new_string: **后台配置现状 vs 目标态**：
+
+> 后台原型文件：[异形弹窗配置原型.html](assets/异形弹窗配置原型.html)（浏览器打开，含修复后效果和前后对比两个视图）
+
+当前后台「弹窗」模块选中图片组件后，右侧配置栏**缺失以下配置项**（2025 年 8 月改造后丢失）：
+
+| # | 缺失配置项 | 说明 | 修复要求 |
+|---|----------|------|---------|
+| 1 | 弹窗浮层宽度 | 数字输入框，单位 px | 恢复输入框，投放填写弹窗宽度 |
+| 2 | 弹窗浮层高度 | 数字输入框，单位 px | 恢复输入框，投放填写弹窗高度 |
+| 3 | 背景图片上传 | 上传区域，提示「需上传宽高比为 宽度:高度 的图片」 | 恢复上传功能，宽高比提示跟随上方宽高值联动 |
+| 4 | 弹窗设置（热区配置） | 「配置弹窗」按钮 + 热区表格（标题/热区类型） | 恢复热区配置入口和表格展示 |
+| 5 | 预览开关 | Toggle 开关，控制左侧预览区是否展示弹窗效果 | 恢复预览开关 |
+
+**配置项交互说明**：
+
+- **宽度/高度**：投放输入目标尺寸后，背景图片上传区域的比例提示自动更新（如输入 300x395，提示变为「需上传宽高比为 300:395 的图片」）
+- **背景图片**：上传后作为弹窗的异形背景，透明区域应保持透明（不填充白色），这是「异形」效果的关键
+- **热区配置**：点击「配置弹窗」按钮进入热区编辑，可在弹窗图片上划定可点击区域，每个热区绑定一个行为（继续支付/离开等）
+- **预览**：开启后左侧手机预览区实时展示弹窗效果，含热区标注
+
+**预期修复结果**：
+
+- 落地页配置后台恢复上述 5 个配置项
+- 投放团队可上传自定义图片，配置异形弹窗
+- 弹窗在手机端展示正常，无裁切、拉伸、透明区域异常等问题
+- 弹窗触发逻辑与改造前一致（用户尝试离开页面时触发）
+
+**验收标准**：
+
+- [ ] 后台右侧配置栏完整展示弹窗浮层宽度、高度、背景图片、热区配置、预览开关 5 个配置项
+- [ ] 宽高输入后，背景图片上传提示的比例值联动更新
+- [ ] 上传背景图片后，预览区正确展示异形弹窗（透明区域不填白）
+- [ ] 热区配置功能正常：可新增/编辑/删除热区，绑定行为
+- [ ] 手机端访问落地页，触发条件满足时异形弹窗正常弹出
+- [ ] 弹窗展示与上传图片一致，无白底、无矩形边框
+- [ ] 关闭弹窗交互正常
+- [ ] 不影响现有标准弹窗功能
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"2","content":"更新 PRD 需求1，补充后台配置说明和原型引用","status":"completed"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+完成了。做了两件事：
+
+**1. 创建了后台配置原型** `personal/work/prd/assets/异形弹窗配置原型.html`
+
+浏览器打开后有两个视图：
+- **修复后效果**：完整模拟后台界面，左侧导航 + 中间手机预览（含异形弹窗和热区标注）+ 右侧配置栏（所有配置项用绿色标注"需恢复"）
+- **修复前 vs 修复后对比**：左右并排，左侧展示当前缺失状态，右侧展示恢复后完整配置
+
+原型是基于你发的 P2 截图还原的，包含 5 个需恢复的配置项：弹窗浮层宽度、高度、背景图片上传、热区配置、预览开关。
+
+**2. 更新了 PRD 需求 1**
+
+- 新增「后台配置现状 vs 目标态」章节，用表格列出 5 个缺失配置项及修复要求
+- 新增「配置项交互说明」，描述宽高联动、透明区域、热区编辑、预览等交互细节
+- 验收标准从 5 条扩充到 8 条，覆盖后台配置和端上展示两个维度
+- 引用了原型文件链接
+
+你可以用浏览器打开原型文件看看效果是否符合预期。
+
+user:
+<user_query>
+用浏览器打开原型文件
+</user_query>
+
+assistant:
+[Tool call] Shell
+  command: open "/Users/jiwenyue/cursorProjects/personal/work/prd/assets/异形弹窗配置原型.html"
+  description: 用默认浏览器打开原型HTML文件
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Shell
+  command: open -a "Google Chrome" "/Users/jiwenyue/cursorProjects/personal/work/prd/assets/异形弹窗配置原型.html"
+  description: 用Chrome打开原型HTML文件
+  required_permissions: ["all"]
+
+[Tool result] Shell
+
+assistant:
+已经用 Chrome 打开了，你看看效果。页面顶部有两个 Tab 可以切换：
+- **修复后效果（目标态）**：完整的后台界面模拟
+- **修复前 vs 修复后对比**：左右并排对比
+
+user:
+[Image]
+<image_files>
+The following images were provdied by the user and saved to the workspace for future use:
+1. /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/assets/image-6554dac2-083a-4ddc-b968-5b22c62c258b.png
+
+These images can be copied for use in other locations.
+</image_files>
+<user_query>
+用户点击图中的「配置弹窗」会展示什么呢？需要加一下这个交互
+</user_query>
+
+assistant:
+[Thinking] The user is asking about what happens when users click the "配置弹窗" (Configure Popup) button. Looking at the P2 screenshot from before, I can see the hot zone configuration table shows "标题 | 热区类型" with entries like "热区1 | 继续支付" and "热区2 | 离开".
+
+When clicking "配置弹窗", it should open a hot zone editor where users can:
+1. Draw rectangular regions on the popup image
+2. Set each region's action (继续支付/离开/etc.)
+3. Set click target URLs
+
+Let me look at the P2 screenshot more carefully. The hot zone configuration seems to allow defining clickable areas on the popup image. This is a common pattern in landing page builders where you overlay clickable "hot zones" on an image.
+
+
+Now I need to implement this interactive modal in the HTML prototype where users can see the popup background image, draw or adjust hot zone rectangles directly on it, and configure each zone's properties like title, action type, and link URL.
+好问题。看 P2 截图，点击「配置弹窗」应该进入热区编辑界面——在弹窗背景图上拖拽划定可点击区域，给每个区域配置行为和跳转链接。我把这个交互加到原型里。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/assets/异形弹窗配置原型.html
+  offset: 440
+
+[Tool result] Read
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/assets/异形弹窗配置原型.html
+  offset: 1
+  limit: 50
+
+[Tool result] Read
+
+assistant:
+现在我来添加「配置弹窗」点击后的热区编辑弹窗交互。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/assets/异形弹窗配置原型.html
+  old_string:   .page-wrapper { padding: 24px 32px; overflow-y: auto; height: 100%; }
+</style>
+  new_string:   .page-wrapper { padding: 24px 32px; overflow-y: auto; height: 100%; }
+
+  /* 热区编辑弹窗 */
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,.45); z-index: 1000; align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #fff; border-radius: 12px; width: 720px; max-height: 90vh;
+    box-shadow: 0 8px 32px rgba(0,0,0,.2); display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-header {
+    padding: 16px 24px; border-bottom: 1px solid #ebeef5;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-header h3 { font-size: 16px; font-weight: 600; color: #303133; }
+  .modal-close {
+    width: 28px; height: 28px; border: none; background: #f5f7fa;
+    border-radius: 6px; cursor: pointer; font-size: 16px; color: #909399;
+    display: flex; align-items: center; justify-content: center; transition: all .2s;
+  }
+  .modal-close:hover { background: #fef0f0; color: #f56c6c; }
+  .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+  .modal-footer {
+    padding: 16px 24px; border-top: 1px solid #ebeef5;
+    display: flex; justify-content: flex-end; gap: 12px;
+  }
+  .modal-footer .btn-cancel {
+    padding: 8px 20px; border: 1px solid #dcdfe6; border-radius: 6px;
+    background: #fff; color: #606266; font-size: 13px; cursor: pointer;
+  }
+  .modal-footer .btn-confirm {
+    padding: 8px 20px; border: none; border-radius: 6px;
+    background: #409eff; color: #fff; font-size: 13px; cursor: pointer; font-weight: 500;
+  }
+
+  .hotzone-editor { display: flex; gap: 24px; }
+  .hotzone-canvas-wrap {
+    width: 300px; flex-shrink: 0; position: relative;
+    border: 1px solid #ebeef5; border-radius: 8px; overflow: hidden; background: #fafafa;
+  }
+  .hotzone-canvas-wrap .canvas-label {
+    position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,.5);
+    color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 4px; z-index: 2;
+  }
+  .hotzone-canvas {
+    width: 300px; height: 395px; position: relative;
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+  }
+  .hotzone-rect {
+    position: absolute; border: 2px solid #409eff; background: rgba(64,158,255,.15);
+    cursor: move; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #409eff; font-weight: 600; transition: border-color .2s;
+  }
+  .hotzone-rect:hover { border-color: #66b1ff; background: rgba(64,158,255,.25); }
+  .hotzone-rect.selected { border-color: #f56c6c; background: rgba(245,108,108,.15); }
+  .hotzone-rect .resize-handle {
+    position: absolute; width: 8px; height: 8px; background: #409eff;
+    border: 1px solid #fff; border-radius: 2px;
+  }
+  .hotzone-rect .resize-handle.br { bottom: -4px; right: -4px; cursor: nwse-resize; }
+  .hotzone-rect .resize-handle.bl { bottom: -4px; left: -4px; cursor: nesw-resize; }
+  .hotzone-rect .resize-handle.tr { top: -4px; right: -4px; cursor: nesw-resize; }
+  .hotzone-rect .resize-handle.tl { top: -4px; left: -4px; cursor: nwse-resize; }
+
+  .hotzone-form-area { flex: 1; min-width: 0; }
+  .hotzone-form-area .toolbar {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+  }
+  .hotzone-form-area .toolbar .tip { font-size: 12px; color: #909399; }
+  .btn-add-hotzone {
+    padding: 6px 14px; border: 1px dashed #409eff; border-radius: 6px;
+    background: #ecf5ff; color: #409eff; font-size: 12px; cursor: pointer;
+    font-weight: 500; transition: all .2s;
+  }
+  .btn-add-hotzone:hover { background: #409eff; color: #fff; border-style: solid; }
+
+  .hotzone-card {
+    border: 1px solid #ebeef5; border-radius: 8px; padding: 16px;
+    margin-bottom: 12px; transition: border-color .2s; position: relative;
+  }
+  .hotzone-card:hover { border-color: #c0c4cc; }
+  .hotzone-card.active { border-color: #409eff; box-shadow: 0 0 0 2px rgba(64,158,255,.15); }
+  .hotzone-card .card-top {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+  }
+  .hotzone-card .card-top .hz-name {
+    font-size: 14px; font-weight: 600; color: #303133;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hotzone-card .card-top .hz-name .hz-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #409eff;
+  }
+  .hotzone-card .card-top .hz-delete {
+    font-size: 12px; color: #c0c4cc; cursor: pointer; padding: 2px 6px;
+    border-radius: 4px; transition: all .2s;
+  }
+  .hotzone-card .card-top .hz-delete:hover { color: #f56c6c; background: #fef0f0; }
+
+  .hz-form-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .hz-form-row .hz-label {
+    width: 70px; font-size: 12px; color: #909399; text-align: right; flex-shrink: 0;
+  }
+  .hz-form-row .hz-input {
+    flex: 1; padding: 6px 10px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 12px; color: #303133; outline: none; transition: border-color .2s;
+  }
+  .hz-form-row .hz-input:focus { border-color: #409eff; }
+  .hz-form-row .hz-select {
+    flex: 1; padding: 6px 10px; border: 1px solid #dcdfe6; border-radius: 4px;
+    font-size: 12px; color: #303133; background: #fff;
+  }
+  .hz-pos-group { display: flex; gap: 8px; flex: 1; }
+  .hz-pos-item {
+    flex: 1; display: flex; align-items: center; gap: 4px;
+  }
+  .hz-pos-item .pos-label { font-size: 11px; color: #c0c4cc; }
+  .hz-pos-item .pos-input {
+    width: 100%; padding: 5px 6px; border: 1px solid #e4e7ed; border-radius: 3px;
+    font-size: 11px; color: #606266; text-align: center; outline: none;
+  }
+</style>
+
+[Tool result] StrReplace
+
+assistant:
+现在添加弹窗 HTML 和交互逻辑。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/assets/异形弹窗配置原型.html
+  old_string: <script>
+function switchTab(tabId) {
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+</script>
+
+</body>
+</html>
+  new_string: <!-- 热区编辑弹窗 -->
+<div class="modal-overlay" id="hotzoneModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>配置弹窗热区</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="hotzone-editor">
+        <!-- 左侧：画布 -->
+        <div class="hotzone-canvas-wrap">
+          <div class="canvas-label">弹窗背景 300 x 395</div>
+          <div class="hotzone-canvas">
+            <!-- 模拟弹窗内容 -->
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:8px;">
+              <div style="font-size:18px;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,.2);">暑期专属提升</div>
+              <div style="font-size:11px;opacity:.8;">确定要放弃体验吗？</div>
+              <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;font-size:12px;">
+                <div>📚 2000+ 知识视频</div>
+                <div>📝 2700+ 练习题库</div>
+                <div>📄 20000+ 全套试卷</div>
+              </div>
+            </div>
+            <!-- 热区1：CTA按钮 -->
+            <div class="hotzone-rect active" id="hz1" style="left:40px;right:40px;bottom:50px;height:44px;border-radius:22px;" onclick="selectHotzone(1)">
+              <span>热区 1</span>
+              <div class="resize-handle tl"></div>
+              <div class="resize-handle tr"></div>
+              <div class="resize-handle bl"></div>
+              <div class="resize-handle br"></div>
+            </div>
+            <!-- 热区2：关闭区域 -->
+            <div class="hotzone-rect" id="hz2" style="left:100px;right:100px;top:6px;height:24px;border-radius:4px;" onclick="selectHotzone(2)">
+              <span>热区 2</span>
+              <div class="resize-handle tl"></div>
+              <div class="resize-handle tr"></div>
+              <div class="resize-handle bl"></div>
+              <div class="resize-handle br"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧：热区属性 -->
+        <div class="hotzone-form-area">
+          <div class="toolbar">
+            <span class="tip">在左侧画布上拖拽调整热区位置和大小</span>
+            <button class="btn-add-hotzone">+ 新增热区</button>
+          </div>
+
+          <!-- 热区1 -->
+          <div class="hotzone-card active" id="hzCard1" onclick="selectHotzone(1)">
+            <div class="card-top">
+              <div class="hz-name"><div class="hz-dot"></div>热区 1</div>
+              <span class="hz-delete">删除</span>
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">标题</span>
+              <input class="hz-input" value="热区 1" placeholder="热区名称">
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">热区类型</span>
+              <select class="hz-select">
+                <option value="pay" selected>继续支付</option>
+                <option value="leave">离开</option>
+                <option value="link">跳转链接</option>
+                <option value="close">关闭弹窗</option>
+              </select>
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">跳转链接</span>
+              <input class="hz-input" value="" placeholder="类型为"跳转链接"时填写目标URL">
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">区域坐标</span>
+              <div class="hz-pos-group">
+                <div class="hz-pos-item">
+                  <span class="pos-label">X</span>
+                  <input class="pos-input" value="40">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">Y</span>
+                  <input class="pos-input" value="301">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">W</span>
+                  <input class="pos-input" value="220">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">H</span>
+                  <input class="pos-input" value="44">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 热区2 -->
+          <div class="hotzone-card" id="hzCard2" onclick="selectHotzone(2)">
+            <div class="card-top">
+              <div class="hz-name"><div class="hz-dot" style="background:#909399;"></div>热区 2</div>
+              <span class="hz-delete">删除</span>
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">标题</span>
+              <input class="hz-input" value="热区 2" placeholder="热区名称">
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">热区类型</span>
+              <select class="hz-select">
+                <option value="pay">继续支付</option>
+                <option value="leave" selected>离开</option>
+                <option value="link">跳转链接</option>
+                <option value="close">关闭弹窗</option>
+              </select>
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">跳转链接</span>
+              <input class="hz-input" value="" placeholder="类型为"跳转链接"时填写目标URL">
+            </div>
+            <div class="hz-form-row">
+              <span class="hz-label">区域坐标</span>
+              <div class="hz-pos-group">
+                <div class="hz-pos-item">
+                  <span class="pos-label">X</span>
+                  <input class="pos-input" value="100">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">Y</span>
+                  <input class="pos-input" value="6">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">W</span>
+                  <input class="pos-input" value="100">
+                </div>
+                <div class="hz-pos-item">
+                  <span class="pos-label">H</span>
+                  <input class="pos-input" value="24">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-confirm" onclick="closeModal()">确定</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+document.querySelectorAll('.popup-config-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('hotzoneModal').classList.add('show');
+  });
+});
+
+function closeModal() {
+  document.getElementById('hotzoneModal').classList.remove('show');
+}
+
+function selectHotzone(n) {
+  document.querySelectorAll('.hotzone-rect').forEach(r => r.classList.remove('selected', 'active'));
+  document.querySelectorAll('.hotzone-card').forEach(c => c.classList.remove('active'));
+  const rect = document.getElementById('hz' + n);
+  const card = document.getElementById('hzCard' + n);
+  if (rect) { rect.classList.add('active'); }
+  if (card) { card.classList.add('active'); }
+}
+
+document.getElementById('hotzoneModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+
+</body>
+</html>
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] Shell
+  command: open -a "Google Chrome" "/Users/jiwenyue/cursorProjects/personal/work/prd/assets/异形弹窗配置原型.html"
+  description: 用Chrome刷新原型文件
+  required_permissions: ["all"]
+
+[Tool result] Shell
+
+assistant:
+已经更新了。现在点击「配置弹窗」按钮会弹出热区编辑弹窗，包含：
+
+**左侧 - 画布区**：
+- 展示弹窗背景图（300x395）
+- 两个可视化热区矩形（蓝色虚线框），点击可选中高亮
+- 四角有调整手柄，提示可拖拽调整位置和大小
+
+**右侧 - 属性配置**：
+- 每个热区一张卡片，包含：
+  - **标题**：热区名称
+  - **热区类型**：下拉选择（继续支付 / 离开 / 跳转链接 / 关闭弹窗）
+  - **跳转链接**：类型为"跳转链接"时填写目标 URL
+  - **区域坐标**：X / Y / W / H 精确数值
+- 「+ 新增热区」按钮
+- 每张卡片有「删除」操作
+
+**交互**：点击左侧画布的热区 或 右侧的卡片，两边联动高亮。
+
+你刷新浏览器看看效果。
+
+user:
+<user_query>
+review 下这个 prd 吧
+</user_query>
+
+assistant:
+[Thinking] The user wants me to review the PRD. Let me first check if there's a PRD review skill available.
+
+Looking at the available skills, I see:
+- `prd-review` at `/Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/SKILL.md` - "review PRD"、"评审需求"
+
+Let me read that skill first, then review the PRD.
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/SKILL.md
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/投放落地页配置修复.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now let me read the review checklist to do a thorough review.
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/review-checklist.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have the full PRD review skill and checklist. Let me analyze this PRD according to the framework.
+
+**Version identification**: This PRD doesn't follow the standard naming format (产品名X.X-{159版本}-{副版本}). It's a bug fix / feature restoration PRD. But based on the content, it's essentially at v1/v5 level since it contains both the problem description and detailed interaction specs. Let me treat it as a combined v1+v5 since it's a restoration, not new feature.
+
+**PRD type**: This is clearly a 🟢 快速验证型 - it's a bug fix / feature restoration, not a new feature. Development cost should be small. The risk is low.
+
+
+**Review depth**: Since this is a tool fix for the投放 team rather than user-facing product logic and doesn't affect all users or require cross-team coordination, I'll do a 标准 review. For a 🟢快速验证 type, I'm mainly checking that there are no unintended side effects. The PRD appropriately frames this from the投放 team's perspective as the primary users of this tool.
+
+**1. 用户视角**: This is restoring existing functionality with no side effects, which is fine for this category.
+
+**2. 问题定义**: The two bugs introduced during the August 2025 refactor are clearly laid out.
+
+**3. 问题分析**: The root cause is identified, though the PRD notes it's still pending technical confirmation. For a v1 快速验证, that's acceptable even if a deeper diagnosis of why the refactor broke things would strengthen it.
+
+**4. 收益判断**: The benefits are described qualitatively, but there's no quantification of the impact.  The PRD mentions that landing page retention was noticeably better with the modal before, but doesn't provide numbers. Since historical data can't be traced, I should focus on the cost-effectiveness angle—the estimated effort is small, which is a strong point. It would help to estimate scope though, like how many landing pages or traffic volume this affects.
+
+**5. 是否直击根本**: This directly fixes the bug, so it's straightforward.
+
+**6. 竞品/行业参照**: For 快速验证, the standard is whether there's something better out there or if this is clearly not weaker than alternatives.
+
+**7. 方案路线对比**: Since it's a bug fix with only one solution—restoring the feature—there's no need to compare against other approaches.
+
+**8. 效果评估思路**: The PRD's measurement plan is vague—it mentions observing modal and button click rates after the fix, but doesn't specify the baseline or timeframe. I should tighten this up and focus on proving effectiveness clearly.
+
+**9. 待决策点**: The technical unknowns are flagged well, but I'm missing contingency plans for scenarios like if the old code can't be recovered or the architecture has shifted significantly. I should also flag a potential issue with the modal trigger logic—"用户尝试离开页面时触发" relies on browser-specific behavior that may have changed in newer mobile browsers. And while the PRD says no new埋点 are needed, measuring the effect properly might actually require checking if existing埋点 are sufficient.
+按 review skill 的框架来评审。先判断类型和版本。
+
+---
+
+这份 PRD 是功能修复，不是标准 159 版本体系，但内容覆盖了 v1（问题分析+方案方向）和部分 v5（配置交互），按 v1 标准来 review。
+
+**PRD 类型**：🟢 快速验证型（已有功能修复，预计工作量小，失败成本低）
+**Review 深度**：标准（不影响核心业务指标，影响范围限于投放团队工具）
+
+按这个标准，review 重点看三件事：**有效性、成本可控、无副作用**。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-review/reviews/投放落地页配置修复_review_20260317.md
+  contents: # PRD Review：投放落地页配置后台修复
+
+> 版本：v1+v5 | PRD 类型：🟢快速验证（功能修复） | Review 深度：标准 | 日期：2026-03-17
+
+## 门禁判断
+
+**⚠️ 方向没问题，建议补充 2 处后可推进开发。**
+
+PRD 对问题的描述清晰，方案直接（恢复已有功能），配置原型做得好，验收标准具体。但在收益论证和效果评估上偏弱，如果领导问"坏了半年为什么现在才修"、"修了之后怎么知道有效果"，目前的内容不太好回答。
+
+阻塞项：无。以下是建议补充的内容。
+
+## 各维度评价
+
+### 1. 用户视角
+- **判断**：✅
+- **评价**：这是投放团队的 B 端工具修复，"用户"就是迎春和投放团队。PRD 从投放团队的使用场景出发，描述了功能缺失对日常工作的影响，视角没问题。方案是恢复已有功能，不会对 C 端用户产生副作用。
+- **无需改动。**
+
+### 2. 问题定义
+- **判断**：✅
+- **评价**：问题定义清晰——"8 月改造引入 bug → 异形弹窗不可用 + 按钮白框"，是事实性描述，有明确的时间点和现象。
+- **无需改动。**
+
+### 3. 问题分析
+- **判断**：✅（🟢快速验证标准：点到即可）
+- **评价**：对于功能修复型需求，根因就是"代码改坏了"，不需要深挖用户行为或多层 why。"技术侧待确认"里也列出了需要研发定位的技术根因，合理。
+- **无需改动。**
+
+### 4. 收益判断
+- **判断**：⚠️
+- **评价**：当前的收益描述偏定性——"迎春反馈效果明显更好"、"提升转化表现和迭代效率"。缺少量级感知。
+- **领导可能会问**：
+  - "坏了半年了，投放一直在用标准弹窗，转化率降了多少？如果影响不大，优先级为什么是高？"
+  - "异形弹窗比标准弹窗好多少？有数据吗？"
+- **改进思路**：
+  补一段**影响面的量化估算**，不需要精确数据，给一个量级感知即可。比如：
+  - 落地页日均 PV 多少？使用挽留弹窗的页面占比多少？
+  - 标准弹窗的挽留点击率大概是多少？（现在有数据的）
+  - 异形弹窗历史数据虽然追溯不到，但可以写"兄弟业务线验证正向效果后全量使用"作为间接证据
+  - "坏了半年才修"的原因也值得一句话交代（比如投放团队一直在反馈但之前优先级排不上、或者最近才确认是 bug 而非下线）
+
+### 5. 是否直击根本
+- **判断**：✅
+- **评价**：功能修复，方案就是恢复原有功能，直击根本，没有绕路。
+- **无需改动。**
+
+### 6. 竞品/行业参照
+- **判断**：✅（🟢快速验证：不强求）
+- **评价**：功能修复不需要竞品分析。
+- **无需改动。**
+
+### 7. 方案路线对比
+- **判断**：✅（🟢快速验证：不需要对比）
+- **评价**：只有一条路——修复 bug，不需要方案对比。
+- **无需改动。**
+
+### 8. 效果评估思路
+- **判断**：⚠️
+- **评价**：备注里写了"修复后观察投放团队使用异形弹窗/自定义按钮的落地页，对比弹窗点击率和按钮点击率变化"，但过于模糊。
+- **领导可能会问**：
+  - "怎么对比？跟谁比？用什么口径？"
+  - "修完之后你打算怎么跟我汇报效果？"
+- **改进思路**：
+  不需要设计 AB 实验（PRD 自己也说了历史就是全量的），但建议明确一个简单的前后对比方案：
+  - **观察指标**：使用异形弹窗的落地页的挽留弹窗点击率 vs 修复前同页面使用标准弹窗的点击率
+  - **观察周期**：修复上线后 2 周
+  - **数据来源**：确认现有埋点是否能区分"异形弹窗点击"和"标准弹窗点击"——PRD 说"沿用现有埋点"，但要确认现有埋点能支撑这个对比，否则就真的修完就完了，没法汇报效果
+
+### 9. 待决策点
+- **判断**：⚠️（小问题）
+- **评价**："技术侧待确认"写得不错，5 个待确认项覆盖了关键问题。但缺一个兜底：如果研发评估后发现 8 月改造的代码结构变化太大、恢复成本远超预期怎么办？
+- **改进思路**：
+  加一条：如果修复成本超过 X 人日（比如 5 人日），是否考虑重新评估优先级或拆分为两期？当前只写了"需求 2 可延后"，但没有说需求 1 的兜底。
+
+## 修改优先级
+
+1. **【建议补】收益判断 - 补影响面量化**：加 2-3 句话给量级感知，顺带交代"为什么现在才修"。可以快速补。
+2. **【建议补】效果评估 - 明确前后对比方案**：明确指标、口径、观察周期，确认埋点能支撑。写清楚后也方便上线后向领导汇报。
+3. **【可选补】待决策点 - 加修复成本兜底**：一句话的事，写了更稳。
+
+## 给你的建议
+
+这份 PRD 整体质量不错，做到了几个好的点：
+
+- **后台配置原型**做得很好，缺失项表格 + HTML 原型 + 热区编辑交互，研发看完基本不需要再问。这个在功能修复类 PRD 里是加分项，很多人写修复需求就一句"恢复原来的功能"，研发根本不知道"原来"是什么样。
+- **验收标准**具体、可勾选，QA 和投放都能对着验收。
+- **优先级排序**明确（需求 1 > 需求 2），给了资源紧张时的取舍策略。
+
+核心提升点是**收益论证**。功能修复类需求容易被认为"不紧急"，尤其坏了半年还在运转。如果你能补上影响面的量化（哪怕是估算），再加上一个清晰的效果观察方案，这份 PRD 就从"修个 bug"升级成"修复后预计提升 X，我会这样验证"——领导更容易给资源。
+
+
+[Tool result] Write
+
+assistant:
+Review 报告已存档到 `prd-review/reviews/投放落地页配置修复_review_20260317.md`。
+
+---
+
+**门禁判断：⚠️ 方向没问题，建议补 2 处后推进。**
+
+整体质量不错，方案清晰、原型到位、验收标准具体。有两个可以加强的地方：
+
+**1. 收益判断偏弱（建议补）**
+
+当前只有定性描述——"迎春反馈效果明显更好"。领导可能会问：**坏了半年为什么现在才修？影响到底有多大？** 建议补几句量级感知：落地页日均 PV、挽留弹窗覆盖比例、标准弹窗目前的点击率。不需要精确数据，给个量级就行。另外"为什么现在才修"值得一句话交代。
+
+**2. 效果评估太模糊（建议补）**
+
+备注里写了"对比弹窗点击率变化"，但没说跟谁比、用什么口径、看多久。建议明确：
+- 指标：异形弹窗的挽留点击率 vs 修复前同页面标准弹窗的点击率
+- 周期：上线后 2 周
+- 前提确认：现有埋点是否能区分异形弹窗和标准弹窗的点击
+
+这两处补完，PRD 就从"修个 bug"升级成"修复后预计带来什么收益、我会这样验证"，领导更容易批资源。
+
+其他维度都没问题。问题定义清晰、方案直击根本、后台原型是加分项。
+
+user:
+<user_query>
+1 的部分因为上线的时间是24 年 11 月，现在数据已经不可查了，之前的时候是因为兄弟业务验证有效，但是复盘数据也没有
+2. 按照你这个框架补充下吧
+</user_query>
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/投放落地页配置修复.md
+  old_string: - 两个需求均为**功能修复**，不涉及新功能设计
+- 无需新增埋点，沿用现有落地页埋点体系
+- 修复上线后由投放团队（迎春）验收确认
+- 修复后观察投放团队使用异形弹窗/自定义按钮的落地页，对比弹窗点击率和按钮点击率变化
+  new_string: - 两个需求均为**功能修复**，不涉及新功能设计
+- 修复上线后由投放团队（迎春）验收确认
+
+### 效果观察方案
+
+**为什么缺少历史数据**：异形弹窗 2024 年 11 月上线，2025 年 8 月改造后失效，上线期间未做 AB 测试（兄弟业务线验证正向后直接全量），复盘数据未留存，当前已不可追溯。
+
+**修复后的效果评估**：
+
+| 维度 | 说明 |
+|------|------|
+| 观察指标 | 使用异形弹窗的落地页：挽留弹窗点击率（弹窗点击 / 弹窗展示） |
+| 对比基线 | 同一落地页修复前使用标准弹窗时的挽留弹窗点击率 |
+| 观察周期 | 修复上线后 2 周 |
+| 数据来源 | 现有落地页埋点体系（需确认：现有埋点是否能区分异形弹窗与标准弹窗的展示和点击，如不能需补埋点） |
+| 预期方向 | 异形弹窗点击率 > 标准弹窗点击率 |
+
+**需求 2（吸底按钮白框）**：修复为样式还原，不涉及效果评估，由投放团队验收视觉效果即可。
+
+[Tool result] StrReplace
+
+assistant:
+补好了。主要改了「备注」部分，拆成两块：
+
+1. **说清楚为什么没有历史数据**：2024 年 11 月上线、兄弟业务线验证后全量、没做 AB、复盘数据未留存——把事实交代清楚，领导问的时候不用现场解释。
+
+2. **效果观察方案表格**：观察指标（挽留弹窗点击率）、对比基线（同页面修复前标准弹窗的点击率）、观察周期（2 周）、数据来源（现有埋点，但标注了需确认是否能区分两种弹窗类型）、预期方向。
+
+另外标注了一个需要提前跟研发确认的点：现有埋点能不能区分异形弹窗和标准弹窗的展示/点击，如果不能的话修复时需要顺手补一个埋点。

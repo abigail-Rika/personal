@@ -1,0 +1,4097 @@
+user:
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861 这是我新写的一个 prd，这是我领导对该文档的 review 结果@/Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/1873747d9e8de3eeacdbeaf7cc81dfdc/完习激励抽奖活动_review_20260227.md ，请根据这个更新 prd-
+</user_query>
+
+assistant:
+[Thinking] The user wants me to:
+1. Read a Confluence page (their PRD)
+2. Read a review file from their leader
+3. Update the PRD based on the review feedback
+
+Let me start by fetching both sources of information.
+我来获取 Confluence 页面内容和领导的 review 结果。
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 1039568861
+[Tool call] Read
+  path: /Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/1873747d9e8de3eeacdbeaf7cc81dfdc/完习激励抽奖活动_review_20260227.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] The Confluence tool was rejected. Let me try again to get the Confluence page content. But first, let me check what PRD files exist in the workspace.
+Confluence 获取超时了，让我重试一下，同时看看现有的 PRD 文件。
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861 这是我新写的一个 prd，这是我领导对该文档的 review 结果@/Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/1873747d9e8de3eeacdbeaf7cc81dfdc/完习激励抽奖活动_review_20260227.md ，请根据这个更新 prd-writer
+</user_query>
+
+assistant:
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 1039568861
+[Tool call] Glob
+  glob_pattern: prd/**/*
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+[Tool result] Glob
+
+assistant:
+[Thinking] Now I have both the Confluence PRD content and the review feedback. Let me also read the existing PRD-writer skill files to understand what needs to be updated.
+
+Let me read the template, examples, and changelog to understand the full picture.
+好，已经获取到了 Confluence 页面内容和 review 结果。让我先看看现有的 prd-writer 相关文件。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/examples/断课老用户前测.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/CHANGELOG.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have a clear picture. Let me analyze what the review feedback tells us and how it should inform updates to the prd-writer skill.
+
+The review feedback from the leader highlights several key gaps in the PRD:
+
+1. **Missing "why" - user perspective**: The PRD jumps from phenomena to solutions without explaining why users don't complete their studies. Need to add user perspective analysis.
+
+2. **Problem definition**: Need to separate "problem" from "solution" - currently the background section mixes phenomena, direction, and solution together.
+
+3. **Deeper analysis**: Data is there but needs deeper "why" analysis - asking follow-up questions on the data.
+
+
+4. **Revenue/goal justification**: The 5pp target needs basis - is it from past activities? Business expectation? Also need to consider what happens after the activity ends.
+
+5. **Solution positioning**: Need to clarify where this activity sits in the overall strategy - short-term vs long-term.
+
+6. **Competitive analysis / alternative approaches**: Need to compare with other approaches (content optimization, social incentives, streak mechanisms, etc.) and explain why this approach was chosen.
+
+7. **Attribution design**: Need to think about how to attribute effects - control groups, post-activity observation period.
+
+8. **Open questions**: Standards definition, reward tier basis, activity continuity.
+
+Looking at the template and skill documentation, I'm seeing these gaps align with what's actually missing - user research needs to be front and center rather than buried, the problem analysis should emphasize the causal chain, and we're not asking authors to justify their goals or think through how to measure causality. I should update the skill guide, template, and create a better example to address these gaps.
+
+Now I'm planning the specific updates: I'll restructure the background section to require user perspective and problem attribution analysis upfront, strengthen the goals section to demand justification and post-activity impact assessment, enhance the design section to emphasize solution positioning and alternative comparisons, and add attribution design and evaluation methods to the data requirements.
+
+For the template itself, I'll add dedicated subsections for user perspective and problem chains in the background, include goal basis and expected outcomes in targets, add solution positioning and strengthen the comparison framework in design, and incorporate attribution design and impact evaluation in the data section.
+
+I should also include the 完习激励抽奖活动 as a concrete example showing both the original PRD and the review feedback to illustrate these improvements, then update the changelog to reflect this new version.
+现在我已经完整了解了:
+1. 你的 PRD 原文（Confluence 页面）
+2. 领导的 review 反馈（8 个维度的具体建议）
+3. 现有的 prd-writer skill 结构
+
+领导的 review 暴露了当前 prd-writer 在几个关键环节的指导不足。让我来系统更新。
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"更新 SKILL.md：补充用户视角、问题归因链、方案定位、归因设计等撰写标准","status":"in_progress"},{"id":"2","content":"更新 PRD_TEMPLATE.md：增加用户视角、问题归因链、方案定位、目标依据、归因设计等模板节","status":"pending"},{"id":"3","content":"新增示例：完习激励抽奖活动（作为 review 反面案例）","status":"pending"},{"id":"4","content":"更新 CHANGELOG.md","status":"pending"}]
+  merge: false
+
+[Tool result] TodoWrite
+
+assistant:
+[Thinking] Let me start updating the SKILL.md first. Based on the review, the key improvements needed are:
+
+1. **背景部分**：
+   - 强调「用户视角」- 先从用户角度分析问题
+   - 强调「问题归因链」- 现象→原因→解法方向，不能直接从现象跳到解法
+   - 数据分析要追问 why
+
+2. **目标测算部分**：
+   - 目标依据 - 为什么是这个数字
+   - 活动/方案结束后的预期
+   - 成本收益关系
+
+3. **设计思路部分**：
+   - 方案定位 - 在整体策略中的位置，短期还是长期
+   - 方案对比 - 为什么选这个方案而不是其他
+   - 竞品参照
+
+4. **数据需求部分**：
+   - 归因设计 - 如何区分因果
+   - 活动后观察期
+   - 指标关系说明
+
+现在开始更新SKILL.md。
+先更新 SKILL.md，核心是根据 review 反馈补强撰写标准。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 一、背景
+
+**必须包含**：
+- 当前业务/产品所处阶段
+- 核心数据（用户规模、关键指标）
+- 本次要解决的核心问题
+- 问题归因（最好有数据支撑）
+
+**可选**：
+- 漏斗图、趋势图
+- 用户分层说明
+  new_string: ### 一、背景
+
+**必须包含**：
+- 当前业务/产品所处阶段
+- 核心数据（用户规模、关键指标）
+- 本次要解决的核心问题
+
+**用户视角（必须）**：
+- 回到用户角度分析问题——用户为什么会出现这个行为/现象？
+- 不能只从业务运营角度切入，要先理解用户侧的根因
+- 例：不是"完习率有提升空间"，而是先问"用户为什么不完习"
+
+**问题归因链（必须）**：
+- 严格按「现象 → 原因 → 解法方向」的逻辑链来组织
+- ❌ 错误：现象→直接给方案（"需要周维度抓手"已经是方案方向，不是问题分析）
+- ✅ 正确：数据现象 → 追问 why（至少 1-2 层）→ 归因结论 → 解法方向
+- 数据分析要追问线索，例如：到习完习 90%+ → 问题出在"不到习" → 为什么不到习？
+
+**可选**：
+- 漏斗图、趋势图
+- 用户分层说明
+- 与助理/一线人员的定性调研结论
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 二、目标测算
+
+**必须包含**：
+- 主要关注的指标
+- 至少一套收益测算（保守或激进）
+- 关键假设说明
+
+**可选**：
+- 链接到石墨等测算表
+- 多套测算对比
+  new_string: ### 二、目标测算
+
+**必须包含**：
+- 主要关注的指标
+- 至少一套收益测算（保守或激进）
+- 关键假设说明
+- **目标依据**：目标数字从何而来？是历史数据推算、类似活动参考、还是业务期望？需讲清楚
+- **成本与收益关系**：预算投入（人力、奖品、补贴等）与预期收益的大致 ROI
+
+**方案时效性（建议）**：
+- 如果是短期活动，需说明活动结束后的预期影响（如完习率是否会回落）
+- 短期提升带来的实际业务价值是什么
+
+**可选**：
+- 链接到石墨等测算表
+- 多套测算对比
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 四、设计思路
+
+**必须包含**：
+- 核心设计思路
+- 主要方案说明
+
+**可选**：
+- 问题/流程设计（如前测题目结构）
+- 竞品分析
+- AB 实验设计（分组、变量、流量、预期）
+  new_string: ### 四、设计思路
+
+**必须包含**：
+- 核心设计思路
+- 主要方案说明
+
+**方案定位（必须）**：
+- 在整体策略中的位置——这是短期手段还是长期机制？
+- 如果是短期活动，需正视局限性并说明预期，例如：
+  > "这是短期运营活动，目标是在 X-Y 月提振 XX 率。长期策略还需从内容/产品体验侧解决。"
+- 讲清楚了，团队对这件事的预期才能对齐
+
+**方案对比（建议）**：
+- 达成目标的路线通常不止一条，需简要说明考虑过哪些方向、为什么选了当前方案
+- 不需要每个都详细分析，有一个简要的思考过程即可
+- 例：提升完习率的路线有内容优化、助理跟进策略、社交激励、产品机制（streak/成就）、外部激励（抽奖/补贴）等
+
+**竞品/行业参考（建议）**：
+- 快速看看行业里类似机制的常见做法和效果
+- 给方案找支撑或启发
+
+**可选**：
+- 问题/流程设计（如前测题目结构）
+- AB 实验设计（分组、变量、流量、预期）
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 六、数据需求
+
+**必须包含**：
+- 埋点事件表（页面、事件类型、事件名称）
+- 渠道/实验标识（keyfrom 等）
+  new_string: ### 六、数据需求
+
+**必须包含**：
+- 埋点事件表（页面、事件类型、事件名称）
+- 渠道/实验标识（keyfrom 等）
+
+**效果归因（建议）**：
+- 如何区分「因为方案/活动才改善」和「本来就会改善」？是否设对照组？
+- 如果是短期活动，需设计活动后 1-2 周的观察期，观察效果是否回落
+- 关注指标之间的关系需说明（如某指标提升如何关联到最终业务目标）
+
+[Tool result] StrReplace
+
+assistant:
+现在在 SKILL.md 底部增加一个「常见问题清单」模块，提醒作者自查。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ---
+
+## 能力边界
+  new_string: ---
+
+## 自查清单
+
+PRD 完成后，建议对照以下问题自查：
+
+**"为什么做"是否讲清楚了？**
+- [ ] 有用户视角的问题分析，而非仅从业务运营角度出发
+- [ ] 问题归因链完整：现象 → 原因（至少追问 1-2 层 why）→ 解法方向
+- [ ] 没有从"现象"直接跳到"方案"
+
+**"为什么这么做"是否讲清楚了？**
+- [ ] 方案在整体策略中的定位明确（短期/长期、与其他策略的关系）
+- [ ] 简要对比过其他可选方案，说明了选择当前方案的理由
+- [ ] 目标数字有依据（历史数据、类似活动、业务测算），而非凭感觉
+
+**效果能否衡量？**
+- [ ] 有归因设计或对照方案
+- [ ] 如果是短期活动，有活动后观察期设计
+- [ ] 指标之间的关系已说明
+
+**关键定义是否清晰？**
+- [ ] 核心概念的定义标准明确，不会产生歧义
+- [ ] 奖励/规则设计有依据或标注了"初始方案，根据数据迭代"
+- [ ] 方案的延续性有考虑（效果好怎么办、效果差怎么办）
+
+---
+
+## 能力边界
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"更新 SKILL.md：补充用户视角、问题归因链、方案定位、归因设计等撰写标准","status":"completed"},{"id":"2","content":"更新 PRD_TEMPLATE.md：增加用户视角、问题归因链、方案定位、目标依据、归因设计等模板节","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+现在更新 PRD 模板，同步增加新的模板节。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ### 1.1 业务背景
+
+- 当前业务/产品所处阶段
+- 核心数据概览（用户规模、关键指标）
+- 本次需求要解决的核心问题
+
+### 1.2 问题诊断
+
+- 现状数据与漏斗分析
+- 问题归因（可配合图表）
+- 机会点与切入方向
+  new_string: ### 1.1 业务背景
+
+- 当前业务/产品所处阶段
+- 核心数据概览（用户规模、关键指标）
+- 本次需求要解决的核心问题
+
+### 1.2 用户视角
+
+- 从用户角度理解问题：用户为什么会出现这个行为/现象？
+- 定性信息来源（如与一线/助理沟通的结论）
+- 用户的真实痛点或动机是什么
+
+### 1.3 问题诊断
+
+- 现状数据与漏斗分析
+- **问题归因链**：现象 → 原因（追问 1-2 层 why）→ 归因结论
+- 数据线索的追问（例：某指标高/低说明了什么？背后原因是什么？）
+- 机会点与切入方向
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ### 2.2 目标设定
+
+- 【保守】预期目标及假设
+- 【激进】乐观目标及假设
+- 关键假设说明
+  new_string: ### 2.2 目标设定
+
+- 【保守】预期目标及假设
+- 【激进】乐观目标及假设
+- 关键假设说明
+
+### 2.3 目标依据与成本
+
+- 目标数字的来源（历史数据推算 / 类似活动参考 / 业务期望）
+- 成本预估（人力、奖品、补贴等）
+- 大致 ROI 判断
+- （如为短期活动）活动结束后的预期影响
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ### 4.1 方案设计
+
+- 核心设计思路
+- 着力点与变量说明
+- 方案对比（如有多种方案）
+
+### 4.2 问题/流程设计（如适用）
+
+- 问题结构设计
+- 逻辑分支与跳转
+- 文案与配置说明
+
+### 4.3 竞品/参考
+
+- 竞品方案
+- 可借鉴点
+- 差异化设计
+  new_string: ### 4.1 方案定位
+
+- 本方案在整体策略中的位置（短期运营手段 / 长期产品机制 / 阶段性实验）
+- 与其他策略的关系和边界
+- 对方案局限性的正视（如外部激励的长期效果、活动结束后的回落风险等）
+
+### 4.2 方案对比
+
+- 达成目标的可选路线有哪些（简要列举）
+- 为什么在当前阶段选择了这个方案
+- 各方案的优劣势对比（简要即可）
+
+### 4.3 方案设计
+
+- 核心设计思路
+- 着力点与变量说明
+- 关键规则/参数的设计依据（如无依据，标注"初始方案，根据数据迭代"）
+
+### 4.4 问题/流程设计（如适用）
+
+- 问题结构设计
+- 逻辑分支与跳转
+- 文案与配置说明
+
+### 4.5 竞品/行业参考
+
+- 行业内类似机制的常见做法与效果
+- 可借鉴点
+- 差异化设计
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ### 4.4 实验设计（如适用）
+  new_string: ### 4.6 实验设计（如适用）
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ### 6.2 渠道标识（keyfrom 等）
+
+| 实验组/渠道 | keyfrom 或标识 |
+||------------|----------------|
+||            |                |
+
+---
+
+## 附录
+  new_string: ### 6.2 渠道标识（keyfrom 等）
+
+| 实验组/渠道 | keyfrom 或标识 |
+|------------|----------------|
+|            |                |
+
+### 6.3 效果归因设计
+
+- 如何区分「因为方案/活动才改善」和「本来就会改善」的用户
+- 是否设置对照组
+- （如为短期活动）活动后 1-2 周的观察期计划
+- 各指标与最终业务目标的关系说明
+
+---
+
+## 附录
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  offset: 130
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: || 实验组/渠道 | keyfrom 或标识 |
+||------------|----------------|
+||            |                |
+
+---
+
+## 附录
+  new_string: || 实验组/渠道 | keyfrom 或标识 |
+||------------|----------------|
+||            |                |
+
+### 6.3 效果归因设计
+
+- 如何区分「因为方案/活动才改善」和「本来就会改善」的用户
+- 是否设置对照组
+- （如为短期活动）活动后 1-2 周的观察期计划
+- 各指标与最终业务目标的关系说明
+
+---
+
+## 附录
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  offset: 160
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: | 实验组/渠道 | keyfrom 或标识 |
+|------------|----------------|
+|            |                |
+
+---
+
+## 附录
+  new_string: | 实验组/渠道 | keyfrom 或标识 |
+|------------|----------------|
+|            |                |
+
+### 6.3 效果归因设计
+
+- 如何区分「因为方案/活动才改善」和「本来就会改善」的用户
+- 是否设置对照组
+- （如为短期活动）活动后 1-2 周的观察期计划
+- 各指标与最终业务目标的关系说明
+
+---
+
+## 附录
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"2","content":"更新 PRD_TEMPLATE.md：增加用户视角、问题归因链、方案定位、目标依据、归因设计等模板节","status":"completed"},{"id":"3","content":"新增示例：完习激励抽奖活动（作为 review 反面案例）","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+现在新增示例文件，把完习激励抽奖活动作为一个 review 案例，帮助后续撰写者避开同样的问题。
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/examples/完习激励抽奖活动-review案例.md
+  contents: # 示例：完习激励抽奖活动（Review 案例）
+
+> 本示例记录一篇 PRD 在 review 中暴露的典型问题，用于说明 prd-writer 各章节标准的实际意义。
+> 原文档：https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861
+
+## 文档概况
+
+| 项目 | 内容 |
+|------|------|
+| 需求名称 | 完习激励抽奖活动 |
+| 核心目标 | 提升 W13+ 用户单周全环节完习率 5pp |
+| 方案 | 连续完习 1-4 周获得阶梯奖励（抽奖券+海豚币） |
+| Review 结论 | ⚠️ 建议先补充问题分析和用户视角，再进入评审 |
+
+## Review 发现的问题
+
+### 问题 1：缺少用户视角（对应模板 1.2）
+
+**原文写法**：
+> 从"助理侧的促完习活动"角度切入，直接进入活动方案。
+
+**问题**：
+只从业务运营角度出发，没有回答最根本的问题——W13+ 的用户为什么不完习了？
+
+**Review 指出**：
+到习完习率高达 90%+，说明来上课的用户基本都能完成，真正的缺口在"不来上课"。那为什么不来？是学习动力在 M3 后自然衰减？是课程吸引力下降？还是生活中有更优先的事？
+
+**应该怎么写**：
+> 用户不完习的原因是 XX → 我们认为在现阶段，用外部激励能在一定程度上应对 → 所以选择抽奖+海豚币的方式
+
+---
+
+### 问题 2：问题归因链断裂（对应模板 1.3）
+
+**原文写法**：
+> - "单周全环节完习率有提升空间"——现象
+> - "需要周维度抓手"——已经是方案方向
+> - "通过阶梯激励增强连续完习的留存动机"——解决方案
+
+**问题**：
+从「现象」直接跳到了「方案」，中间少了最关键的一环——为什么会这样？原因是什么？
+
+**应该怎么写**：
+现象（完习率 55%-60%）→ 数据追问（到习完习 90%+ 说明问题在不到习）→ 原因分析（M3 衰减、新鲜感消退等）→ 解法方向
+
+---
+
+### 问题 3：数据有了但分析不够深（对应模板 1.3）
+
+**原文数据**：
+> 全完习 55%-60%、到习完习 90%+、M3 衰减最快、寒暑假上抬
+
+**问题**：
+这些数据背后的线索没有被追问：
+- 到习完习 90%+ → 问题主要出在"不到习"，那"不到习"的原因是什么？
+- M3 衰减最快 → 第三个月发生了什么？新鲜感消退？课程阶段切换？
+- 寒暑假上抬 → 是时间更充裕，还是家长监督更强？
+
+---
+
+### 问题 4：目标缺依据（对应模板 2.3）
+
+**原文写法**：
+> 各周期全环节完习提升 5pp
+
+**问题**：
+- 5pp 的依据是什么？基于以往类似活动的数据？还是业务期望？
+- 活动只有 4 周，结束后会怎样？如果完习率回落，这 4 周的提升带来的实际业务价值是什么？
+- 海豚币和奖品的预算大概是多少？5pp 完习率提升对应多少留存改善？大致 ROI 合不合理？
+
+---
+
+### 问题 5：缺少方案定位（对应模板 4.1）
+
+**问题**：
+抽奖活动本质上是外部激励手段，文档没有正视其局限性：
+- 活动结束后，用户的完习行为会不会回落？
+- 长期来看，外部激励是否足够？根本性的留存要靠内容和体验
+
+**应该怎么写**：
+> "这是一个短期运营活动，目标是在 3-4 月期间提振完习率。长期的完习策略还需要从内容/产品体验侧去解决，但短期先用这个活动顶一下。"
+
+---
+
+### 问题 6：缺少方案对比（对应模板 4.2）
+
+**问题**：
+提升完习率的路线有很多——内容优化、助理跟进策略调整、社交激励（学习小组/排行榜）、产品机制（streak/成就系统）等。文档只提了"抽奖+海豚币"一条路，没有说明为什么选这个。
+
+---
+
+### 问题 7：缺少归因设计（对应模板 6.3）
+
+**原文**：
+只列了活动过程指标（参加人数、获奖人数、抽奖人数），缺少效果评估设计：
+- 怎么区分"因为活动多完习了"和"本来就会完习"的用户？
+- 活动结束后 1-2 周的完习率变化很重要——如果马上回落，说明活动只是"借了未来的完习"
+- "10 分钟完习率、单科全完习率"和活动效果的关系是什么
+
+---
+
+### 问题 8：关键定义和规则设计缺依据
+
+- "周全环节完习"定义为"任一科目当周必学内容完习"，标准是否太低？三科用户只完成一个科目就算？
+- 奖励阶梯 1/1/2/2 张抽奖券、0/200/0/500 海豚币的设计依据是什么？
+- 如果效果好，后续打算怎么办？常态化还是不定期做？
+
+---
+
+## 总结：Review 映射到 PRD 模板
+
+| Review 问题 | 对应模板章节 | 关键缺失 |
+|------------|------------|----------|
+| 缺少用户视角 | 1.2 用户视角 | 没有从用户角度分析"为什么不完习" |
+| 归因链断裂 | 1.3 问题诊断 | 现象→原因 的 why 追问缺失 |
+| 数据分析浅 | 1.3 问题诊断 | 数据线索没有深入追问 |
+| 目标无依据 | 2.3 目标依据与成本 | 5pp 从何而来、ROI 未说明 |
+| 缺方案定位 | 4.1 方案定位 | 短期/长期未说明，局限性未正视 |
+| 缺方案对比 | 4.2 方案对比 | 只提一条路线，未对比其他方向 |
+| 缺归因设计 | 6.3 效果归因设计 | 无对照组、无活动后观察期 |
+| 定义/规则无依据 | 4.3 方案设计 | 关键参数未说明设计依据 |
+
+## 备注
+
+- 该文档的执行层细节（规则设计、边界情况、触达流程）写得扎实，说明在"怎么把事做好"上有能力
+- 核心问题是「往前多想一步」——在进入方案细节之前，先把"为什么做"和"为什么这么做"想清楚、讲清楚
+- 这不是增加文档篇幅，而是让自己和团队对这件事的价值和定位有清晰判断
+
+
+[Tool result] Write
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"3","content":"新增示例：完习激励抽奖活动（作为 review 反面案例）","status":"completed"},{"id":"4","content":"更新 CHANGELOG.md","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/CHANGELOG.md
+  old_string: # Changelog
+
+## [0.1.0] - 2026-02-12
+
+### Added
+- 新增 prd-writer skill，支持从需求分析到研发交付的 PRD 撰写指导
+- 新增 PRD_TEMPLATE.md 模板，提取自「断课老用户增加前测」文档结构
+- 新增示例：断课老用户前测
+  new_string: # Changelog
+
+## [0.2.0] - 2026-02-27
+
+### Added
+- SKILL.md：背景章节新增「用户视角」和「问题归因链」撰写标准（必须项）
+- SKILL.md：目标章节新增「目标依据」和「成本与收益关系」要求
+- SKILL.md：设计思路章节新增「方案定位」（必须）和「方案对比」（建议）
+- SKILL.md：数据需求章节新增「效果归因」建议（对照组、活动后观察期）
+- SKILL.md：新增「自查清单」模块，提供 PRD 完成后的自检项
+- PRD_TEMPLATE.md：新增 1.2 用户视角、1.3 问题归因链、2.3 目标依据与成本、4.1 方案定位、4.2 方案对比、6.3 效果归因设计
+- 新增示例：完习激励抽奖活动 review 案例（展示典型问题与改进方向）
+
+### Changed
+- PRD_TEMPLATE.md：设计思路章节重新编号（4.1-4.6），强调方案定位和对比在方案设计之前
+- PRD_TEMPLATE.md：竞品/参考改名为"竞品/行业参考"
+
+## [0.1.0] - 2026-02-12
+
+### Added
+- 新增 prd-writer skill，支持从需求分析到研发交付的 PRD 撰写指导
+- 新增 PRD_TEMPLATE.md 模板，提取自「断课老用户增加前测」文档结构
+- 新增示例：断课老用户前测
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"4","content":"更新 CHANGELOG.md","status":"completed"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+最后验证一下更新后的文件。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Everything looks good. Let me also update the SKILL.md to fix the template path references since the skill is now in `prd/prd-writer/` not `.claude/skills/prd-writer/`.
+模板路径引用需要修正一下，当前 skill 实际在 `prd/prd-writer/` 下。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: - 模板文件：`.claude/skills/prd-writer/templates/PRD_TEMPLATE.md`
+- 参考示例：`.claude/skills/prd-writer/examples/`
+  new_string: - 模板文件：`prd/prd-writer/templates/PRD_TEMPLATE.md`
+- 参考示例：`prd/prd-writer/examples/`
+
+[Tool result] StrReplace
+
+assistant:
+所有更新完成。以下是本次修改的总结：
+
+---
+
+**基于你领导的 review 反馈，prd-writer 做了以下升级（v0.1.0 → v0.2.0）：**
+
+### SKILL.md 撰写标准新增
+
+| 新增内容 | 对应 review 问题 | 级别 |
+|---------|----------------|------|
+| **用户视角** — 先从用户角度分析问题根因 | "用户为什么不完习"缺失 | 必须 |
+| **问题归因链** — 现象→原因→解法，禁止跳步 | 背景从现象直接跳到方案 | 必须 |
+| **目标依据** — 数字从何而来、ROI 分析 | "5pp 的依据是什么" | 必须 |
+| **方案定位** — 短期/长期、在整体策略中的位置 | 外部激励的局限性未正视 | 必须 |
+| **方案对比** — 为什么选这条路线 | 只提一个方案无对比 | 建议 |
+| **效果归因** — 对照组、活动后观察期 | 无法区分因果 | 建议 |
+| **自查清单** — PRD 完成后的自检项 | 汇总所有常见遗漏 | 新增模块 |
+
+### PRD_TEMPLATE.md 模板新增
+
+新增 6 个模板小节：`1.2 用户视角`、`1.3 问题诊断`（强化归因链）、`2.3 目标依据与成本`、`4.1 方案定位`、`4.2 方案对比`、`6.3 效果归因设计`
+
+### 新增示例
+
+`完习激励抽奖活动-review案例.md` — 把你这次 PRD 的 8 个 review 问题逐一映射到模板章节，作为后续写 PRD 时的反面教材参考。
+
+user:
+<user_query>
+@/Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/693526680bbf88881ab3f7ad1e75990b/review-checklist.md @/Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/1b32bd41bf44347155f03a786012301e/SKILL.md 这两个是我领导发我的，她用来 review prd 的 skill，帮我归档一下
+</user_query>
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/693526680bbf88881ab3f7ad1e75990b/review-checklist.md
+[Tool call] Read
+  path: /Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/1b32bd41bf44347155f03a786012301e/SKILL.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] These are two files that make up a "prd-review" skill from the user's leader. Let me analyze the structure:
+
+1. `SKILL.md` - The main skill file for PRD review, defining the workflow (get PRD content → identify version → assess review depth → review by version → output report → archive)
+2. `review-checklist.md` - The detailed checklist for v1 and v5 reviews
+
+I need to archive these properly in the repository. Based on the repo structure, skills should go into either `.claude/skills/` or since we already have `prd/prd-writer/`, maybe under `prd/prd-review/` would be consistent.
+
+
+Since `prd-review` is a skill related to `prd-writer`, I should place it in `prd/prd-review/` for consistency, keeping both the main skill file and the checklist together. The SKILL.md references `review-checklist.md` as a separate file, so they need to be in the same directory.
+
+The original save path is specific to the user's machine, so I'll update it to be relative to the repo structure. I'm thinking the reviews should live in `prd/prd-review/reviews/` for archived reviews, keeping everything organized under the prd folder. Since the user asked to archive these files properly, I should place them correctly in the repo structure and fix the paths, but keep the content largely as-is.
+这是你领导用来 review PRD 的 skill，包含主文件和检查清单。我来把它归档到仓库的规范位置。
+[Tool call] Glob
+  glob_pattern: prd/**/*
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Shell
+  command: mkdir -p prd/prd-review/reviews
+  working_directory: /Users/jiwenyue/aries-teach
+  description: Create prd-review directory structure
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+  contents: ---
+name: prd-review
+description: PRD Review 工具。从 Confluence 拉取 PRD 内容，按 159 版本分层 review，输出结构化评审意见并存档。用于用户说"帮我 review 这个 PRD"、"看看这个需求文档"、贴 Confluence 链接、或提到"PRD review"时。
+---
+
+# PRD Review
+
+产品 Leader 视角的 PRD 评审工具。v1 审问题分析与方案方向，v5 审交互设计。
+
+## 工作流
+
+### Step 1：获取 PRD 内容
+
+**Confluence 文档**（v1/v5 均适用）：
+
+```
+MCP server: user-shimo
+Tool: get_confluence_content
+Arguments: { "page": "<url>", "pageId": "<id>" }
+```
+
+**Motiff 设计稿**（v5 交互稿）：
+
+从 Motiff URL `https://motiff.com/file/{docId}?nodeId={nodeId}` 中提取参数。nodeId 中的 `%3A` 需解码为 `:`。
+
+```
+MCP server: user-motiff
+Tool: get_motiff_node_screenshot  # 获取设计截图
+Arguments: { "docId": "<docId>", "nodeId": "<nodeId>" }
+
+Tool: get_motiff_node             # 获取 HTML 结构（辅助分析布局和组件）
+Arguments: { "docId": "<docId>", "nodeId": "<nodeId>" }
+```
+
+用户可能同时提供 Confluence 链接和 Motiff 链接，都需要拉取。
+
+### Step 2：识别版本
+
+从 PRD 标题中的版本号判断：
+- 标题格式：`产品名X.X-{159版本}-{副版本}`，如 `通用题库 CMS1.0-1-3` 中 `-1-` 表示 v1
+- 版本 1 = v1 概念稿，5 = v5 主功能稿，9 = v9 细节稿
+- 无法判断时问用户
+- v9 不在 review 范围内，如果是 v9 告知用户
+
+### Step 3：评估 Review 深度
+
+**深度 review**（每个维度详细分析，给具体建议）— 满足任一条件：
+- 影响核心业务指标：首单 ROI、UE、体验课转化率、在课留存（周完习率）、长续率、退费率
+- 影响全量用户（而非小部分用户）
+- 涉及多个部门协作
+- 改动范围大（多个模块/页面）
+- 开发难度高
+
+**标准 review**（标注有问题的维度，给要点）：不满足上述条件。
+
+无法判断时问用户："这个需求的影响面和复杂度大概是什么水平？"
+
+### Step 4：按版本 Review
+
+详细检查标准见 [review-checklist.md](review-checklist.md)。
+
+#### v1 Review：问题分析与方案方向
+
+核心判断：**问题值得做吗？方向对吗？**
+
+| # | 维度 | 核心问题 |
+|---|------|---------|
+| 1 | **用户视角** | 这个需求是从用户需求出发的吗？对用户的影响说清楚了吗？ |
+| 2 | 问题定义 | 要解决什么问题，说清楚了吗？ |
+| 3 | 问题分析 | 做了严肃分析吗？需求来源、根因挖掘 |
+| 4 | 收益判断 | 收益清晰吗？长短期、重要紧急 |
+| 5 | 是否直击根本 | 方案是否简单直接解决根本问题 |
+| 6 | 竞品/行业参照 | 别人怎么做的、为什么我们这样做 |
+| 7 | 方案路线对比 | 想过其他路线吗？为什么选当前方案 |
+| 8 | 效果评估思路 | 做完怎么知道成功了 |
+| 9 | 待决策点 | 还有哪些模糊需要决策的问题 |
+
+**关于「用户视角」**：这不只是一个维度，而是贯穿 review 的底层检查。几乎所有需求都应该回归到用户需求——即使是业务提出的需求，业务指标的变化本质上是对用户需求的回应。需要说清楚对用户的影响是什么、能不能带来显著的体验变化、进而如何影响业务。极少数纯算账/经营模式类需求可以豁免。
+
+**门禁判断：**
+- ✅ 可以推进到 v5
+- ⚠️ 需要在特定点上补充后重新 review
+- ❌ 方向有问题，建议重新分析
+
+#### v5 Review：交互设计
+
+前提：v1 方向已过。核心判断：**交互走得通吗？设计合理吗？**
+
+| # | 维度 | 核心问题 |
+|---|------|---------|
+| 1 | 场景还原 | 主流程走得通吗？（谁→页面→看到什么→想做什么→怎么操作） |
+| 2 | 交互逻辑自洽 | 各功能点正常逻辑是否清晰、自洽 |
+| 3 | 与 v1 方向一致 | 交互方案是否忠实于 v1 定的方向 |
+| 4 | 设计一致性 | 是否复用已有组件和交互模式，避免不必要的新发明 |
+| 5 | 交互层待决策点 | 有没有交互设计上拿不准的地方 |
+
+**门禁判断：**
+- ✅ 可以推进到 v9 交付开发
+- ⚠️ 需在 v5 上修改（方向没变）
+- ❌ 方向变了，回到 v1
+
+### Step 5：输出 Review 报告
+
+```markdown
+# PRD Review：{PRD 名称}
+
+> 版本：{v1/v5} | Review 深度：{深度/标准} | 日期：{YYYY-MM-DD}
+
+## 门禁判断
+
+{一句话结论}
+
+{如果不通过，列出阻塞原因}
+
+## 各维度评价
+
+### 1. {维度名称}
+- **判断**：✅ / ⚠️ / ❌
+- **评价**：{具体说明，引用 PRD 中的原文佐证}
+- **建议**：{改进建议，示范更好的思考方式}
+
+（重复各维度）
+
+## 给 PM 的建议
+
+{教练式建议：不是"问题分析不够深"，而是"你分析到了 XX 但没挖到 YY，可以试试从 ZZ 角度想"}
+```
+
+### Step 6：存档
+
+保存到：`prd/prd-review/reviews/{PRD名称}_review_{YYYYMMDD}.md`
+
+如果目录不存在，创建目录。
+
+## 注意事项
+
+- Review 时始终以产品 Leader 视角出发，兼顾"门禁判断"和"教练指导"两个角色
+- 评价要具体、引用原文，不说空话
+- 建议要可操作，示范"如果是我会怎么想"
+- 不纠结 v9 层面的细节（异常状态、loading、文案等），那不是 review 重点
+- 业务核心指标参考：首单 ROI、UE、体验课转化率、在课留存、退费率
+
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/review-checklist.md
+  contents: # PRD Review 检查清单
+
+## v1 Review：问题分析与方案方向
+
+### 1. 用户视角（贯穿性底层检查）
+
+**要回答的问题：** 这个需求是从用户需求出发的吗？对用户的影响说清楚了吗？
+
+**核心理念：** 业务指标的变化大多数是对用户需求的回应。即使是业务方提出的需求，也应该回归到用户需求中去——用户遇到了什么问题、用户会怎么感受、对用户的体验改变是什么、这个体验改变如何传导到业务指标。
+
+**检查标准：**
+- PRD 的叙事起点是"用户遇到了什么问题"，而非"业务要做什么功能"
+- 清楚描述了对用户的影响是什么——不是抽象的"提升体验"，而是具体的用户场景和感受变化
+- 能回答"这个改动对用户来说，体验会有显著变化吗？"
+- 如果涉及业务指标（转化率、留存等），说清楚了指标变化和用户体验变化之间的因果链
+- 方案选择的理由能回到用户场景，而非只是"竞品这么做""老板要求"
+
+**常见问题：**
+- 全程从功能/业务/技术视角描述，用户只是一个抽象概念
+- 业务提了一个需求，PM 直接接了就做，没有追问"这背后用户的需求到底是什么"
+- 说了"提升用户体验"但说不出具体是什么体验、怎么提升、用户能感知到吗
+- 方案对用户的实际影响很小，但被包装成很重要的需求
+- 混淆"我们想让用户做的事"和"用户自己想做的事"
+
+**追问方向：**
+- "这个需求解决的是用户的什么问题？用户自己知道自己有这个问题吗？"
+- "做完之后，用户的使用体验会有什么具体变化？变化大吗？"
+- "你说的这个业务指标变化，对应的是用户行为的什么改变？"
+
+**豁免情况：** 纯算账/经营模式类需求（如定价策略调整、SKU 结构变更等）可能不需要强制回到用户视角，但这类需求非常少。如果 PM 说"这个不涉及用户"，追问确认是否真的不涉及。
+
+---
+
+### 2. 问题定义
+
+**要回答的问题：** 要解决什么问题，说清楚了吗？
+
+**检查标准：**
+- 用"问题/痛点"而非"功能"来描述需求
+- 能回答"不做这个，用户/业务会怎样？"
+- 问题描述是事实性的，有数据或实例支撑
+
+**常见问题：**
+- 把解法当问题写（"我们需要做一个 XX 功能" ← 这不是问题定义）
+- 问题描述太笼统（"用户体验不好"）
+- 混淆现象和问题（现象是表层数据，问题是背后的原因）
+
+**好的标准（示范）：**
+> "小高英语体验课的第 3 节课完课率只有 45%，远低于其他课次的 70%，导致体验课整体转化率偏低。"
+> 而非："体验课完课率需要优化。"
+
+---
+
+### 3. 问题分析
+
+**要回答的问题：** 做了严肃分析吗？
+
+**检查标准：**
+- 需求来源清晰：是数据发现、业务方反馈、用户投诉、还是战略判断？
+- 根因有挖掘：不是停留在"XX 数据低"，而是分析了为什么低
+- 至少追问了 2-3 层 why
+- 分析有依据，不是纯主观推测
+
+**常见问题：**
+- 只描述现象不挖原因
+- 用个例代替系统分析（"有个用户反馈说…"就定性了整个问题）
+- 需求来源不明（不知道这个需求从哪冒出来的）
+- 分析链断裂（从现象直接跳到方案，中间的推理过程缺失）
+
+**追问方向：**
+- "这个数据/现象的背后原因是什么？你怎么确认的？"
+- "除了这个原因，还有没有其他可能性？"
+- "这个判断有数据支撑吗？还是假设？"
+
+---
+
+### 4. 收益判断
+
+**要回答的问题：** 解决后的收益清晰吗？
+
+**检查标准：**
+- 收益是具体的，不是泛泛的"提升体验"
+- 区分了短期收益和长期收益
+- 在重要-紧急矩阵中的位置清晰
+- 收益和核心业务指标有关联（首单 ROI、UE、体验课转化率、在课留存、退费率）
+
+**常见问题：**
+- 收益描述模糊（"提升用户体验""提高效率"）
+- 只讲短期止血，不讲长期价值（或反过来）
+- 收益和问题对不上（解决的是 A 问题，讲的收益是 B 方向的）
+- 没有量级感知（不知道影响多少用户、影响多大比例）
+
+---
+
+### 5. 是否直击根本
+
+**要回答的问题：** 方案是否简单直接解决根本问题？
+
+**检查标准：**
+- 方案解决的是根因，不是衍生问题
+- 没有不必要的绕路
+- 方案复杂度和问题复杂度匹配（简单问题不该需要复杂方案）
+
+**常见问题：**
+- 在衍生问题上做文章，没碰到根因
+- 方案过度工程化（一个简单问题搞出一套复杂系统）
+- 方案只是"打补丁"，没有从根本上解决
+
+**追问方向：**
+- "有没有更简单直接的方式解决这个问题？"
+- "这个方案解决的是根因还是症状？"
+
+---
+
+### 6. 竞品/行业参照
+
+**要回答的问题：** 别人怎么做的？为什么我们这样做？
+
+**检查标准：**
+- 看了竞品或同类产品（完全对标竞品 + 同类产品）
+- 分析了竞品方案的优缺点
+- 我们方案和竞品差异的原因清晰
+- 如果是完全创新的设计，有充分理由说明为什么不沿用已有方案
+
+**常见问题：**
+- 没看竞品就做方案
+- 看了但只是"参考了 XX"，没分析优缺点
+- 竞品分析浮于表面（只截了图，没分析背后的设计逻辑）
+
+**注意：** 公司 PRD 规范明确要求——"完全的创造性的设计一定要谨慎"
+
+---
+
+### 7. 方案路线对比
+
+**要回答的问题：** 想过其他路线吗？为什么选当前方案？
+
+**检查标准：**
+- 至少考虑了 2 种以上方案
+- 各方案的优缺点清晰
+- 选择当前方案的理由充分
+- 被放弃的方案的放弃理由清晰
+- 当前方案的已知缺点和应对策略清晰
+
+**常见问题：**
+- 只提了一个方案（"我的方案是…"——你想过其他方式吗？）
+- 对比维度不一致（A 方案讲了 3 个优点，B 方案只讲了 1 个缺点）
+- 选择理由是"我觉得这个更好"而非具体分析
+
+---
+
+### 8. 效果评估思路
+
+**要回答的问题：** 做完怎么知道成功了？
+
+**检查标准：**
+- 有具体的衡量指标
+- 指标和问题/收益对应（不是随便找个指标）
+- 数据怎么收集、口径是什么
+- 有预期的目标值或方向
+
+**常见问题：**
+- 没有衡量标准（做完就完了，不知道效果好不好）
+- 指标和问题对不上（问题说的是完课率，指标看的是 DAU）
+- 指标太间接（做了课程优化，去看 GMV——中间变量太多，归因不了）
+
+---
+
+### 9. 待决策点
+
+**要回答的问题：** 还有哪些模糊的、需要决策的问题？
+
+**检查标准：**
+- PM 主动标出了自己拿不准的地方
+- 对每个待决策点给出了自己的倾向和理由
+- 没有"看起来定了但其实经不起追问"的伪决策
+
+**常见问题：**
+- PM 没意识到方案里有模糊地带（认为都想清楚了，实际上没有）
+- 有模糊点但没暴露（怕被 review 出来不好看，不如自己先提出来）
+- 待决策点太多说明 v1 本身没准备好
+
+**Reviewer 的职责：**
+不只是看 PM 自己标出的待决策点，还要主动发现 PRD 中隐藏的模糊地带。
+
+---
+
+## v5 Review：交互设计
+
+### 1. 场景还原
+
+**要回答的问题：** 主流程走得通吗？
+
+**检查标准：**
+- 有完整的用户场景描述：谁（某种用户）→ 点进（某个页面）→ 看到（什么）→ 希望（做什么）→ 如何操作
+- 主流程覆盖了核心用户场景
+- 流程中每一步都有对应的交互设计
+- 不同用户角色的场景都有覆盖（如果适用）
+
+**常见问题：**
+- 只描述了功能，没有场景（"支持 XX 功能"但不知道用户什么时候、怎么用）
+- 主流程有断裂（从 A 状态到 B 状态，中间的操作路径不清楚）
+- 只覆盖了一种用户角色
+
+---
+
+### 2. 交互逻辑自洽
+
+**要回答的问题：** 各功能点正常逻辑是否清晰、自洽？
+
+**检查标准：**
+- 每个功能的操作→反馈链路完整
+- 功能之间不矛盾（A 功能的输出和 B 功能的输入衔接得上）
+- 信息架构清晰（用户能找到他要的东西）
+- 操作路径不绕弯
+
+**常见问题：**
+- 功能之间有矛盾（两个地方对同一个数据有不同的处理逻辑）
+- 操作路径不顺畅（完成一个简单任务需要太多步骤）
+- 信息层级不清（重要的东西藏得太深）
+
+---
+
+### 3. 与 v1 方向一致
+
+**要回答的问题：** 交互方案是否忠实于 v1 定的方向？
+
+**检查标准：**
+- v5 的功能范围没有超出 v1 定义的边界
+- 没有在做交互时偷偷引入新功能或改变方向
+- v1 中确定的核心问题在 v5 中有对应的解决方案
+
+**常见问题：**
+- 做着做着偏了，v5 的交互其实在解决另一个问题
+- 加了 v1 没定义的功能（范围蔓延）
+- v1 说的核心场景在 v5 中反而被弱化了
+
+---
+
+### 4. 设计一致性
+
+**要回答的问题：** 有没有复用已有组件和交互模式？
+
+**检查标准：**
+- 使用了 Octopus 组件库的元素
+- 交互模式和产品现有功能一致
+- 没有不必要的新发明（新的操作方式、新的控件样式）
+- 如果确实需要新设计，有充分理由
+
+**常见问题：**
+- 重新造轮子（产品已有类似交互但没复用）
+- 同一类操作在不同地方交互方式不一致
+- 引入了新的交互范式但没有评估对整体产品的影响
+
+**注意：** 公司规范要求改动通用设计时需组织团队 review。
+
+---
+
+### 5. 交互层待决策点
+
+**要回答的问题：** 有没有交互设计上拿不准的地方？
+
+**检查标准：**
+- PM 标出了交互上的取舍点
+- 对每个取舍给出了倾向和理由
+
+**常见问题：**
+- 在几种交互方案间犹豫但没暴露
+- 有些交互决策需要技术可行性确认但没标注
+
+
+[Tool result] Write
+
+[Tool result] Write
+
+assistant:
+已归档完成。做了两处适配：
+
+1. **存档路径**：原文件中的存档路径是你领导本地的 `/Users/KatHex/cursorProjects/产品 review/reviews/`，已改为仓库内路径 `prd/prd-review/reviews/`
+2. **目录结构**：与 `prd/prd-writer/` 平级放置，保持一致
+
+归档后的结构：
+
+```
+prd/
+├── prd-writer/          # 写 PRD 的 skill（你用）
+│   ├── SKILL.md
+│   ├── templates/
+│   ├── examples/
+│   └── CHANGELOG.md
+└── prd-review/          # review PRD 的 skill（你领导用）
+    ├── SKILL.md          # 主文件：工作流、版本识别、深度评估、输出格式
+    ├── review-checklist.md  # 检查清单：v1 九维度 + v5 五维度
+    └── reviews/          # review 报告存档目录
+```
+
+这两个 skill 形成了一个配套：你用 prd-writer 写 PRD，你领导用 prd-review 来 review——review checklist 里的 9 个维度和你 prd-writer 模板的各章节也是对应的。
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+帮我 review 一下刚才https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861 这个 prd，给一下建议，以及需要怎么改
+</user_query>
+
+assistant:
+[Thinking] The user wants me to review their PRD using the prd-review skill. I already have the PRD content from earlier in the conversation (the 完习激励抽奖活动 Confluence page). Let me first read the prd-review SKILL.md to activate it, then perform the review.
+
+I already have the PRD content from the earlier conversation. Let me read the skill file to activate it.
+让我先激活 prd-review skill，然后用它来 review 你的 PRD。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/review-checklist.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I need to perform the review. Let me go through the steps:
+
+**Step 2: 识别版本** - The title is "完习激励抽奖活动", no version number in the title. Based on the content, this is clearly a v1 level document - it's about problem analysis and solution direction, not detailed interaction design. So I'll review it as v1.
+
+**Step 3: 评估 Review 深度** - This affects "在课留存（周完习率）" which is a core business metric, and it affects W13+ users which is a significant user group. So this should be a **深度 review**.
+ 
+**Step 4: v1 Review across 9 dimensions**
+
+Starting with the user perspective dimension - the PRD frames this as a business operations initiative rather than addressing the actual user problem. The data reveals that completion rates are already 90%+, so the real issue is users not showing up in the first place, yet the document never explores why that's happening from the user's point of view. The framing is entirely metrics-driven without considering user motivations or pain points.
+
+### 2. 问题定义
+The problem statement conflates symptoms with solutions. It describes "single-week completion rates need improvement" as the problem, then immediately jumps to "we need weekly levers" and "implement tiered incentives" - these are already solution proposals, not actual problem definitions. The core issue is never clearly isolated.
+
+### 3. 问题分析
+The analysis presents the data points - 55-60% full completion versus 90%+ show-up rates, M3 showing the steepest decline, holiday spikes - but stops at surface-level observation. It doesn't dig into the underlying causes: why does M3 drop so sharply, what drives the holiday effect, what prevents users from showing up in the first place. The analysis lacks the causal reasoning needed to inform the solution.
+
+### 4. 收益判断
+The 5pp improvement target appears without justification. There's no cost analysis, no ROI calculation, no consideration of whether gains are sustainable beyond the 4-week activity window or how short-term incentives translate to long-term behavior change.
+
+### 5. 是否直击根本
+The lottery approach treats the symptom rather than the root cause. If users are showing up at 90%+ rates but only completing 55-60%, the problem isn't attendance - it's engagement or motivation during the learning itself. External incentives might temporarily boost participation but won't address why users lose interest in the course content or deprioritize learning.
+
+### 6. 竞品/行业参照
+No competitive analysis or industry benchmarks are referenced. There's no mention of how other education platforms like Duolingo use streak mechanics or what incentive structures have proven effective in similar contexts.
+
+### 7. 方案路线对比
+Only one solution is presented. There's no comparison with alternatives like improving course content, implementing tutor follow-ups, leveraging social incentives, or building streak-based systems.
+
+### 8. 效果评估思路
+The metrics framework lists participation and completion rates, but lacks a proper attribution model to isolate the activity's impact from baseline behavior, no post-activity tracking period, and no clear connection between the measured metrics and actual business outcomes.
+
+### 9. 待决策点
+Several critical assumptions remain unexamined: what constitutes "full completion" for multi-subject learners, the reward tier structure lacks justification, there's no contingency planning for different outcomes, and the technical feasibility of integrating with the existing lottery system hasn't been verified.
+
+The overall assessment is that this proposal needs stronger grounding in user research, more rigorous problem diagnosis, and clearer decision frameworks before moving forward.
+已经拉取了 PRD 内容（之前对话中已获取）。这篇标题是「完习激励抽奖活动」，无 159 版本号标注，从内容看属于 **v1 概念稿**（问题分析与方案方向）。这个需求直接影响**在课留存（周完习率）**这个核心业务指标，且覆盖全量 W13+ 用户，按深度 review 处理。
+
+以下是完整的 review 报告：
+
+---
+
+# PRD Review：完习激励抽奖活动
+
+> 版本：按 v1 标准 review（标题未标注版本号）| Review 深度：深度 | 日期：2026-02-27
+
+## 门禁判断
+
+**⚠️ 建议补充问题分析和用户视角后重新 review。**
+
+执行层细节（规则设计、边界情况、触达流程）写得扎实，但 v1 最核心的"为什么做"和"为什么这么做"两个问题没有回答清楚。3 个维度 ❌、4 个维度 ⚠️，需要先把前半段补齐。
+
+**阻塞原因：**
+1. 缺用户视角——不知道用户为什么不完习
+2. 问题定义和方案混在一起——从现象直接跳到了方案
+3. 没有方案对比和竞品参照——不知道为什么选抽奖这条路
+
+## 各维度评价
+
+### 1. 用户视角
+- **判断**：❌
+- **评价**：PRD 的叙事起点是"助理侧的促完习活动"，全程从业务运营角度切入。但你自己的数据里藏着一个关键信息——到习完习率高达 90%+，说明**来上课的用户基本都能完成，真正的缺口在"不来上课"**。这是一个非常有价值的发现，但文档没有从用户角度追问下去：他们为什么不来？是 M3 后学习动力自然衰减？课程吸引力下降？还是生活里有了更优先的事？
+- **建议**：在背景部分加一段用户视角的分析。最直接的做法是**跟助理聊一下**，W13+ 不完习的用户通常是什么情况——助理对这些用户的感知可能比数据更直接。然后把思考链写出来：
+
+  > 用户不完习的主要原因是 XX → 我们认为在现阶段，用外部激励能在一定程度上拉回这部分用户 → 所以选择抽奖+海豚币的方式
+
+### 2. 问题定义
+- **判断**：❌
+- **评价**：背景里的三句话分别是：
+  - "单周全环节完习率有提升空间"——**现象**
+  - "需要周维度抓手"——已经是**方案方向**了
+  - "通过阶梯激励增强连续完习的留存动机"——这是**解决方案**本身
+
+  从"现象"直接跳到了"方案"，中间最关键的一环——**为什么完习率不高？原因是什么？**——被跳过了。这属于典型的"把解法当问题写"。
+- **建议**：把背景拆成两段——先把**问题**讲完（现象+原因），再讲你打算**怎么解决**。可以参考这个结构：
+  - 现象：全完习率 55%-60%，M3 衰减最快
+  - 原因分析：到习完习 90%+ 说明问题出在"不到习"，不到习的可能原因是...
+  - 切入方向：在当前阶段，选择用外部激励来提振到习率
+
+### 3. 问题分析
+- **判断**：❌
+- **评价**：你放了很好的数据基础（55%-60%、90%+、M3 衰减、寒暑假上抬），这是好的。但这些数据里的线索没有被追问：
+  - 到习完习 90%+ → 问题主要出在"不到习"，那**不到习的原因**是什么？
+  - M3 衰减最快 → **第三个月发生了什么？** 新鲜感消退？课程阶段切换？
+  - 寒暑假上抬 → 是因为时间充裕，还是家长在家监督更强？
+
+  分析链在"数据描述"这一步就断了，没有往下挖 why。
+- **建议**：不需要做特别重的分析，哪怕追问一两层 why 就够了。比如可以分年级/科目看看衰减模式有没有差异，或者看看 M3 衰减的用户画像跟其他月份有什么不同。
+
+### 4. 收益判断
+- **判断**：⚠️
+- **评价**："各周期全环节完习提升5pp"——有具体数字，但三个关键问题没回答：
+  1. **5pp 的依据是什么？** 基于以往类似活动的数据？还是业务期望？
+  2. **活动只有 4 周，结束后会怎样？** 如果完习率回落，这 4 周的提升带来的实际业务价值是什么？
+  3. **成本收益关系**：海豚币和奖品的预算大概是多少？5pp 提升对应多少留存改善？ROI 合理吗？
+
+  只有"做到多少"没有"为什么是这个数"，收益判断缺乏说服力。
+- **建议**：补充目标依据（哪怕是"参考XX活动的数据"或"业务期望值，后续根据数据调整"），再粗略估一下成本。
+
+### 5. 是否直击根本
+- **判断**：⚠️
+- **评价**：如果根因是"用户不到习"，那抽奖激励本质上是用外部激励把人"拉回来"——这不是在解决根因（为什么不到习），而是在绕过根因。这不一定是错的——可能短期内确实没有更好的办法——但文档需要正视这一点。
+- **建议**：在方案部分坦诚说明：
+
+  > "这是一个短期运营活动，目标是在 3-4 月期间提振完习率。长期的完习策略还需要从内容/产品体验侧去解决，但短期先用这个活动顶一下。"
+
+  讲清楚了，大家对这件事的预期就对齐了。
+
+### 6. 竞品/行业参照
+- **判断**：❌
+- **评价**：文档中没有任何竞品或行业参照。"连续学习激励"在教育行业里是一个非常成熟的设计方向——Duolingo 的 streak 机制、其他教育 App 的打卡奖励、学习社群的排行榜等——这些已有大量实践和效果数据。完全不参考就直接做，容易错过已被验证的有效设计。
+- **建议**：不需要做很重的竞品分析，快速看 2-3 个行业案例（Duolingo streak、其他 K12 App 的打卡奖励），总结它们的做法和效果，给你的方案找支撑或启发。
+
+### 7. 方案路线对比
+- **判断**：❌
+- **评价**：只提了"抽奖+海豚币"一条路线。但提升完习率的路线其实有不少：内容优化（让课更吸引人）、助理跟进策略调整（更精准的催课）、社交激励（学习小组/排行榜）、产品机制（streak/成就系统）、外部物质激励（抽奖/补贴）等。不知道你考虑过其他方向没有。
+- **建议**：补一段简要的方案对比，不需要每个都详细分析，说清楚"我考虑过 A/B/C，当前阶段选 D 的理由是..."就够了。
+
+### 8. 效果评估思路
+- **判断**：⚠️
+- **评价**：列了活动过程指标（参加人数、获奖人数、抽奖人数）和结果指标（10 分钟完习率、单科全完习率），基本面有了。但缺三个关键设计：
+  1. **归因**：怎么区分"因为活动多完习了"和"本来就会完习"的用户？有没有可能设一个对照组？
+  2. **活动后观察期**：活动结束后 1-2 周的完习率变化很重要——如果马上回落，说明活动只是"借了未来的完习"
+  3. **指标关系**："10 分钟完习率、单科全完习率"和活动效果是什么关系？没有说明
+- **建议**：补充归因思路（哪怕是"通过对比活动参与者 vs 未参与者的完习率变化"），加上活动后 1-2 周的观察期设计。
+
+### 9. 待决策点
+- **判断**：⚠️
+- **评价**：文档里有几个隐含的模糊地带没有暴露：
+  1. **"周全环节完习"的标准**：定义是"任一科目当周必学内容完习"就算。一个三科用户只完成一个科目就算"全环节完习"？这个标准会不会太低？
+  2. **奖励阶梯的依据**：1/1/2/2 张抽奖券、0/200/0/500 海豚币——这个设计有什么依据？如果是先试试的，可以标注"初始方案，根据数据迭代"
+  3. **活动延续性**：如果效果好，后续打算怎么办？常态化做还是不定期做？
+  4. **技术可行性**：文档写了"需要调研现在的抽奖活动是否支持直接接口下发"——这个还没确认，是阻塞项吗？
+- **建议**：把这些主动标出来，对每个给出你的倾向。比如"完习标准目前定义为任一科目即可，后续根据数据看是否调整"。主动暴露比被 review 出来更好。
+
+---
+
+## 给你的建议
+
+你在执行层的细节上做得很好——规则设计、边界情况处理、触达流程都很清晰，说明你在"怎么把事做好"上是有能力的。
+
+这次主要的提升点是**往前多想一步**。在进入方案细节之前，先回答两个问题：
+
+1. **"为什么做"**：你已经有了很好的数据（90%+ 到习完习率是一个非常有价值的发现），但停在了数据描述层面。如果你顺着这个数据追问一层——"问题出在不到习，那为什么不到习？"——你对问题的理解会深一层，方案也会更有针对性。
+
+2. **"为什么这么做"**：抽奖活动是一个可以做的选择，但文档需要让读者知道你思考过其他路线、知道这个方案的局限性、知道它在整体策略中的位置。不是说分析完就不做了——可能分析完你会更有信心做这个活动——但过程要体现出来。
+
+**修改优先级建议：**
+1. 补用户视角和问题归因链（最重要，也是当前最大的缺口）
+2. 讲清楚方案定位（短期手段，坦诚局限性）
+3. 简单补一下方案对比（为什么是抽奖而不是其他）
+4. 补竞品参考、目标依据、归因设计可以同步做
+
+---
+
+需要我把这份 review 报告存档到 `prd/prd-review/reviews/` 吗？
+
+user:
+<user_query>
+保存吧
+</user_query>
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/reviews/完习激励抽奖活动_review_20260227.md
+  contents: # PRD Review：完习激励抽奖活动
+
+> 版本：按 v1 标准 review（标题未标注版本号）| Review 深度：深度 | 日期：2026-02-27
+> 作者：姬文悦 | 页面：https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861
+
+## 门禁判断
+
+**⚠️ 建议补充问题分析和用户视角后重新 review。**
+
+执行层细节（规则设计、边界情况、触达流程）写得扎实，但 v1 最核心的"为什么做"和"为什么这么做"两个问题没有回答清楚。3 个维度 ❌、4 个维度 ⚠️，需要先把前半段补齐。
+
+**阻塞原因：**
+1. 缺用户视角——不知道用户为什么不完习
+2. 问题定义和方案混在一起——从现象直接跳到了方案
+3. 没有方案对比和竞品参照——不知道为什么选抽奖这条路
+
+## 各维度评价
+
+### 1. 用户视角
+- **判断**：❌
+- **评价**：PRD 的叙事起点是"助理侧的促完习活动"，全程从业务运营角度切入。但你自己的数据里藏着一个关键信息——到习完习率高达 90%+，说明**来上课的用户基本都能完成，真正的缺口在"不来上课"**。这是一个非常有价值的发现，但文档没有从用户角度追问下去：他们为什么不来？是 M3 后学习动力自然衰减？课程吸引力下降？还是生活里有了更优先的事？
+- **建议**：在背景部分加一段用户视角的分析。最直接的做法是**跟助理聊一下**，W13+ 不完习的用户通常是什么情况——助理对这些用户的感知可能比数据更直接。然后把思考链写出来：
+  > 用户不完习的主要原因是 XX → 我们认为在现阶段，用外部激励能在一定程度上拉回这部分用户 → 所以选择抽奖+海豚币的方式
+
+---
+
+### 2. 问题定义
+- **判断**：❌
+- **评价**：背景里的三句话分别是：
+  - "单周全环节完习率有提升空间"——**现象**
+  - "需要周维度抓手"——已经是**方案方向**了
+  - "通过阶梯激励增强连续完习的留存动机"——这是**解决方案**本身
+
+  从"现象"直接跳到了"方案"，中间最关键的一环——**为什么完习率不高？原因是什么？**——被跳过了。这属于典型的"把解法当问题写"。
+- **建议**：把背景拆成两段——先把**问题**讲完（现象+原因），再讲你打算**怎么解决**。可以参考这个结构：
+  - 现象：全完习率 55%-60%，M3 衰减最快
+  - 原因分析：到习完习 90%+ 说明问题出在"不到习"，不到习的可能原因是...
+  - 切入方向：在当前阶段，选择用外部激励来提振到习率
+
+---
+
+### 3. 问题分析
+- **判断**：❌
+- **评价**：你放了很好的数据基础（55%-60%、90%+、M3 衰减、寒暑假上抬），这是好的。但这些数据里的线索没有被追问：
+  - 到习完习 90%+ → 问题主要出在"不到习"，那**不到习的原因**是什么？
+  - M3 衰减最快 → **第三个月发生了什么？** 新鲜感消退？课程阶段切换？
+  - 寒暑假上抬 → 是因为时间充裕，还是家长在家监督更强？
+
+  分析链在"数据描述"这一步就断了，没有往下挖 why。
+- **建议**：不需要做特别重的分析，哪怕追问一两层 why 就够了。比如可以分年级/科目看看衰减模式有没有差异，或者看看 M3 衰减的用户画像跟其他月份有什么不同。
+
+---
+
+### 4. 收益判断
+- **判断**：⚠️
+- **评价**："各周期全环节完习提升5pp"——有具体数字，但三个关键问题没回答：
+  1. **5pp 的依据是什么？** 基于以往类似活动的数据？还是业务期望？
+  2. **活动只有 4 周，结束后会怎样？** 如果完习率回落，这 4 周的提升带来的实际业务价值是什么？
+  3. **成本收益关系**：海豚币和奖品的预算大概是多少？5pp 提升对应多少留存改善？ROI 合理吗？
+
+  只有"做到多少"没有"为什么是这个数"，收益判断缺乏说服力。
+- **建议**：补充目标依据（哪怕是"参考XX活动的数据"或"业务期望值，后续根据数据调整"），再粗略估一下成本。
+
+---
+
+### 5. 是否直击根本
+- **判断**：⚠️
+- **评价**：如果根因是"用户不到习"，那抽奖激励本质上是用外部激励把人"拉回来"——这不是在解决根因（为什么不到习），而是在绕过根因。这不一定是错的——可能短期内确实没有更好的办法——但文档需要正视这一点。
+- **建议**：在方案部分坦诚说明：
+  > "这是一个短期运营活动，目标是在 3-4 月期间提振完习率。长期的完习策略还需要从内容/产品体验侧去解决，但短期先用这个活动顶一下。"
+
+  讲清楚了，大家对这件事的预期就对齐了。
+
+---
+
+### 6. 竞品/行业参照
+- **判断**：❌
+- **评价**：文档中没有任何竞品或行业参照。"连续学习激励"在教育行业里是一个非常成熟的设计方向——Duolingo 的 streak 机制、其他教育 App 的打卡奖励、学习社群的排行榜等——这些已有大量实践和效果数据。完全不参考就直接做，容易错过已被验证的有效设计。
+- **建议**：不需要做很重的竞品分析，快速看 2-3 个行业案例（Duolingo streak、其他 K12 App 的打卡奖励），总结它们的做法和效果，给你的方案找支撑或启发。
+
+---
+
+### 7. 方案路线对比
+- **判断**：❌
+- **评价**：只提了"抽奖+海豚币"一条路线。但提升完习率的路线其实有不少：内容优化（让课更吸引人）、助理跟进策略调整（更精准的催课）、社交激励（学习小组/排行榜）、产品机制（streak/成就系统）、外部物质激励（抽奖/补贴）等。不知道你考虑过其他方向没有。
+- **建议**：补一段简要的方案对比，不需要每个都详细分析，说清楚"我考虑过 A/B/C，当前阶段选 D 的理由是..."就够了。
+
+---
+
+### 8. 效果评估思路
+- **判断**：⚠️
+- **评价**：列了活动过程指标（参加人数、获奖人数、抽奖人数）和结果指标（10 分钟完习率、单科全完习率），基本面有了。但缺三个关键设计：
+  1. **归因**：怎么区分"因为活动多完习了"和"本来就会完习"的用户？有没有可能设一个对照组？
+  2. **活动后观察期**：活动结束后 1-2 周的完习率变化很重要——如果马上回落，说明活动只是"借了未来的完习"
+  3. **指标关系**："10 分钟完习率、单科全完习率"和活动效果是什么关系？没有说明
+- **建议**：补充归因思路（哪怕是"通过对比活动参与者 vs 未参与者的完习率变化"），加上活动后 1-2 周的观察期设计。
+
+---
+
+### 9. 待决策点
+- **判断**：⚠️
+- **评价**：文档里有几个隐含的模糊地带没有暴露：
+  1. **"周全环节完习"的标准**：定义是"任一科目当周必学内容完习"就算。一个三科用户只完成一个科目就算"全环节完习"？这个标准会不会太低？
+  2. **奖励阶梯的依据**：1/1/2/2 张抽奖券、0/200/0/500 海豚币——这个设计有什么依据？如果是先试试的，可以标注"初始方案，根据数据迭代"
+  3. **活动延续性**：如果效果好，后续打算怎么办？常态化做还是不定期做？
+  4. **技术可行性**：文档写了"需要调研现在的抽奖活动是否支持直接接口下发"——这个还没确认，是阻塞项吗？
+- **建议**：把这些主动标出来，对每个给出你的倾向。比如"完习标准目前定义为任一科目即可，后续根据数据看是否调整"。主动暴露比被 review 出来更好。
+
+---
+
+## 给 PM 的建议
+
+你在执行层的细节上做得很好——规则设计、边界情况处理、触达流程都很清晰，说明你在"怎么把事做好"上是有能力的。
+
+这次主要的提升点是**往前多想一步**。在进入方案细节之前，先回答两个问题：
+
+1. **"为什么做"**：你已经有了很好的数据（90%+ 到习完习率是一个非常有价值的发现），但停在了数据描述层面。如果你顺着这个数据追问一层——"问题出在不到习，那为什么不到习？"——你对问题的理解会深一层，方案也会更有针对性。
+
+2. **"为什么这么做"**：抽奖活动是一个可以做的选择，但文档需要让读者知道你思考过其他路线、知道这个方案的局限性、知道它在整体策略中的位置。不是说分析完就不做了——可能分析完你会更有信心做这个活动——但过程要体现出来。
+
+**修改优先级建议：**
+1. 补用户视角和问题归因链（最重要，也是当前最大的缺口）
+2. 讲清楚方案定位（短期手段，坦诚局限性）
+3. 简单补一下方案对比（为什么是抽奖而不是其他）
+4. 补竞品参考、目标依据、归因设计可以同步做
+
+
+[Tool result] Write
+
+assistant:
+已存档到 `prd/prd-review/reviews/完习激励抽奖活动_review_20260227.md`。
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+prd主要分为两种情况，对应侧重点可能会有不同，一种是以快速验证为目的的，比如https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861 ，如果短期方案，其实是更加灵活的，只需要阐述为什么短期方案是：
+1. 有效
+2. 成本低
+3. 并没有带来太多额外成本，或者关键价值损害（比如说把一个功能错误使用，导致用户认知模糊）
+另一种是比较完整的方案，比如@prd/prd-writer/examples/断课老用户前测.md 这一个，比较完整，成本较大，重点会放在为什么要这么做/用户视角等
+
+</user_query>
+
+assistant:
+[Thinking] The user is making a really good point about differentiating PRD types. They're saying there are two kinds of PRDs:
+
+1. **Quick validation / short-term activities** (like the 完习激励抽奖活动) - These are more flexible and the key questions are:
+   - Is it effective?
+   - Is it low cost?
+   - Does it not cause collateral damage (like confusing user mental models)?
+   
+2. **Complete/heavy solutions** (like the 断课老用户前测) - These need the full treatment:
+   - Why do this?
+   - User perspective
+   - Full problem analysis
+   - etc.
+   
+So the real issue is that my current prd-writer and prd-review skills apply the same standards to everything, when I should be calibrating the review criteria based on the PRD's scope and weight. For lightweight validation PRDs, I need to shift focus toward demonstrating effectiveness, assessing costs, and identifying potential side effects. For heavier solutions, the full rigor applies. I should update both skills to make this distinction explicit.
+
+Now I'm reviewing the current files to implement these changes.
+这个区分非常关键——不同类型的 PRD 侧重点确实不同，当前的 prd-writer 和 prd-review 都没有做这个区分。让我来更新。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/examples/断课老用户前测.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] The user is making a really important distinction. Let me understand it:
+
+**Type A: Quick Validation / Short-term activities** (e.g., 完习激励抽奖活动)
+- Purpose: Quick test, low cost, temporary
+- Key questions to answer:
+  1. Why is this effective? (有效性论证)
+  2. Why is it low cost? (成本可控)
+  3. Does it NOT cause significant side effects? (无额外损害)
+- Doesn't need deep user research, full problem analysis, comprehensive competitive analysis
+- The review standards should be lighter on "why do this" and heavier on "is this safe and cheap to try"
+
+
+- **Type B: Complete/Heavy solutions** (e.g., 断课老用户前测) need the full treatment with user perspective, problem analysis, competitive analysis, and ROI justification
+
+This is a practical insight—the current PRD standards treat everything uniformly, which means quick validation attempts get over-scrutinized with demands for deep analysis when they really just need to prove they're worth trying. I need to update the guidelines to differentiate review rigor based on the initiative type.
+
+My plan is to add a type-recognition section to SKILL.md right after the standard structure definition, then mark which requirements apply to each type throughout the document, and make the self-check list type-aware. Let me implement this now.
+这个区分很关键。当前 prd-writer 把所有 PRD 一视同仁，导致快速验证类的 PRD 被要求做过重的分析，而完整方案类的又可能漏掉深度。我来更新 SKILL.md、模板和 prd-review 来体现这个区分。
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"SKILL.md：新增 PRD 类型判断（快速验证 vs 完整方案），调整各章节的必须/建议标注","status":"in_progress"},{"id":"2","content":"PRD_TEMPLATE.md：标注各节适用的 PRD 类型","status":"pending"},{"id":"3","content":"prd-review SKILL.md：在 Step 3 增加类型识别，调整 review 侧重点","status":"pending"},{"id":"4","content":"更新 CHANGELOG.md","status":"pending"}]
+  merge: false
+
+[Tool result] TodoWrite
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ---
+
+## 标准 PRD 结构
+
+PRD 应包含以下六大部分，且顺序建议保持不变：
+
+| 章节 | 核心问题 | 撰写要点 |
+|------|----------|----------|
+| **一、背景** | 为什么要做？ | 业务数据、问题诊断、机会点 |
+| **二、目标测算** | 做了能带来什么？ | 收益目标、保守/激进测算、关键假设 |
+| **三、现状** | 现在是什么样？ | 现状梳理、用户调研、数据分析 |
+| **四、设计思路** | 打算怎么做？ | 方案设计、竞品参考、实验设计 |
+| **五、需求详情** | 具体要做什么？ | 展示规则、流程、UI、可配置项 |
+| **六、数据需求** | 如何衡量效果？ | 埋点、keyfrom、关注指标 |
+
+---
+
+## 各章节撰写标准
+  new_string: ---
+
+## PRD 类型判断
+
+PRD 主要分为两种类型，撰写侧重点不同。**动笔前先判断类型**。
+
+### 快速验证型
+
+**特征**：短期活动、低成本实验、运营抓手、快速试错
+**典型案例**：完习激励抽奖活动、限时促销、A/B 测试型需求
+**核心要回答的问题**：
+
+| # | 问题 | 说明 |
+|---|------|------|
+| 1 | **为什么有效？** | 方案的有效性论证——基于什么逻辑/数据认为这个方案能起作用 |
+| 2 | **成本是否可控？** | 开发成本、运营成本、奖品预算等是否在合理范围 |
+| 3 | **有没有副作用？** | 是否会带来额外损害——如功能误用导致用户认知模糊、破坏现有体验、挤占其他资源等 |
+
+**撰写原则**：
+- 不需要做很深的用户调研和根因分析——快速验证的价值在于"试了才知道"
+- 重点在方案的**有效性论证**、**成本可控**、**风险可控**
+- 问题分析点到即可，但要诚实——知道什么、不知道什么、这次试验想验证什么
+- 方案定位要清晰：这是一个短期实验，不是长期机制
+
+### 完整方案型
+
+**特征**：产品功能新增/重构、影响面大、开发成本高、长期影响
+**典型案例**：断课老用户增加前测、新功能上线、流程重设计
+**核心要回答的问题**：
+
+| # | 问题 | 说明 |
+|---|------|------|
+| 1 | **为什么要做？** | 用户视角的问题分析、完整的归因链 |
+| 2 | **为什么这么做？** | 方案对比、竞品参照、设计依据 |
+| 3 | **做了会怎样？** | 收益测算、ROI、长期影响 |
+
+**撰写原则**：
+- 需要完整的用户视角和问题归因
+- 方案对比和竞品分析要认真做
+- 目标测算要有依据、成本收益要算清楚
+
+### 如何判断类型？
+
+| 维度 | 快速验证型 | 完整方案型 |
+|------|-----------|-----------|
+| 开发周期 | ≤1 周 或 纯配置 | >1 周 |
+| 影响范围 | 可控/可回滚/有时限 | 长期生效/不可逆 |
+| 失败成本 | 低（试错代价小） | 高（浪费资源/影响体验） |
+| 方案性质 | 运营活动/实验/临时策略 | 产品功能/流程/机制 |
+
+如果拿不准，按**完整方案型**处理更安全。
+
+---
+
+## 标准 PRD 结构
+
+PRD 应包含以下六大部分，且顺序建议保持不变：
+
+| 章节 | 核心问题 | 撰写要点 |
+|------|----------|----------|
+| **一、背景** | 为什么要做？ | 业务数据、问题诊断、机会点 |
+| **二、目标测算** | 做了能带来什么？ | 收益目标、保守/激进测算、关键假设 |
+| **三、现状** | 现在是什么样？ | 现状梳理、用户调研、数据分析 |
+| **四、设计思路** | 打算怎么做？ | 方案设计、竞品参考、实验设计 |
+| **五、需求详情** | 具体要做什么？ | 展示规则、流程、UI、可配置项 |
+| **六、数据需求** | 如何衡量效果？ | 埋点、keyfrom、关注指标 |
+
+> 两种类型都遵循这个结构，但各章节的深度和侧重不同。下面用 🔵完整 / 🟢快速 标注每个要求的适用类型。
+
+---
+
+## 各章节撰写标准
+
+[Tool result] StrReplace
+
+assistant:
+现在调整各章节的撰写标准，按类型区分侧重。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 一、背景
+
+**必须包含**：
+- 当前业务/产品所处阶段
+- 核心数据（用户规模、关键指标）
+- 本次要解决的核心问题
+
+**用户视角（必须）**：
+- 回到用户角度分析问题——用户为什么会出现这个行为/现象？
+- 不能只从业务运营角度切入，要先理解用户侧的根因
+- 例：不是"完习率有提升空间"，而是先问"用户为什么不完习"
+
+**问题归因链（必须）**：
+- 严格按「现象 → 原因 → 解法方向」的逻辑链来组织
+- ❌ 错误：现象→直接给方案（"需要周维度抓手"已经是方案方向，不是问题分析）
+- ✅ 正确：数据现象 → 追问 why（至少 1-2 层）→ 归因结论 → 解法方向
+- 数据分析要追问线索，例如：到习完习 90%+ → 问题出在"不到习" → 为什么不到习？
+
+**可选**：
+- 漏斗图、趋势图
+- 用户分层说明
+- 与助理/一线人员的定性调研结论
+  new_string: ### 一、背景
+
+**必须包含**（🔵🟢 两种类型都需要）：
+- 当前业务/产品所处阶段
+- 核心数据（用户规模、关键指标）
+- 本次要解决的核心问题
+
+**用户视角**（🔵必须 / 🟢简要即可）：
+- 🔵 完整方案型：回到用户角度深入分析——用户为什么会出现这个行为/现象？不能只从业务运营角度切入
+- 🟢 快速验证型：简要说明对用户的影响即可，重点是方案不会对用户造成负面影响（认知混乱、体验损害等）
+
+**问题归因链**（🔵必须 / 🟢点到即可）：
+- 🔵 完整方案型：严格按「现象 → 原因 → 解法方向」组织，追问至少 1-2 层 why
+- 🟢 快速验证型：简要描述问题现象和基本判断，承认"具体原因需要验证"也是可以的——快速验证的价值就在于通过实验来回答不确定的问题
+- ❌ 两种类型都不能：现象→直接给方案，中间没有任何分析
+
+**可选**：
+- 漏斗图、趋势图
+- 用户分层说明
+- 与助理/一线人员的定性调研结论
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 二、目标测算
+
+**必须包含**：
+- 主要关注的指标
+- 至少一套收益测算（保守或激进）
+- 关键假设说明
+- **目标依据**：目标数字从何而来？是历史数据推算、类似活动参考、还是业务期望？需讲清楚
+- **成本与收益关系**：预算投入（人力、奖品、补贴等）与预期收益的大致 ROI
+
+**方案时效性（建议）**：
+- 如果是短期活动，需说明活动结束后的预期影响（如完习率是否会回落）
+- 短期提升带来的实际业务价值是什么
+
+**可选**：
+- 链接到石墨等测算表
+- 多套测算对比
+  new_string: ### 二、目标测算
+
+**必须包含**（🔵🟢）：
+- 主要关注的指标
+- 关键假设说明
+
+**收益测算**（🔵必须 / 🟢简要）：
+- 🔵 完整方案型：至少一套保守/激进测算，目标数字需有依据（历史数据、类似活动、业务测算）
+- 🟢 快速验证型：说明预期方向和量级即可，承认"需要通过实验验证"
+
+**成本评估**（🟢必须 / 🔵必须）：
+- 🟢 快速验证型：**重点项**——需明确说明成本可控：开发成本低（≤X 人日）、运营预算可控（奖品/补贴总额）、试错代价小（可随时停止）
+- 🔵 完整方案型：预算投入与预期收益的 ROI
+
+**方案时效性**（🟢建议 / 🔵建议）：
+- 短期活动需说明活动结束后的预期影响
+- 🟢 快速验证型可以坦诚："这是一次试验，如果效果好再考虑长期化"
+
+**可选**：
+- 链接到石墨等测算表
+- 多套测算对比
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 三、现状
+
+**必须包含**：
+- 当前链路/流程
+- 相关点位与转化数据
+
+**可选**：
+- 用户调研结论（断课原因、召回动机等）
+- 用户行为数据分析
+- 竞品/历史方案参考
+  new_string: ### 三、现状
+
+**必须包含**（🔵必须 / 🟢可简化）：
+- 🔵 完整方案型：当前链路/流程、相关点位与转化数据
+- 🟢 快速验证型：如果方案不涉及现有流程改动，可简化或合并到背景中
+
+**可选**（🔵建议 / 🟢按需）：
+- 用户调研结论（断课原因、召回动机等）——🔵 完整方案型建议有
+- 用户行为数据分析
+- 竞品/历史方案参考
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 四、设计思路
+
+**必须包含**：
+- 核心设计思路
+- 主要方案说明
+
+**方案定位（必须）**：
+- 在整体策略中的位置——这是短期手段还是长期机制？
+- 如果是短期活动，需正视局限性并说明预期，例如：
+  > "这是短期运营活动，目标是在 X-Y 月提振 XX 率。长期策略还需从内容/产品体验侧解决。"
+- 讲清楚了，团队对这件事的预期才能对齐
+
+**方案对比（建议）**：
+- 达成目标的路线通常不止一条，需简要说明考虑过哪些方向、为什么选了当前方案
+- 不需要每个都详细分析，有一个简要的思考过程即可
+- 例：提升完习率的路线有内容优化、助理跟进策略、社交激励、产品机制（streak/成就）、外部激励（抽奖/补贴）等
+
+**竞品/行业参考（建议）**：
+- 快速看看行业里类似机制的常见做法和效果
+- 给方案找支撑或启发
+
+**可选**：
+- 问题/流程设计（如前测题目结构）
+- AB 实验设计（分组、变量、流量、预期）
+  new_string: ### 四、设计思路
+
+**必须包含**（🔵🟢）：
+- 核心设计思路
+- 主要方案说明
+
+**方案定位**（🔵🟢 都需要，但侧重不同）：
+- 🔵 完整方案型：在整体策略中的位置、长期影响、与其他策略的关系
+- 🟢 快速验证型：明确标注"这是短期实验/活动"，重点回答三个问题：
+  1. **有效性**：基于什么逻辑/数据认为方案能起作用？
+  2. **成本可控**：开发和运营成本是否在合理范围？
+  3. **无副作用**：是否会造成用户认知混乱、破坏现有体验、或其他附带损害？
+
+**方案对比**（🔵建议 / 🟢可选）：
+- 🔵 完整方案型：需简要说明考虑过哪些方向、为什么选了当前方案
+- 🟢 快速验证型：如果方案本身就是"低成本试一下"，不需要和重方案做对比
+
+**竞品/行业参考**（🔵建议 / 🟢可选）：
+- 🔵 完整方案型：认真看竞品，分析优缺点
+- 🟢 快速验证型：如果有现成参考能增强说服力就加，没有也不强求
+
+**可选**：
+- 问题/流程设计（如前测题目结构）
+- AB 实验设计（分组、变量、流量、预期）
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 六、数据需求
+
+**必须包含**：
+- 埋点事件表（页面、事件类型、事件名称）
+- 渠道/实验标识（keyfrom 等）
+
+**效果归因（建议）**：
+- 如何区分「因为方案/活动才改善」和「本来就会改善」？是否设对照组？
+- 如果是短期活动，需设计活动后 1-2 周的观察期，观察效果是否回落
+- 关注指标之间的关系需说明（如某指标提升如何关联到最终业务目标）
+  new_string: ### 六、数据需求
+
+**必须包含**（🔵🟢）：
+- 埋点事件表（页面、事件类型、事件名称）
+- 渠道/实验标识（keyfrom 等）
+
+**效果归因**（🔵建议 / 🟢建议）：
+- 如何区分「因为方案/活动才改善」和「本来就会改善」？是否设对照组？
+- 如果是短期活动，需设计活动后 1-2 周的观察期，观察效果是否回落
+- 🟢 快速验证型：归因设计尤其重要——因为快速验证的核心目的就是"搞清楚有没有效"，如果连效果都量不清楚，验证就白做了
+
+[Tool result] StrReplace
+
+assistant:
+现在更新自查清单，按类型区分。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ## 自查清单
+
+PRD 完成后，建议对照以下问题自查：
+
+**"为什么做"是否讲清楚了？**
+- [ ] 有用户视角的问题分析，而非仅从业务运营角度出发
+- [ ] 问题归因链完整：现象 → 原因（至少追问 1-2 层 why）→ 解法方向
+- [ ] 没有从"现象"直接跳到"方案"
+
+**"为什么这么做"是否讲清楚了？**
+- [ ] 方案在整体策略中的定位明确（短期/长期、与其他策略的关系）
+- [ ] 简要对比过其他可选方案，说明了选择当前方案的理由
+- [ ] 目标数字有依据（历史数据、类似活动、业务测算），而非凭感觉
+
+**效果能否衡量？**
+- [ ] 有归因设计或对照方案
+- [ ] 如果是短期活动，有活动后观察期设计
+- [ ] 指标之间的关系已说明
+
+**关键定义是否清晰？**
+- [ ] 核心概念的定义标准明确，不会产生歧义
+- [ ] 奖励/规则设计有依据或标注了"初始方案，根据数据迭代"
+- [ ] 方案的延续性有考虑（效果好怎么办、效果差怎么办）
+  new_string: ## 自查清单
+
+PRD 完成后，先确认类型，再对照自查。
+
+### 🟢 快速验证型自查
+
+**有效性论证**
+- [ ] 说清楚了为什么认为这个方案能起作用（逻辑/数据/参考）
+- [ ] 问题现象有基本描述，知道在解决什么问题
+
+**成本可控**
+- [ ] 开发成本低或可接受
+- [ ] 运营/奖品预算明确且可控
+- [ ] 方案可随时停止或回滚
+
+**无副作用**
+- [ ] 不会导致用户认知混乱（如把一个功能错误使用，让用户对产品产生误解）
+- [ ] 不会损害现有体验或挤占关键资源
+- [ ] 不会产生难以收回的长期承诺
+
+**效果可量**
+- [ ] 有明确的效果衡量方式（最好能归因）
+- [ ] 知道"成功"和"失败"分别长什么样
+- [ ] 方案定位为短期实验，标注了后续计划（效果好→X，效果差→Y）
+
+### 🔵 完整方案型自查
+
+**"为什么做"是否讲清楚了？**
+- [ ] 有用户视角的问题分析，而非仅从业务运营角度出发
+- [ ] 问题归因链完整：现象 → 原因（至少追问 1-2 层 why）→ 解法方向
+- [ ] 没有从"现象"直接跳到"方案"
+
+**"为什么这么做"是否讲清楚了？**
+- [ ] 方案在整体策略中的定位明确
+- [ ] 简要对比过其他可选方案，说明了选择当前方案的理由
+- [ ] 目标数字有依据（历史数据、类似活动、业务测算），而非凭感觉
+
+**效果能否衡量？**
+- [ ] 有归因设计或对照方案
+- [ ] 指标之间的关系已说明
+
+**关键定义是否清晰？**
+- [ ] 核心概念的定义标准明确，不会产生歧义
+- [ ] 规则设计有依据或标注了"初始方案，根据数据迭代"
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"SKILL.md：新增 PRD 类型判断（快速验证 vs 完整方案），调整各章节的必须/建议标注","status":"completed"},{"id":"2","content":"PRD_TEMPLATE.md：标注各节适用的 PRD 类型","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+现在更新模板。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: # 【需求名称】产品需求文档
+
+> 本模板基于「断课老用户增加前测」PRD 提炼，适用于从需求分析到研发交付的完整产品需求撰写。
+
+---
+
+## 版本更新 log
+  new_string: # 【需求名称】产品需求文档
+
+> **PRD 类型**：🔵 完整方案 / 🟢 快速验证（请选择一个，删掉另一个）
+>
+> 🔵 完整方案型：产品功能新增/重构，开发成本高，需完整论证
+> 🟢 快速验证型：短期活动/实验，成本低，重点论证有效性、成本可控、无副作用
+>
+> 标注 🟢 的章节在快速验证型中可简化或跳过。
+
+---
+
+## 版本更新 log
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ### 1.2 用户视角
+
+- 从用户角度理解问题：用户为什么会出现这个行为/现象？
+- 定性信息来源（如与一线/助理沟通的结论）
+- 用户的真实痛点或动机是什么
+
+### 1.3 问题诊断
+
+- 现状数据与漏斗分析
+- **问题归因链**：现象 → 原因（追问 1-2 层 why）→ 归因结论
+- 数据线索的追问（例：某指标高/低说明了什么？背后原因是什么？）
+- 机会点与切入方向
+  new_string: ### 1.2 用户视角 🟢可简化
+
+- 🔵 从用户角度理解问题：用户为什么会出现这个行为/现象？
+- 🔵 定性信息来源（如与一线/助理沟通的结论）
+- 🔵 用户的真实痛点或动机是什么
+- 🟢 快速验证型：简要说明对用户的影响，重点确认方案不会对用户造成负面影响
+
+### 1.3 问题诊断 🟢可简化
+
+- 现状数据与漏斗分析
+- 🔵 **问题归因链**：现象 → 原因（追问 1-2 层 why）→ 归因结论
+- 🔵 数据线索的追问（例：某指标高/低说明了什么？背后原因是什么？）
+- 🟢 快速验证型：描述问题现象和基本判断即可，承认"具体原因需要验证"
+- 机会点与切入方向
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ### 4.1 方案定位
+
+- 本方案在整体策略中的位置（短期运营手段 / 长期产品机制 / 阶段性实验）
+- 与其他策略的关系和边界
+- 对方案局限性的正视（如外部激励的长期效果、活动结束后的回落风险等）
+
+### 4.2 方案对比
+
+- 达成目标的可选路线有哪些（简要列举）
+- 为什么在当前阶段选择了这个方案
+- 各方案的优劣势对比（简要即可）
+  new_string: ### 4.1 方案定位
+
+- 本方案在整体策略中的位置（短期运营手段 / 长期产品机制 / 阶段性实验）
+- 🔵 与其他策略的关系和边界
+- 🔵 对方案局限性的正视（如外部激励的长期效果、活动结束后的回落风险等）
+- 🟢 快速验证型重点回答三个问题：
+  1. **有效性**：基于什么逻辑/数据认为方案能起作用？
+  2. **成本可控**：开发和运营成本是否在合理范围？
+  3. **无副作用**：是否会造成用户认知混乱、破坏现有体验、或其他附带损害？
+
+### 4.2 方案对比 🟢可跳过
+
+- 达成目标的可选路线有哪些（简要列举）
+- 为什么在当前阶段选择了这个方案
+- 各方案的优劣势对比（简要即可）
+- 🟢 快速验证型：如果方案本身就是"低成本试一下"，不需要和重方案做对比
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ### 4.5 竞品/行业参考
+
+- 行业内类似机制的常见做法与效果
+- 可借鉴点
+- 差异化设计
+  new_string: ### 4.5 竞品/行业参考 🟢可跳过
+
+- 行业内类似机制的常见做法与效果
+- 可借鉴点
+- 差异化设计
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/templates/PRD_TEMPLATE.md
+  old_string: ## 三、现状
+
+### 3.1 现状梳理
+  new_string: ## 三、现状 🟢可简化或合并到背景
+
+### 3.1 现状梳理
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"2","content":"PRD_TEMPLATE.md：标注各节适用的 PRD 类型","status":"completed"},{"id":"3","content":"prd-review SKILL.md：在 Step 3 增加类型识别，调整 review 侧重点","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+现在更新 prd-review 的 SKILL.md，让 review 也按类型区分侧重。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+  old_string: ### Step 3：评估 Review 深度
+
+**深度 review**（每个维度详细分析，给具体建议）— 满足任一条件：
+- 影响核心业务指标：首单 ROI、UE、体验课转化率、在课留存（周完习率）、长续率、退费率
+- 影响全量用户（而非小部分用户）
+- 涉及多个部门协作
+- 改动范围大（多个模块/页面）
+- 开发难度高
+
+**标准 review**（标注有问题的维度，给要点）：不满足上述条件。
+
+无法判断时问用户："这个需求的影响面和复杂度大概是什么水平？"
+
+### Step 4：按版本 Review
+
+详细检查标准见 [review-checklist.md](review-checklist.md)。
+
+#### v1 Review：问题分析与方案方向
+
+核心判断：**问题值得做吗？方向对吗？**
+
+| # | 维度 | 核心问题 |
+|---|------|---------|
+| 1 | **用户视角** | 这个需求是从用户需求出发的吗？对用户的影响说清楚了吗？ |
+| 2 | 问题定义 | 要解决什么问题，说清楚了吗？ |
+| 3 | 问题分析 | 做了严肃分析吗？需求来源、根因挖掘 |
+| 4 | 收益判断 | 收益清晰吗？长短期、重要紧急 |
+| 5 | 是否直击根本 | 方案是否简单直接解决根本问题 |
+| 6 | 竞品/行业参照 | 别人怎么做的、为什么我们这样做 |
+| 7 | 方案路线对比 | 想过其他路线吗？为什么选当前方案 |
+| 8 | 效果评估思路 | 做完怎么知道成功了 |
+| 9 | 待决策点 | 还有哪些模糊需要决策的问题 |
+
+**关于「用户视角」**：这不只是一个维度，而是贯穿 review 的底层检查。几乎所有需求都应该回归到用户需求——即使是业务提出的需求，业务指标的变化本质上是对用户需求的回应。需要说清楚对用户的影响是什么、能不能带来显著的体验变化、进而如何影响业务。极少数纯算账/经营模式类需求可以豁免。
+  new_string: ### Step 3：识别 PRD 类型 & 评估 Review 深度
+
+#### PRD 类型判断
+
+先识别 PRD 属于哪种类型，review 侧重点不同：
+
+| 维度 | 🟢 快速验证型 | 🔵 完整方案型 |
+|------|-------------|-------------|
+| 典型场景 | 短期活动、低成本实验、运营抓手 | 产品功能新增/重构、流程重设计 |
+| 开发周期 | ≤1 周或纯配置 | >1 周 |
+| 失败成本 | 低（可回滚/有时限） | 高（浪费资源/影响体验） |
+
+**🟢 快速验证型的 review 核心**：不需要追问很深的用户分析和根因挖掘，重点看三件事：
+1. **有效性**：为什么认为这个方案能起作用？
+2. **成本可控**：开发和运营成本是否合理？
+3. **无副作用**：会不会造成用户认知混乱、破坏现有体验、产生难以收回的承诺？
+
+**🔵 完整方案型的 review 核心**：完整覆盖所有 9 个维度，重点在"为什么做"和"为什么这么做"。
+
+#### Review 深度
+
+**深度 review**（每个维度详细分析，给具体建议）— 满足任一条件：
+- 影响核心业务指标：首单 ROI、UE、体验课转化率、在课留存（周完习率）、长续率、退费率
+- 影响全量用户（而非小部分用户）
+- 涉及多个部门协作
+- 改动范围大（多个模块/页面）
+- 开发难度高
+
+**标准 review**（标注有问题的维度，给要点）：不满足上述条件。
+
+无法判断时问用户："这个需求的影响面和复杂度大概是什么水平？"
+
+### Step 4：按版本 Review
+
+详细检查标准见 [review-checklist.md](review-checklist.md)。
+
+#### v1 Review：问题分析与方案方向
+
+核心判断：**问题值得做吗？方向对吗？**
+
+| # | 维度 | 核心问题 | 🟢快速验证 | 🔵完整方案 |
+|---|------|---------|-----------|-----------|
+| 1 | **用户视角** | 需求从用户出发吗？对用户影响说清楚了吗？ | 重点看**无副作用** | 深入分析 |
+| 2 | 问题定义 | 要解决什么问题？ | 简要即可 | 必须清晰 |
+| 3 | 问题分析 | 做了严肃分析吗？ | 点到即可 | 至少 2-3 层 why |
+| 4 | 收益判断 | 收益清晰吗？ | 重点看**成本可控** | 完整 ROI |
+| 5 | 是否直击根本 | 方案解决根因吗？ | 可接受"绕过根因的低成本试验" | 必须直击 |
+| 6 | 竞品/行业参照 | 别人怎么做的？ | 有更好，没有不强求 | 必须有 |
+| 7 | 方案路线对比 | 想过其他路线吗？ | 不需要和重方案对比 | 必须对比 |
+| 8 | 效果评估思路 | 怎么知道成功了？ | 重点看**有效性论证** | 完整评估 |
+| 9 | 待决策点 | 还有模糊点吗？ | 标准不变 | 标准不变 |
+
+**关于「用户视角」在不同类型中的应用**：
+- 🔵 完整方案型：这是贯穿 review 的底层检查，需要回归用户需求，说清楚用户影响和体验变化
+- 🟢 快速验证型：不需要深入用户分析，但必须确认方案**不会造成副作用**——不会导致用户认知混乱、不会破坏现有体验、不会产生难以收回的长期承诺。如果一个"低成本试验"会把某个功能误用导致用户对产品产生误解，那即使成本低也不应该做
+
+[Tool result] StrReplace
+
+assistant:
+现在更新 CHANGELOG。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/CHANGELOG.md
+  old_string: # Changelog
+
+## [0.2.0] - 2026-02-27
+
+### Added
+- SKILL.md：背景章节新增「用户视角」和「问题归因链」撰写标准（必须项）
+- SKILL.md：目标章节新增「目标依据」和「成本与收益关系」要求
+- SKILL.md：设计思路章节新增「方案定位」（必须）和「方案对比」（建议）
+- SKILL.md：数据需求章节新增「效果归因」建议（对照组、活动后观察期）
+- SKILL.md：新增「自查清单」模块，提供 PRD 完成后的自检项
+- PRD_TEMPLATE.md：新增 1.2 用户视角、1.3 问题归因链、2.3 目标依据与成本、4.1 方案定位、4.2 方案对比、6.3 效果归因设计
+- 新增示例：完习激励抽奖活动 review 案例（展示典型问题与改进方向）
+
+### Changed
+- PRD_TEMPLATE.md：设计思路章节重新编号（4.1-4.6），强调方案定位和对比在方案设计之前
+- PRD_TEMPLATE.md：竞品/参考改名为"竞品/行业参考"
+  new_string: # Changelog
+
+## [0.3.0] - 2026-02-27
+
+### Added
+- SKILL.md：新增「PRD 类型判断」模块——区分🟢快速验证型和🔵完整方案型，不同类型侧重不同
+- SKILL.md：快速验证型核心三问：有效性、成本可控、无副作用
+- SKILL.md：自查清单按类型拆分为两套
+
+### Changed
+- SKILL.md：各章节撰写标准增加 🔵🟢 类型标注，快速验证型可简化用户视角、问题归因、方案对比等
+- PRD_TEMPLATE.md：顶部增加 PRD 类型选择，各节增加 🟢可简化/可跳过 标注
+- prd-review SKILL.md：Step 3 增加 PRD 类型识别，v1 review 维度表增加按类型的侧重说明
+
+## [0.2.0] - 2026-02-27
+
+### Added
+- SKILL.md：背景章节新增「用户视角」和「问题归因链」撰写标准（必须项）
+- SKILL.md：目标章节新增「目标依据」和「成本与收益关系」要求
+- SKILL.md：设计思路章节新增「方案定位」（必须）和「方案对比」（建议）
+- SKILL.md：数据需求章节新增「效果归因」建议（对照组、活动后观察期）
+- SKILL.md：新增「自查清单」模块，提供 PRD 完成后的自检项
+- PRD_TEMPLATE.md：新增 1.2 用户视角、1.3 问题归因链、2.3 目标依据与成本、4.1 方案定位、4.2 方案对比、6.3 效果归因设计
+- 新增示例：完习激励抽奖活动 review 案例（展示典型问题与改进方向）
+
+### Changed
+- PRD_TEMPLATE.md：设计思路章节重新编号（4.1-4.6），强调方案定位和对比在方案设计之前
+- PRD_TEMPLATE.md：竞品/参考改名为"竞品/行业参考"
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"3","content":"prd-review SKILL.md：在 Step 3 增加类型识别，调整 review 侧重点","status":"completed"},{"id":"4","content":"更新 CHANGELOG.md","status":"completed"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+全部更新完成。总结一下核心改动：
+
+---
+
+### 新增「PRD 类型判断」（v0.3.0）
+
+基于你的洞察，在写 PRD 和 review PRD 时，先判断类型再决定深度：
+
+| | 🟢 快速验证型 | 🔵 完整方案型 |
+|---|---|---|
+| **典型案例** | 完习激励抽奖活动 | 断课老用户增加前测 |
+| **核心要回答** | 有效吗？便宜吗？有副作用吗？ | 为什么做？为什么这么做？做了会怎样？ |
+| **用户视角** | 简要，重点确认无负面影响 | 深入分析用户根因 |
+| **问题归因** | 点到即可，承认"需验证"也行 | 至少追问 1-2 层 why |
+| **方案对比** | 低成本试验不需要和重方案对比 | 必须对比 |
+| **竞品** | 有更好，没有不强求 | 必须有 |
+
+核心理念：快速验证型 PRD 的价值在于"试了才知道"，只要能论证**有效、便宜、没害处**，不需要做完整方案级别的分析。但两种类型都不能从"现象"直接跳到"方案"——至少要有基本的思考过程。
+
+user:
+<user_query>
+我会认为 prd-review 和 prd-writer 的主要区别在于， writer 的主要目的是以我的视角出发，帮助我按照一定的规范完成 prd 的书写，包括我思考的维度和全面性；review 的主要视角是领导，可能会按照她的标准和维度给我的 prd 一些建议，同时希望你可以给我一些回答和改进思路。所以我希望这二者是有区别的，writer 的重点在于写和思考规范，review 的重点在于按照一个标准提出建议和修改思路
+</user_query>
+
+assistant:
+[Thinking] The user is making a very clear distinction between the two skills:
+
+1. **prd-writer**: From the user's own perspective. Helps them write and think through a PRD systematically. It's a writing and thinking framework - "how do I write a good PRD" and "what dimensions should I think about."
+
+2. **prd-review**: From the leader's perspective. Simulates what the leader would say when reviewing the PRD. It should give feedback AND actionable improvement suggestions - not just point out problems, but help the user figure out how to respond/fix them.
+
+Currently, the two skills have significant overlap - prd-writer absorbed a lot of the review checklist content (user perspective, problem attribution chain, etc.), which made them blur together. 
+
+So I need to separate them more cleanly. The prd-writer should stick to structure, section guidance, PRD type judgment, self-check prompts, and templates. The prd-review should handle the leader's evaluation framework across those dimensions, cite specific feedback from the actual PRD content, and provide concrete ways to improve it.
+
+The real issue is that prd-writer is currently mixing in review language when it should be framed as thinking aids to help the user write better. And prd-review needs stronger actionable suggestions beyond just the evaluation itself. This isn't a massive overhaul—it's more about clarifying the positioning and philosophy of each skill so they complement each other without overlap. I'm realizing the core changes needed are reframing prd-writer from evaluation criteria to a thinking guide that walks through each section, and making prd-review explicitly focus on providing concrete improvement directions rather than just identifying problems. I should also eliminate any overlap between the two tools so each has a distinct purpose.
+你说得很对，这两个 skill 的定位应该更清晰地分开。目前 prd-writer 吸收了太多 review 视角的内容，导致两者有些模糊。让我来调整定位。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have a clear picture. Let me make the adjustments:
+
+**prd-writer** needs to be repositioned as:
+- "你的写作和思考搭档" — from YOUR perspective
+- Helps you think through the right dimensions while writing
+- Provides structure and thinking prompts, not evaluation criteria
+- The tone should be "写这部分的时候，想想这些问题" rather than "必须包含/检查标准"
+
+**prd-review** needs to be repositioned as:
+- "模拟领导视角的预审" — from the LEADER's perspective
+
+
+- Points out what the leader would flag
+- Gives concrete improvement suggestions and response strategies
+- Not just "这里有问题" but "这样改/这样回答"
+
+Let me make targeted updates to both. The content is largely correct, it's about reframing. For **prd-writer**, I'll update the identity to emphasize the writing companion role, reframe the chapter standards as self-reflection prompts rather than evaluation criteria, keep the structure and type distinction since that's about writing strategy, and make the self-check feel like introspection instead of assessment. For **prd-review**, I'll shift the focus to simulate how a leader would actually respond — flagging concerns, suggesting specific improvements, and offering concrete ways to address feedback.
+理解了。核心区别是：
+
+- **writer** = 你自己的思考搭档，帮你想得全、写得好
+- **review** = 模拟领导视角预审，告诉你哪里会被挑战、怎么改
+
+当前问题是 writer 里用了太多"评审"口吻（必须/检查/不能），读起来像在审你而不是帮你。让我来调整两边的定位。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ## 身份与职责
+
+你是**产品需求文档撰写助手**，帮助产品/教研同学产出结构完整、逻辑清晰、可交付研发的 PRD。
+
+### 核心能力
+
+- 按标准结构组织 PRD 内容
+- 指导各章节的撰写要点和深度
+- 检查需求完整性（背景、目标、现状、设计、详情、数据）
+- 确保「需求详情」可被研发直接执行
+
+### 工作原则
+
+- **文档先行**：先搭结构再填内容，避免边做边写导致遗漏
+- **数据驱动**：背景、目标、现状需有数据支撑
+- **可验收性**：需求详情需明确、可验收，避免模糊表述
+- **迭代记录**：重要变更记录在版本 log 中
+  new_string: ## 身份与职责
+
+你是**我的 PRD 写作搭档**，站在我的视角，帮我系统地思考需求、组织文档，确保写出来的 PRD 结构完整、逻辑清晰。
+
+### 你帮我做什么
+
+- 动笔前帮我判断 PRD 类型，确定写作策略
+- 写每个章节时提醒我该想哪些维度，避免遗漏
+- 帮我把思考过程组织成清晰的文档结构
+- 最后帮我自查一遍，确保提交前没有明显短板
+
+### 工作原则
+
+- **先想清楚再动笔**：先判断类型、搭结构，再逐章填充
+- **思考过程要体现**：不是只写结论，而是把"我为什么这么想"写出来
+- **诚实面对不确定**：不知道的就说不知道，比硬编一个理由更好
+- **研发能直接用**：需求详情要明确、可验收，不留模糊地带
+
+### 与 prd-review 的关系
+
+- **prd-writer**（本文件）：从**我自己的视角**出发，帮我思考和写作
+- **prd-review**：从**领导的视角**出发，模拟 review 给反馈和改进建议
+- 建议流程：先用 writer 写完 → 再用 review 自我预审 → 修改后提交正式 review
+
+[Tool result] StrReplace
+
+assistant:
+现在把各章节标准的口吻从"检查/必须"调整为"写的时候想想这些"。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ## 各章节撰写标准
+
+### 一、背景
+
+**必须包含**（🔵🟢 两种类型都需要）：
+- 当前业务/产品所处阶段
+- 核心数据（用户规模、关键指标）
+- 本次要解决的核心问题
+
+**用户视角**（🔵必须 / 🟢简要即可）：
+- 🔵 完整方案型：回到用户角度深入分析——用户为什么会出现这个行为/现象？不能只从业务运营角度切入
+- 🟢 快速验证型：简要说明对用户的影响即可，重点是方案不会对用户造成负面影响（认知混乱、体验损害等）
+
+**问题归因链**（🔵必须 / 🟢点到即可）：
+- 🔵 完整方案型：严格按「现象 → 原因 → 解法方向」组织，追问至少 1-2 层 why
+- 🟢 快速验证型：简要描述问题现象和基本判断，承认"具体原因需要验证"也是可以的——快速验证的价值就在于通过实验来回答不确定的问题
+- ❌ 两种类型都不能：现象→直接给方案，中间没有任何分析
+
+**可选**：
+- 漏斗图、趋势图
+- 用户分层说明
+- 与助理/一线人员的定性调研结论
+  new_string: ## 各章节写作指引
+
+> 每个章节列出了"写的时候想想这些"——不是检查项，而是帮你把思考过程理清楚。
+
+### 一、背景
+
+**基本面**（🔵🟢 都要写）：
+- 我们现在处于什么阶段？关键数据是什么？
+- 这次要解决的核心问题是什么？
+
+**想想用户**（🔵深入 / 🟢简要）：
+- 🔵 完整方案型：站在用户角度想——用户为什么会这样？他们遇到了什么问题？
+- 🟢 快速验证型：这个方案对用户有什么影响？会不会有负面感受？简要说明即可
+
+**理清因果**（🔵深入 / 🟢点到即可）：
+- 🔵 完整方案型：按「我看到了什么现象 → 我认为原因是什么 → 所以我打算往这个方向走」来组织，追问 1-2 层 why
+- 🟢 快速验证型：简要描述问题和基本判断，如果原因不确定，坦诚写"具体原因需要验证，这次试验想搞清楚的是 XX"
+- 两种类型都要避免：从现象直接跳到方案，中间没有任何思考过程
+
+**可以加分的**：
+- 漏斗图、趋势图
+- 用户分层说明
+- 跟助理/一线聊过的结论
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 二、目标测算
+
+**必须包含**（🔵🟢）：
+- 主要关注的指标
+- 关键假设说明
+
+**收益测算**（🔵必须 / 🟢简要）：
+- 🔵 完整方案型：至少一套保守/激进测算，目标数字需有依据（历史数据、类似活动、业务测算）
+- 🟢 快速验证型：说明预期方向和量级即可，承认"需要通过实验验证"
+
+**成本评估**（🟢必须 / 🔵必须）：
+- 🟢 快速验证型：**重点项**——需明确说明成本可控：开发成本低（≤X 人日）、运营预算可控（奖品/补贴总额）、试错代价小（可随时停止）
+- 🔵 完整方案型：预算投入与预期收益的 ROI
+
+**方案时效性**（🟢建议 / 🔵建议）：
+- 短期活动需说明活动结束后的预期影响
+- 🟢 快速验证型可以坦诚："这是一次试验，如果效果好再考虑长期化"
+
+**可选**：
+- 链接到石墨等测算表
+- 多套测算对比
+  new_string: ### 二、目标测算
+
+**基本面**（🔵🟢）：
+- 我主要关注什么指标？
+- 我的关键假设是什么？
+
+**想想收益**（🔵深入 / 🟢简要）：
+- 🔵 完整方案型：做一套保守/激进测算，想清楚目标数字从何而来（历史数据？类似活动？业务期望？）
+- 🟢 快速验证型：说明预期方向和大致量级即可，"需要通过实验验证"是诚实的回答
+
+**算算成本**（🔵🟢 都要想）：
+- 🟢 快速验证型重点想：开发要多少人日？运营预算多少？试错代价大吗？能随时停吗？
+- 🔵 完整方案型：投入和预期收益的 ROI 大致合理吗？
+
+**想想时效**（🔵🟢 短期方案建议想）：
+- 活动/方案结束后，效果会不会回落？
+- 🟢 可以坦诚写："这是一次试验，如果效果好再考虑长期化"
+
+**可以加分的**：
+- 链接到测算表
+- 多套测算对比
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 三、现状
+
+**必须包含**（🔵必须 / 🟢可简化）：
+- 🔵 完整方案型：当前链路/流程、相关点位与转化数据
+- 🟢 快速验证型：如果方案不涉及现有流程改动，可简化或合并到背景中
+
+**可选**（🔵建议 / 🟢按需）：
+- 用户调研结论（断课原因、召回动机等）——🔵 完整方案型建议有
+- 用户行为数据分析
+- 竞品/历史方案参考
+  new_string: ### 三、现状
+
+**现在是什么样？**（🔵写清楚 / 🟢可简化）：
+- 🔵 完整方案型：把当前链路/流程梳理清楚，相关的转化数据列出来
+- 🟢 快速验证型：如果方案不涉及现有流程改动，可简化或并到背景中
+
+**可以加分的**（🔵建议有 / 🟢按需）：
+- 用户调研结论
+- 用户行为数据分析
+- 竞品/历史方案参考
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 四、设计思路
+
+**必须包含**（🔵🟢）：
+- 核心设计思路
+- 主要方案说明
+
+**方案定位**（🔵🟢 都需要，但侧重不同）：
+- 🔵 完整方案型：在整体策略中的位置、长期影响、与其他策略的关系
+- 🟢 快速验证型：明确标注"这是短期实验/活动"，重点回答三个问题：
+  1. **有效性**：基于什么逻辑/数据认为方案能起作用？
+  2. **成本可控**：开发和运营成本是否在合理范围？
+  3. **无副作用**：是否会造成用户认知混乱、破坏现有体验、或其他附带损害？
+
+**方案对比**（🔵建议 / 🟢可选）：
+- 🔵 完整方案型：需简要说明考虑过哪些方向、为什么选了当前方案
+- 🟢 快速验证型：如果方案本身就是"低成本试一下"，不需要和重方案做对比
+
+**竞品/行业参考**（🔵建议 / 🟢可选）：
+- 🔵 完整方案型：认真看竞品，分析优缺点
+- 🟢 快速验证型：如果有现成参考能增强说服力就加，没有也不强求
+
+**可选**：
+- 问题/流程设计（如前测题目结构）
+- AB 实验设计（分组、变量、流量、预期）
+  new_string: ### 四、设计思路
+
+**方案是什么？**（🔵🟢）：
+- 核心设计思路
+- 主要方案说明
+
+**想清楚方案定位**（🔵🟢 都要想，侧重不同）：
+- 🔵 完整方案型：这个方案在整体策略中处于什么位置？和其他策略是什么关系？长期影响是什么？
+- 🟢 快速验证型：标注清楚"这是短期实验/活动"，然后问自己三个问题：
+  1. 我为什么觉得这个方案能起作用？（有效性）
+  2. 成本划算吗？（成本可控）
+  3. 会不会带来什么坏处？（无副作用）
+
+**想过其他方案吗？**（🔵建议想 / 🟢不强求）：
+- 🔵 完整方案型：简要说明考虑过哪些方向、为什么选了当前方案
+- 🟢 快速验证型：如果方案本身就是"低成本试一下"，不需要和重方案做对比
+
+**看过别人怎么做吗？**（🔵建议看 / 🟢有就加）：
+- 🔵 完整方案型：认真看竞品，分析优缺点
+- 🟢 快速验证型：有现成参考能增强说服力就加，没有不强求
+
+**可以加分的**：
+- 问题/流程设计（如前测题目结构）
+- AB 实验设计（分组、变量、流量、预期）
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ### 五、需求详情
+
+**必须包含**：
+- 展示人群、触发时机、展示限制
+- 流程说明（页面/步骤）
+- 设计稿链接或关键截图
+
+**建议**：
+- 文案、配置项单独列出，标明是否支持 luban 等配置
+- 异常/边界情况说明
+- 实验组差异（如有 AB）
+
+**质量标准**：研发阅读后能直接开发，无需反复沟通澄清
+
+### 六、数据需求
+
+**必须包含**（🔵🟢）：
+- 埋点事件表（页面、事件类型、事件名称）
+- 渠道/实验标识（keyfrom 等）
+
+**效果归因**（🔵建议 / 🟢建议）：
+- 如何区分「因为方案/活动才改善」和「本来就会改善」？是否设对照组？
+- 如果是短期活动，需设计活动后 1-2 周的观察期，观察效果是否回落
+- 🟢 快速验证型：归因设计尤其重要——因为快速验证的核心目的就是"搞清楚有没有效"，如果连效果都量不清楚，验证就白做了
+  new_string: ### 五、需求详情
+
+**把方案写到研发能直接用的程度**：
+- 展示人群、触发时机、展示限制
+- 流程说明（页面/步骤）
+- 设计稿链接或关键截图
+
+**多想一步**：
+- 文案、配置项单独列出，标明是否支持 luban 等配置
+- 异常/边界情况怎么处理？
+- 如果有 AB，各组的差异是什么？
+
+**自测标准**：假装自己是研发，读一遍——能直接开发吗？还是会来找你问问题？
+
+### 六、数据需求
+
+**基本面**（🔵🟢）：
+- 需要哪些埋点？（页面、事件类型、事件名称）
+- 渠道/实验标识怎么设？
+
+**想想怎么量效果**（🔵🟢 都值得想）：
+- 怎么区分"因为我的方案才改善"和"本来就会改善"？能设对照组吗？
+- 如果是短期活动，活动结束后 1-2 周的变化也要观察
+- 🟢 快速验证型特别注意：验证的核心目的就是"搞清楚有没有效"，如果效果都量不清楚，验证就白做了
+
+[Tool result] StrReplace
+
+assistant:
+现在把自查清单的口吻也调整一下。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/SKILL.md
+  old_string: ## 自查清单
+
+PRD 完成后，先确认类型，再对照自查。
+
+### 🟢 快速验证型自查
+
+**有效性论证**
+- [ ] 说清楚了为什么认为这个方案能起作用（逻辑/数据/参考）
+- [ ] 问题现象有基本描述，知道在解决什么问题
+
+**成本可控**
+- [ ] 开发成本低或可接受
+- [ ] 运营/奖品预算明确且可控
+- [ ] 方案可随时停止或回滚
+
+**无副作用**
+- [ ] 不会导致用户认知混乱（如把一个功能错误使用，让用户对产品产生误解）
+- [ ] 不会损害现有体验或挤占关键资源
+- [ ] 不会产生难以收回的长期承诺
+
+**效果可量**
+- [ ] 有明确的效果衡量方式（最好能归因）
+- [ ] 知道"成功"和"失败"分别长什么样
+- [ ] 方案定位为短期实验，标注了后续计划（效果好→X，效果差→Y）
+
+### 🔵 完整方案型自查
+
+**"为什么做"是否讲清楚了？**
+- [ ] 有用户视角的问题分析，而非仅从业务运营角度出发
+- [ ] 问题归因链完整：现象 → 原因（至少追问 1-2 层 why）→ 解法方向
+- [ ] 没有从"现象"直接跳到"方案"
+
+**"为什么这么做"是否讲清楚了？**
+- [ ] 方案在整体策略中的定位明确
+- [ ] 简要对比过其他可选方案，说明了选择当前方案的理由
+- [ ] 目标数字有依据（历史数据、类似活动、业务测算），而非凭感觉
+
+**效果能否衡量？**
+- [ ] 有归因设计或对照方案
+- [ ] 指标之间的关系已说明
+
+**关键定义是否清晰？**
+- [ ] 核心概念的定义标准明确，不会产生歧义
+- [ ] 规则设计有依据或标注了"初始方案，根据数据迭代"
+  new_string: ## 提交前问自己
+
+写完后、提交 review 前，按类型过一遍这些问题。
+
+### 🟢 快速验证型
+
+- [ ] 领导问"为什么觉得这个能起作用"，我能回答吗？
+- [ ] 领导问"这要花多少钱/多少人日"，我有数吗？
+- [ ] 领导问"这会不会搞乱用户体验"，我想过了吗？
+- [ ] 做完之后，我知道怎么判断"成了"还是"没成"吗？
+- [ ] 如果效果好/效果差，我想过下一步是什么吗？
+
+### 🔵 完整方案型
+
+- [ ] 领导问"用户到底遇到了什么问题"，我能从用户角度回答吗？
+- [ ] 我的思考链是「现象→原因→方案」，还是直接从现象跳到了方案？
+- [ ] 领导问"为什么不用其他方案"，我有回答吗？
+- [ ] 目标数字从哪来的？我能说清楚吗？
+- [ ] 做完之后怎么量效果？能归因吗？
+
+[Tool result] StrReplace
+
+assistant:
+现在调整 prd-review 的定位，强调"领导视角 + 给你改进思路"。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+  old_string: # PRD Review
+
+产品 Leader 视角的 PRD 评审工具。v1 审问题分析与方案方向，v5 审交互设计。
+  new_string: # PRD Review
+
+以**产品 Leader 的视角**预审你的 PRD，帮你提前发现会被挑战的点，并给出具体的改进思路。
+
+### 定位
+
+- **视角**：站在领导的位置，用她的标准和维度来看你的 PRD
+- **目的**：不只是告诉你"哪里有问题"，更重要的是告诉你"怎么改"和"怎么回答领导的追问"
+- **角色**：既是门禁判断者（这个 PRD 能不能过），也是教练（帮你提升思考深度）
+
+### 与 prd-writer 的关系
+
+- **prd-writer**：从你自己的视角出发，帮你思考和写作
+- **prd-review**（本文件）：从领导的视角出发，模拟 review 给反馈
+- 建议流程：先用 writer 写完 → 再用 review 自我预审 → 修改后提交正式 review
+
+v1 审问题分析与方案方向，v5 审交互设计。
+
+[Tool result] StrReplace
+
+assistant:
+更新 review 输出格式，增加"如何改进"和"领导可能追问"。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+  old_string: ### Step 5：输出 Review 报告
+
+```markdown
+# PRD Review：{PRD 名称}
+
+> 版本：{v1/v5} | Review 深度：{深度/标准} | 日期：{YYYY-MM-DD}
+
+## 门禁判断
+
+{一句话结论}
+
+{如果不通过，列出阻塞原因}
+
+## 各维度评价
+
+### 1. {维度名称}
+- **判断**：✅ / ⚠️ / ❌
+- **评价**：{具体说明，引用 PRD 中的原文佐证}
+- **建议**：{改进建议，示范更好的思考方式}
+
+（重复各维度）
+
+## 给 PM 的建议
+
+{教练式建议：不是"问题分析不够深"，而是"你分析到了 XX 但没挖到 YY，可以试试从 ZZ 角度想"}
+```
+  new_string: ### Step 5：输出 Review 报告
+
+```markdown
+# PRD Review：{PRD 名称}
+
+> 版本：{v1/v5} | PRD 类型：{🟢快速验证/🔵完整方案} | Review 深度：{深度/标准} | 日期：{YYYY-MM-DD}
+
+## 门禁判断
+
+{一句话结论}
+
+{如果不通过，列出阻塞原因}
+
+## 各维度评价
+
+### 1. {维度名称}
+- **判断**：✅ / ⚠️ / ❌
+- **评价**：{具体说明，引用 PRD 中的原文佐证}
+- **领导可能会问**：{模拟领导的追问，帮 PM 提前准备}
+- **改进思路**：{具体的改法——不是"分析不够深"，而是"你可以从 XX 角度补一段，具体写法是..."}
+
+（重复各维度）
+
+## 修改优先级
+
+{按重要性排序，告诉 PM 先改什么、后改什么，哪些可以快速补、哪些需要花时间想}
+
+## 给你的建议
+
+{教练式建议：肯定做得好的地方，指出核心提升点，示范"如果是我会怎么想这个问题"}
+```
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+  old_string: ## 注意事项
+
+- Review 时始终以产品 Leader 视角出发，兼顾"门禁判断"和"教练指导"两个角色
+- 评价要具体、引用原文，不说空话
+- 建议要可操作，示范"如果是我会怎么想"
+- 不纠结 v9 层面的细节（异常状态、loading、文案等），那不是 review 重点
+- 业务核心指标参考：首单 ROI、UE、体验课转化率、在课留存、退费率
+  new_string: ## 注意事项
+
+- 始终以**领导视角**出发，但目的是帮 PM 变强，不是挑刺
+- 评价要具体、引用原文，不说空话
+- **改进建议要可操作**——不是"问题分析不够深"，而是"你分析到了到习完习 90%+，但没追问'那为什么不到习'，可以从 XX 角度补一段"
+- 给出**领导可能的追问**，帮 PM 提前准备回答
+- 区分 PRD 类型：🟢快速验证型不要用🔵完整方案型的标准来过度要求
+- 不纠结 v9 层面的细节（异常状态、loading、文案等），那不是 review 重点
+- 业务核心指标参考：首单 ROI、UE、体验课转化率、在课留存、退费率
+
+[Tool result] StrReplace
+
+assistant:
+最后更新 CHANGELOG。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/prd/prd-writer/CHANGELOG.md
+  old_string: ## [0.3.0] - 2026-02-27
+
+### Added
+- SKILL.md：新增「PRD 类型判断」模块——区分🟢快速验证型和🔵完整方案型，不同类型侧重不同
+- SKILL.md：快速验证型核心三问：有效性、成本可控、无副作用
+- SKILL.md：自查清单按类型拆分为两套
+
+### Changed
+- SKILL.md：各章节撰写标准增加 🔵🟢 类型标注，快速验证型可简化用户视角、问题归因、方案对比等
+- PRD_TEMPLATE.md：顶部增加 PRD 类型选择，各节增加 🟢可简化/可跳过 标注
+- prd-review SKILL.md：Step 3 增加 PRD 类型识别，v1 review 维度表增加按类型的侧重说明
+  new_string: ## [0.3.0] - 2026-02-27
+
+### Added
+- SKILL.md：新增「PRD 类型判断」模块——区分🟢快速验证型和🔵完整方案型
+- SKILL.md：快速验证型核心三问：有效性、成本可控、无副作用
+
+### Changed
+- **prd-writer 和 prd-review 的定位区分**：
+  - prd-writer：从"我的视角"出发的写作思考搭档，口吻从"检查标准"改为"写的时候想想这些"
+  - prd-review：从"领导视角"出发的预审工具，增加"领导可能会问"和"改进思路"输出
+- SKILL.md：身份定位从"撰写助手"改为"写作搭档"，增加与 prd-review 的关系说明
+- SKILL.md：各章节从"撰写标准"改为"写作指引"，口吻从审查式改为引导式
+- SKILL.md：自查清单改为"提交前问自己"，用领导追问的方式帮你自检
+- prd-review SKILL.md：增加定位说明，强调"帮你发现问题+给改进思路"
+- prd-review SKILL.md：输出格式增加"领导可能会问"和"修改优先级"
+- PRD_TEMPLATE.md：顶部增加 PRD 类型选择，各节增加 🟢可简化/可跳过 标注
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"SKILL.md：新增 PRD 类型判断（快速验证 vs 完整方案），调整各章节的必须/建议标注","status":"completed"},{"id":"2","content":"PRD_TEMPLATE.md：标注各节适用的 PRD 类型","status":"completed"},{"id":"3","content":"prd-review SKILL.md：强化领导视角定位，增加“领导可能会问”和“改进思路”","status":"completed"},{"id":"4","content":"更新 CHANGELOG.md","status":"completed"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+全部调整完成。核心改动总结：
+
+---
+
+### prd-writer：从"审你"变成"帮你想"
+
+| 改前 | 改后 |
+|------|------|
+| "产品需求文档撰写助手" | "我的 PRD 写作搭档" |
+| "各章节撰写标准" | "各章节写作指引" |
+| "必须包含"、"检查标准" | "写的时候想想这些"、"问自己..." |
+| 自查清单：checklist 式 | "提交前问自己"：用领导追问的方式自检 |
+
+比如自查从 `- [ ] 有用户视角的问题分析` 变成了 `- [ ] 领导问"用户到底遇到了什么问题"，我能从用户角度回答吗？` —— 同样的检查点，但视角是你自己在准备，而不是被人检查。
+
+### prd-review：不只是评分，更要告诉你怎么改
+
+| 改前 | 改后 |
+|------|------|
+| 输出只有"评价 + 建议" | 增加"领导可能会问" + "改进思路" + "修改优先级" |
+| "教练式建议" | 明确：帮你预判领导的追问，给你具体的改法和回答策略 |
+
+两者形成配套流程：**writer 帮你写** → **review 帮你预审** → **修改后再提交正式 review**。
+
+user:
+<user_query>
+@/Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/ab858cf1a311bbf6d903846cf159fcc9/增长产品PRD规范.md 这是一个新的增长产品规范，我希望他可以作为一个钉死的规范存在，区别于 writer 和 review 的视角，这更像是一个底层的规范，在 prd 文档的用词和结构上做一些约束和修改。并不必在编写 prd 的时候照搬，但是需要做一些大框架上的把控，可以把这个规范单列出来，不用按照这个优化我们现有的 writer 和 review skill
+</user_query>
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-02/ab858cf1a311bbf6d903846cf159fcc9/增长产品PRD规范.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] The user wants this to be a standalone specification document - a "底层规范" (foundational standard) that sits separately from the writer and review skills. It's not a skill per se, but a reference document that provides the underlying framework/constraints.
+
+Let me just archive it properly into the `prd/` directory as a standalone spec. I'll keep it as-is since the user specifically said not to use it to optimize the existing writer/review skills.
+
+The right placement would be something like `prd/growth-prd-spec.md` or `prd/specs/增长产品PRD规范.md`. Let me think about the best structure...
+
+
+I'm settling on `prd/增长产品PRD规范.md` - it's straightforward and sits at the top level alongside the skill directories, making it clear this is a fixed reference standard rather than a learnable skill.
+明白，这是一份独立的底层规范，不是 skill，也不用去改 writer 和 review。直接归档到 `prd/` 下作为参考文档。
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/prd/增长产品PRD规范.md
+  contents: # 增长产品 PRD 规范
+
+> 基于团队现有 [PRD 规范](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=721134945) 扩展，适用于增长方向的产品需求文档。
+
+## 为什么需要单独的规范
+
+增长需求通常体量小、迭代快、实验性强。现有 PRD 规范的 159 分层和完备性要求，对增长场景偏重了。
+
+但增长需求有自己容易犯的毛病：**上来就写方案，说不清为什么有效；做完了不知道算成功还是失败；经验没沉淀，下一个需求还是拍脑袋。**
+
+这套规范不追求面面俱到，**只抓增长需求最容易缺失的几个点**。
+
+---
+
+## 核心要求：五个必须说清楚的事
+
+### 1. 问题和现状
+
+你观察到了什么？数据是什么？
+
+不需要长篇大论，但要有事实基础，不能只是"感觉可以做"。
+
+### 2. 假设
+
+**"我们认为 [做法] 能 [效果]，因为 [原因]。"**
+
+一句话，把因果逻辑说清楚。这是增长 PRD 和普通 PRD 最大的区别——增长需求本质上都是在验证一个假设。
+
+写假设不是为了形式，而是为了：
+- 逼自己想清楚"凭什么这么做就有效"
+- 事后能对着假设复盘，到底是假设对了、方案对了、还是碰巧了
+
+**示例**：
+- ✅ "我们认为，在首触电话之前通过产品端让家长提前了解到'有专属辅导老师会联系你提供服务'，能提升加微率和首通成功率，因为当前首通分析显示家长核心问题是'没有预期'——不知道会有电话，不知道老师能帮什么。"
+- ✅ "通过连续完习的阶梯奖励，能提升周完习率，因为用户已有完习习惯但缺少持续动力，阶梯机制利用沉没成本让用户不愿断档。"
+- ❌ "做一个激励活动提升完习率"（这是做法描述，不是假设）
+- ❌ "优化预期建立流程，提升首通成功率"（没有因果推理，只有目标）
+
+**常见问题：分析做得好但没收敛成假设。** 很多 PRD 有详细的数据分析和现状梳理，但分析完之后直接跳到了方案设计，中间缺一个"所以呢"。分析是过程，假设是结论——要把分析收敛成一句可验证的因果判断，再展开方案。
+
+### 3. 假设支撑
+
+假设不能是空中楼阁，需要有支撑——但不需要写论文，有就写，一两条即可：
+
+- 之前类似活动的数据（"上次 XX 活动参与率 30%，完习率提升了 X"）
+- 用户调研或反馈（"用户访谈中 X 位提到 Y"）
+- 行业参照或竞品做法
+- 已有的数据分析（比如"数据显示先加微后完测的用户首通率 70.6%，远高于仅加微的 67%和仅完测的 51%，说明这条路径最优"）
+- 业务经验判断（坦诚标注"这是经验判断，没有硬数据"也行）
+
+**没有任何支撑的假设 = 纯猜测**。纯猜测不是不能做，但要坦诚标注，让评审者和自己都清楚这是在赌。
+
+**如果有多个方案在犹豫，数据可以帮你框定讨论方向。** 不要让"选方案"变成纯主观辩论。回到数据看看：每个方案本质上在验证什么假设？数据对哪个假设更有支撑？比如如果分析出的问题是"用户不知道有这个服务"（信息缺失），那"前置直接告知"就比"渐进建信任"更对症——因为问题是不知道，不是不信任。
+
+### 4. 方案（用户视角描述）
+
+不要上来就写功能逻辑和规则表。**先从用户视角把方案走一遍**：
+
+> 用户在什么场景下 → 看到/遇到什么 → 做了什么 → 得到什么反馈 → 为什么这个体验能让他做出我们期望的行为
+
+走完用户视角之后，再写功能规则、逻辑细节。这样读者先理解"这个东西怎么用、为什么有效"，再看"具体怎么实现"。
+
+B 端需求同理，只是视角换成业务操作者：当前怎么干的 → 改成怎么干 → 为什么更好。
+
+功能方案部分沿用团队现有 PRD 规范即可，不额外要求。
+
+**推荐写法：当前 vs 优化后的对比。** 用几句话把改变前后的用户路径都写出来，让读者一眼看到差异。比如：
+
+> 当前：注册 → 学习计划页（纯课程信息）→ 弱加微引导 → 突然接到陌生电话 → 懵/挂断
+>
+> 优化后：注册 → 学习计划页（有辅导老师信息+服务说明）→ 强化加微引导 → 完测后收到诊断报告 → 接电话时已有预期
+
+**常见问题：如果需求涉及多个视角，每个视角都需要有用户旅程。** 比如一个需求同时涉及"产品端体验改造"和"销售端首通优化"，那产品侧的用户路径和销售侧的用户路径都要写，并且说清楚两者怎么衔接。只写了一侧的分析，另一侧直接上界面，读者就会断档。
+
+### 5. 实验方案
+
+做完怎么判断成败？这是增长需求最容易偷懒的地方。
+
+必须写清楚：
+- **怎么验证**：A/B 测试 / 灰度 / 前后对比
+- **看什么指标**：核心看哪个指标，辅助看哪些，有没有需要保护的指标（比如防止"水完习"就要看学习时长，防止"强引导加微"就要看次留和投诉率）
+- **什么算成功**：不需要精确到 5pp 这种数字——因为很多时候确实拍不准。但至少要说清楚方向和量级感（"有统计显著的正向提升"或"至少能覆盖活动成本"），以及**什么情况下算失败要止损**
+- **成功了然后呢，失败了然后呢**：一句话的迭代思路
+
+**如果有多个方案，A/B 本身就是最好的选择方式。** 与其在 PRD 里讨论半天"思路一好还是思路二好"，不如直接 A/B。两个思路往往是在验证两个不同的假设，A/B 的结果不仅能选方案，还能告诉你用户的真实心理模型是什么——这比选哪个 UI 方案更有价值。如果实在做不了 A/B，先选数据和分析更支持的那个。
+
+---
+
+## 关于定量目标
+
+坦率说，增长需求的定量目标经常是拍的。硬要拍一个"提升 5pp"，既不准确，也容易变成事后甩锅的工具。
+
+**推荐的做法**：
+- 核心指标写**方向和量级感**（"显著提升周完习率"）而非精确数字
+- 如果有历史数据参照，写参照范围（"参照上次活动，预期提升 2-5pp"）
+- 过程指标和防护指标比核心目标值更重要——它们帮你理解"为什么有效/无效"
+- 把精力花在**实验设计和数据拆解**上，而不是花在拍一个经不起推敲的目标数字上
+
+---
+
+## 关于文档结构
+
+不要求严格的 1-5-9 分稿，但建议用标题层级或页面分区做自然分层，让不同读者快速定位：
+
+- **开头**（框架）：问题、假设、实验方案 → 快速理解"为什么做、怎么验证"
+- **中间**（方案）：用户视角描述 + 功能逻辑 → 理解"怎么做"
+- **末尾**（细节）：规则明细、埋点、文案、技术依赖 → 开发交付用
+
+一个小需求，框架部分可能就 3-5 句话，方案部分一页，细节部分看复杂度。**不要求篇幅，要求该说的说到位。**
+
+如果文档用了 Motiff 的多页结构（比如 1-1 放分析，5-2 放方案），方案页的开头最好用几句话把分析页的结论带过来——不是复制一遍，而是一段话的上下文引用。因为看方案的人（技术、设计）不一定会仔细看分析页，他们需要在方案页就能理解"为什么这么做"。
+
+---
+
+## 实验结论（上线后回填）
+
+在 PRD 末尾留一个区域，活动/实验结束后回来填：
+
+- 假设成立吗？
+- 关键发现是什么？
+- 下一步做什么？
+
+这不是形式主义。增长团队最大的资产是**"试过什么、学到什么"**，不沉淀就白做了。
+
+---
+
+## 速查
+
+写增长 PRD 时，对照这五条自检：
+
+1. **问题**：我要解决什么问题？数据现状是什么？
+2. **假设**：我认为 [做法] 能 [效果]，因为 [原因]——分析做完了，有没有收敛成一句因果判断？
+3. **假设支撑**：有什么依据支撑这个假设？如果有多个方案，数据更支持哪个？
+4. **方案**：从用户视角走一遍——用户怎么用、为什么有效？当前路径 vs 优化后路径的差异写清楚了吗？
+5. **实验**：怎么验证、看什么指标、成功/失败后怎么办？多个方案能不能直接 A/B？
+
+
+[Tool result] Write
+
+assistant:
+已归档到 `prd/增长产品PRD规范.md`，和 `prd-writer/`、`prd-review/` 平级但独立存在。
+
+当前 `prd/` 目录结构：
+
+```
+prd/
+├── 增长产品PRD规范.md      ← 底层规范（钉死的标准，约束用词和结构）
+├── prd-writer/              ← 写作搭档（你的视角，帮你思考和写）
+│   ├── SKILL.md
+│   ├── templates/
+│   ├── examples/
+│   └── CHANGELOG.md
+└── prd-review/              ← 预审工具（领导视角，给反馈和改进思路）
+    ├── SKILL.md
+    ├── review-checklist.md
+    └── reviews/
+```
+
+三者定位不同：
+- **增长产品PRD规范**：底层框架约束，不管用什么工具写，这五个点（问题、假设、假设支撑、方案用户视角、实验方案）都要说清楚
+- **prd-writer**：帮你按规范把文档写好
+- **prd-review**：帮你预判领导会怎么看
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+Website URL: https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0
+Website Title: 石墨文档
+Website Content:
+
+____
+
+Website URL: https://shimo.zhenguanyu.com/docs/3NmpY8r40GaBsL7G
+Website Title: 石墨文档
+Website Content:
+
+____
+
+</external_links>
+<user_query>
+又说到刚才提到的 完习激励抽奖活动prd（https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861 ），我给你几个文档，帮我按照之前 review 的结论修改一下，补充一下背景，如果文档中没有涵盖的，请帮我梳理出，我需要补充哪些信息
+文档：https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0 https://shimo.zhenguanyu.com/docs/3NmpY8r40GaBsL7G 
+</user_query>
+
+assistant:
+[Thinking] The user wants me to:
+1. Fetch the two shimo documents for reference data
+2. Use the review conclusions from earlier to improve the PRD
+3. Draft improved content for the PRD, especially the background section
+4. Identify what information is still missing that the user needs to provide
+
+Let me fetch the shimo documents first.
+让我先获取这两份石墨文档的内容。
+[Tool call] user-tutor-wb-mcp-1_0-get_shimo_file_info
+  fileUrl: https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0
+[Tool call] user-tutor-wb-mcp-1_0-get_shimo_file_info
+  fileUrl: https://shimo.zhenguanyu.com/docs/3NmpY8r40GaBsL7G
+
+[Tool result] user-tutor-wb-mcp-1_0-get_shimo_file_info
+
+[Tool result] user-tutor-wb-mcp-1_0-get_shimo_file_info
+
+assistant:
+好，两份文档分别是「周-月全完习活动方案」和「常规完习活动策略」。让我获取内容。
+[Tool call] user-tutor-wb-mcp-1_0-get_shimo_content
+  fileUrl: https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0
+[Tool call] user-tutor-wb-mcp-1_0-get_shimo_content
+  fileUrl: https://shimo.zhenguanyu.com/docs/3NmpY8r40GaBsL7G
+
+[Tool result] user-tutor-wb-mcp-1_0-get_shimo_content
+
+[Tool result] user-tutor-wb-mcp-1_0-get_shimo_content
+
+assistant:
+[Thinking] Now I have the two documents. Let me also re-read the review conclusions and the original PRD to understand what needs to be improved.
+
+From the review, the key issues were:
+1. Missing user perspective - why don't users complete their studies
+2. Problem attribution chain broken - jumped from phenomena to solution
+3. Data analysis not deep enough
+4. Target (5pp) lacks basis
+5. Missing solution positioning
+6. Missing solution comparison
+7. Missing attribution design
+8. Key definitions and rules lack basis
+
+Now with these two documents, I can extract useful information:
+
+**From 「周-月全完习活动方案」(kyY7v4WpwLdET8x0)**:
+
+
+- More detailed data on current completion rates
+- Activity design details (already in the PRD mostly)
+- Prize/reward details
+- Cost considerations mentioned but not detailed
+- References the 常规完习活动策略
+
+**From 「常规完习活动策略」(3NmpY8r40GaBsL7G)**:
+- This has a 1.0 and 2.0 version, which is very valuable for understanding the evolution
+- 1.0 had two activities: "月学月有礼" (monthly continuous) and "助理激励活动" (tutor incentive for activation)
+- Test results from 1.0 show the performance metrics I need to analyze
+
+: the monthly continuous activity only marginally improved 4-week completion by 0.7pp while reducing initial engagement by 1.3pp, indicating low effectiveness. The key insight is that continuous incentives through WeChat don't effectively drive engagement for mid-to-late lifecycle users, and 4-week durations are too long for users with learning intent. However, the tutor incentive activity showed strong results with a 3pp activation rate increase and positive ROI.
+- 2.0 shifted strategy entirely toward activation, dropping the continuous learning incentive approach in favor of the more effective tutor-focused model
+- Looking at the cost breakdown: approximately 57,000 W13+ users with roughly 1,800 monthly participants, working out to about 1元 per user per month
+
+This is striking because the 1.0 test already validated that a similar continuous incentive approach had minimal impact, and the data clearly showed that mid-to-late lifecycle users don't respond well to this type of WeChat-based engagement. Yet the current PRD seems to be proposing something similar without acknowledging this prior learning. This raises a fundamental question about whether we're repeating a failed approach.
+
+I can now strengthen the PRD with better problem framing backed by actual test data, incorporate the historical context showing why the continuous incentive model underperformed, and clarify the target user basis—though I still need to identify what other elements might be missing from the full picture.
+好，内容都拿到了。让我结合 review 结论和这两份文档来帮你改进。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/reviews/完习激励抽奖活动_review_20260227.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now let me analyze what I can extract from the two documents and what's still missing.
+
+From 「常规完习活动策略」(3NmpY8r40GaBsL7G), I found VERY important historical context:
+
+**1.0 Test Results:**
+- "月学月有礼" (monthly continuous completion incentive): Only 0.7pp improvement in continuous 4-week completion, 1.3pp reduction in 0-week completion. Overall low value.
+- Key findings:  - "连续性的激励活动，在生命周期的中后期用户，通过微信场景无法有效发挥刺激作用" (Continuous incentive activities can't effectively stimulate mid-late lifecycle users via WeChat)
+
+
+- The earlier testing also showed that 4-week continuous incentives don't resonate with users who are already willing to complete, while the tutor-based activation approach delivered a meaningful 3pp lift in activation rates.
+- **2.0 conclusion:** The data clearly points toward prioritizing activation strategies and moving away from continuous incentive mechanics through WeChat.
+
+This is a critical finding because the current PRD is essentially proposing a version of the continuous incentive approach that was already tested and found to have minimal impact.
+
+Now I'm looking at what's actually different this time—the new proposal includes more granular activity design, cost calculations, and targets W13+ users with a structured reward framework. I'm also pulling in the cost reference from the strategy document to ground this in real numbers. The key insight is positioning this as a short-term activation activity rather than an ongoing incentive loop, which addresses the core weakness of the 1.0 approach.
+
+But I need to push back on a few things: the 5pp lift target seems disconnected from what 1.0 actually achieved with continuous incentives, and I'm missing the user research on why W13+ users aren't completing in the first place. I should also flag that we need clarity on the measurement design—how we'll isolate the effect of this activity from other variables.
+信息量很大，特别是「常规完习活动策略」里有**非常关键的历史测试数据**。让我梳理一下能帮你补什么，以及还缺什么需要你来填。
+
+---
+
+我从两份文档里发现了一个你 PRD 里没提但非常重要的信息：
+
+**常规完习活动策略 1.0 已经做过类似的连续完习激励测试，结论是效果很低。** 具体来说：
+- "月学月有礼"（累计4周全完习奖励）：连续4周完习占比仅提升 **0.7pp**，整体价值较低
+- 原因判断："连续性的激励活动，在生命周期的中后期用户，通过微信场景无法有效发挥刺激作用"、"连续性激励不宜过长，4周对于完习意向用户不具备"
+- 相反，**助理激励活动（激活沉睡用户）效果显著**：激活率提升 **3pp**，ROI 正向
+- 2.0 的结论是：放弃连续性激励，聚焦激活策略
+
+这意味着你现在的 PRD 在做的事，和 1.0 被验证效果不好的方案有相似之处——都是连续完习的阶梯激励。**这一点在 PRD 里必须主动说明，否则领导一定会问。**
+
+---
+
+下面我按 review 的修改优先级，帮你草拟可以补充的内容，并标出需要你来填的信息。
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/reviews/完习激励抽奖活动_改进草稿.md
+  contents: # 完习激励抽奖活动 PRD — 改进草稿
+
+> 本文基于 review 结论和两份参考文档草拟，标注了可直接补充的内容和需要你来填的信息。
+> 参考文档：
+> - [周-月全完习活动方案](https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0)
+> - [常规完习活动策略](https://shimo.zhenguanyu.com/docs/3NmpY8r40GaBsL7G)
+
+---
+
+## 一、背景（改写）
+
+### 1.1 完习现状（数据面）
+
+- 到习用户约占整体 75%
+- 全完习用户占比 55%-60%，到习完习占比 90%-92%，到习全完习率 75%-80%
+- 从用户生命周期看，M3 衰减最快，后续趋于稳定下降
+- 寒暑假完习出现上抬，流失明显减弱
+
+### 1.2 问题定位（归因链）
+
+**核心发现：到习完习 90%+，说明来上课的用户基本都能完成，问题主要出在"不到习"而非"到习不完"。**
+
+进一步追问：
+- M3 衰减最快 → ⚠️ **【需要你补充】第三个月发生了什么？你的判断是什么？**（新鲜感消退？课程阶段切换？家长监督减弱？）
+- 寒暑假完习上抬 → ⚠️ **【需要你补充】你认为原因是什么？**（时间更充裕？家长在家监督更强？）
+- ⚠️ **【需要你补充】跟助理聊过的结论**——W13+ 不完习的用户通常是什么情况？助理感知到的不完习原因是什么？
+
+### 1.3 历史验证（关键上下文）
+
+> 以下内容从「常规完习活动策略」文档提取，必须在 PRD 中说明。
+
+**2025年9-10月，团队已做过类似的连续完习激励测试（常规完习活动策略 1.0）：**
+
+| 活动 | 机制 | 效果 | 结论 |
+|------|------|------|------|
+| "月学月有礼" | 累计4周全完习→发放抽奖券 | 连续4周完习占比提升 0.7pp，0周完习占比减少 1.3pp | 整体价值较低，连续性激励在中后期用户效果有限 |
+| 助理激励活动 | 2周+未完习用户，完成首次全完习→发放抽奖券 | 激活率提升 3pp | 效果显著，ROI 正向 |
+
+**1.0 的归因判断：**
+- 连续性激励在生命周期中后期用户，通过微信场景无法有效发挥刺激作用
+- 连续性激励不宜过长，4周门槛对完习意愿用户偏高
+- 激活策略（拉回沉睡用户）比连续激励（维持活跃用户）更有效
+
+**本次活动与 1.0 的区别：** ⚠️ **【需要你补充——这是领导一定会问的问题】**
+
+1.0 的连续完习激励效果仅 0.7pp，本次方案也是连续完习的阶梯激励，为什么认为这次会不一样？可能的理由：
+- ⚠️ 激励维度从"月"缩短到"周"，降低了门槛？
+- ⚠️ 增加了海豚币即时奖励（1.0 只有抽奖），即时反馈更强？
+- ⚠️ 1.0 主要通过微信触达，本次增加了站内信/push/短信等多渠道触达？
+- ⚠️ 活动资源位（Banner+弹窗）在 App 端曝光，不依赖微信场景？
+- ⚠️ 其他你认为的差异点？
+
+**如果你说不清楚"为什么这次不一样"，领导大概率会问：既然上次试过效果不好，为什么还做？**
+
+---
+
+## 二、假设（新增）
+
+> 按增长产品 PRD 规范，把分析收敛成一句可验证的因果判断。
+
+⚠️ **【需要你写——以下是参考模板】**
+
+> "我们认为，通过**周维度的阶梯抽奖激励**（区别于 1.0 的月维度），能提升 W13+ 用户的单周全环节完习率，因为：
+> 1. 1.0 测试表明月维度门槛过高（0.7pp），周维度更贴近用户的行为节奏
+> 2. [你补充的第二个因为]
+> 3. [你补充的第三个因为]"
+
+---
+
+## 三、目标（补充依据）
+
+**定量目标**：各周期全环节完习提升 5pp
+
+**目标依据**：⚠️ **【需要你补充】**
+
+参考数据点：
+- 1.0 连续完习激励效果仅 0.7pp（但那是月维度，本次是周维度）
+- 1.0 激活策略效果 3pp
+- ⚠️ 5pp 的依据是什么？是业务期望？是基于某个测算？还是需要调整为"方向+量级"的表述？
+
+**成本预估**（从文档中可提取）：
+- W13+ 在读用户约 57,000 人
+- 参考 1.0 成本结构：人均活动成本约 1 元/月，总成本约 55,000 元
+- 实物中奖率 7%，海豚币中奖率 100%，人均海豚币约 300
+- ⚠️ **【需要你确认】本次活动的预算和 1.0 是否类似？奖品设置有变化吗？**
+
+---
+
+## 四、方案定位（新增）
+
+> 以下可直接补入 PRD。
+
+**这是一个短期运营活动**，目标是在 3-4 月期间提振 W13+ 用户的单周全环节完习率。
+
+**在整体完习策略中的位置**：
+- 短期：本次抽奖活动（外部激励，4周）
+- 中期：自动激活策略已在推进（从 1.0 助理激励活动演化，以推运营为主+电话/短信/端内辅助）
+- 长期：完习率的根本提升需要从内容/产品体验侧解决（不在本次范围内）
+
+**坦诚局限性**：
+- 外部激励的效果可能在活动结束后回落
+- 1.0 的经验表明，连续性激励对中后期用户效果有限
+- 本次活动的核心假设是"周维度+多渠道触达"能比 1.0 的"月维度+微信触达"更有效，需要通过数据验证
+
+---
+
+## 五、效果评估（补充归因设计）
+
+⚠️ **【以下框架可以用，具体方案需要你确认可行性】**
+
+**验证方式**：
+- ⚠️ 能否设对照组？（参考 1.0，按助理组做测试组/对照组分组）
+- 如果不能设对照组，至少做前后对比 + 环比
+
+**核心指标**：
+- 单周全环节完习率（主指标）
+- 连续完习周数分布（1/2/3/4 周各占比多少）
+
+**过程指标**：
+- 活动参与人数、奖励发放人数、抽奖人数
+- 各渠道（Banner/弹窗/push/短信）的曝光和点击
+
+**防护指标**（防止"水完习"）：
+- 10 分钟完习率
+- 单科学习时长
+
+**活动后观察期**：
+- 活动结束后 1-2 周的完习率变化——如果马上回落，说明只是临时拉动
+
+**成功标准**：
+- ⚠️ **【需要你定义】什么算成功、什么算失败、失败了怎么止损？**
+
+---
+
+## 你需要补充的信息清单
+
+按优先级排序：
+
+### P0：领导一定会问，不回答过不了
+
+| # | 问题 | 说明 |
+|---|------|------|
+| 1 | **与 1.0 的区别是什么？** | 1.0 连续完习激励只有 0.7pp 的效果，为什么这次还做？这次有什么不同？ |
+| 2 | **假设是什么？** | 把你的分析收敛成一句因果判断："我们认为 [做法] 能 [效果]，因为 [原因]" |
+| 3 | **5pp 目标从哪来的？** | 1.0 连续激励只有 0.7pp，凭什么这次能到 5pp？还是说目标需要调整？ |
+
+### P1：补上会明显提升 PRD 质量
+
+| # | 问题 | 说明 |
+|---|------|------|
+| 4 | **用户为什么不完习？** | 跟助理聊一下 W13+ 不完习用户的典型情况，哪怕几句话的定性描述 |
+| 5 | **M3 衰减、寒暑假上抬的原因判断** | 你怎么理解这两个数据现象？ |
+| 6 | **能否设对照组？** | 参考 1.0 的做法（按助理组分测试/对照），确认是否可行 |
+| 7 | **成功/失败后的计划** | 效果好→常态化？效果差→止损？还是调整方向？ |
+
+### P2：有就加，没有可以标注"待验证"
+
+| # | 问题 | 说明 |
+|---|------|------|
+| 8 | **本次活动预算** | 奖品成本、海豚币预算是否沿用 1.0 的框架（约55,000元） |
+| 9 | **奖励阶梯的设计依据** | 1/1/2/2 券、0/200/0/500 币的逻辑是什么？没有依据就标注"初始方案" |
+| 10 | **"周全环节完习"定义的合理性** | 任一科目就算全完习，标准是否太低？ |
+
+
+[Tool result] Write
+
+assistant:
+改进草稿已保存到 `prd/prd-review/reviews/完习激励抽奖活动_改进草稿.md`。
+
+---
+
+### 最重要的发现
+
+从「常规完习活动策略」里挖出了一个你 PRD 里没提到的关键历史数据：**1.0 已经做过类似的连续完习激励（月维度），效果只有 0.7pp，结论是"连续性激励对中后期用户效果有限"。** 而你现在的方案也是连续完习阶梯激励。
+
+这不是说不能做，但必须在 PRD 里主动说明"这次和上次有什么不同、为什么认为这次能起作用"。不然领导看到这个历史数据，第一反应就是"上次不是试过了吗"。
+
+### 已帮你草拟的部分
+
+- **背景的归因链**：从"到习完习90%+ → 问题在不到习"开始组织
+- **历史验证**：1.0 的测试数据和结论，以及与本次的对比框架
+- **方案定位**：短期活动在整体完习策略中的位置
+- **效果评估框架**：核心/过程/防护指标 + 活动后观察期
+
+### 需要你来补的信息（3个最关键的）
+
+1. **与 1.0 的区别**：为什么这次连续激励会比 1.0 的 0.7pp 更好？（周维度 vs 月维度？多渠道 vs 纯微信？即时奖励 vs 延迟奖励？）
+2. **假设**：一句因果判断——"我们认为 [做法] 能 [效果]，因为 [原因]"
+3. **5pp 目标依据**：1.0 只做到 0.7pp，这次凭什么 5pp？还是说目标需要调整？
+
+user:
+<git_status>
+This is the git status at the start of the conversation. Note that this status is a snapshot in time, and will not update during the conversation.
+
+Git repo: /Users/jiwenyue/aries-teach
+
+## master...origin/master
+ M .gitignore
+ M CLAUDE.md
+?? .cursor/
+?? prd/
+?? tableau_mcp/
+</git_status>
+
+<agent_transcripts>
+Agent transcripts (past chats) live in /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/agent-transcripts. They have names like <uuid>.jsonl, cite them to the user as [<title for chat <=6 words>](<uuid excluding .jsonl>). NEVER cite subagent transcripts/IDs; you can only cite parent uuids. Don't discuss the folder structure.
+</agent_transcripts>
+
+<agent_skills>
+When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge. To use a skill, read the skill file at the provided absolute path using the Read tool, then follow the instructions within. When a skill is relevant, read and follow it IMMEDIATELY as your first action. NEVER just announce or mention a skill without actually reading and following it. Only use skills listed below.
+
+<available_skills description="Skills the agent can use. Use the Read tool with the provided absolute path to fetch full contents.">
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/answer-generator/SKILL.md">基于题目自动生成标准答案,包含解题方法和最终答案。当用户提到"生成标答"、"标答生产"、"自动撰写标答"时激活</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/board-component-generator/SKILL.md">根据题目资料生成符合规范的教学板书指令</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-branch-creator/SKILL.md">帮助用户创建规范命名的 feature 分支</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-branch-switcher/SKILL.md">安全地在 Git 分支之间切换</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-commit-helper/SKILL.md">帮助非研发人员轻松完成 Git 本地提交操作，自动检查状态、生成规范的 commit message</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-mr-updater/SKILL.md">响应 GitLab MR 评审意见，创建新提交并更新 MR</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-push-review/SKILL.md">帮助非研发人员推送到远端 feature 分支并发起代码 review，处理常见推送问题</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/.cursor/skills-cursor/create-rule/SKILL.md">Create Cursor rules for persistent AI guidance. Use when the user wants to create a rule, add coding standards, set up project conventions, configure file-specific patterns, create RULE.md files, or asks about .cursor/rules/ or AGENTS.md.</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/.cursor/skills-cursor/create-skill/SKILL.md">Guides users through creating effective Agent Skills for Cursor. Use when the user wants to create, write, or author a new skill, or asks about skill structure, best practices, or SKILL.md format.</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/.cursor/skills-cursor/update-cursor-settings/SKILL.md">Modify Cursor/VSCode user settings in settings.json. Use when the user wants to change editor settings, preferences, configuration, themes, font size, tab size, format on save, auto save, keybindings, or any settings.json values.</agent_skill>
+</available_skills>
+</agent_skills>
+
+<mcp_instructions description="Instructions provided by MCP servers to help use them properly">
+Server: aries-teach-tableau
+通过 MCP 协议操作 Tableau Server REST API：查询资源、获取视图截图/数据、刷新数据源、管理作业等
+
+Server: cursor-ide-browser
+The cursor-ide-browser is an MCP server that allows you to navigate the web and interact with the page. Use this for frontend/webapp development and testing code changes.
+
+CRITICAL - Lock/unlock workflow:
+1. browser_lock requires an existing browser tab - you CANNOT lock before browser_navigate
+2. Correct order: browser_navigate -> browser_lock -> (interactions) -> browser_unlock
+3. If a browser tab already exists (check with browser_tabs list), call browser_lock FIRST before any interactions
+4. Only call browser_unlock when completely done with ALL browser operations for this turn
+
+IMPORTANT - Before interacting with any page:
+1. Use browser_tabs with action "list" to see open tabs and their URLs
+2. Use browser_snapshot to get the page structure and element refs before any interaction (click, type, hover, etc.)
+
+IMPORTANT - Waiting strategy:
+When waiting for page changes (navigation, content loading, animations, etc.), prefer short incremental waits (1-3 seconds) with browser_snapshot checks in between rather than a single long wait. For example, instead of waiting 10 seconds, do: wait 2s -> snapshot -> check if ready -> if not, wait 2s more -> snapshot again. This allows you to proceed as soon as the page is ready rather than always waiting the maximum time.
+
+Notes:
+- Native dialogs (alert/confirm/prompt) never block automation. By default, confirm() returns true and prompt() returns the default value. To test different responses, call browser_handle_dialog BEFORE the triggering action: use accept: false for "Cancel", or promptText: "value" for custom prompt input.
+- Iframe content is not accessible - only elements outside iframes can be interacted with.
+- Use browser_type to append text, browser_fill to clear and replace. browser_fill also works on contenteditable elements.
+- For nested scroll containers, use browser_scroll with scrollIntoView: true before clicking elements that may be obscured.
+</mcp_instructions>
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861 改了一下，帮我 review 吧
+</user_query>
+
+assistant:
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 1039568861
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+assistant:
+[Thinking] The user has updated their PRD on Confluence and wants me to review it again. Let me first read the prd-review skill to activate it, and also read the previous review and the improvement draft to understand what was suggested before.
+好的，我来读取 review skill 和之前的 review 记录，对比你改过的版本。
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/SKILL.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/reviews/完习激励抽奖活动_review_20260227.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/reviews/完习激励抽奖活动_改进草稿.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/review-checklist.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have all the context I need. Let me compare the updated PRD (v9.2) with the previous review and improvement draft to see what was addressed and what still needs work.
+
+Let me analyze the updated PRD systematically against the previous review's findings:
+
+**Previous Review's 9 Dimensions:**
+
+1. **用户视角** ❌ → Now the PRD has a "用户视角对于「完习行为」的分析" table with user stages and psychology. This is a significant improvement.
+
+2. **问题定义** ❌ → Now has "目前问题" section with clearer separation. Also has "问题分析" as a separate section. Better than before but let me check more carefully.
+   
+3. **问题分析** ❌ → The new "问题分析" section includes the key insight about "到习完习 90%+" and the user perspective table, which represents substantial progress.
+
+4. **收益判断** ⚠️ → Still shows "各周期全环节完习提升 5pp" without clear justification, especially given that v1.0 only achieved 0.7pp.
+
+5. **是否直击根本** ⚠️ → Now explicitly frames this as a quick validation effort with the "因此本次希望可以做一个快速验证" section, which better contextualizes the approach.
+
+6. **竞品/行业参照** ❌ → Added competitive analysis covering 小熊美术, 斑马/猿辅导, and 猿编程, identifying the common pattern of "阶段性交付物" across competitors.
+
+7. **方案路线对比** ❌ → Still missing explicit comparison of different solution routes; the "之前的尝试" section discusses v1.0 results but doesn't evaluate alternative approaches.
+
+8. **效果评估思路** ⚠️ → Lists metrics like 活动参加人数 and 曝光人数 but still lacks attribution design, control group setup, and post-activity observation period.
+
+9. **待决策点** → Now examining what decisions still need to be made.
+
+Looking at the improvements made in v9.2, I've added user perspective analysis, problem insights around the 90%+ completion threshold, competitive benchmarking, and positioned this as a rapid verification test with clear success criteria. The cost justification and activity flow are now documented, plus a vision for making this a recurring feature. But there are still gaps—the historical data comparison from v1.0 needs more specificity to properly validate whether this approach actually addresses the previous shortcomings. 这是一份快速验证型的PRD，虽然版本标记为v9.2，但由于战略方向层面的内容仍在完善中，我应该按v1级别来审查——特别是既然前次审查已经在v1层面指出了背景和方向的问题，这次更新正好涉及这些方面，所以继续在这个层级深入审视会更有价值。
+好的，PRD 已拉取。对比上次 review（2026-02-27）和改进草稿，我来做一次完整的二轮 review。
+
+---
+
+# PRD Review：完习激励抽奖活动（二轮）
+
+> 版本：v9.2（按 v1 标准复审方向层） | PRD 类型：🟢 快速验证 | Review 深度：深度 | 日期：2026-02-28
+
+## 门禁判断
+
+**⚠️ 方向层有明显进步，但有 2 个关键点仍需补充后可推进。**
+
+相比上次 review（3个 ❌、4个 ⚠️），这次改进很大——用户视角、问题分析、竞品参照、方案定位都补上了，整体从"只有执行层"变成了"有思考框架的快速验证方案"。但还有两个硬伤：**5pp 目标缺乏依据**（尤其是 1.0 只做到 0.7pp 的情况下），以及**效果归因设计缺失**。
+
+## 各维度评价
+
+### 1. 用户视角
+- **判断**：✅（从 ❌ → ✅）
+- **评价**：这次有了实质性的用户分析。你加了一个"用户视角对于完习行为的分析"表格，把用户分成了两个阶段，分析了每个阶段的心理和行为特征。尤其是 W13+ 的三类用户画像（习惯型、工具型、放弃型）非常好，说明你确实想过这些用户的差异。
+- **一个小提升点**：可以点明"本次活动主要能影响哪一类用户"。三类里面，习惯型用户不需要激励，放弃型用户光靠抽奖可能拉不回来，最可能被撬动的是中间的"工具型"用户。如果把这个判断写进去，方案的针对性会更强。
+
+---
+
+### 2. 问题定义
+- **判断**：✅（从 ❌ → ✅）
+- **评价**：现在的结构是"完习现状 → 目前问题 → 问题分析 → 解决思路"，逻辑清晰多了。问题和方案不再混在一起，"到习完习 90%+"的关键发现被提炼出来了，且在问题分析里做了进一步拆解。
+
+---
+
+### 3. 问题分析
+- **判断**：⚠️（从 ❌ → ⚠️）
+- **评价**：比上次好很多。你加了归因分析（"问题主要出在不到习而非到习不完习"），也加了用户分阶段的行为分析。但有一个关键的分析跳跃——
+  
+  你分析出"问题在不到习"，但方案做的是"激励全环节完习"。**这两个之间的逻辑连接没有写出来。** 如果核心缺口是"不到习"，那激励完习的活动如何影响到习率？可能的逻辑是"用抽奖预期拉动到习动力"，但需要写明。
+
+- **领导可能会问**："你说问题出在不到习，那你为什么做的是完习激励而不是到习激励？"
+- **改进思路**：在"解决思路"里加一句逻辑桥接，比如：
+  > "问题出在不到习，但到习率的提升需要从触达和内容侧长期解决。短期内，我们选择用完习奖励反向拉动到习意愿——用户知道完习有奖后，更有动力来上课。"
+
+---
+
+### 4. 收益判断
+- **判断**：⚠️（仍然 ⚠️，且是最大的硬伤之一）
+- **评价**：目标仍然是"各周期全环节完习提升 5pp"，没有依据。更关键的是——你这次把 1.0 的经验写进来了（"对全环节完习有小幅延缓作用"），但没有给出 1.0 的具体数据。
+
+  **根据之前从「常规完习活动策略」文档中提取的数据，1.0 的连续完习激励效果只有 0.7pp。** 你的方案也是连续完习阶梯激励，目标却是 5pp，差了 7 倍。这个数字在 review 中一定会被追问。
+
+- **领导可能会问**："上次连续完习激励只提了 0.7pp，你凭什么觉得这次能到 5pp？"
+- **改进思路（三选一）**：
+  1. **调低目标**：比如"预计提升 1-2pp，保守目标 1pp"，同时说明与 1.0 的差异（周维度+多渠道）可能带来增量
+  2. **拆分目标**：分"活动参与者"和"整体"两个口径——活动参与者的完习率提升可能更高，但整体会被稀释
+  3. **改为方向性目标**：既然是快速验证，可以说"验证周维度阶梯激励是否比 1.0 的月维度更有效，预期效果 > 1.0 的 0.7pp"
+
+---
+
+### 5. 是否直击根本
+- **判断**：✅（从 ⚠️ → ✅）
+- **评价**：这次最大的进步之一。你明确把方案定位为"快速验证"，写了验证问题（"阶段性抽奖激励能否成为减缓用户全环节完习流失的抓手"），列了关键保障点，也说了成本可控和不产生额外影响。作为🟢快速验证型 PRD，这个定位是对的。
+- **加分项**：活动流程图里标注了"之前尝试过的动作"和"后续可完善的动作"，说明你有策略层面的思考，这个很好。
+
+---
+
+### 6. 竞品/行业参照
+- **判断**：✅（从 ❌ → ✅）
+- **评价**：加了小熊美术、斑马/猿辅导、猿编程三个竞品，且提炼了共性洞察——"本质上是给用户阶段性的交付物"。作为快速验证型 PRD，这个程度够了。
+
+---
+
+### 7. 方案路线对比
+- **判断**：⚠️（从 ❌ → ⚠️，有改善但不完整）
+- **评价**：你现在有了"之前的尝试"部分，讲了 1.0 的设计和经验，也讲了本次与 1.0 的 4 个差异点（缩短激励周期、多渠道触达、即时反馈、抽奖形式不变）。这实质上是一种"迭代对比"，比上次完全没有好很多。
+  
+  但这更像是"同一个方向上的迭代优化"，而不是"不同方向的对比"。快速验证型不强求完整的方案对比，所以这点不阻塞。
+
+- **一个建议**：可以用一句话带过为什么不做其他方向，比如：
+  > "内容优化和产品体验提升是长期方向，短期可快速落地且成本可控的选项主要是激励活动，因此选择在 1.0 基础上迭代。"
+
+---
+
+### 8. 效果评估思路
+- **判断**：❌（仍然是短板）
+- **评价**：数据需求部分只列了 4 个过程指标和 2 个结果指标，但缺少三个关键设计：
+
+  | 缺失项 | 为什么重要 |
+  |--------|-----------|
+  | **归因方式** | 怎么区分"因为活动多完习的"和"本来就会完习的"？没有对照组或归因方式，活动结束后说不清楚效果 |
+  | **活动后观察期** | 活动结束后 1-2 周的完习率是否回落？如果马上回落，说明只是临时拉动 |
+  | **成功/失败标准** | 什么数据算验证成功？什么算失败？失败了是调整还是放弃？ |
+
+- **领导可能会问**："活动做完了，你怎么证明完习率提升是因为这个活动，而不是自然波动？"
+- **改进思路**：在数据需求里加三段：
+  1. **归因**：能设对照组最好（参考 1.0，按助理组分测试/对照），不能的话至少做"参与者 vs 未参与者"的对比
+  2. **观察期**：活动结束后跟踪 2 周的完习率变化
+  3. **成功标准**：比如"参与者完习率提升 > 1pp（超过 1.0 的 0.7pp）则验证假设成立，可进入常态化设计"
+
+---
+
+### 9. 待决策点
+- **判断**：⚠️（与上次持平）
+- **评价**：有几个隐含问题仍未主动暴露：
+  1. **1.0 数据缺失**：你提到了"之前的尝试"的结论和经验，但没有给出具体数据（0.7pp、激活率 3pp）。建议把具体数字写出来，主动透明
+  2. **"抽奖次数发放"的技术可行性**：文中写了"需要调研现在的抽奖活动是否支持直接接口下发"——这是一个阻塞项，当前状态是什么？
+  3. **活动延续策略**：你在活动流程图里画了后续方向（灰色部分），但文字里没有展开。效果好→常态化？效果差→止损？
+
+---
+
+## 上次 Review 问题的改进进度
+
+| # | 上次问题 | 本次状态 | 说明 |
+|---|---------|---------|------|
+| 1 | 缺用户视角 ❌ | ✅ 已解决 | 加了用户分阶段行为分析表 |
+| 2 | 问题定义和方案混在一起 ❌ | ✅ 已解决 | 拆成了 现状→问题→分析→思路 |
+| 3 | 问题分析停在数据描述 ❌ | ⚠️ 大幅改善 | 有归因，但"不到习→完习激励"的逻辑桥缺失 |
+| 4 | 5pp 目标无依据 ⚠️ | ⚠️ 未解决 | 仍无依据，且与 1.0 的 0.7pp 矛盾 |
+| 5 | 方案定位不清 ⚠️ | ✅ 已解决 | 明确定位为快速验证 |
+| 6 | 无竞品参照 ❌ | ✅ 已解决 | 加了 3 个竞品 + 共性洞察 |
+| 7 | 无方案对比 ❌ | ⚠️ 部分解决 | 有 1.0 迭代对比，缺跨方向对比 |
+| 8 | 效果归因缺失 ⚠️ | ❌ 未解决 | 仍缺归因设计和观察期 |
+| 9 | 待决策点隐藏 ⚠️ | ⚠️ 部分改善 | 1.0 数据、技术可行性仍隐藏 |
+
+## 修改优先级
+
+### P0：不改过不了
+
+1. **5pp 目标依据**：1.0 只有 0.7pp，必须解释为什么这次能到 5pp，或者调整目标。这是领导最容易追问的一个点
+2. **效果归因设计**：怎么证明效果是活动带来的？至少要有对照思路 + 活动后观察期 + 成功/失败标准
+
+### P1：改了会明显加分
+
+3. **"不到习→完习激励"的逻辑桥**：加一句话解释为什么问题在"不到习"但方案做"完习激励"
+4. **1.0 的具体数据**：把 0.7pp 和 3pp 写进去，主动透明比被追问好
+5. **活动延续策略**：一句话说清楚效果好/差分别怎么办
+
+### P2：锦上添花
+
+6. 点明活动主要能撬动哪类用户（工具型 > 习惯型/放弃型）
+7. 用一句话说明为什么短期不做其他方向（内容优化、产品体验等）
+
+## 给你的建议
+
+这次改进幅度很大，说明你把上次的反馈真正消化了——不是机械地补内容，而是重新组织了思考链条。用户视角的分阶段分析、"快速验证"的定位、"之前的尝试"的经验沉淀，这些都是实质性的提升。
+
+**现在最关键的就是 5pp 这个数字。** 建议你花 10 分钟想清楚：这个数字到底从哪来的？如果说不清楚，不如改成"验证是否优于 1.0（0.7pp）"——诚实比好看重要，领导会更认可你对数据的尊重。
+
+要不要我帮你把 P0 的两个修改（目标调整 + 归因设计）直接草拟出来？
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/reviews/完习激励抽奖活动_review_20260228.md
+  contents: # PRD Review：完习激励抽奖活动（二轮）
+
+> 版本：v9.2（按 v1 标准复审方向层） | PRD 类型：🟢 快速验证 | Review 深度：深度 | 日期：2026-02-28
+> 作者：姬文悦 | 页面：https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1039568861
+
+## 门禁判断
+
+**⚠️ 方向层有明显进步，但有 2 个关键点仍需补充后可推进。**
+
+相比上次 review（3个 ❌、4个 ⚠️），这次改进很大——用户视角、问题分析、竞品参照、方案定位都补上了，整体从"只有执行层"变成了"有思考框架的快速验证方案"。但还有两个硬伤：**5pp 目标缺乏依据**（尤其是 1.0 只做到 0.7pp 的情况下），以及**效果归因设计缺失**。
+
+## 各维度评价
+
+### 1. 用户视角
+- **判断**：✅（从 ❌ → ✅）
+- **评价**：这次有了实质性的用户分析。加了"用户视角对于完习行为的分析"表格，把用户分成两个阶段，分析了每个阶段的心理和行为特征。W13+ 的三类用户画像（习惯型、工具型、放弃型）非常好，说明确实思考过用户差异。
+- **小提升点**：可以点明"本次活动主要能影响哪一类用户"。三类里面，习惯型不需要激励，放弃型光靠抽奖可能拉不回来，最可能被撬动的是中间的"工具型"用户。
+
+---
+
+### 2. 问题定义
+- **判断**：✅（从 ❌ → ✅）
+- **评价**：结构变成"完习现状 → 目前问题 → 问题分析 → 解决思路"，逻辑清晰。问题和方案不再混在一起，"到习完习 90%+"的关键发现被提炼出来了。
+
+---
+
+### 3. 问题分析
+- **判断**：⚠️（从 ❌ → ⚠️）
+- **评价**：加了归因分析（"问题主要出在不到习而非到习不完习"），也加了用户分阶段行为分析。但有一个关键的分析跳跃——分析出"问题在不到习"，但方案做的是"激励全环节完习"。这两个之间的逻辑连接没有写出来。
+- **领导可能会问**："你说问题出在不到习，那你为什么做的是完习激励而不是到习激励？"
+- **改进思路**：加一句逻辑桥接："问题出在不到习，但到习率的提升需要从触达和内容侧长期解决。短期内，用完习奖励反向拉动到习意愿——用户知道完习有奖后，更有动力来上课。"
+
+---
+
+### 4. 收益判断
+- **判断**：⚠️（仍然 ⚠️，最大硬伤之一）
+- **评价**：目标仍是"各周期全环节完习提升 5pp"，没有依据。更关键的是——1.0 的连续完习激励效果只有 0.7pp，本次方案也是连续完习阶梯激励，目标却是 5pp，差了 7 倍。
+- **领导可能会问**："上次连续完习激励只提了 0.7pp，你凭什么觉得这次能到 5pp？"
+- **改进思路（三选一）**：
+  1. 调低目标：比如"预计提升 1-2pp，保守目标 1pp"
+  2. 拆分目标：分"活动参与者"和"整体"两个口径
+  3. 改为方向性目标："验证周维度阶梯激励是否比 1.0 的月维度更有效，预期效果 > 1.0 的 0.7pp"
+
+---
+
+### 5. 是否直击根本
+- **判断**：✅（从 ⚠️ → ✅）
+- **评价**：明确定位为"快速验证"，写了验证问题，列了关键保障点，说了成本可控和不产生额外影响。活动流程图标注了"之前尝试过/后续可完善"，有策略思考。
+
+---
+
+### 6. 竞品/行业参照
+- **判断**：✅（从 ❌ → ✅）
+- **评价**：加了小熊美术、斑马/猿辅导、猿编程三个竞品，提炼了共性洞察——"本质上是给用户阶段性的交付物"。快速验证型 PRD 这个程度够了。
+
+---
+
+### 7. 方案路线对比
+- **判断**：⚠️（从 ❌ → ⚠️，有改善但不完整）
+- **评价**：有了"之前的尝试"部分，讲了 1.0 的设计和经验，以及本次的差异点。这是"同一方向上的迭代对比"，比上次好很多。快速验证型不强求完整对比，不阻塞。
+- **建议**：加一句为什么不做其他方向："内容优化和产品体验提升是长期方向，短期可快速落地且成本可控的选项主要是激励活动。"
+
+---
+
+### 8. 效果评估思路
+- **判断**：❌（仍然是短板）
+- **评价**：数据需求只列了过程指标和结果指标，缺三个关键设计：
+
+| 缺失项 | 为什么重要 |
+|--------|-----------|
+| **归因方式** | 怎么区分"因活动多完习的"和"本来就会完习的"？ |
+| **活动后观察期** | 活动结束后完习率是否回落？ |
+| **成功/失败标准** | 什么算验证成功？什么算失败？ |
+
+- **领导可能会问**："活动做完了，你怎么证明完习率提升是因为这个活动？"
+- **改进思路**：
+  1. 归因：能设对照组最好，不能的话至少"参与者 vs 未参与者"对比
+  2. 观察期：活动结束后跟踪 2 周完习率变化
+  3. 成功标准：如"参与者完习率提升 > 1pp 则验证假设成立"
+
+---
+
+### 9. 待决策点
+- **判断**：⚠️（与上次持平）
+- **评价**：几个隐含问题仍未主动暴露：
+  1. **1.0 数据缺失**：提到了结论和经验，但没给具体数字（0.7pp、激活率 3pp）。主动写出来比被追问好
+  2. **技术可行性**："需要调研抽奖活动是否支持接口下发"——当前状态？是否阻塞？
+  3. **活动延续策略**：效果好→常态化？效果差→止损？
+
+---
+
+## 上次 Review 问题的改进进度
+
+| # | 上次问题 | 本次状态 | 说明 |
+|---|---------|---------|------|
+| 1 | 缺用户视角 ❌ | ✅ 已解决 | 加了用户分阶段行为分析表 |
+| 2 | 问题定义和方案混在一起 ❌ | ✅ 已解决 | 拆成了 现状→问题→分析→思路 |
+| 3 | 问题分析停在数据描述 ❌ | ⚠️ 大幅改善 | 有归因，但"不到习→完习激励"逻辑桥缺失 |
+| 4 | 5pp 目标无依据 ⚠️ | ⚠️ 未解决 | 仍无依据，且与 1.0 的 0.7pp 矛盾 |
+| 5 | 方案定位不清 ⚠️ | ✅ 已解决 | 明确定位为快速验证 |
+| 6 | 无竞品参照 ❌ | ✅ 已解决 | 加了 3 个竞品 + 共性洞察 |
+| 7 | 无方案对比 ❌ | ⚠️ 部分解决 | 有 1.0 迭代对比，缺跨方向对比 |
+| 8 | 效果归因缺失 ⚠️ | ❌ 未解决 | 仍缺归因设计和观察期 |
+| 9 | 待决策点隐藏 ⚠️ | ⚠️ 部分改善 | 1.0 数据、技术可行性仍隐藏 |
+
+## 修改优先级
+
+### P0：不改过不了
+
+1. **5pp 目标依据**：1.0 只有 0.7pp，必须解释为什么这次能到 5pp，或者调整目标
+2. **效果归因设计**：怎么证明效果是活动带来的？至少要有对照思路 + 活动后观察期 + 成功/失败标准
+
+### P1：改了会明显加分
+
+3. **"不到习→完习激励"的逻辑桥**：加一句话解释为什么问题在"不到习"但方案做"完习激励"
+4. **1.0 的具体数据**：把 0.7pp 和 3pp 写进去，主动透明
+5. **活动延续策略**：效果好/差分别怎么办
+
+### P2：锦上添花
+
+6. 点明活动主要能撬动哪类用户（工具型 > 习惯型/放弃型）
+7. 一句话说明为什么短期不做其他方向
+
+## 给你的建议
+
+这次改进幅度很大，说明上次的反馈被真正消化了——不是机械地补内容，而是重新组织了思考链条。用户视角的分阶段分析、"快速验证"的定位、"之前的尝试"的经验沉淀，这些都是实质性的提升。
+
+**现在最关键的就是 5pp 这个数字。** 建议花 10 分钟想清楚：这个数字到底从哪来的？如果说不清楚，不如改成"验证是否优于 1.0（0.7pp）"——诚实比好看重要，领导会更认可对数据的尊重。
+
+
+[Tool result] Write
+
+assistant:
+Review 报告已存档到 `prd/prd-review/reviews/完习激励抽奖活动_review_20260228.md`。
+
+总结一下：这次改进很明显，9 个维度从上次的 **0✅ 3❌ 4⚠️** 变成了现在的 **5✅ 1❌ 3⚠️**，方向层的框架基本成型了。
+
+**现在只剩两个硬伤需要补**：
+
+1. **5pp 目标**：1.0 做过类似方案只有 0.7pp，你目标写 5pp 差了 7 倍，这个一定会被追问。建议要么调低，要么换成"验证是否优于 1.0"的方向性目标
+2. **效果归因**：活动结束后怎么证明效果是活动带来的？至少补个对照思路 + 活动后 2 周观察期 + 成功/失败标准
+
+这两个补完，方向层就可以过了。需要我帮你草拟这两段内容吗？
+
+user:
+<user_query>
+行
+</user_query>
+
+assistant:
+[Thinking] The user said "行" which means "okay/sure", agreeing to my offer to help draft the two sections (5pp target adjustment + attribution design). Let me draft these two pieces of content that they can directly add to their PRD.
+
+Let me draft:
+
+1. **目标调整** - Revise the 5pp target with proper justification
+2. **效果归因设计** - Add attribution design, observation period, and success/failure criteria
+
+I'll also add the logic bridge for "不到习→完习激励" since it's P1 and quick to do.
+好，帮你草拟 P0 的两段 + P1 的逻辑桥，你可以直接贴进 Confluence。
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/prd/prd-review/reviews/完习激励抽奖活动_补充建议_20260228.md
+  contents: # 完习激励抽奖活动 — 建议补充内容
+
+> 以下内容可直接补入 Confluence PRD，按优先级排列。
+
+---
+
+## 【P0-1】目标部分（替换现有"目标"章节）
+
+**定性目标：** 验证「周维度阶梯抽奖激励」能否比 1.0（月维度）更有效地提升 W13+ 用户单周全环节完习率
+
+**定量目标：**
+
+| 指标 | 目标 | 依据 |
+|------|------|------|
+| 活动参与者单周全环节完习率提升 | > 1pp | 1.0 连续完习激励效果为 0.7pp（月维度、纯微信触达），本次缩短为周维度 + 多渠道触达，预期优于 1.0 |
+| 活动参与者连续 2 周+ 全完习占比 | > 1.0 水平 | 1.0 连续 4 周完习占比提升 0.7pp，本次降低门槛后预期连续完习比例更高 |
+
+**目标说明：**
+- 1.0（2025年9-10月）做过类似的连续完习激励测试，主要规则是连续 4 周全完习→发放抽奖券，效果为连续4周完习占比提升 0.7pp，结论是"整体价值较低，连续性激励在中后期用户效果有限"
+- 本次与 1.0 的关键差异：
+  - 激励维度从月→周，降低参与门槛
+  - 触达渠道从纯微信→Banner + 弹窗 + push + 短信 + 站内信，覆盖率更高
+  - 增加海豚币即时奖励，即时反馈更强
+  - 阶梯奖励（连续周数越多奖励越高），增强连续动力
+- 因此目标定为"优于 1.0 的 0.7pp"，不设过高预期。如果实际效果显著优于预期，说明周维度+多渠道模式可行，后续可常态化
+
+**成本预估：**
+- 实物抽奖奖品使用供应链积压库存，总成本 4800 元，预计实际成本 1000 元内
+- ROI 参考 1.0：ROI 正向，预计带来的收益远高于成本
+
+---
+
+## 【P0-2】数据需求部分（补充到现有"数据需求"末尾）
+
+### 效果归因设计
+
+**归因方式：**
+- 优先方案：按助理组分测试组/对照组（参考 1.0 做法），测试组用户参与活动，对照组不参与，对比两组完习率变化
+- 备选方案（如果无法设对照组）：对比活动参与者 vs 同期未参与者的完习率变化（需注意自选择偏差——主动参与的用户本身完习意愿可能更高）
+
+**活动后观察期：**
+- 活动结束后跟踪 2 周的完习率变化
+- 如果完习率在活动结束后 1 周内回落到活动前水平，说明活动只是临时拉动，不具备持续效果
+- 如果完习率在活动结束后仍有部分保持，说明活动对用户习惯有一定强化作用
+
+**成功/失败标准：**
+
+| 结果 | 判断标准 | 后续动作 |
+|------|---------|---------|
+| ✅ 验证成功 | 参与者完习率提升 > 1pp，且活动后 1 周未完全回落 | 进入常态化设计，周期性运营 |
+| ⚠️ 部分有效 | 有提升但 ≤ 1pp，或活动后立即回落 | 分析原因，调整激励机制后再次验证 |
+| ❌ 验证失败 | 无显著提升，或成本超出预期 | 放弃连续激励方向，转向激活策略（参考 1.0 助理激励活动的 3pp 效果） |
+
+---
+
+## 【P1-1】问题分析→解决思路的逻辑桥（补充到"问题分析"和"解决思路"之间）
+
+> 建议在"问题分析"最后加一段：
+
+核心缺口在"不到习"，但到习率的提升需要从触达方式和内容体验侧长期解决，短期无法快速见效。因此本次选择用「完习奖励」反向拉动到习意愿——当用户知道完习有奖时，到习的动力也会增强。同时，对于已经到习但没有全完习的用户（到习全完习率 78%），阶梯奖励也能激励他们完成全部环节。
+
+即：本次活动同时作用于两个环节：
+1. **拉动到习**：用奖励预期增强用户到习动力（间接作用）
+2. **促进全完习**：用阶梯奖励激励到习用户完成全部环节（直接作用）
+
+---
+
+## 【P1-2】1.0 具体数据（建议补充到"之前的尝试"部分）
+
+> 建议把"之前的尝试"里的结论部分补上具体数据：
+
+**1.0 测试数据：**
+
+| 活动 | 机制 | 效果 | 结论 |
+|------|------|------|------|
+| "月学月有礼" | 累计 4 周全完习→发放抽奖券，纯微信触达 | 连续 4 周完习占比提升 0.7pp，0 周完习占比减少 1.3pp | 整体价值较低，连续性激励在中后期用户效果有限 |
+| 助理激励活动 | 2 周+未完习用户，完成首次全完习→发放抽奖券 | 激活率提升 3pp | 效果显著，ROI 正向 |
+
+**1.0 关键经验：**
+- 连续性激励在生命周期中后期用户，通过微信场景无法有效发挥刺激作用
+- 连续性激励不宜过长，4 周连续完习激励筛选作用 ＞ 激励作用
+- 激活策略（拉回沉睡用户）比连续激励（维持活跃用户）更有效
+
+**本次与 1.0 的改进点：**
+
+| 维度 | 1.0 | 本次 | 改进逻辑 |
+|------|-----|------|---------|
+| 激励周期 | 月（累计 4 周） | 周（每周结算） | 降低参与门槛，减少筛选效应 |
+| 触达渠道 | 纯微信 | Banner + 弹窗 + push + 短信 + 站内信 | 提升活动覆盖率 |
+| 即时反馈 | 无（累计后才发放） | 海豚币即时到账 | 缩短反馈延迟，增强激励感知 |
+| 奖励结构 | 单一（抽奖券） | 阶梯（抽奖券 + 海豚币，随连续周数递增） | 增强连续完习动力 |
+
+
+[Tool result] Write
+
+assistant:
+草拟好了，已存到 `prd/prd-review/reviews/完习激励抽奖活动_补充建议_20260228.md`，一共 4 段内容：
+
+**P0（必须补）**：
+1. **目标改写** — 把"5pp"调整为"优于 1.0 的 0.7pp"，补上了 1.0 数据作为依据，列了与 1.0 的 4 个关键差异点来支撑"为什么这次能更好"
+2. **效果归因设计** — 归因方式（对照组 or 参与/未参与对比）+ 活动后 2 周观察期 + 成功/部分有效/失败的判断标准和后续动作
+
+**P1（加分项）**：
+3. **逻辑桥** — 一段话解释"问题在不到习，但方案做完习激励"的合理性：完习奖励反向拉动到习 + 直接促进全完习
+4. **1.0 具体数据** — 测试数据表格 + 与 1.0 的对比表（4 个维度的改进点）
+
+你可以直接复制贴进 Confluence，根据实际情况微调。

@@ -1,0 +1,655 @@
+user:
+<user_query>
+
+https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0/ 《周-月全完习活动方案》帮我梳理一下这个需求，以及简单写一下 prd（不用画原型）
+</user_query>
+
+assistant:
+<think>
+The user wants me to review a document from Shimo (石墨) and help them organize the requirements. They also want a simple PRD written without prototyping. Let me first fetch the content from the Shimo document using the MCP tool.
+
+The URL is: https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0/
+
+I need to use the Shimo MCP tools to get the content. Let me try get_shimo_content or get_shimo_file_info with the file URL.
+</think>
+正在获取石墨文档内容以梳理需求并撰写 PRD。
+
+[Tool call] mcp_tutor-wb-mcp-1_0_get_shimo_content
+  fileUrl: https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0/
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/SKILL.md
+
+[Tool result] mcp_tutor-wb-mcp-1_0_get_shimo_content
+
+[Tool result] Read
+
+assistant:
+<think>
+I now have the content from the Shimo document about the "周-月全完习活动方案" (Weekly-Monthly Complete Learning Activity Plan). Let me summarize and organize the requirements:
+
+**Key content from the document:**
+
+1. **Timeline**: 
+   - Start: March 9
+   - Material delivery: March 6
+   - Reference: https://shimo.zhenguanyu.com/docs/3NmpY8r40GaBsL7G/ 《常规完习活动策略》
+
+2. **Current Complete Learning Status**:
+   - 75% of users reach attendance (到习)
+   - 55%-60% complete all lessons (全完习)
+   - 90%-92% of attendees complete all lessons
+   - 75%-80% of attendees complete all lessons
+   - M3 decay fastest in lifecycle, then stable decline
+   - Summer/winter breaks show uplift, retention loss weakens
+
+3. **Activity Goals**:
+   - Qualitative: Improve weekly full completion rate
+   - Quantitative: 5pp improvement in full completion per cycle
+
+4. **Activity Design**:
+   - 4 weeks: March 9 - April 5
+   - Incentives: Dolphin coins + lottery
+   - Coverage: W13+ users, W12 and below use W12 activity (regular + activation)
+   - Weekly dimension,阶梯奖励 for continuous completion
+
+5. **Monthly Incentive Structure**:
+   - Complete 1 week full: 1 lottery ticket
+   - Complete 2 weeks consecutive: 2 tickets + 200 dolphin coins
+   - Complete 3 weeks consecutive: 2 tickets + 500 dolphin coins
+   - Complete 4 weeks consecutive: 4 tickets + 200 dolphin coins
+   - If break, restart from beginning
+
+6. **Reward Distribution**:
+   - Dolphin coins: instant upon completion
+   - Tickets: instant push upon completion
+
+7. **Online Promotion**:
+   - Banner: March 9 - April 5, full coverage
+   - Popup: Mon-Wed: full users 1x; Fri-Sat: users who haven't completed this week 1x
+
+8. **Lottery Prizes** (probability based):
+   - Various prizes with quantities and costs
+
+9. **Product Requirements**:
+   - Experience: Push lottery link when user meets conditions (in-app message)
+   - Workbench: Labels for completion status (1, 2, 3, 4 weeks)
+   - Growth: Lottery chance judgment, addition
+
+Let me read the PRD template for reference to create a proper PRD structure.
+</think>
+
+
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/templates/PRD_TEMPLATE.md
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/examples/断课老用户前测.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+<think>
+Now I have a good understanding of the document. Let me create a comprehensive requirements summary and PRD for the user. I'll organize the content from the Shimo document and create a structured PRD document.
+
+From the Shimo content, I need to extract:
+1. 活动背景 - current complete learning status
+2. 活动目标 - qualitative and quantitative
+3. 活动设计 - 4 weeks, incentives, rules
+4. 激励设计 - 阶梯奖励
+5. 宣发规则 - banner, popup
+6. 产品需求 - experience, workbench, growth
+7. 奖品设置 - lottery prizes
+8. 外化活动
+
+I'll create a new PRD file in the prd-writer examples or as a new document. Let me create it in the workspace root or a suitable location. The user said "简单写一下 prd"，so I'll create a concise but complete PRD document.
+</think>
+创建需求梳理与 PRD 文档：
+
+[Tool call] Write
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/examples/周月全完习活动-PRD.md
+  contents: # 周-月全完习活动 产品需求文档
+
+> 需求来源：https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0/ 《周-月全完习活动方案》
+
+---
+
+## 版本更新 log
+
+| 版本 | 更新内容 | 更新时间 |
+|------|----------|----------|
+| v0.1 | 基于活动方案梳理需求并撰写 PRD | 2025-02-12 |
+
+---
+
+## 需求梳理摘要
+
+### 核心需求
+
+通过**周维度激励 + 连续完习阶梯奖励**，提升单周全环节完习率。用户在 3 月 9 日 - 4 月 5 日（4 周）内，达成全环节完习可获得海豚币和抽奖券，连续多周完成可获得额外阶梯奖励。
+
+### 关键规则
+
+| 项目 | 说明 |
+|------|------|
+| 活动周期 | 3 月 9 日 - 4 月 5 日（4 周） |
+| 物料交付 | 3 月 6 日 |
+| 用户覆盖 | W13 及以上用户；W12 及以内用 W12 活动（常规+激活） |
+| 激励形式 | 海豚币 + 抽奖券（抽奖转盘，中奖率 100%） |
+| 阶梯逻辑 | 一旦断全环节完习，重新参与计算 |
+
+### 激励阶梯
+
+| 条件 | 奖励 |
+|------|------|
+| 完成 1 周全环节完习 | 1 张抽奖券 |
+| 连续完成 2 周全环节完习 | 2 张抽奖券 + 200 海豚币 |
+| 连续完成 3 周全环节完习 | 2 张抽奖券 + 500 海豚币 |
+| 连续完成 4 周全环节完习 | 4 张抽奖券 + 200 海豚币 |
+| **累计** | 6 张奖券 + 700 海豚币 |
+
+---
+
+## 一、背景
+
+### 1.1 业务背景
+
+- 海豚 AI 学完习活动体系的一部分，参考《常规完习活动策略》
+- 当前全完习用户占比 55%-60%，到习完习占比 90%-92%，到习全完习率 75%-80%
+- 用户生命周期 M3 衰减最快，后续趋于稳定下降；寒暑假完习有上抬
+
+### 1.2 问题诊断
+
+- 单周全环节完习率有提升空间
+- 需要周维度抓手，刺激用户持续完习
+- 通过阶梯激励增强连续完习的留存动机
+
+---
+
+## 二、目标测算
+
+### 2.1 收益目标
+
+- **定性目标**：提升单周全环节完习率
+- **定量目标**：各周期全环节完习提升 5pp
+
+### 2.2 目标设定
+
+- 活动收益评估待商分老师测算
+- 关键假设：周阶梯激励 + 抽奖形式能有效刺激完习行为
+
+---
+
+## 三、现状
+
+### 3.1 现状梳理
+
+- 到习用户约占整体 75%
+- 全完习用户占比 55%-60%
+- 到习完习占比 90%-92% ；到习全完习率占比 75%-80% 全环节完习留存 从用户生命周期观测前 M3 衰减最快，后续生命周期基本呈现稳定下降
+- 用户在寒暑假完习出现上抬，流失明显减弱
+
+### 3.2 参考活动
+
+- 海豚完课抽奖活动
+- 小熊完课活动
+- 设计需求参考：https://shimo.zhenguanyu.com/docs/3QXp9eNanK8OuELM/ 《全完习活动需求文档》
+
+---
+
+## 四、设计思路
+
+### 4.1 方案设计
+
+- **周维度激励**：设置周维度激励，推动用户当周达成全环节完习
+- **连续完习阶梯**：设置连续完习附加激励，促使用户连续全完习留存
+- **激励形式**：抽奖 + 海豚币，抽奖转盘形式，中奖率 100%
+- **设计逻辑**：激励全完习，周周有抓手，刺激连续全环节完习
+
+### 4.2 宣发策略
+
+| 宣发形式 | 展示时间 | 规则 |
+|----------|----------|------|
+| Banner | 3 月 9 日 - 4 月 5 日 | 全量用户 |
+| 弹窗 | 3 月 9 日 - 4 月 5 日 | 周一-周三：全量用户展示 1 次；周五-周六：当周未单科全环节完习用户展示 1 次 |
+
+### 4.3 奖品设置（抽奖）
+
+按概率随机，奖品包括但不限于：海豚币、海豚奇幻手办、智能护眼灯、行李箱、百变早餐杯、元气痛包等，具体以设计需求文档为准。
+
+### 4.4 外化活动
+
+- 每周实物奖品用户发朋友圈，助理晒截图可得 1000 海豚币
+- 每周幸运儿公布（中奖用户名单海报）
+- 每周大奖中奖用户展示
+- 奖品外化、抽奖仪式感外化、完习兑换换算海报
+
+---
+
+## 五、需求详情
+
+> 研发可直接执行的需求规格。设计稿见：https://shimo.zhenguanyu.com/docs/3QXp9eNanK8OuELM/
+
+### 5.1 展示规则
+
+| 项目 | 规则 |
+|------|------|
+| 展示人群 | W13 及以上用户（W12 及以内用 W12 活动） |
+| 活动周期 | 3 月 9 日 - 4 月 5 日 |
+| Banner | 全量用户，活动期内展示 |
+| 弹窗 | 周一-周三全量 1 次；周五-周六当周未全完习用户 1 次 |
+
+### 5.2 激励发放规则
+
+| 项目 | 规则 |
+|------|------|
+| 海豚币 | 完成全环节完习即刻到账 |
+| 奖券 | 完成全环节完习即刻推送到账 |
+| 阶梯 | 连续 1/2/3/4 周对应不同档位；断全环节完习则重新计算 |
+
+### 5.3 产品需求（已沟通）
+
+**1. 体验侧**
+
+- 用户达到相关条件下发抽奖链接（站内信）
+- 抽奖入口及跳转逻辑
+
+**2. 工作台**
+
+- 用户全完习情况标签
+- 活动期间全完习周数展示（1、2、3、4）
+
+**3. 增长侧**
+
+- 抽奖机会判断逻辑
+- 抽奖机会添加与发放
+
+### 5.4 边界与异常
+
+- 用户 W12 及以内：不参与本活动，使用 W12 用户活动
+- 断全环节完习：从下一周开始重新计算连续周数
+- 奖励发放失败：需有重试或补发机制（建议与业务方确认）
+
+---
+
+## 六、数据需求
+
+### 6.1 埋点需求
+
+| 页面/模块 | 事件类型 | 事件名称 | 备注 |
+|----------|----------|----------|------|
+| 活动入口 | 曝光/点击 | 活动 Banner/弹窗 | 区分入口来源 |
+| 抽奖页 | 曝光/点击 | 抽奖转盘 | 中奖结果 |
+| 工作台 | 曝光 | 全完习标签 | 周数 1/2/3/4 |
+| 站内信 | 点击 | 抽奖链接 | 跳转至抽奖 |
+
+### 6.2 渠道标识（keyfrom）
+
+| 实验组/渠道 | keyfrom 或标识 |
+|------------|----------------|
+| 周月全完习活动 | 与增长/数据约定 |
+
+### 6.3 关注指标
+
+- 各周期全环节完习率（环比提升）
+- 抽奖参与率、中奖率
+- 连续完习周数分布（1/2/3/4 周占比）
+
+---
+
+## 附录
+
+- 活动方案原文：https://shimo.zhenguanyu.com/docs/kyY7v4WpwLdET8x0/
+- 常规完习活动策略：https://shimo.zhenguanyu.com/docs/3NmpY8r40GaBsL7G/
+- 设计需求文档：https://shimo.zhenguanyu.com/docs/3QXp9eNanK8OuELM/
+
+
+[Tool result] Write
+
+assistant:
+<think>
+I've created the PRD document. Let me summarize for the user what I've done and provide a clear overview of the requirements and PRD structure.
+</think>
+已根据《周-月全完习活动方案》梳理需求并产出 PRD，摘要如下。
+
+---
+
+## 需求梳理摘要
+
+### 核心问题
+
+- 全完习用户占比约 55–60%，单周全环节完习率有提升空间  
+- 需要周维度抓手，激励用户持续完习、减少流失
+
+### 活动目标
+
+- **定性**：提升单周全环节完习率  
+- **定量**：各周期全环节完习提升 5pp
+
+### 活动设计要点
+
+| 项目 | 内容 |
+|------|------|
+| **时间** | 3 月 9 日 - 4 月 5 日（4 周），物料 3 月 6 日交付 |
+| **用户** | W13 及以上；W12 及以内用 W12 活动 |
+| **激励** | 海豚币 + 抽奖券（转盘，100% 中奖） |
+| **阶梯** | 连续 1 周→1 券；2 周→2 券+200 币；3 周→2 券+500 币；4 周→4 券+200 币 |
+| **规则** | 任意一周未全完习则重新计算连续周数 |
+
+### 宣发规则
+
+- **Banner**：全量用户，活动期内展示  
+- **弹窗**：周一至周三全量 1 次；周五至周六仅对当周未全完习用户 1 次  
+
+### 产品需求（已沟通）
+
+1. **体验**：达到条件后推送抽奖链接（站内信）  
+2. **工作台**：展示活动期间全完习周数（1/2/3/4 周）  
+3. **增长**：抽奖机会判断与发放逻辑  
+
+---
+
+## PRD 文档位置
+
+PRD 已写入：`.claude/skills/prd-writer/examples/周月全完习活动-PRD.md`
+
+结构按 prd-writer 技能标准组织，包含：
+
+- 背景与现状  
+- 目标与测算  
+- 设计思路与宣发  
+- 需求详情（展示规则、激励发放、产品需求、边界与异常）  
+- 数据需求（埋点、渠道标识、关注指标）  
+- 附录（相关文档链接）  
+
+如需完整内容，可提供 markdown、html 或文件元数据，也可按你的需求继续补充或调整章节。
+
+user:
+<user_query>
+
+需要有一些功能交互的部分，比如用户参与活动后，如何判断用户的抽奖次数发放，现在的抽奖后台仅支持手动发放抽奖次数，因此需要一些技术改造。
+</user_query>
+
+assistant:
+<think>
+The user wants me to add more functionality and interaction details to the PRD, specifically:
+
+1. **How to determine and distribute lottery chances** - when users participate in the activity, how to judge/calculate how many lottery chances they get
+2. **Current limitation**: The lottery backend only supports manual distribution of lottery chances
+3. **Therefore**: Some technical modifications are needed
+
+So I need to add a section to the PRD that covers:
+- The logic/rules for determining when a user gets lottery chances
+- The flow of how lottery chances are distributed
+- The technical transformation needed (since the current system only supports manual distribution, they need automated/API-based distribution)
+- The interaction between the activity completion system and the lottery system
+
+Let me read the current PRD to see what's there and where to add this content.
+</think>
+
+
+[Tool call] Read
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/examples/周月全完习活动-PRD.md
+
+[Tool result] Read
+
+assistant:
+<think>
+The user wants me to add:
+1. Function and interaction details - specifically how user participation triggers lottery chance distribution
+2. The logic for determining how many lottery chances to give
+3. The technical transformation needed - because the current lottery backend only supports manual distribution, they need automated/API-based distribution
+
+I need to add a new section that covers:
+- User participation flow
+- 抽奖次数判断逻辑 (when does user get lottery chances)
+- 抽奖次数发放流程 (how to distribute)
+- 现状与技术改造 (current lottery system only supports manual, need API/automation)
+- Maybe a diagram or flow description
+
+Let me add a section like "5.5 抽奖次数判断与发放" or expand the existing 5.3 with more detail. I'll also add a "技术约束与改造" section in the 现状 or 需求详情 part.
+
+I'll add:
+1. A detailed "5.5 抽奖次数判断与发放" section covering:
+   - 判断触发时机
+   - 判断逻辑（全环节完习判断、连续周数计算）
+   - 发放数量与阶梯对应
+   - 发放流程
+
+2. A "5.6 技术约束与改造需求" section:
+   - 现状：抽奖后台仅支持手动发放
+   - 改造需求：支持接口/自动发放
+   - 改造要点（可能涉及的系统、接口、数据流）
+
+Actually, let me re-read the structure. The user said they need "功能交互的部分" and "抽奖次数发放" and "技术改造". So I should:
+
+1. Add a detailed flow for 抽奖次数判断与发放
+2. Add 现状（抽奖后台仅支持手动）and 技术改造需求
+
+I'll add this as a new subsection under 五、需求详情, perhaps 5.5 抽奖次数判断与发放流程 and 5.6 技术约束与改造需求. Or maybe combine them into one section "5.5 抽奖次数发放与技术改造".
+</think>
+补充抽奖次数判断与发放的交互流程，以及针对抽奖后台仅支持手动发放的技术改造需求。
+
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/examples/周月全完习活动-PRD.md
+  old_string: ### 5.3 产品需求（已沟通）
+
+**1. 体验侧**
+
+- 用户达到相关条件下发抽奖链接（站内信）
+- 抽奖入口及跳转逻辑
+
+**2. 工作台**
+
+- 用户全完习情况标签
+- 活动期间全完习周数展示（1、2、3、4）
+
+**3. 增长侧**
+
+- 抽奖机会判断逻辑
+- 抽奖机会添加与发放
+
+### 5.4 边界与异常
+  new_string: ### 5.3 抽奖次数判断与发放
+
+#### 5.3.1 判断逻辑
+
+| 步骤 | 说明 |
+|------|------|
+| 1. 触发时机 | 用户当周完成全环节完习后，系统在**周结时**（如周日 24:00 或周一 0:00）进行批量判断 |
+| 2. 全环节完习判定 | 校验用户当周是否达成「全环节完习」条件（依赖完习数据源/接口） |
+| 3. 连续周数计算 | 回溯用户过去 N 周（N≤4）的完习记录，计算当前连续完习周数 |
+| 4. 阶梯对应 | 根据连续周数映射到奖励档位，确定抽奖券数量与海豚币数量 |
+
+**阶梯映射表**（研发可直接使用）：
+
+| 连续完习周数 | 抽奖券数量 | 海豚币数量 |
+|--------------|------------|------------|
+| 1 | 1 | 0 |
+| 2 | 2 | 200 |
+| 3 | 2 | 500 |
+| 4 | 4 | 200 |
+
+#### 5.3.2 发放流程
+
+```
+用户完成当周全环节完习
+        ↓
+周结时批量任务/定时任务触发
+        ↓
+拉取完习数据 → 判断全环节完习 → 计算连续周数
+        ↓
+确定奖励档位（券+币）
+        ↓
+调用海豚币发放接口（即刻到账）
+        ↓
+调用抽奖次数发放接口（见 5.4 技术改造）
+        ↓
+推送站内信（含抽奖链接）
+```
+
+#### 5.3.3 用户侧交互
+
+| 场景 | 用户感知 |
+|------|----------|
+| 完成当周全完习 | 海豚币立即到账；抽奖券到账后，站内信提醒「您获得 X 张抽奖券，快去抽奖」 |
+| 进入抽奖页 | 展示当前抽奖券余额，可进行抽奖 |
+| 工作台 | 展示「已连续完习 X 周」标签，激励继续 |
+
+---
+
+### 5.4 技术约束与改造需求
+
+#### 5.4.1 现状
+
+- **抽奖后台**：当前仅支持**手动发放**抽奖次数，无法满足活动「完成即发放」的自动化需求
+- **数据依赖**：完习数据、连续周数需有明确数据源或接口，供判断与发放链路使用
+
+#### 5.4.2 改造需求
+
+| 改造项 | 说明 | 优先级 |
+|--------|------|--------|
+| 抽奖次数发放接口 | 抽奖后台需提供**接口/回调**，支持按「用户 ID + 活动 ID + 发放数量」自动发放抽奖次数 | P0 |
+| 幂等与防重 | 同一用户同一周次仅可发放一次，需有幂等 key（如 userId + 活动周次）避免重复发放 | P0 |
+| 完习数据接口 | 提供「用户当周是否全环节完习」「用户连续完习周数」的查询接口或数据表，供发放任务调用 | P0 |
+| 发放任务 | 完习侧或增长侧需有**定时任务/批量任务**，在周结时执行判断与发放逻辑 | P0 |
+| 发放记录与对账 | 记录发放日志（用户、时间、数量、来源），支持人工对账与补发 | P1 |
+
+#### 5.4.3 系统协作示意
+
+```
+完习/课程系统 ──(完习数据)──→ 发放任务/中台
+                                     │
+                                     ├──→ 海豚币系统（发放海豚币）
+                                     │
+                                     └──→ 抽奖后台（需改造：支持接口发放）
+                                              │
+                                              └──→ 站内信（推送抽奖链接）
+```
+
+#### 5.4.4 改造验收标准
+
+- 用户完成全环节完习后，抽奖券在约定时间内（如 24 小时内）自动到账
+- 同一用户同一周不重复发放
+- 发放失败可追溯，支持人工补发
+
+---
+
+### 5.5 产品需求（已沟通）
+
+**1. 体验侧**
+
+- 用户达到相关条件下发抽奖链接（站内信）
+- 抽奖入口及跳转逻辑
+
+**2. 工作台**
+
+- 用户全完习情况标签
+- 活动期间全完习周数展示（1、2、3、4）
+
+**3. 增长侧**
+
+- 抽奖机会判断逻辑（见 5.3）
+- 抽奖机会添加与发放（依赖 5.4 技术改造）
+
+### 5.6 边界与异常
+
+[Tool result] StrReplace
+
+assistant:
+<think>
+Now I need to fix the section reference - 5.4 边界与异常 was changed to 5.6 边界与异常, but the content might still reference the old structure. Let me also update the remaining "5.4" reference in the content.
+</think>
+
+
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/examples/周月全完习活动-PRD.md
+  old_string: - 调用抽奖次数发放接口（见 5.4 技术改造）
+  new_string: - 调用抽奖次数发放接口（见 5.4 技术约束与改造需求）
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/examples/周月全完习活动-PRD.md
+  old_string: ## 版本更新 log
+
+| 版本 | 更新内容 | 更新时间 |
+|------|----------|----------|
+| v0.1 | 基于活动方案梳理需求并撰写 PRD | 2025-02-12 |
+  new_string: ## 版本更新 log
+
+| 版本 | 更新内容 | 更新时间 |
+|------|----------|----------|
+| v0.1 | 基于活动方案梳理需求并撰写 PRD | 2025-02-12 |
+| v0.2 | 补充抽奖次数判断与发放流程、技术约束与改造需求 | 2025-02-12 |
+
+[Tool result] StrReplace
+
+[Tool result] StrReplace
+
+assistant:
+<think>
+The first replace failed - maybe the string is different. Let me try again with the exact string from the fuzzy match.
+</think>
+
+
+[Tool call] StrReplace
+  path: /Users/jiwenyue/aries-teach/.claude/skills/prd-writer/examples/周月全完习活动-PRD.md
+  old_string: 调用抽奖次数发放接口（见 5.4 技术改造）
+  new_string: 调用抽奖次数发放接口（见 5.4 技术约束与改造需求）
+
+[Tool result] StrReplace
+
+assistant:
+<think>
+Good, the update is done. Let me provide a summary to the user.
+</think>
+已在 PRD 中补充功能交互与技术改造相关内容，主要更新如下：
+
+---
+
+## 新增内容摘要
+
+### 5.3 抽奖次数判断与发放
+
+**判断逻辑：**
+- **触发时机**：用户当周完成全环节完习后，在周结时（如周日 24:00 或周一 0:00）批量判断
+- **全环节完习判定**：依赖完习数据源/接口校验
+- **连续周数计算**：回溯过去 N 周（N≤4）的完习记录
+- **阶梯映射表**：按连续周数 1/2/3/4 对应不同抽奖券与海豚币数量，供研发直接使用
+
+**发放流程：**
+```
+完习完成 → 周结定时任务 → 拉取数据 → 判断+计算 → 发放海豚币 → 发放抽奖券 → 推送站内信
+```
+
+**用户侧交互：**
+- 完成全完习：海豚币即时到账；抽奖券到账后通过站内信提醒
+- 抽奖页：展示抽奖券余额
+- 工作台：展示「已连续完习 X 周」
+
+---
+
+### 5.4 技术约束与改造需求
+
+**现状：**
+- 抽奖后台仅支持手动发放抽奖次数
+
+**改造需求（优先级）：**
+
+| 改造项 | 说明 |
+|--------|------|
+| **抽奖次数发放接口** | 提供接口，支持按「用户 ID + 活动 ID + 发放数量」自动发放 |
+| **幂等与防重** | 同一用户同一周仅发放一次，需幂等 key |
+| **完习数据接口** | 提供「当周是否全完习」「连续完习周数」的查询接口 |
+| **发放任务** | 周结时执行的定时/批量任务 |
+| **发放记录与对账** | 记录发放日志，支持对账与补发 |
+
+**系统协作示意：**
+- 完习系统 → 发放任务 → 海豚币系统 + 抽奖后台（需改造）→ 站内信
+
+**验收标准：**
+- 抽奖券在约定时间内自动到账
+- 同一用户同一周不重复发放
+- 发放失败可追溯，支持人工补发
+
+---
+
+以上内容已写入 PRD 的 5.3、5.4 两节，可直接用于与研发/抽奖后台的评审和对接。

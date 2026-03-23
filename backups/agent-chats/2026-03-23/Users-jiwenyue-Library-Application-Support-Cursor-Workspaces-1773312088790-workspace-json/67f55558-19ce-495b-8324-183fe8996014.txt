@@ -1,0 +1,429 @@
+user:
+<user_query>
+我准备在售卖落地页增加一个可以配置的前置异形弹窗@/Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-03/cfb532d45bdfcac5ed5236b40001071a/落地页弹窗需求方案.md @/Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-03/64d022112a3f0cf4ca51cef59915e3cf/落地页弹窗原型Demo.html ，帮我写一下这个 prd
+</user_query>
+
+assistant:
+[Thinking] The user wants me to write a PRD for a feature about adding a configurable pre-popup (异形弹窗) on a sales landing page. They've provided two reference files:
+1. A markdown file with the requirement/solution description
+2. An HTML file with a prototype demo
+
+Let me first read these files and the PRD writer skill to follow the proper process.
+先读取需求方案和原型文件，以及 PRD 写作 skill。
+[Tool call] Read
+  path: /Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-03/cfb532d45bdfcac5ed5236b40001071a/落地页弹窗需求方案.md
+[Tool call] Read
+  path: /Users/jiwenyue/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/B5D084740FACC09F2A831A995FD85BD8/Caches/Files/2026-03/64d022112a3f0cf4ca51cef59915e3cf/落地页弹窗原型Demo.html
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-writer/SKILL.md
+
+[Tool result] Read
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have all the context. Let me also read the PRD template and any examples to follow the proper format.
+再看一下 PRD 模板和已有的示例。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-writer/templates/PRD_TEMPLATE.md
+[Tool call] Glob
+  glob_pattern: **/prd-writer/examples/*.md
+  target_directory: /Users/jiwenyue/cursorProjects/personal
+
+[Tool result] Read
+
+[Tool result] Glob
+
+assistant:
+[Thinking] Now let me also look at the existing PRD example that was recently written for reference on formatting and depth.
+看一下已有的 PRD 作为参考。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-writer/投放落地页配置修复.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have a complete picture:
+
+1. The requirement is about adding a "前置弹窗" (pre-entry popup) component to the sales landing page
+2. The user has provided a detailed requirement document and an HTML prototype
+3. I need to use the prd-writer SKILL to write a proper PRD
+
+Let me analyze the requirement:
+
+**PRD Type**: This is a **快速验证型** (Quick Validation Type):
+- Development cycle: ~3 days (≤1 week)
+- Impact: Controllable, can be disabled via config
+- Failure cost: Low (can easily turn off)
+
+
+- Nature: Growth experiment / operational tool
+
+Now I'm structuring the PRD following the template but tailored for this quick validation approach. I'll reference the existing PRD style and incorporate the key details from the requirement: the current 23% conversion baseline, expected 1-2pp lift from competitor benchmarks, the configurable backend setup, reuse of the existing retention popup component framework, H5-only scope, 3-day dev timeline, and the AB testing strategy.
+
+Setting up the tracking events now...
+好的，我来分析一下需求并撰写 PRD。
+
+**类型判断**：这是一个**快速验证型**需求——开发周期约 3 天，复用现有组件框架，配置化可开关，试错代价小。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/work/prd/prd-writer/售卖落地页前置弹窗.md
+  contents: # 售卖落地页「前置弹窗」组件
+
+> **PRD 类型**：🟢 快速验证
+>
+> **需求方**：文悦（增长） | **优先级**：中 | **预计工作量**：3 人日
+
+---
+
+## 版本更新 log
+
+| 版本 | 更新内容 | 更新时间 |
+|------|----------|----------|
+| v0.1 | 创建文档 | 2026-03-20 |
+
+---
+
+## 一、背景
+
+### 1.1 业务背景
+
+正价用户分享落地页（周周分享新用户购课落地页）是转介绍链路的核心承载页面，当前页面转化率近半年均值约 **23%**，存在提升空间。
+
+当前落地页「弹窗」模块仅有**挽留弹窗**（用户尝试离开时触发），且仅在 APP 端内生效。转介绍落地页承载在 H5 上，挽留弹窗对 H5 不生效，意味着用户在 H5 上从进入到离开，全程没有任何弹窗干预。
+
+### 1.2 问题与机会
+
+**现象**：用户从微信/分享链接进入 H5 落地页后，需要自行浏览整个页面才能了解核心卖点，部分用户在浏览过程中流失，未触达购买决策。
+
+**判断**：在用户进入页面的前几秒，注意力最集中，是影响转化决策的黄金窗口。如果能在这个窗口用一个视觉冲击力强的弹窗，快速传递核心卖点和行动号召，有机会提升转化率。
+
+**依据**：竞品实践表明，在落地页增加进入弹窗后，落地页转化率可提升 **1-2pp**。
+
+**对用户的影响**：弹窗会打断用户的自然浏览，但通过以下设计降低负面感受：
+- 弹窗有关闭按钮，用户可随时关闭
+- 展示频率可配置（不是每次都弹）
+- 弹窗内容与落地页一致，不构成认知冲突
+
+---
+
+## 二、目标测算
+
+### 2.1 关注指标
+
+- **核心指标**：落地页购买转化率（购买人数 / 页面UV）
+- **过程指标**：弹窗展示率、弹窗主按钮点击率、弹窗关闭率
+
+### 2.2 目标设定
+
+| 场景 | 预期 | 假设 |
+|------|------|------|
+| 保守 | 转化率提升 0.5pp（23% → 23.5%） | 弹窗对部分用户有促进作用，但整体提升有限 |
+| 激进 | 转化率提升 1-2pp（23% → 24-25%） | 参考竞品实践的提升幅度 |
+
+### 2.3 成本与 ROI
+
+- **开发成本**：约 3 人日（复用现有挽留弹窗组件框架）
+- **运营成本**：设计师出一张弹窗图，成本极低
+- **试错代价**：配置化开关，效果不好随时关闭，无沉没成本
+- **ROI 判断**：3 天开发换取持续可用的配置化能力，即使首版效果一般，后续可通过换图、换文案持续迭代，ROI 合理
+
+> 这是一次快速验证，具体提升幅度需要通过实验确认。如果效果好，可作为落地页标配能力长期使用。
+
+---
+
+## 三、现状
+
+当前「弹窗」模块只有**挽留弹窗**一种类型，且仅 APP 端内生效：
+
+```
+页面配置后台 → 左侧组件栏 →「弹窗」分类
+  └── 挽留弹窗（已有，APP 端生效）
+```
+
+挽留弹窗的配置项包括：预览开关、弹窗图片上传、按钮布局（通栏/主副）、触发时机（退出/进入/返回）、主按键文案。
+
+H5 落地页当前没有任何弹窗能力，用户进入后直接看到页面内容。
+
+---
+
+## 四、设计思路
+
+### 4.1 方案定位
+
+在「弹窗」分类下新增「前置弹窗」组件，**复用挽留弹窗的配置模式和组件框架**，支持运营配置弹窗图片、按钮文案和触发参数，在 H5 落地页生效。
+
+定位为**短期实验 + 长期能力沉淀**：首轮验证有无弹窗的效果差异，后续可持续迭代弹窗素材和配置。
+
+**三个核心判断**：
+
+1. **有效性**：竞品已验证同类弹窗对落地页转化有 1-2pp 正向提升；用户进入页面前几秒注意力最集中，弹窗在这个窗口传递核心卖点和行动号召，逻辑合理。
+2. **成本可控**：复用现有挽留弹窗组件框架，开发约 3 天；运营只需出一张图、填几个配置项；配置化开关随时可关。
+3. **无副作用**：弹窗有明确的关闭入口，不强制用户操作；展示频率可配（避免反复骚扰）；弹窗内容与落地页一致，不会造成认知冲突。
+
+### 4.2 与现有挽留弹窗的关系
+
+| 维度 | 挽留弹窗 | 前置弹窗 |
+|------|---------|---------|
+| 触发时机 | 用户尝试离开 | 用户进入页面 |
+| 生效环境 | APP 端内 | H5 |
+| 目的 | 挽留流失用户 | 促进首次转化 |
+| 配置模式 | 图片+按钮+文案 | 复用，新增延迟和频率控制 |
+
+两者互补，不冲突。
+
+### 4.3 AB 测试设计
+
+利用弹窗的可配置性，可分轮次做 AB 测试：
+
+| 轮次 | 测试变量 | 操作方式 |
+|------|---------|---------|
+| 第 1 轮 | 有弹窗 vs 无弹窗 | 开/关「预览展示」开关 |
+| 第 2 轮 | 不同弹窗设计图 | 设计师出两版图，分别配置 |
+| 第 3 轮 | 不同 CTA 话术 | 修改主按键文案 |
+| 第 4 轮 | 通栏按钮 vs 主副按钮 | 切换按钮布局 |
+
+每轮建议测试 **2 周**，每组样本量 >= **5000 UV**。
+
+---
+
+## 五、需求详情
+
+### 5.1 组件位置
+
+```
+页面配置后台 → 左侧组件栏 →「弹窗」分类
+  ├── 挽留弹窗（已有）
+  └── 前置弹窗（新增）  ← 本次需求
+```
+
+### 5.2 配置栏
+
+在「弹窗」分类下新增「前置弹窗」卡片，选中后右侧展示配置栏：
+
+```
+┌─ 配置栏 - 前置弹窗 ─────────┐
+│                              │
+│  预览展示：[🔵开]             │
+│                              │
+│  * 弹窗图片：[图片上传]       │
+│    （设计师出图，运营上传）     │
+│                              │
+│  * 按钮布局：◉通栏按钮 ○主副按钮│
+│                              │
+│  * 主按键(购买)：[立即免费领取] │
+│                              │
+│  * 副按键(关闭)：[先看看再说]  │
+│    （仅「主副按钮」布局时展示） │
+│                              │
+│  * 弹出延迟：[800] ms        │
+│                              │
+│  * 展示频率：                 │
+│    ◉ 每次访问                │
+│    ○ 每天首次                 │
+│    ○ 仅首次                  │
+│                              │
+└──────────────────────────────┘
+```
+
+### 5.3 配置项说明
+
+| # | 配置项 | 类型 | 默认值 | 说明 |
+|---|--------|------|--------|------|
+| 1 | 预览展示 | Toggle 开关 | 开 | 控制弹窗是否生效。关闭时弹窗不展示，可用于 AB 测试对照组 |
+| 2 | 弹窗图片 | 图片上传 | 无 | 必填。设计师出图，运营上传。图片只包含视觉内容区，不含按钮 |
+| 3 | 按钮布局 | 单选 | 通栏按钮 | 通栏按钮：仅主按钮 + 底部关闭图标；主副按钮：主按钮 + 副按钮 + 底部关闭图标 |
+| 4 | 主按键文案 | 文本输入 | 立即免费领取 | 主按钮上的文案。点击行为：触发购买流程 |
+| 5 | 副按键文案 | 文本输入 | 先看看再说 | 仅「主副按钮」布局时展示。点击行为：关闭弹窗 |
+| 6 | 弹出延迟 | 数字输入（ms） | 800 | 用户进入页面后延迟多久弹出 |
+| 7 | 展示频率 | 单选 | 每次访问 | 每次访问：每次进入都弹；每天首次：同一用户每天第一次进入弹；仅首次：同一用户只弹一次 |
+
+### 5.4 与挽留弹窗配置项对比
+
+| 配置项 | 挽留弹窗 | 前置弹窗 | 说明 |
+|--------|:---:|:---:|------|
+| 预览展示 | 有 | 有 | 复用 |
+| 弹窗图片 | 有 | 有 | 复用 |
+| 按钮布局 | 有 | 有 | 复用 |
+| 触发时机 | 有 | 无 | 前置弹窗固定为「进入页面后触发」，不需要此项 |
+| 主按键文案 | 有（关闭行为） | 有（购买行为） | 复用字段，行为不同 |
+| 副按键文案 | 无 | 有 | 新增 |
+| 弹出延迟 | 无 | 有 | 新增 |
+| 展示频率 | 无 | 有 | 新增 |
+
+### 5.5 交互流程
+
+```
+用户通过分享链接进入 H5 落地页
+    ↓
+页面正常加载渲染
+    ↓
+  ┌─ 未配置前置弹窗 → 正常浏览（现有逻辑不变）
+  │
+  └─ 已配置前置弹窗
+        ↓
+     检查展示频率规则
+        ↓
+      ┌─ 不满足展示条件 → 正常浏览
+      │
+      └─ 满足展示条件
+            ↓
+         延迟 N 毫秒后弹出弹窗
+         （半透明遮罩，页面不可滚动）
+            ↓
+         用户操作：
+           A: 点击主按钮  → 触发购买流程
+           B: 点击副按钮  → 关闭弹窗
+           C: 点击关闭图标 → 关闭弹窗
+           D: 点击遮罩区域 → 关闭弹窗
+```
+
+### 5.6 按钮行为
+
+#### 通栏按钮布局
+
+```
+┌─────────────────────┐
+│                     │
+│    [弹窗图片区域]    │
+│                     │
+│  ┌─────────────────┐│
+│  │  立即免费领取     ││  ← 点击 → 触发购买流程
+│  └─────────────────┘│
+│         ✕           │  ← 底部关闭图标
+└─────────────────────┘
+```
+
+#### 主副按钮布局
+
+```
+┌─────────────────────┐
+│                     │
+│    [弹窗图片区域]    │
+│                     │
+│  ┌─────────────────┐│
+│  │  立即免费领取     ││  ← 主按钮：触发购买流程
+│  └─────────────────┘│
+│  ┌─────────────────┐│
+│  │  先看看再说       ││  ← 副按钮：关闭弹窗
+│  └─────────────────┘│
+│         ✕           │  ← 底部关闭图标
+└─────────────────────┘
+```
+
+#### 主按钮点击逻辑（购买）
+
+与落地页底部「立即0元抢」按钮逻辑一致：
+- 若已选年级 → 直接进入下单/支付流程
+- 若未选年级 → 关闭弹窗，自动滚动到年级选择区域
+
+#### 副按钮 / 关闭图标 / 遮罩点击
+
+关闭弹窗，恢复页面正常浏览。
+
+### 5.7 设计师出图规范
+
+| 项目 | 要求 |
+|------|------|
+| 图片尺寸 | 宽 **630px**，高度不限（建议 630~900px） |
+| 文件格式 | PNG（推荐）/ JPG |
+| 文件大小 | <= 500KB |
+| 内容区域 | 图片只包含视觉内容区，**不含按钮**（按钮由组件渲染） |
+| 安全边距 | 左右各留 **20px** 不放关键信息（适配圆角裁切） |
+| 圆角 | 图片本身不需要加圆角，组件自动加 **24px** 圆角 |
+
+### 5.8 展示频率实现说明
+
+| 频率 | 判断依据 | 存储方式 |
+|------|---------|---------|
+| 每次访问 | 不判断，每次进入都展示 | 无需存储 |
+| 每天首次 | 当天是否已展示过 | localStorage，key 含日期，每日自动失效 |
+| 仅首次 | 是否曾经展示过 | localStorage，永久标记 |
+
+### 5.9 边界情况
+
+| 场景 | 处理方式 |
+|------|---------|
+| 未上传弹窗图片 | 不展示弹窗（图片为必填项，后台配置时校验） |
+| 页面加载失败 | 不展示弹窗（弹窗依赖页面加载完成） |
+| 同时配置了挽留弹窗和前置弹窗 | 各自独立触发，互不影响（前置弹窗进入时触发，挽留弹窗离开时触发） |
+| 用户在弹窗展示前就点击了页面底部 CTA | 不再弹出弹窗（已进入购买流程） |
+
+### 5.10 原型参考
+
+附件：`落地页弹窗原型Demo.html`（浏览器打开，展示弹窗样式和交互效果）
+
+首版弹窗设计建议包含：
+- 活动主题（如「开学季 · 1V1提分特训礼包」）
+- 三个核心卖点（1 份 AI 学习规划 / 2000+ 精美动画 / 2700+ 模拟试卷）
+- 视觉风格与落地页保持一致（橙红色系）
+
+---
+
+## 六、数据需求
+
+### 6.1 埋点需求
+
+| 事件名 | 触发时机 | 关键参数 |
+|--------|---------|---------|
+| `entry_popup_show` | 弹窗展示 | pageId, userId |
+| `entry_popup_main_click` | 点击主按钮 | pageId, userId, duration_ms（弹窗展示到点击的时长） |
+| `entry_popup_sub_click` | 点击副按钮 | pageId, userId, duration_ms |
+| `entry_popup_close` | 点击关闭图标或遮罩 | pageId, userId, duration_ms |
+
+### 6.2 效果归因
+
+**第 1 轮实验（有弹窗 vs 无弹窗）**：
+
+- **实验组**：配置前置弹窗的落地页
+- **对照组**：关闭前置弹窗的落地页（同一页面，仅弹窗开关不同）
+- **核心对比指标**：页面购买转化率
+- **观察周期**：2 周，每组 >= 5000 UV
+- **关注的过程数据**：
+  - 弹窗展示 → 主按钮点击的转化率
+  - 弹窗关闭率（副按钮 + 关闭图标）
+  - 弹窗展示到用户操作的平均时长（判断用户是否真的在看弹窗）
+  - 有弹窗 vs 无弹窗页面的平均停留时长对比
+
+---
+
+## 七、开发工作量评估
+
+| 模块 | 工作内容 | 预估 |
+|------|---------|------|
+| 后台 | 弹窗分类下新增「前置弹窗」卡片 + 右侧配置表单（复用挽留弹窗结构，新增延迟、频率、副按键字段） | 1 天 |
+| H5 前端 | 新增前置弹窗渲染组件（读取配置 → 渲染图片+按钮 → 处理点击 → 频率控制） | 1 天 |
+| 埋点 | 4 个事件 | 0.5 天 |
+| 联调测试 | 配置 → 渲染 → 按钮行为 → 频率控制联调 | 0.5 天 |
+| **合计** | | **约 3 天** |
+
+---
+
+## 附录
+
+| 文件 | 说明 |
+|------|------|
+| 落地页弹窗原型Demo.html | 可交互原型，展示弹窗样式和动画效果 |
+| 落地页弹窗需求方案.md | 原始需求方案文档 |
+
+
+[Tool result] Write
+
+assistant:
+PRD 已写好，存在 `work/prd/prd-writer/售卖落地页前置弹窗.md`。
+
+几个关键点说明：
+
+1. **类型判断为快速验证型**：开发 3 天，复用现有组件框架，配置化可开关，试错代价小。所以背景和目标测算点到为止，重点在有效性论证、成本可控、无副作用三个判断。
+
+2. **需求详情是重点**：因为你这个需求方案本身已经很完整了（配置项、按钮行为、出图规范、埋点都有），我基本保留了核心内容，补充了几个点：
+   - 展示频率的技术实现方式（localStorage）
+   - 边界情况处理（未上传图片、同时配置两种弹窗、用户已点 CTA 等）
+   - 遮罩点击也关闭弹窗（原方案没提，但用户预期如此）
+
+3. **目标测算坦诚处理**：竞品数据给了 1-2pp 参考，但承认具体幅度需要实验验证，这比硬编一个数字更合理。
+
+4. **AB 测试分轮次设计**已整合到设计思路中，第一轮先验证有无弹窗的效果差异，后续再迭代素材和配置。
+
+要不要我跑一下 prd-review 帮你预审一遍？

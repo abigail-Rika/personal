@@ -1,0 +1,104 @@
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1053139255
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1053139255 
+我们要在小红书投放广告，你看一下，这个有没有什么需要我补充的，因为感觉大部分应该是研发的工作量
+</user_query>
+
+assistant:
+[Thinking] The user wants me to look at a Confluence page about advertising on Xiaohongshu (Little Red Book). Let me fetch the content using the Confluence MCP tool.
+让我先获取这个 Confluence 页面的内容。
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  page: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=1053139255
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+assistant:
+[Thinking] Let me analyze this Confluence page about integrating Xiaohongshu (Little Red Book) app download advertising channel.
+
+The page is titled "小红书渠道应用下载对接" (Xiaohongshu Channel App Download Integration), written by 张国亮, and covers:
+
+1. **Background**: App direct investment channel growth target from 1400/period to 3200/period by Q2 2026, need new channels
+2. **Module 1**: Click tracking link macro parameters - standard ad tracking parameters
+3. **Module 2**: Device ID matching logic for conversion attribution
+4. **Module 3**: Event mapping between Haitun (Dolphin) events and media events
+
+
+5. **Module 4**: Data postback API specification
+6. **Module 5**: App direct investment user groups (keyfrom, orion backend)
+
+Looking at this from a PM perspective, most of the heavy lifting here is indeed engineering work—the technical integration details, API specs, and backend logic. But I should think about what gaps might exist from a product and strategy angle that the PM should be flagging or owning.
+
+The doc covers the technical side well: macro parameters, device ID matching, event mapping, data postback specs, and user group assignment. But there are a couple of things that feel incomplete. The title mentions Android specifically, yet the background talks about both iOS and Android—so where's the iOS implementation plan? And the keyfrom naming convention they're proposing needs PM validation to make sure it aligns with existing channel naming and doesn't create conflicts downstream. Beyond that, I should think about whether the key metrics they care about—首单ROI, UE, conversion rates, retention—are actually being tracked properly through this integration, and whether there are any business rules or constraints the engineering team might not be aware of.
+
+Looking at the user group configuration and event postback strategy, there are some critical decisions that need PM sign-off. For the user groups, we need to confirm the selection rules for group 129, how assignments work in exclusive group mode, and whether we're creating a new group or reusing an existing one. On the event side, there's ambiguity around which event signals new user activation versus returning user re-engagement, and what the payment amount field actually represents—is it first-order value or something else? These details matter for attribution and ROI calculation.
+
+Beyond that, I'm noticing several gaps that need to be addressed: there's no mention of the attribution window (how long after a click counts as a conversion), no ROI targets or budget allocation for the Xiaohongshu channel despite the goal to scale to 3200 per period, and no clarity on how users from this channel will be handled—whether they go through exclusive group assignment, what the sales distribution rules are, and how this differs from existing direct investment channels. The experiment setup also seems incomplete.
+看完了。这个文档是张国亮写的**小红书渠道应用下载对接**方案，确实以研发侧的技术对接为主。我从你（增长PM）的角度帮你梳理一下，哪些可能需要你补充或确认：
+
+---
+
+**一、文档本身的问题**
+
+1. **只有安卓端方案，没有 iOS 端** — 标题写"方案：安卓端"，但背景里提到的聚光开发指南是"iOS & 安卓"。iOS 是单独排期还是遗漏了？
+2. **模块3 事件映射关系写得不够清晰** — 左右两列的对应关系有歧义，比如"注册行为回传媒体激活字段"和"登录节点回传媒体激活字段"同时存在，到底新用户走哪个、回归用户走哪个？建议让国亮再理清楚。
+
+---
+
+**二、你作为 PM 可能需要确认/补充的**
+
+1. **keyfrom 命名** — `tg-xhsapp-1-1-CREATIVITY_ID`，你需要确认：
+   - 和现有直投渠道（抖音、快手等）的 keyfrom 命名规则是否一致
+   - 渠道标识在 orion/数仓里能被正确识别和归类
+
+2. **用户群组 & 承接策略** — 模块5只提到了 orion 群组129，但没说清楚：
+   - 小红书来的用户走哪个承接模式？专组还是通用池？
+   - 销售分配规则跟现有直投渠道一样吗？
+   - 如果是专组承接，需要和销售侧同步
+
+3. **归因窗口** — 文档没有提到点击后多长时间内的转化算归因（24h？7天？），这个通常需要你和市场一起定
+
+4. **付费回传的金额定义** — 数据样例里 `pay: 2000` 对应的是什么？首单金额？体验课金额？单位是分还是元？这个影响 ROI 计算
+
+---
+
+**三、文档里完全没涉及但你可能要关注的**
+
+1. **ROI 目标 & 效果评估方案** — 背景说要从1400/期增到3200/期，小红书渠道预期贡献多少单量？CPA 和 ROI 基线是什么？
+2. **灰度放量计划** — 新渠道直接全量还是先小量跑通再放大？
+3. **数据看板** — 上线后小红书渠道的归因数据、转化漏斗在 Tableau 哪个看板看？是否需要新建？
+4. **次留定义对齐** — 模块3特意加粗了"次留 450"，确认一下小红书的次留口径是否和其他渠道统一
+
+---
+
+**总结**：你说得对，大头确实是研发工作（监测链接拼接、设备匹配、数据回传 API 对接）。但你这边需要确认的主要是**承接策略、归因规则、效果评估方案**这几块，都是业务侧的决策，研发没法替你定。建议你重点看一下 keyfrom + 群组承接 + 归因窗口这三件事，跟国亮和市场对齐。

@@ -1,0 +1,4605 @@
+user:
+<cursor_rules_context>
+Cursor Rules are extra documentation provided by the user to help the AI understand the codebase.
+Use them if they seem useful to the users most recent query, but do not use them if they seem unrelated.
+
+Rule Name: 海豚AI学产品上下文
+Description: # 海豚AI学 - 产品与技术上下文
+
+## 产品概览
+
+- **产品名称**：海豚AI学
+- **所属公司**：猿辅导
+- **产品定位**：AI驱动的小学数学在线学习产品
+- **核心模式**：AI老师实时讲解 + 互动练习，替代真人直播课
+- **目标用户**：小学生（当前主要覆盖五年级），使用人教版数学教材
+
+## 课程流程
+
+一节数学AI课的典型流程：
+1. **例题讲解**（example）— AI老师逐步讲解例题，配合板书动画
+2. **练习题**（exercise）— 学生独立做题，AI实时判断和反馈
+3. **语音快答**（quick-ask）— 口头快速问答，检验理解
+
+关键交互组件：
+- **题目面板**：展示题干、选项
+- **板书区**：AI老师的手写讲解动画
+- **答题区**：选择题、填空题、判断题等多种交互形式
+- **AI形象（"小白"）**：虚拟老师形象，配合语音讲解
+
+## 设备与端
+
+- **手机端**：横屏使用，左右等宽分栏（左题目 | 右板书+交互）
+- **Pad端**：竖屏使用，单栏布局
+- **客户端**：iOS + Android 原生壳，内嵌 WebView 加载前端页面
+
+## 业务核心指标
+
+| 指标 | 说明 |
+|------|------|
+| 首单 ROI / UE | 首次付费的投入产出比和单位经济模型 |
+| 体验课转化率 | 体验课用户转为正价课付费用户的比例 |
+| 周完习率 | 在课用户每周完成学习的比例（在课留存） |
+| 长续率 | 老用户续费下一期课程的比例 |
+| 退费率 | 用户申请退费的比例 |
+
+## 用户生命周期
+
+```
+获客 → 体验课 → 首单转化 → 在课学习 → 续费/断课
+         ↓                    ↓           ↓
+      转化率              周完习率    长续率/退费率
+```
+
+- **断课用户**：曾付费但未续费、当前不在课的老用户
+- **在课用户**：当前有正价课在学的用户
+
+## 技术架构
+
+### 代码仓库
+
+| 仓库 | 地址 | 说明 |
+|------|------|------|
+| 前端 | https://gitlab-ee.zhenguanyu.com/yuanli/aries-web-practice | Vue 3 + Vite + TS + Pinia，MPA 架构 |
+| AI策略 | https://gitlab-ee.zhenguanyu.com/yuanli/aitutor-prompt | AI讲解的 prompt 和策略逻辑 |
+| 服务端 | https://gitlab-ee.zhenguanyu.com/yuanli/aries-aria-ai-rtc | 后端服务，AI实时通信 |
+| iOS | git@gitlab-ee.zhenguanyu.com:aries-client/aries-ios.git | iOS 客户端 |
+| Android | git@gitlab-ee.zhenguanyu.com:aries-client/aries-android.git | Android 客户端 |
+
+### 前端核心路径
+
+主页面入口：`src/pages/ai-live-tutor-solo/`
+- `stages/example/` — 例题讲解
+- `stages/exercise/` — 练习题
+- `stages/quick-ask/` — 语音快答
+- `common/components/exercise-board/` — 题目面板、板书区、答题区
+- `common/components/exercise-board/answer-area/` — 各类答题组件
+
+### 前端技术要点
+
+- MPA 多页架构，`vite-plugin-virtual-mpa` 自动发现 `src/pages/*/index.html`
+- 样式使用 PostCSS px-to-rem 转换（基准 16px）
+- 制作原型时应直接复用 `ai-live-tutor-solo` 中的真实组件和样式
+
+## 团队与协作
+
+### 团队分工
+
+| 角色 | 职责 |
+|------|------|
+| 增长产品经理（文悦） | PRD、增长实验、数据分析、用户行为研究 |
+| 教研AI组 | AI讲解能力、课程内容生产、prompt工程 |
+| 前端开发 | 课堂页面、交互组件 |
+| 服务端开发 | AI通信、业务逻辑 |
+| 客户端开发 | iOS/Android 壳 |
+| 商分 | 数据分析支持 |
+| 运营 | 用户运营、活动策划 |
+
+### 协作工具
+
+| 工具 | 用途 |
+|------|------|
+| Confluence | PRD 文档 |
+| Motiff | 设计稿 |
+| Tableau | 数据看板 |
+| GitLab | 代码和 MR |
+
+## 写 PRD 时的注意事项
+
+- 需求背景要关联具体指标（转化率、留存、ROI 等）
+- 方案设计要考虑手机端和 Pad 端两种设备的适配
+- 涉及课堂内交互时，需了解 example/exercise/quick-ask 三个阶段的差异
+- 涉及前端改动时，可参考上述核心路径定位具体模块
+- 实验设计要明确实验组/对照组、核心观测指标、预期效果
+
+</cursor_rules_context>
+<user_query>
+@personal/.cursor/rules/海豚AI学产品上下文.mdc  这个context，用@aries/共享工具/context-builder 这个里的 skill review 下
+</user_query>
+
+assistant:
+[Thinking] The user wants me to use the context-builder skill to review the "海豚AI学产品上下文.mdc" file. Let me first read the skill file and the target file.
+先读取 context-builder skill 和目标文件。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/共享工具/context-builder/SKILL.md
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/海豚AI学产品上下文.mdc
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I need to apply the context-builder skill's review methodology to the "海豚AI学产品上下文.mdc" file. Let me analyze each section of the file, classify each piece of information into categories A-F, and then apply the corresponding review checks.
+
+Let me go through the file systematically:
+
+### 产品概览 (Lines 8-14)
+- 产品名称/所属公司/产品定位/核心模式/目标用户 → **A. 业务框架**
+
+### 课程流程 (Lines 16-27)
+- 典型流程描述 → **B. 
+
+用户旅程** (学生在课堂内的路径)
+- 关键交互组件 → **A. 业务框架** (结构性认知)
+
+### 设备与端 (Lines 29-33)
+- 手机端/Pad端/客户端描述 → **A. 业务框架** + **D. 业务逻辑** (技术实现)
+
+### 业务核心指标 (Lines 35-43)
+- 指标定义 → **A. 业务框架**
+- 具体指标数据还在继续分类中...
+
+### 用户生命周期 (Lines 45-54)
+- 生命周期路径映射到**B. 用户旅程**，而断课和在课用户的定义属于**A. 业务框架**的范畴。
+
+### 技术架构 (Lines 56-81)
+- 代码仓库、前端路径和技术要点都归入**D. 业务逻辑**。
+
+### 团队与协作 (Lines 83-104)
+- 团队分工和协作工具的信息属于**A. 业务框架**。
+
+### 写PRD注意事项 (Lines 106-112)
+- 这部分是**E. 业务SOP**，即人员需要遵循的标准操作流程。
+
+现在我来逐一检查业务框架类的内容。目标用户定位在五年级这个说法存在时效性问题，需要确认是否仍然只覆盖这个年级或已经扩展；核心模式中"替代真人直播课"的定位是否准确，以及与增长业务的描述是否保持一致；团队分工里缺少了设计师、测试、数据分析师等关键角色；业务核心指标只有5个，需要评估是否足够完整。
+
+接下来检查用户旅程类的内容。课程流程目前只记录了主路径，但实际的课程体验可能包含其他环节需要补充；用户生命周期的描述也不够全面，缺少退费、暂停、召回等分支场景；这些旅程描述还需要和线上产品的实际情况进行对比验证。
+
+在业务逻辑层面，前端的核心路径需要和实际代码库进行核对。
+
+技术要点的描述是否仍然准确也需要确认。
+
+业务SOP部分的PRD注意事项看起来更像是个人经验总结，需要进一步规范化。现在我要检查和增长业务上下文以及AI课产品机制的一致性，同时查看是否还有其他相关的上下文文件存在矛盾之处。
+好，按 context-builder skill 的方法论，对这份 context 做系统 review。先检查一下其他相关 context 文件，做交叉验证。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+[Tool call] Read
+  path: /Users/jiwenyue/.cursor/rules/AI课产品机制.mdc
+  limit: 80
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have all three context files. Let me do a systematic review of the "海豚AI学产品上下文.mdc" file using the context-builder skill's methodology.
+
+Let me classify each section and identify issues:
+
+### Section-by-section classification and review:
+
+**1. 产品概览 (Lines 8-14) → A. 业务框架**
+- "目标用户：小学生（当前主要覆盖五年级），使用人教版数学教材"
+  - **Cross-validation issue**: 增长业务上下文 says "面向 1-9 年级"! This is a significant inconsistency.
+  - AI课产品机制 doesn't mention grade restrictions either, so the product context's narrow focus on fifth grade contradicts the broader scope claimed in growth strategy.
+- "核心模式：AI老师实时讲解 + 互动练习，替代真人直播课"
+  - **Cross-validation**: 增长业务上下文 describes the experience as "学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节" which is a three-phase model, whereas the product context frames it as a simpler two-part structure of explanation plus practice.
+  - The "学练补" framework and the "讲解/练习/快答" sequence might be describing the same pedagogical approach but at different levels of granularity.
+
+Looking at the course flow now, the product file describes a linear sequence of three steps per lesson, but the mechanism file reveals this repeats for each learning objective—so it's actually a nested structure where each of the 2-3 learning objectives contains its own cycle of example explanation, extended practice, and quick Q&A.
+
+Now I'm noticing a device orientation contradiction: the current file says tablets use portrait mode, but the mechanism file recommends landscape for tablet learning. I need to clarify which is actually correct.
+
+For mobile, the layout splits horizontally with questions on the left and notes plus interactions on the right. The tablet setup also needs verification since there's this conflict about whether it should be portrait or landscape.
+
+Moving on to the core business metrics section.
+
+The current file only lists five indicators, but the growth business context document has a much more comprehensive set including conversion rates, completion rates, and GMV metrics. What's here is a reasonable high-level summary, though I should note that more granular data exists elsewhere—like the weekly completion rate which sits around 55-60% for all users and 90-92% for those who started lessons.
+
+For the user lifecycle section, I'm looking at how it maps to the user journey framework.
+
+The simplified flow here (acquisition → trial → first purchase → active learning → renewal/churn) aligns with the more detailed state machine in the other document, but I'm missing some nuances around the sales versus customer success distinction, purchase limits logic, and how leads convert through the funnel. The definitions for churned and active users are consistent across both documents though.
+
+On the technical architecture side, I need to verify the code repository paths and confirm the technical details like the multi-page application structure and the PostCSS pixel-to-rem conversion setup with a 16px baseline.
+
+Looking at the team structure, I notice the roles listed here don't include designers, customer success managers, sales staff, or self-study assistants—but the growth business context document describes these roles in detail, so there's a gap in how the team composition is documented here. The growth product manager attribution is correct though.
+
+The PRD guidelines section appears to be general best practices rather than verified processes specific to this product.
+
+I'm also spotting a critical inconsistency around grade coverage—this document mentions elementary students with a current focus on fifth grade using People's Education math textbooks, but I need to check what the other files say about grade range to resolve this conflict. 还有设备方向的矛盾需要验证——文件里说的是平板端，但AI课产品机制推荐的是横屏学习。课程流程被过度简化成了线性的三步，实际上应该是围绕2-3个学习目标展开，每个目标下都有三个环节。团队角色和指标体系都不够完整，缺少了CC、销售、自习助理这些关键角色，以及析出率、加微率、到习率、完课率等重要的过程指标。
+
+用户生命周期的描述也太简化了，没有完整的状态机流转（从注册到体验在读、体验断课、会员在读、会员断课），也没有涉及限购逻辑。技术架构部分需要和实际代码库对照验证，而且很多信息都没有标注截止日期，不确定是否反映了最新的状态。还要注意"学练补"和"例题/练习/快答"这两套术语之间的混淆问题。
+现在有了三份相关 context（产品上下文、增长业务上下文、AI课产品机制），按 context-builder skill 的方法论做系统 review。
+
+---
+
+## Review 报告：海豚AI学产品上下文.mdc
+
+### 一、逐节分类与问题
+
+#### 1. 产品概览 — 分类 A（业务框架）
+
+**发现关键矛盾：年级覆盖范围**
+
+| 文件 | 描述 |
+|------|------|
+| 本文件 | "小学生（当前主要覆盖五年级），使用人教版数学教材" |
+| 增长业务上下文 | "面向 1-9 年级" |
+
+这是两份 context 之间最大的事实冲突。一个说只覆盖五年级小学生，另一个说覆盖小学到初中全年级。根据增长业务上下文中的详细描述（CC 主接小低+9年级、销售主接小高+初中、体验周排除1/2/3/9年级等），产品明显不止五年级。
+
+- 需要你确认：**当前实际覆盖哪些年级？** "当前主要覆盖五年级"这个描述是否过时？
+
+#### 2. 课程流程 — 分类 B（用户旅程）
+
+**两个问题**：
+
+**(a) 课堂环节命名体系不一致**
+
+| 文件 | 描述 |
+|------|------|
+| 本文件 | 例题讲解 → 练习题 → 语音快答 |
+| 增长业务上下文 | 学（知识探究）→ 练（小试牛刀）→ 补（定向提升） |
+| AI课产品机制 | 例题讲解 → 延展练习 → 快问快答 |
+
+"学练补" 和 "例题/练习/快答" 是同一个东西的不同叫法，还是两套不同的分法？如果只是内外部话术不同，应该在 context 中标注清楚（如"内部叫 example/exercise/quick-ask，对外叫学练补"），避免后续分析时混淆。
+
+**(b) 流程结构过度简化**
+
+本文件写成线性3步。AI课产品机制明确说的是**每节课2-3个学习目标，每个目标下重复这3个环节**。这不是小差别——理解成"一节课3步"和"一节课6-9步"，写 PRD 时对时长、交互设计的判断完全不同。
+
+#### 3. 设备与端 — 分类 A+D（业务框架+业务逻辑）
+
+**Pad 端方向可能有误**：
+
+| 文件 | 描述 |
+|------|------|
+| 本文件 | "Pad端：竖屏使用，单栏布局" |
+| AI课产品机制 | "推荐平板横屏学习" |
+
+这两者矛盾。需要和线上产品实际验证：Pad 端到底是横屏还是竖屏？
+
+#### 4. 业务核心指标 — 分类 A（业务框架）
+
+**完整性不足**。只列了5个高层指标，缺少增长链路中的关键过程指标：析出率、加微率、到习率、完课率、人头转化率、GMV 转化率。
+
+作为"产品与技术上下文"，只保留高层指标是合理的（细节在增长业务上下文里），但建议至少引用一下"详细指标定义见增长业务上下文"，防止读者以为这就是全部。
+
+#### 5. 用户生命周期 — 分类 B（用户旅程）
+
+**多路径覆盖不足**。增长业务上下文中有完整的用户状态机：
+
+```
+注册用户 → 体验在读(TRIAL/SALES_TRIAL/CC_TRIAL)
+         → 体验断课(TRIAL_OVERDUE)
+         → 会员在读(VIP) → 会员断课(VIP_OVERDUE)
+```
+
+本文件的简化版漏掉了：
+- 销售/CC 双轨分流
+- 限购逻辑（210天规则）
+- 留资转化路径（购买 vs 留资两种析出方式）
+
+同样的问题——如果是有意简化，应该标注"详见增长业务上下文"。
+
+#### 6. 技术架构 — 分类 D（业务逻辑）
+
+**代码库验证状态未知**。5个仓库地址和前端核心路径是否仍然准确？特别是：
+- 前端仓库路径 `src/pages/ai-live-tutor-solo/` 是否还是当前主页面入口？
+- "MPA 多页架构" 和 "PostCSS px-to-rem（基准 16px）"是否仍是当前技术方案？
+
+建议标注"截至 YYYY-MM-DD 验证"。
+
+#### 7. 团队与协作 — 分类 A（业务框架）
+
+**角色列表不完整**。增长业务上下文中的核心角色——CC（课程顾问）、销售、自习助理——在本文件完全未提及。这三个角色是增长链路的核心执行者。
+
+#### 8. 写PRD注意事项 — 分类 E（业务SOP）
+
+这部分更像是个人经验总结，没有标注来源。可以保留，但建议标注为"团队共识"或"个人经验"。
+
+---
+
+### 二、交叉验证汇总
+
+| 验证对 | 发现 | 严重程度 |
+|--------|------|---------|
+| 本文件(A) × 增长上下文(A) | **年级覆盖范围矛盾**：五年级 vs 1-9年级 | 高 — 基础事实冲突 |
+| 本文件(B) × 增长上下文(A) | **课堂环节命名不一致**：例题/练习/快答 vs 学/练/补 | 中 — 术语混用 |
+| 本文件(A) × AI课产品机制(B) | **Pad横竖屏矛盾** | 中 — 需实际验证 |
+| 本文件(B) × AI课产品机制(B) | **课程流程结构简化失真**：线性3步 vs 每目标3环节 | 中 — 影响方案设计 |
+| 本文件(A) × 增长上下文(A) | **团队角色缺失**：CC/销售/助理 | 低 — 不同文件侧重不同 |
+
+---
+
+### 三、整体评估
+
+这份 context 的**定位**是"产品与技术上下文"，覆盖面较广但每块都偏浅。主要问题不是信息错误，而是：
+
+1. **和其他 context 文件有事实矛盾**（年级、横竖屏），需要确认哪个是对的
+2. **简化时丢失了关键结构**（课程流程、用户生命周期），容易误导后续分析
+3. **缺少时效标注和交叉引用**，读者不知道信息的新鲜度，也不知道详细版本在哪
+
+---
+
+### 四、建议修改项
+
+需要你确认以下问题后，我来更新文件：
+
+1. **年级覆盖**：当前实际覆盖1-9年级对吗？还是确实主要只做五年级？
+2. **Pad方向**：线上产品 Pad 端是横屏还是竖屏？
+3. **学练补 vs 例题/练习/快答**：这两套说法的关系是什么？
+4. **是否要补充 CC/销售/助理角色**：还是保持本文件只写技术相关团队，增长角色留在增长业务上下文？
+5. **技术架构**：仓库地址和前端路径是否仍然准确？最近有没有大的技术架构变更？
+
+user:
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=963282611 
+这是 ab 实验的沉淀，读一些 以及里面的引用链接也读一下，然后加到 context
+</user_query>
+
+assistant:
+[Thinking] The user wants me to read a Confluence page about AB experiment documentation, and also read the referenced links within it, then add the information to the context. Let me fetch the Confluence page first.
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 963282611
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+assistant:
+[Thinking] Good, I got the main page. Now let me read the referenced documents. I can see several links:
+1. 强制登录实验 - pageId=859434203
+2. 前测落地页挽留弹窗 - pageId=926461043
+3. 20250806 前测售卖页挽留弹窗优化&增加送审开关 - pageId=917136531
+4. 「服务渗透&加微流程优化」 - external link to miaoduo
+5. 复盘和结论 - shimo doc kgOmKgvYZyaXCG97
+
+
+6. 20250725 计划页提升析出优化 - pageId=913910240
+7. 体验课加微页面优化 - pageId=957830127
+
+I'll focus on the pages with the most detailed experiment data and conclusions, starting with the shimo doc and the key Confluence pages.
+已读到主汇总页，共7个实验。现在读几个关键的引用文档获取更多细节。
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 859434203
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 913910240
+[Tool call] user-tutor-wb-mcp-1_0-get_shimo_content
+  fileUrl: https://shimo.zhenguanyu.com/docs/kgOmKgvYZyaXCG97
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+[Tool result] user-tutor-wb-mcp-1_0-get_shimo_content
+
+assistant:
+[Thinking] Now I have a lot of information from the AB experiments. Let me also read the remaining experiment document - the体验课加微页面优化 one.
+
+Actually, I have enough information now. Let me synthesize the AB experiment data and add it to the context file. The user wants me to add this to context. Let me think about what the best context file to add this to is.
+
+Given that this is about AB experiments for the growth side, it should go into the 增长业务上下文.mdc file. But the user said "加到 context" - they might mean adding a new section to the existing 增长业务上下文 or creating a new context file.
+
+
+Looking at the existing context structure, the AB experiments are clearly growth-side work, so they belong in 增长业务上下文.mdc. That file is already quite long at 452 lines, so I need to decide whether to add this as a new section there or create a separate context file specifically for AB experiments.
+
+The user's request to "加到 context" is a bit ambiguous - it could mean either file - but given that 增长业务上下文.mdc is already comprehensive and these experiments are directly related to growth initiatives, I'll add a new section there rather than fragmenting the information.
+
+Now I'm organizing the AB experiment data into a structured summary. I can see there are multiple experiments documented, starting with the forced login experiment from May 2025 that tested different approaches to user registration, and there appear to be more experiments following that one. 留弹窗** (2025.8.18)
+   - Design: 新弹窗样式 vs 旧弹窗样式
+   - Result: p值0.002<0.05，新弹窗样式的析出率显著优于旧样式
+   - Action: 已全量实验组
+
+3. **加微页和计划页优化实验** 
+   - Design: 计划页新/旧 x 加微页新/旧 交叉实验
+   - Results (from the shimo doc):
+     - 老加微页CTR > 新加微页
+     - 交叉组合效果更好：旧加微+新计划、新加微+旧计划
+     - 新计划页显著提升入门测到测率
+     - 新版加微页主动加微率没优势，但被动加微成功率更高
+     - 标单大盘最佳组合：旧加微页+新计划页
+     - 直投专组最佳组合：新加微页+旧计划页
+   - Action: 全量新计划页+旧加微页
+
+4. **计划页9元按钮付费浮层优化** (2025.8.28)
+   - Design: 新弹窗样式 vs 旧弹窗样式
+   - Background: 直投用户完成前测未购买且进入端内的占53%，目标提升计划页析出贡献
+   - Result: 旧样式表现更好
+
+，新样式下单→支付成功率更高（主要由挽留弹窗贡献）。猜想：信息太多可能影响用户决策（新弹窗信息更全面但CTR跌了3个点）
+   - Action: 优化新样式后继续ab
+
+5. **计划页9元按钮付费浮层优化v2** (2025.10.30)
+   - Result: 暖色整体转化更好
+   - Action: 全量暖色
+
+6. **计划页试看视频ab** (2025.10.13)
+   - Design: 有试看视频模块 vs 无试看视频模块
+   - Result: 售卖落
+
+地页曝光率提升，但整体析出率下跌——主要是有试看模块的用户在其他位置析出率下降（4.1%→3.3%），点击过试看的用户在其他页面析出率更低（2.7%）
+   - Action: 回滚
+
+7. **加微页优化ab** (2025.12.09)
+   - 进行中，暂无结论
+
+现在我在思考是否应该把这些实验数据加入到增长业务上下文文件中。这个文件已经有452行了，所以我需要考虑是否新增一个章节还是单独创建文件。我觉得直接在增长业务上下文中添加一个精简的章节比较合适，因为这些实验直接关联到增长策略。同时我应该从这些实验中提炼出关键认知，而不仅仅是罗列原始数据——比如强制登录虽然提升了登录率但没有提升端到端效率，说明流失用户在其他环节也会流失；挽留弹窗改版确实有效；以及付费浮层信息过多反而会影响用户决策和点击率。
+
+另外还有一些更细致的发现，比如加微页和计划页之间存在交互效应，最优方案是新旧混搭而不是单纯的新版本，这说明风格一致性和用户预期管理很重要；试看视频模块虽然提升了体验但反而降低了购买动机；新计划页对直投专组的早期完课有帮助但可能会延长销售跟进的时间间隔。
+已读完主汇总页和3个引用文档。信息量足够了，现在整理成 context 写入。因为这些实验都属于增长业务范畴，我把它作为新章节加到增长业务上下文中。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  offset: 440
+  limit: 15
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ---
+
+## 十、待补充
+  new_string: ---
+
+## 十、增长侧 AB 实验沉淀
+
+来源：[增长侧 AB 实验汇总](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=963282611)，截至 2025.12.24
+
+### 实验清单
+
+| # | 实验 | 上线 | 核心结论 | 结果 |
+|---|------|------|---------|------|
+| 1 | 强制登录实验 | 2025.5 | 「强制+有利益文案」登录率比「可跳过」高 1.4pp（置信），但登录析出率和端到端效率无显著差异 | 下线强制无文案组 |
+| 2 | 前测挽留弹窗 | 2025.8.18 | 新弹窗样式析出率显著优于旧样式（p=0.002） | 全量实验组 |
+| 3 | 加微页 x 计划页交叉实验 | 2025.8 | 交叉组合效果更好（旧加微+新计划、新加微+旧计划）；新计划页显著提升入门测到测率 | 全量旧加微+新计划 |
+| 4 | 计划页付费浮层优化 v1 | 2025.8.28 | 旧样式 CTR 更好；新样式下单→支付成功率更高（由挽留弹窗贡献）。信息更全面的弹窗 CTR 反而跌 3pp | 继续优化 |
+| 5 | 计划页付费浮层优化 v2 | 2025.10.30 | 暖色系整体转化更好 | 全量暖色 |
+| 6 | 计划页试看视频 | 2025.10.13 | 售卖落地页曝光提升，但整体析出率下跌。计划页析出无显著变化，其他位置析出率从 4.1%→3.3%（点击过试看的用户更低：2.7%） | 回滚 |
+| 7 | 加微页优化 v2 | 2025.12.09 | 进行中 | — |
+
+### 沉淀的关键认知
+
+**1. 漏斗前端强制行为不一定提升端到端效率**（实验1）
+- 强制登录提高了登录率，但流失用户在后续环节同样会流失，说明增量用户质量较低
+- 启示：漏斗前端的"堵漏"要区分是真正减少流失还是只是延后流失
+
+**2. 挽留弹窗是有效的析出提升手段**（实验2、4）
+- 前测挽留弹窗改版显著提升析出（p=0.002）
+- 付费浮层的挽留弹窗也贡献了下单→支付成功率的提升
+
+**3. 信息量与转化存在倒 U 关系**（实验4、5）
+- 付费浮层信息更全面 → CTR 反而跌 3pp。猜想：信息过多增加决策成本
+- 暖色系优于冷色系，情感驱动 > 信息堆砌
+- 启示：析出场景下"简洁+情感"优于"全面+理性"
+
+**4. 加微页与计划页存在交互效应，不能单变量优化**（实验3）
+- 最佳组合是"交叉混搭"而非"全新"或"全旧"
+- 标单大盘最佳：旧加微+新计划；直投专组最佳：新加微+旧计划
+- 原因分析：
+  - 新加微页建立"专属学习安排"预期 → 落地旧计划页（有学习规划环节）形成呼应
+  - 旧加微页预期弱 → 落地新计划页（清晰课程安排）深化"课程"概念
+- 启示：用户预期管理是连续的，相邻页面之间需要"期望差"来保持动力
+
+**5. 试看内容的"替代效应"**（实验6）
+- 有试看视频 → 用户在其他位置析出率下跌（4.1%→3.3%）
+- 点击过试看的用户在其他页面析出率更低（2.7%）
+- 启示：免费体验满足了探索需求，反而降低了付费动机。试看/试用类功能需要在"体验够了"和"还想要更多"之间找到平衡点
+
+**6. 新计划页对早期完课有正向影响，但可能恶化转化**（实验3复盘）
+- 直投专组：新计划页显著提升入门测到完测率和 D1 到课率
+- 但转化率反而偏低。推测原因：
+  - 用户提早自主学习 D1 → D1 完课到销售跟进解锁 D2 的间隔变长
+  - 已知 D1D2 解锁间隔 0-1 天、完课间隔 1 天时转化率最高
+  - 新计划页筛选效果弱 → 销售做功更分散、效能降低
+- 启示：产品优化和服务节奏需要联动，产品侧提前了用户行为但服务侧没跟上
+
+### 实验方法论沉淀
+
+- **AB 平台**：switch 平台，支持实验变量配置和分流
+- **置信标准**：p < 0.05 认为置信
+- **常见陷阱**：
+  - 单看局部指标正向不代表端到端正向（实验1、6）
+  - 多变量交叉时单变量分析会误导（实验3）
+  - 转化率受销售做功影响大，样式实验对转化率的影响往往不显著（实验3复盘）
+
+---
+
+## 十一、待补充
+
+[Tool result] StrReplace
+
+assistant:
+已完成。在增长业务上下文中新增了「十、增长侧 AB 实验沉淀」章节，包含：
+
+1. **实验清单**：7 个实验的设计、结论、当前状态一览表
+2. **沉淀的 6 条关键认知**：从实验结论中提炼出的可复用判断
+   - 漏斗前端强制行为不一定提升端到端效率
+   - 挽留弹窗有效
+   - 信息量与转化的倒 U 关系（简洁+情感 > 全面+理性）
+   - 加微页与计划页的交互效应（预期管理是连续的）
+   - 试看内容的替代效应
+   - 产品优化与服务节奏需要联动
+3. **实验方法论**：平台、置信标准、常见陷阱
+
+按 context-builder 的标准做几个标注：
+- **分类**：主要是 C（数据）+ F（认知/判断）
+- **来源**：Confluence 汇总页 + 石墨复盘文档
+- **时效**：截至 2025.12.24（第7个实验进行中）
+- **可信度**：实验结论部分为"已验证"，认知推导部分标注了"猜想/推测"
+
+user:
+<user_query>
+用context-builder 的 skill review 一下
+</user_query>
+
+assistant:
+[Thinking] The user wants me to review the newly added AB experiment section using the context-builder skill methodology. I already have both the skill and the file content in context, so I don't need to re-read them. Let me apply the review framework to the new section.
+
+Let me review the new "十、增长侧 AB 实验沉淀" section I just added, applying the context-builder review methodology.
+
+The section contains:
+1. An experiment list table (7 experiments)
+2. 6 key learnings
+3. Methodology notes
+
+Let me classify each piece of information and apply the review checks.
+
+### Classification:
+
+**实验清单（表格）**：
+
+
+The experiment designs map to structural business framework information, the core conclusions contain quantitative data like p-values and percentages, and the results reflect current production status tied to business logic.
+
+**沉淀的关键认知**：
+Most of the key insights are derived judgments extracted from the experimental data, with some referencing the underlying metrics.
+
+**实验方法论**：
+This covers the business framework and systematic approach used across experiments.
+
+现在我在逐个审视数据类信息的来源和准确性。实验1的登录率提升数据来自汇总页面但缺少具体的样本量和时间范围标注，虽然原始文档提到了9月到10月的时间段。实验2的p值来源明确且口径清晰，而实验4的CTR下降数据虽然出自汇总页但需要确认"3个点"的具体定义。
+
+实验6的转化率数据同样来自汇总页，涉及其他位置的析出率统计。实验3中关于D1D2解锁间隔和完课转化率的数据则是二手引用，原始来源不明确。在认知类信息的审查中，我发现漏斗前端的强制行为提升效果这一判断还需要进一步验证。
+
+信息量与转化的倒U关系说法过于宽泛，实际上只有一个实验数据点支撑，而且原文本身也只是猜想。加微页和计划页的交互效应、试看内容的替代效应都有实验数据支撑，可信度相对较高。新计划页对早期完课的影响虽然有直投专组的数据支撑，但转化率的变化可能受到其他因素的影响。
+
+用户预期管理需要相邻页面间的期望差来维持动力，这个认知是从交叉实验结果推导出来的，有一定数据基础但仍属于推测。现在需要检查这些实验概念是否与增长业务的整体上下文一致，比如计划页、加微页、前测等概念在用户旅程中的定义，以及直投专组、标单等术语与组织角色的对应关系。
+
+还要验证数据引用的指标定义是否与增长上下文保持一致。
+
+同时我注意到几个需要改进的地方：实验1的时间标注不够精确，只写了上线时间没有标注数据观测期；实验3的结论做了很多概括可能丢失了重要细节；倒U关系的说法可能过度泛化了；D1D2解锁间隔和完课间隔的数据是二手引用来源不明。
+
+现在需要逐一审视这些问题。
+好，对刚写入的「十、增长侧 AB 实验沉淀」章节做 review。我已有 context-builder skill 和文件内容在上下文中，直接开始。
+
+---
+
+## Review 报告：增长侧 AB 实验沉淀章节
+
+### 一、逐条分类与检查
+
+#### 实验清单（表格）— 分类 C（数据）+ A（框架）
+
+| 检查项 | 发现 | 严重程度 |
+|--------|------|---------|
+| **数据时效标注不完整** | 实验1只写了"2025.5"上线，但数据观测期是"9.12~10.12"，中间隔了4个月才有结论。沉淀时丢失了这个信息 | 中 |
+| **"CTR跌3pp"口径模糊** | 实验4原文说"ctr比老的跌了3个点"。"3个点"是 3pp（百分点）还是 3%（相对下降）？两者差别大，需要确认 | 低 |
+| **实验3结论过度压缩** | 交叉实验有4个组合，复盘文档有大量细分数据（标单vs专组、主动加微vs被动加微），表格中"交叉组合效果更好"这句话丢失了关键信息：标单最佳和专组最佳是不同组合 | 中 |
+
+**结论**：表格作为索引够用，但几个数据缺少观测时间范围。建议实验1补上数据周期。
+
+#### 沉淀的关键认知 — 分类 F（认知/判断）
+
+逐条 review：
+
+**认知1：漏斗前端强制行为不一定提升端到端效率**
+- 可信度：**已验证** — 有实验数据直接支撑
+- 问题：无
+
+**认知2：挽留弹窗是有效的析出提升手段**
+- 可信度：**已验证** — p=0.002
+- 问题：无
+
+**认知3：信息量与转化存在倒 U 关系**
+- 可信度：**推测** — 原文用的词是"猜想"，只有一个数据点（实验4新弹窗CTR下跌），不足以推出"倒 U 关系"这个通用规律
+- **问题：标题过度概括**。原文只是"我们有个猜想：是不是反而信息太多可能影响用户决策"，我沉淀成了"倒 U 关系"，拔高了可信度等级
+- 建议：降级为"猜想"，标注"单实验数据，待更多验证"
+
+**认知4：加微页与计划页存在交互效应**
+- 可信度：**已验证** — 交叉实验数据直接支撑
+- 问题：标单最佳组合和专组最佳组合不同这个信息写了，但"期望差"的解释属于推测
+- 建议：事实部分和推测部分分开标注
+
+**认知5：试看内容的替代效应**
+- 可信度：**已验证**（现象层面）+ **推测**（解释层面）
+- 析出率下降是事实；"满足了探索需求反而降低付费动机"是推测
+- 问题：混写了事实和推测
+
+**认知6：新计划页对早期完课正向但可能恶化转化**
+- 可信度：**待校验** — 原文明确说"转化率受其它因素共同影响无法判断置信水平"，推测原因有3个且都是"推测"
+- **问题：引用了二手数据**。"D1D2 解锁间隔 0-1 天、完课间隔 1 天时转化率最高"是石墨复盘文档中引用的"之前一个分析"，原始来源不明
+- 建议：标注"来源待确认"
+
+#### 实验方法论 — 分类 A（框架）+ D（业务逻辑）
+
+- "switch 平台" — 需要确认：这是当前唯一的 AB 平台吗？和增长上下文"六、营销活动与基建能力"中提到的"AB 实验能力"是否同一个？
+- "p < 0.05 认为置信" — 标准统计学标准，无问题
+
+### 二、交叉验证
+
+和增长业务上下文其他章节的一致性检查：
+
+| 交叉对 | 发现 | 严重程度 |
+|--------|------|---------|
+| 实验沉淀 × 二、增长全链路 | "析出率 17.5%"（实验4背景数据）和核心指标定义中的析出率一致，口径无冲突 | 无问题 |
+| 实验沉淀 × 三、组织角色 | "直投专组"、"标单"在实验中频繁使用，但增长上下文的"三、组织角色"中**没有解释"标单"**这个术语。"术语速查"中有"标单"="按用户质量标记的订单"，但"标准单周"和"标单"是否同一概念不确定 | 低 |
+| 实验沉淀 × 五、定价 | 实验中的"9元"是体验课价格，和"五、体验课定价"中"端内自然流量、App直投=9元"一致 | 无问题 |
+| 实验沉淀 × 六、基建能力 | 基建能力中提到"AB 实验能力"并给了 Confluence 链接，实验章节提到"switch 平台"。两者应该是同一个东西，但名称不同，可能造成混淆 | 低 |
+
+### 三、整体评估
+
+这个章节的**事实记录部分质量不错**——实验设计、结论、状态都有据可查。主要问题在**认知推导部分**：
+
+1. **事实和推测混写**（认知3、5、6）— 违反了 context-builder 的核心原则"认知类必须标注可信度等级，不能和事实类混写"
+2. **一处过度概括**（认知3的"倒 U 关系"）— 从单个猜想升级成了通用规律
+3. **一处二手数据未标注来源**（认知6的 D1D2 间隔数据）
+
+### 四、建议修改
+
+问你两个确认项，确认后我来改：
+
+1. **"标单"和"标准单周"是同一个概念吗？** 实验复盘中交替使用这两个词
+2. **switch 平台和增长上下文"基建能力"中的"AB 实验能力"是同一个东西吗？**
+
+不需要你确认、我可以直接改的部分：
+- 认知3 降级标注为"单实验猜想"
+- 认知5、6 拆分事实和推测
+- 认知6 的 D1D2 数据标注"来源待确认"
+- 实验1 补上数据观测期
+
+要我现在改吗？
+
+user:
+<user_query>
+1. 标单和标准单周是一个概念，
+2. 也是同一个东西
+其他的改一下吧
+</user_query>
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  offset: 443
+  limit: 72
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: | 1 | 强制登录实验 | 2025.5 | 「强制+有利益文案」登录率比「可跳过」高 1.4pp（置信），但登录析出率和端到端效率无显著差异 | 下线强制无文案组 |
+  new_string: | 1 | 强制登录实验 | 2025.5（数据观测期 9.12~10.12） | 「强制+有利益文案」登录率比「可跳过」高 1.4pp（置信），但登录析出率和端到端效率无显著差异 | 下线强制无文案组 |
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: **3. 信息量与转化存在倒 U 关系**（实验4、5）
+- 付费浮层信息更全面 → CTR 反而跌 3pp。猜想：信息过多增加决策成本
+- 暖色系优于冷色系，情感驱动 > 信息堆砌
+- 启示：析出场景下"简洁+情感"优于"全面+理性"
+  new_string: **3. 信息量过多可能抑制即时点击**（实验4、5）（单实验猜想，待更多验证）
+- 事实：付费浮层信息更全面 → CTR 反而跌 3pp；暖色系全量后整体转化更好
+- 猜想：信息过多增加决策成本，析出场景下"简洁+情感"可能优于"全面+理性"
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: - 原因分析：
+  - 新加微页建立"专属学习安排"预期 → 落地旧计划页（有学习规划环节）形成呼应
+  - 旧加微页预期弱 → 落地新计划页（清晰课程安排）深化"课程"概念
+- 启示：用户预期管理是连续的，相邻页面之间需要"期望差"来保持动力
+  new_string: - 原因推测（基于数据分析，非验证结论）：
+  - 新加微页建立"专属学习安排"预期 → 落地旧计划页（有学习规划环节）形成呼应
+  - 旧加微页预期弱 → 落地新计划页（清晰课程安排）深化"课程"概念
+- 启示（推测）：用户预期管理是连续的，相邻页面之间需要"期望差"来保持动力
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: **5. 试看内容的"替代效应"**（实验6）
+- 有试看视频 → 用户在其他位置析出率下跌（4.1%→3.3%）
+- 点击过试看的用户在其他页面析出率更低（2.7%）
+- 启示：免费体验满足了探索需求，反而降低了付费动机。试看/试用类功能需要在"体验够了"和"还想要更多"之间找到平衡点
+  new_string: **5. 试看内容的"替代效应"**（实验6）
+- 事实：有试看视频 → 计划页析出无显著变化，但其他位置析出率从 4.1%→3.3%；点击过试看的用户在其他页面析出率更低（2.7%）
+- 推测：免费体验满足了探索需求，反而降低了付费动机。试看/试用类功能需要在"体验够了"和"还想要更多"之间找到平衡点
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: **6. 新计划页对早期完课有正向影响，但可能恶化转化**（实验3复盘）
+- 直投专组：新计划页显著提升入门测到完测率和 D1 到课率
+- 但转化率反而偏低。推测原因：
+  - 用户提早自主学习 D1 → D1 完课到销售跟进解锁 D2 的间隔变长
+  - 已知 D1D2 解锁间隔 0-1 天、完课间隔 1 天时转化率最高
+  - 新计划页筛选效果弱 → 销售做功更分散、效能降低
+- 启示：产品优化和服务节奏需要联动，产品侧提前了用户行为但服务侧没跟上
+  new_string: **6. 新计划页对早期完课有正向影响，但可能恶化转化**（实验3复盘）
+- 事实：直投专组新计划页显著提升入门测到完测率和 D1 到课率（置信）；但转化率偏低（不显著，受多因素影响）
+- 推测原因（3个假设，均未验证）：
+  - 假设1-跟进间隔：用户提早自主学习 D1 → D1 完课到销售跟进解锁 D2 的间隔变长。参考数据：D1D2 解锁间隔 0-1 天、完课间隔 1 天时转化率最高（来源：历史分析，原始出处待确认）
+  - 假设2-筛选效果：新计划页引导效果强 → 更多低意向用户也进入漏斗 → 销售做功更分散
+  - 假设3-服务配合度：专组新计划页对应的主动加微率、被动加微成功率整体不如旧计划页
+- 启示（推测）：产品优化和服务节奏需要联动，产品侧提前了用户行为但服务侧没跟上
+
+[Tool result] StrReplace
+
+assistant:
+最后补两个交叉验证的小修正：术语表中补上"标单"的别名，AB 平台名称对齐。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: | 标单 | 按用户质量标记的订单，用于分层分配 |
+  new_string: | 标单（标准单周） | 按用户质量标记的订单，用于分层分配。"标单"是"标准单周"的简称 |
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: - **AB 平台**：switch 平台，支持实验变量配置和分流
+  new_string: - **AB 平台**：switch 平台（即基建能力中的"AB 实验能力"），支持实验变量配置和分流
+
+[Tool result] StrReplace
+
+assistant:
+改完了，总共 5 处修改：
+
+1. **实验1补上数据观测期**："2025.5" → "2025.5（数据观测期 9.12~10.12）"
+2. **认知3降级**："倒 U 关系" → "单实验猜想，待更多验证"，拆分事实和猜想
+3. **认知4标注推测**：原因分析标注"推测"，启示标注"推测"
+4. **认知5拆分事实和推测**：数据现象归为"事实"，解释归为"推测"
+5. **认知6拆分事实和推测**：完课率提升标"置信"，转化率标"不显著"；3个推测原因标"假设，均未验证"；D1D2 间隔数据标"来源待确认"
+
+另外两个交叉验证修正：
+- 术语表中"标单"补上"标准单周的简称"
+- AB 平台标注和基建能力章节的对应关系
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=868016361
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=859434203
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=868016361 
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=859434203 
+
+</user_query>
+
+assistant:
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 868016361
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 859434203
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+assistant:
+[Thinking] The user sent two Confluence links. The second one (859434203) is the "强制登录实验" page which I already read earlier. The first one (868016361) is a new page: "先前测再登录方案".
+
+This "先前测再登录方案" document contains:
+1. Background on the login vs pre-test flow optimization
+2. Comparison of "先登录" vs "先前测" approaches with data
+3. Competitor analysis (多邻国, Brilliant)
+4. Solution concepts
+5. Status: appears to be "施工ing" (still in progress)
+
+
+6. Key metrics showing direct channel activation users have about 75% successful registration/login rates, while pre-test pass rates reach 95.56%
+
+The user is likely sharing these documents to provide additional context around the AB experiment data they already have, with the "先前测再登录方案" offering deeper exploration into alternative approaches and their expected outcomes. I'm realizing the user probably wants me to integrate these documents into the existing context rather than treat them as separate experiments. The 强制登录 work is already documented in the AB tests, but the 先前测再登录 approach represents the next strategic iteration—using pre-testing as a sunk cost mechanism to drive login conversion. I should add the direct investment user flow data and this exploration direction to fill gaps in the growth context. Looking at the funnel metrics, I can see the direct investment new user flow has significant drop-off points—about 20% exit before reaching the plan page, though 80%+ do make it there with 30% showing engagement. There's also an interesting upcoming direction around testing before login that could leverage sunk cost effects to boost login rates to around 90%, though it might slightly reduce the pre-test pass rate. Let me add it. But I need to think about where...
+
+I think I should add a brief mention in the AB experiment section as "探索中的实验方向", and add the 直投新用户漏斗 data to the existing growth funnel section or as a supplementary note.
+
+Actually, looking at the existing context, section "二、增长全链路与核心指标" has the funnel overview, but it's high level. The 直投新用户 specific flow adds granularity.
+
+Since they asked me to add this to the context, I'll incorporate the 直投新用户旅程 data as supplementary detail in the funnel section and include the 先前测再登录 direction as an upcoming experiment.
+已读完两个文档。第二个「强制登录实验」之前已读过，第一个「先前测再登录方案」是新内容，包含直投新用户的详细漏斗数据和前测流程优化方向。
+
+这里面有两块有价值的信息可以补进 context：
+
+1. **直投新用户漏斗数据**（C类）— 填补了"用户从激活到进入端内"这段旅程的数据空白
+2. **先前测再登录方向**（F类+B类）— 正在探索的实验方向，包含竞品分析和设计假设
+
+我加到增长业务上下文中。直投漏斗数据补到 AB 实验章节的实验1背景中（因为和强制登录实验直接相关），先前测再登录方向作为"探索中的方向"加在实验清单后面。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ### 沉淀的关键认知
+  new_string: ### 直投新用户漏斗（实验背景数据）
+
+来源：[强制登录实验](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=859434203) + [计划页提升析出优化](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=913910240)，截至 2025.8
+
+```
+App 激活
+  ↓ 登录成功率 ~75%（25%在登录环节流失）
+注册登录
+  ↓ 前测通过率 ~95.56%
+前测完成
+  ├─ 析出（购买体验课）：前测析出率 ~15.7%
+  └─ 未购买进入端内：占全部激活用户 ~53%
+      ├─ 20% 在计划页加载前退出
+      └─ 80%+ 落在计划页
+           └─ 30% 有点击行为（资料库/我的/首页各占 ~40%）
+```
+
+整体析出率 ~17.5%，其中计划页贡献 1.4pp
+
+### 探索中的实验方向：先前测再登录
+
+来源：[先前测再登录方案](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=868016361)，2025.5（方案设计阶段，未上线实验）
+
+**核心假设**：当前"先登录再前测"模式下登录成功率仅 ~75%。如果改为"先前测再登录"，利用沉没成本和认知收获感（"测试让我更了解自己"），登录行为从"门槛"变成"奖励解锁"，预期登录率可提升至 ~90%。
+
+| 模式 | 前测通过率 | 登录成功率 | 预期析出率 |
+|------|-----------|-----------|-----------|
+| 先登录（现状） | 95.56% | 75% | 15.7% |
+| 先登录（优化后） | 96% | 80% | 17% |
+| 先前测（预估） | 92% | 90% | 17% |
+
+**竞品参考**：
+- 多邻国：开屏→前测→内容学习→登录（登录最后置，沉没成本最大化）
+- Brilliant：开屏→前测→登录+订阅→内容学习（前测后立即转化）
+- 两者共同点：前测中都嵌入了产品价值展示和动机激励
+- 关键差异：海豚场景是"家长下载、孩子使用"，和竞品"用户给自己找工具"不同，不能直接照搬
+
+**状态**：方案设计阶段，标注为"施工中"，待 AB 实验验证（基于经验判断，待验证）
+
+### 沉淀的关键认知
+
+[Tool result] StrReplace
+
+assistant:
+已完成，新增了两块内容：
+
+1. **直投新用户漏斗**：从 App 激活到进入端内的完整漏斗数据，包括各环节转化率（登录 75%、前测通过 95.56%、析出 15.7%、未购买进端内 53%、计划页行为分布）。标注了数据来源和时间。
+
+2. **探索中的方向：先前测再登录**：核心假设、三种模式的预期对比、竞品参考（多邻国/Brilliant）、以及"家长下载孩子使用"这个场景差异点。标注了状态为"方案设计阶段，待验证"。
+
+按 context-builder 标准：
+- 漏斗数据标为 **C类（已验证）**，来源明确
+- 先前测方向的预估数据标为 **F类（基于经验判断，待验证）**，不和事实混写
+- 竞品分析中"不能直接照搬"的判断保留了原文的警示
+
+user:
+<user_query>
+@personal/.cursor/rules/增长业务上下文.mdc 现在这个是不是有点太长了，需要分开吗
+</user_query>
+
+assistant:
+[Tool call] Shell
+  command: wc -l /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  description: Check file line count
+
+[Tool result] Shell
+
+assistant:
+[Thinking] The file is 551 lines. Let me think about whether it should be split.
+
+Considerations:
+1. As a Cursor rule file (.mdc), it's loaded into context when triggered. 551 lines is quite long for a single context file.
+2. The content naturally divides into distinct sections:
+   - 一~三: Product overview, growth funnel, org roles (foundational framework)
+   - 四: CC business details (operational)
+   - 五: Pricing & SKU (reference data)
+   - 六: Marketing activities & infrastructure (reference)
+   - 七: User tag system (technical/operational)
+   - 八~十一: Terminology, tools index, AB experiments, and to-do items (reference and learnings)
+
+Looking at the remaining sections, they're mostly reference material and learnings. Splitting makes sense—I could group the foundational framework (一~三) separately from operational details (四~七), then keep reference materials (八~十) together. This reduces token usage when only specific sections are needed while maintaining logical groupings. The trade-off is managing cross-references, but the benefit of smaller, more targeted context files outweighs that complexity. I'm considering how to present these organizational options to the user—whether a two-file split keeping core context together with terminology and tools, or a three-file approach that separates growth fundamentals, operational specifics, and experiment learnings into distinct documents.
+551 行确实偏长了。作为 Cursor rule 文件，每次触发都会整体加载到上下文，太长会浪费 token。
+
+分析一下内容的自然分组：
+
+| 章节 | 行数(约) | 使用场景 |
+|------|---------|---------|
+| 一~三：产品模式、增长漏斗、组织角色 | ~90 | 几乎每次增长相关都需要 |
+| 四：CC 业务详解 | ~110 | 涉及 CC/销售转化时 |
+| 五~六：定价SKU、营销基建 | ~70 | 涉及定价/活动时 |
+| 七：用户标签体系 | ~80 | 涉及人群圈选/标签时 |
+| 八~九：术语、工具索引 | ~50 | 参考性质，通用 |
+| 十：AB 实验沉淀 | ~100 | 设计新实验/分析时 |
+
+建议拆成 **2 个文件**：
+
+**方案：核心 + 专题**
+
+| 文件 | 内容 | 行数(约) | 触发时机 |
+|------|------|---------|---------|
+| `增长业务上下文.mdc`（保留） | 一~三 + 八~九（产品模式、漏斗、组织、术语、工具） | ~200 | 涉及增长策略、PRD、转化、留存时 |
+| `增长运营与实验.mdc`（新建） | 四~七 + 十（CC详解、定价、营销、标签、AB实验） | ~350 | 涉及CC/销售运营、定价、标签圈选、实验设计时 |
+
+不建议拆成3个以上——文件太碎管理成本高，而且 CC详解/定价/标签/实验之间经常联动。
+
+要按这个方案拆吗？
+
+user:
+<user_query>
+可以
+</user_query>
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have the full file. Let me split it into two files:
+
+1. **增长业务上下文.mdc** (keep): Sections 一~三 + 八~九 + 待补充
+2. **增长运营与实验.mdc** (new): Sections 四~七 + 十
+
+I need to:
+1. Write the new file with sections 四~七 + 十
+2. Update the existing file to only keep 一~三 + 八~九
+
+Let me also add cross-references between the two files.
+
+For the existing file, I'll keep:
+
+
+- Lines 1-4: frontmatter (update description)
+- Lines 5-89: Sections 一~三
+- Lines 409-441: Sections 八~九
+- Lines 545-552: 待补充 (update)
+
+For the new file, I'll create the frontmatter and pull in lines 92-406 for sections 四~七, then lines 445-542 for section 十.
+先创建新文件，再更新原文件。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长运营与实验.mdc
+  contents: ---
+description: 海豚AI学增长运营详情——CC业务、定价SKU、营销基建、用户标签体系、AB实验沉淀。涉及CC/销售运营、定价方案、标签圈选、实验设计时参考。
+alwaysApply: false
+---
+
+> 核心增长框架（产品模式、漏斗、组织角色、术语、工具）见 `增长业务上下文.mdc`
+
+## 一、CC 业务详解
+
+- **周均人效**：120-150
+- **流量来源**：新用户（小低 + 9 年级）+ 断课老用户
+- **主接渠道**：端内自然流量、直投、部分效果广告（按年级/用户质量分配）
+
+### CC Leads 来源全景
+
+CC leads 按转化方式分**购买**和**留资**两类，按渠道分**端内**和**私域**。
+
+#### 端内 — 购买转化（用户直接购买体验课）
+
+| 用户身份 | 入口 | 说明 |
+|---------|------|------|
+| 自然流量（新用户） | 新用户流程 | 前测流程析出，最大量级入口（周曝光 ~665，点击率 ~19%） |
+| | 资料库 | 周曝光 ~134，点击率 ~19% |
+| | 找页面磁铁 | 周曝光 ~57，点击率 ~33% |
+| | 首页 banner | 周曝光 ~8，点击率 ~38% |
+| | 首页弹窗 | 小量级 |
+| | 会员页挽留弹窗 | 小量级 |
+| 断课非限购 | 资料库 | 周曝光 ~38，点击率 ~8% |
+| | 会员页挽留弹窗 | 小量级 |
+| | 首页弹窗 | 小量级 |
+| | 首页 banner | 小量级 |
+
+#### 端内 — 留资转化（用户留资成为 leads）
+
+| 入口 | 落地页曝光 | 点击率 | 表单曝光 | 表单点击 | 说明 |
+|------|----------|--------|---------|---------|------|
+| 计划页自回入口 | ~6307 | ~6% | ~384 | ~175 | 量级最大，但点击率低 |
+| 会员页咨询入口 | ~3203 | ~6% | — | — | 量级大，点击率低 |
+| 老用户回归礼-首页弹窗 | ~624 | ~40% | ~250 | ~190 | 点击率高，是断课限购用户最有效的留资入口 |
+| 老用户回归礼-我资源位 | ~119 | ~43% | ~51 | ~37 | 点击率高 |
+| 老用户回归礼-banner | ~49 | ~51% | ~24 | ~14 | 量级小但点击率最高 |
+| 优惠券引导入口 | — | — | — | — | 当前无量级 |
+
+#### 私域 — 留资转化
+
+| 入口 | 落地页曝光 | 点击率 | 说明 |
+|------|----------|--------|------|
+| 私域社群留资页 | ~1275 | ~16% | 私域最大量级入口 |
+| 私域SOP留资 | ~179 | ~29% | |
+| 私域企微客服发送留资页 | ~74 | ~80% | 量级小但点击率极高 |
+| 私域客服发送留资页 | ~11 | ~82% | |
+| CC老带新 | ~3 | 100% | 量级极小 |
+
+#### 端内 Leads 来源总结
+
+**按用户身份的析出路径**：
+
+| 用户状态 | 析出方式 | 主要入口 | 承接方 |
+|---------|---------|---------|-------|
+| 新用户（自然流量） | 购买体验课 | 新用户前测流程、资料库、我的页面磁铁 | CC（小低+9年级）/ 销售 |
+| 断课限购 | 留资转化 | 老用户回归礼弹窗/资源位、计划页召回入口、会员页咨询 | CC |
+| 断课非限购| 购买体验课 | 资料库、会员页挽留弹窗 | 销售 |
+| | 留资转化 | 计划页、会员页咨询入口 | CC |
+
+**断课老用户析出瓶颈**（整体析出率不到 3%，周活跃 ~1.4w）：
+1. **广告位曝光率低**（~41% vs 新用户 97%）：PAD 不展示首页致首页广告位无效（~40%）、秒开关 APP（~25%）
+2. **广告位 CTR 低**：「免费」「0 元」等营销文案引发防备，用户需主动点击才能进入析出场景
+3. **入口分散**：仅 ~50% 断课活跃用户有广告位曝光
+
+**改进方向**（断课用户增加前测，2026.1 启动 AB）：用前测问答替代营销弹窗，提升曝光率（目标 80%）和参与感，前测通过后展示落地页引导留资。
+
+### CC 全流程 SOP
+
+**阶段一：建联**
+
+目标：电话接通 + 加微信
+
+| 触达轮次 | 操作 |
+|---------|------|
+| 首次建联 | 两次手机号拨号 + 一次工作台外呼（都没接 → 下一个） |
+| 二次跟进 | 两次工作台外呼 + 工作台群发加微短信 |
+| 重点跟进 | 以上均未联系上 → 手机发送加微短信 |
+
+**阶段二：挖需（SPIN）**
+
+目标：了解学情、判断意向、打标签（A/B/C）
+
+- **S（现状）**：成绩、学科表现、补习经历、走读/住校、作业时间
+- **P（痛点）**：基础薄弱还是思维固化？计算板块还是应用板块？
+- **I（影响）**：不解决会怎样（落后、厌学、升学压力）
+- **N（价值）**：海豚个性化方案如何匹配
+
+**阶段三：产品介绍 + 约习**
+
+目标：让家长理解产品价值，约定体验课时间
+
+- 介绍学练补三环节 + AI 动画模式
+- 约习时间在工作台勾选确认
+- 微信留痕 + 到课提醒
+
+**阶段四：回访（完课后）**
+
+目标：反馈学习情况，建立信任，推动转化
+
+首次回访：
+1. **破冰** → 确认孩子是否独立完成学习
+2. **和孩子聊**（区分小学/初中）→ 表扬学习情况 → 抽查知识点 → 设立小目标 → 确认能否坚持
+3. **和家长聊** → 按学练补三步逐一反馈课堂情况（区分学得好/学得差的反馈策略）→ 介绍 AI + 真人助理模式 → 规划学习 → 默认关单
+
+二次回访（体验课全部完成后）：
+1. 反馈后续课程表现
+2. **达共识**：为什么学 → 为什么在海豚学 → 为什么现在学
+3. **默认关单** → 带家长打开 APP 报名
+
+**阶段五：关单与异议处理**
+
+目标：推动付费转化，处理犹豫和拒绝
+
+关单策略（按场景选用）：
+
+| 策略 | 核心方向 |
+|------|---------|
+| 学情关单 | 按年级拆解知识点递进关系，说明当下不学对后续的影响 |
+| 福利关单 | 200 优惠券 / 小猿搜题 VIP / 猿题库终身 / 亲子账号（多孩免费）/ 全科微课视频 |
+| 调退保障关单 | 14 天无理由全额调退，按周扣费，合同保障 |
+| 竞品对比 | 对比学习机（科大讯飞）/ 松鼠 AI / 线上直播课 / 洋葱，用海豚优势对标竞品不足 |
+
+异议处理：
+
+| 异议 | 应对 |
+|------|------|
+| 考虑一下 | 追问具体顾虑（时间还是价格），针对性回应 |
+| 和爸爸商量 | 争取直接和爸爸沟通，或约定下次联系时间 |
+| 孩子不愿意 | 引用之前和孩子的沟通记录，说明孩子实际表现积极 |
+| 想再试听 | 强调正式课才有完整规划，14 天内可全额调退 |
+
+### 用户分层标签
+
+**建联后（A/B/C）**：
+
+| 标签 | 条件 |
+|------|------|
+| A | 有学习经验 + 现未报班/不满意 + 明确需求 + 购买力强 + 配合度高。朋友推荐直接标A |
+| B | 配合度高，但不完全满足 A 类条件 |
+| C | 配合度低，且不满足 A 类条件 |
+
+**回访后（S/A+/B+）**：
+
+| 标签 | 条件 |
+|------|------|
+| S | 完课后主动回复 + 家长认可 + 孩子喜欢 |
+| A+ | 无主动回复，但家长认可、孩子喜欢 |
+| B+ | 回访不配合，微信不回复 |
+
+**转化后**：考虑 / 不考虑
+
+### 工作台操作
+
+- 建联记录：培优/补差、各科成绩、走读/住校、补习班、意向度、约习时间
+- 标签管理：建联 A/B/C、回访 S/A+/B+、转化 考虑/不考虑
+- 约习时间：工作台勾选确认
+
+---
+
+## 二、定价与 SKU
+
+### 正价课：新 SKU 按月课包模式（2025.12 起）
+
+从固定 1 年单转为按月课包售卖：
+- 单月基准价 400 元，课包价格 = 月数 x 400 - 1（如 6 个月 = 2399）
+- 每个课包配满减优惠券（50 元/月），实付 = 月数 x 350 - 1
+- 课包时长 3~8 个月，按月份自动切换（通过 luban 配置售卖时间轴）
+- 切换逻辑：切换日对非在读用户自动切换新 SKU；在服务期用户按切换前价格关单
+- 老 SKU（1 年单 3399/2999）已于 2026.1.1 全面停售
+- 配置与维护：[新 SKU 售卖 checklist](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=978747091)
+
+**销售侧按月定价（12 个月轮转）**：
+
+| 购买月份 | 课包时长 | 课包名称 | 标价 | 优惠券 | 实付 |
+|---------|---------|---------|------|-------|------|
+| 1 月 | 6 个月 | x年级·下学期直通车 | 2399 | 300 | 2099 |
+| 2 月 | 5 个月 | x年级·下学期直通车 | 1999 | 250 | 1749 |
+| 3 月 | 4 个月 | x年级·下学期直通车 | 1599 | 200 | 1399 |
+| 4 月 | 3 个月 | x年级·下学期直通车 | 1199 | 150 | 1049 |
+| 5 月 | 8 个月 | x年级·上学期直通车 | 3199 | 400 | 2799 |
+| 6 月 | 7 个月 | x年级·上学期直通车 | 2799 | 350 | 2449 |
+| 7 月 | 6 个月 | x年级·上学期直通车 | 2399 | 300 | 2099 |
+| 8 月 | 5 个月 | x年级·上学期直通车 | 1999 | 250 | 1749 |
+| 9 月 | 4 个月 | x年级·上学期直通车 | 1599 | 200 | 1399 |
+| 10 月 | 3 个月 | x年级·上学期直通车 | 1199 | 150 | 1049 |
+| 11 月 | 8 个月 | x年级·上学期直通车 | 3199 | 400 | 2799 |
+| 12 月 | 7 个月 | x年级·下学期直通车 | 2799 | 350 | 2449 |
+
+**助理侧续费**：仅 1 月和 7 月开放，固定 6 个月课包，实付 2099
+
+### 体验课定价（按渠道）
+
+| 渠道 | 价格 |
+|------|------|
+| 效果广告（抖音/腾讯/百度） | 29 元 |
+| 端内自然流量、App 直投 | 9 元 |
+| 微信公众号 | 1 元 |
+| 猿编程导流 | 0 元 |
+
+### 退款规则
+
+- 购买后 14 天内：App 自助退款，全额退
+- 超 14 天：原则上不予退费，用户投诉意向后才可退
+
+---
+
+## 三、营销活动与基建能力
+
+### 营销活动
+
+| 活动类型 | 说明 | 后台 |
+|---------|------|------|
+| 转介绍 | 通用配置能力，支持活动人群/奖励/分享方式/皮肤，H5+小程序 | gaffey - referral |
+| 拼团 | 私域运营场景，裂变拉新 | gaffey - group-booking |
+| 买赠 | 通用能力，扩展场景需 case by case 开发 | gaffey - gift-activity |
+| 幸运抽奖 | 主要用于大促续费和常规续费，扩展场景需开发 | gaffey - raffle |
+
+### 市场投放
+
+主要渠道：直播电商、信息流效果广告、app 直投
+
+产品工作：
+- 新渠道接入、归因逻辑处理
+- 三方电商解密（抖音、视频号直播卖虚拟商品，需解密获取真实手机号）
+- 平台政策变化时灵活支持
+
+### 基建能力
+
+| 能力 | 说明 |
+|------|------|
+| 用户标签体系 | 研发侧用 Orion 标签平台；私域运营用企微标签，正迁移至运营能效平台(emon) |
+| 自研直播系统 | 教研直播（横屏，板书场景）+ 营销直播（竖屏，售卖+抽奖） |
+| 落地页后台 | 通用落地页（非售卖类）+ 售卖落地页（售卖类） |
+| AB 实验能力 | [AB实验能力介绍](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=926462571) |
+| 广告资源位 | 产品收口管理 |
+
+---
+
+## 四、用户标签体系
+
+[标签体系文档](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380) | 研发侧：Orion 标签平台 | 私域侧：企微标签 → 运营能效平台(emon)
+
+### 用户生命周期（aries_user_identify）
+
+用户在系统中的核心身份标签，驱动所有入口展示、限购判断和人群圈定。
+
+```
+注册用户(REGISTER_USER)
+    ↓ 购买体验课 / leads 激活
+体验在读(TRIAL)  ←→  销售体验在读(SALES_TRIAL) / CC体验在读(CC_TRIAL)
+    ↓ 出班或囤量池释放
+体验断课(TRIAL_OVERDUE)  ←→  销售体验断课 / CC体验断课
+    ↓ 购买正式会员
+会员在读(VIP)  →  销售已转化(SALES_TRANSFORMED) / CC已转化(CC_TRANSFORMED)
+    ↓ 到期或退费（过保护期后）
+会员断课(VIP_OVERDUE)
+```
+
+状态刷新触发事件：leads 激活、会员购买、出班/囤量池释放、退款、会员到期。
+
+注意：
+- 体验在读用户退款后仍标记为「体验在读」，出班后才变「体验断课」
+- 会员断课 = 到期过保护期 或 退费过保护期（全额退费不用过保护期）
+- 销售/CC 身份标签独立于生命周期标签，购买会员后在渠道身份视角始终为「已转化」
+
+### 体验课限购逻辑
+
+限购判断决定用户看到的入口和析出路径，是增长产品的核心规则之一。
+
+**不限购条件**（同时满足）：
+1. 用户不是体验在读 / 会员在读 / 会员断课
+2. 最近一次购买 CC 或销售体验课的时间 无值 或 距今 ≥ 210 天
+
+即：注册用户、体验断课用户，且距上次购买体验课超过 210 天（约 7 个月），才可再次购买体验课。
+
+### 关键用户属性标签
+
+| 标签 | 标签key | 说明 |
+|------|---------|------|
+| 用户真实年级 | aries_real_grade | 1~9，来源：售卖页/前测/留资落地页/工作台手动更新，每年暑假自动升级 |
+| 用户学习年级 | aries_user_grade | 1~9，来源：前测/App个人信息切换，每年暑假自动升级 |
+| 注册渠道 | aries:registerKeyfrom | 注册 keyfrom 前 4 级 |
+| 回归渠道 | aries:comeBackKeyfrom | 回归 keyfrom 前 4 级 |
+| 距最近购买体验课天数 | aries:lastedBuyTrialSpendDays | 用于限购判断 |
+| 距最近 leads 激活天数 | aries:lastedTrialActivateSpendDays / lastedCCActivateSpendDays | 分销售/CC |
+| 距最近断课天数 | lastedSalesOverdueSpendDays / lastedCCOverdueSpendDays / lastedVIPOverdueSpendDays | 分销售/CC/会员 |
+| 用户分层 | user_layering | 高意向用户分层触达（OrganicNewUser_Attend_and_VipShow 等），每日定时刷新 |
+| 到课 | attendClass | 有任意到课行为后打标 |
+
+### 业务标签（工作台同步）
+
+| 标签 | 说明 |
+|------|------|
+| 激活渠道 | 转介绍/推广/客服/App/导流/私域/直播/其他，再次激活时更新 |
+| 住宿 | 住宿/走读，来源：销售工作台或助理问卷 |
+| 期次 | 班课期次或 1v1 体验周，再次激活时更新 |
+| 体验课购买次数 | trialPurchaseTimes，用于识别多次购买用户 |
+| 用户阶段（助理） | 服务期/续费期，续费期细分续1~续5（续1=到期当月） |
+| 用户分层（助理） | SABC，每月1日更新 |
+| 销售服务节点 | 首通→入门测→D1到习→D2到习→反馈→抢购→转化 |
+| 助理服务节点 | 首触→首访→学情沟通→续费沟通 |
+
+### 常用人群群组
+
+群组 = 多个标签条件组合圈定的人群包，用于端内入口展示、AB 实验分流等。
+
+| 场景 | 群组 | 圈选逻辑 |
+|------|------|---------|
+| 前测/资源位入口（自然流量） | organic_GradeNotNine | 注册用户 + 年级非9 |
+| 前测/资源位入口（直投） | aries_trial_app-zt_abtest | 注册用户 + 注册/回归keyfrom为直投渠道 |
+| 断课非限购入口 | xg_GradeNotNine | 体验断课 + 距上次购买体验课≥210天 + 真实年级有值 |
+| 计划页体验周入口 | nature/zt/xg_planPageTrial | 注册用户或体验断课 + 距上次购买≥210天 + 年级非1/2/3/9 |
+| 会员页召回入口 | nature/zt/trial/vip_vipPageRecall | 注册用户 或 体验断课 或 会员断课 |
+| 计划页召回入口 | planPage_recall | 注册/体验断课/会员断课 + 最近CC激活≥120天 + 最近断课>7天 |
+| 留资召回入口 | aries_trial_zt_recall | 进入通用落地页→小程序加私域客服微信→私域析出为CC leads |
+
+年级限制说明：1/2/3/9 年级的体验课 leads 分配给 CC（定制体验课），体验周入口展示的是销售体验课大纲，因此排除这些年级。
+
+---
+
+## 五、增长侧 AB 实验沉淀
+
+来源：[增长侧 AB 实验汇总](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=963282611)，截至 2025.12.24
+
+### 实验清单
+
+| # | 实验 | 上线 | 核心结论 | 结果 |
+|---|------|------|---------|------|
+| 1 | 强制登录实验 | 2025.5（数据观测期 9.12~10.12） | 「强制+有利益文案」登录率比「可跳过」高 1.4pp（置信），但登录析出率和端到端效率无显著差异 | 下线强制无文案组 |
+| 2 | 前测挽留弹窗 | 2025.8.18 | 新弹窗样式析出率显著优于旧样式（p=0.002） | 全量实验组 |
+| 3 | 加微页 x 计划页交叉实验 | 2025.8 | 交叉组合效果更好（旧加微+新计划、新加微+旧计划）；新计划页显著提升入门测到测率 | 全量旧加微+新计划 |
+| 4 | 计划页付费浮层优化 v1 | 2025.8.28 | 旧样式 CTR 更好；新样式下单→支付成功率更高（由挽留弹窗贡献）。信息更全面的弹窗 CTR 反而跌 3pp | 继续优化 |
+| 5 | 计划页付费浮层优化 v2 | 2025.10.30 | 暖色系整体转化更好 | 全量暖色 |
+| 6 | 计划页试看视频 | 2025.10.13 | 售卖落地页曝光提升，但整体析出率下跌。计划页析出无显著变化，其他位置析出率从 4.1%→3.3%（点击过试看的用户更低：2.7%） | 回滚 |
+| 7 | 加微页优化 v2 | 2025.12.09 | 进行中 | — |
+
+### 直投新用户漏斗（实验背景数据）
+
+来源：[强制登录实验](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=859434203) + [计划页提升析出优化](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=913910240)，截至 2025.8
+
+```
+App 激活
+  ↓ 登录成功率 ~75%（25%在登录环节流失）
+注册登录
+  ↓ 前测通过率 ~95.56%
+前测完成
+  ├─ 析出（购买体验课）：前测析出率 ~15.7%
+  └─ 未购买进入端内：占全部激活用户 ~53%
+      ├─ 20% 在计划页加载前退出
+      └─ 80%+ 落在计划页
+           └─ 30% 有点击行为（资料库/我的/首页各占 ~40%）
+```
+
+整体析出率 ~17.5%，其中计划页贡献 1.4pp
+
+### 探索中的实验方向：先前测再登录
+
+来源：[先前测再登录方案](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=868016361)，2025.5（方案设计阶段，未上线实验）
+
+**核心假设**：当前"先登录再前测"模式下登录成功率仅 ~75%。如果改为"先前测再登录"，利用沉没成本和认知收获感（"测试让我更了解自己"），登录行为从"门槛"变成"奖励解锁"，预期登录率可提升至 ~90%。
+
+| 模式 | 前测通过率 | 登录成功率 | 预期析出率 |
+|------|-----------|-----------|-----------|
+| 先登录（现状） | 95.56% | 75% | 15.7% |
+| 先登录（优化后） | 96% | 80% | 17% |
+| 先前测（预估） | 92% | 90% | 17% |
+
+**竞品参考**：
+- 多邻国：开屏→前测→内容学习→登录（登录最后置，沉没成本最大化）
+- Brilliant：开屏→前测→登录+订阅→内容学习（前测后立即转化）
+- 两者共同点：前测中都嵌入了产品价值展示和动机激励
+- 关键差异：海豚场景是"家长下载、孩子使用"，和竞品"用户给自己找工具"不同，不能直接照搬
+
+**状态**：方案设计阶段，标注为"施工中"，待 AB 实验验证（基于经验判断，待验证）
+
+### 沉淀的关键认知
+
+**1. 漏斗前端强制行为不一定提升端到端效率**（实验1）
+- 强制登录提高了登录率，但流失用户在后续环节同样会流失，说明增量用户质量较低
+- 启示：漏斗前端的"堵漏"要区分是真正减少流失还是只是延后流失
+
+**2. 挽留弹窗是有效的析出提升手段**（实验2、4）
+- 前测挽留弹窗改版显著提升析出（p=0.002）
+- 付费浮层的挽留弹窗也贡献了下单→支付成功率的提升
+
+**3. 信息量过多可能抑制即时点击**（实验4、5）（单实验猜想，待更多验证）
+- 事实：付费浮层信息更全面 → CTR 反而跌 3pp；暖色系全量后整体转化更好
+- 猜想：信息过多增加决策成本，析出场景下"简洁+情感"可能优于"全面+理性"
+
+**4. 加微页与计划页存在交互效应，不能单变量优化**（实验3）
+- 最佳组合是"交叉混搭"而非"全新"或"全旧"
+- 标单大盘最佳：旧加微+新计划；直投专组最佳：新加微+旧计划
+- 原因推测（基于数据分析，非验证结论）：
+  - 新加微页建立"专属学习安排"预期 → 落地旧计划页（有学习规划环节）形成呼应
+  - 旧加微页预期弱 → 落地新计划页（清晰课程安排）深化"课程"概念
+- 启示（推测）：用户预期管理是连续的，相邻页面之间需要"期望差"来保持动力
+
+**5. 试看内容的"替代效应"**（实验6）
+- 事实：有试看视频 → 计划页析出无显著变化，但其他位置析出率从 4.1%→3.3%；点击过试看的用户在其他页面析出率更低（2.7%）
+- 推测：免费体验满足了探索需求，反而降低了付费动机。试看/试用类功能需要在"体验够了"和"还想要更多"之间找到平衡点
+
+**6. 新计划页对早期完课有正向影响，但可能恶化转化**（实验3复盘）
+- 事实：直投专组新计划页显著提升入门测到完测率和 D1 到课率（置信）；但转化率偏低（不显著，受多因素影响）
+- 推测原因（3个假设，均未验证）：
+  - 假设1-跟进间隔：用户提早自主学习 D1 → D1 完课到销售跟进解锁 D2 的间隔变长。参考数据：D1D2 解锁间隔 0-1 天、完课间隔 1 天时转化率最高（来源：历史分析，原始出处待确认）
+  - 假设2-筛选效果：新计划页引导效果强 → 更多低意向用户也进入漏斗 → 销售做功更分散
+  - 假设3-服务配合度：专组新计划页对应的主动加微率、被动加微成功率整体不如旧计划页
+- 启示（推测）：产品优化和服务节奏需要联动，产品侧提前了用户行为但服务侧没跟上
+
+### 实验方法论沉淀
+
+- **AB 平台**：switch 平台（即基建能力中的"AB 实验能力"），支持实验变量配置和分流
+- **置信标准**：p < 0.05 认为置信
+- **常见陷阱**：
+  - 单看局部指标正向不代表端到端正向（实验1、6）
+  - 多变量交叉时单变量分析会误导（实验3）
+  - 转化率受销售做功影响大，样式实验对转化率的影响往往不显著（实验3复盘）
+
+
+[Tool result] Write
+
+assistant:
+新文件已创建，现在更新原文件，只保留核心框架部分。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  contents: ---
+description: 海豚AI学增长核心框架——产品模式、增长全链路、组织角色、关键术语与工具索引。涉及增长策略、PRD、转化、留存时参考。运营详情（CC/定价/标签/实验）见「增长运营与实验.mdc」。
+alwaysApply: false
+---
+
+> 运营详情（CC业务、定价SKU、营销基建、用户标签、AB实验）见 `增长运营与实验.mdc`
+
+## 一、产品概述
+
+- **产品**：海豚AI学，猿辅导旗下 AI 教育产品，面向 1-9 年级
+- **模式**：订阅制，按时长收费，可学任意年级学科
+- **核心体验**：学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节
+- **转化路径**：新用户 → 体验课（5天体验会员）→ 正式会员
+
+---
+
+## 二、增长全链路与核心指标
+
+### 漏斗总览
+
+```
+市场投放（信息流/直播电商/app直投）
+    ↓ 曝光
+落地页 / 电商渠道
+    ↓ leads 析出（析出率）
+体验课购买
+    ↓ 分配（按用户质量/年级分给销售或CC）
+建联（电话 + 加微）
+    ↓ 加微率 / 首通率
+催习
+    ↓ day1 到习率
+体验课完课
+    ↓ day1 完习率 / day2 到习 / 完习率
+回访和服务
+    ↓ 转化率
+首单购买（正价课）
+    ↓ 首单 ROI / UE
+在课学习
+    ↓ 周完习率
+续费 / 断课
+    ↓ 长续率 / 退费率
+```
+
+### 核心指标定义
+
+| 指标 | 定义 | 备注 |
+|------|------|------|
+| 析出率 | 从广告曝光到体验课购买的转化 | 受投放素材、落地页、前测等影响 |
+| 加微率 | 购买体验课后添加微信的比例 | 已达 ~95%，天花板效应 |
+| 到习率 | 约习后实际到课学习的比例 | 受跟进、提醒触达影响 |
+| 完课率 | 到习后完成全部学习环节的比例 | 学练补三环节都完成 |
+| 转化率 | 体验课用户购买正价课的比例 | 核心北极星指标之一 |
+| 人头转化率 | 购买正式会员的 leads 数 / 总 leads 数 | |
+| GMV 转化率 | 购买正式会员总 GMV / 基准价 / 总 leads 数 | |
+| 首单 ROI / UE | 获客成本与首单收入的投入产出比 | 衡量获客效率 |
+| 周完习率 | 在课用户每周完成学习的比例 | 全完习 55-60%，到习完习 90-92% |
+| 长续率 | 老用户续费下一期的比例 | 衡量长期留存 |
+| 退费率 | 用户申请退费的比例 | 防护指标 |
+
+---
+
+## 三、组织角色与分工
+
+### 线索获取
+
+日常关注端内 leads 析出，从三个层面理解：
+- **数量**：充分利用所有流量，关注析出效率
+- **抓手**：基于渠道和用户特点设计流程，平衡用户体验和流程效率
+- **质量**：不同质量的 leads 适配不同的承接人效和转化形式
+
+### 线索转化：销售 vs CC
+
+| 维度 | 销售（标准单周） | CC |
+|------|----------------|-----|
+| 周均人效 | 35-40 | 120-150 |
+| 跟进形式 | 固定周期进量、标准化流程 | 随时进量、灵活跟进 |
+| 用户体验流程 | 所有用户体验统一课程内容 | 沟通学情后定制下发课包 |
+| 服务特点 | 更深入，周期更长 | 更灵活：断课用户转化 ~3 天，新客更长 |
+| 主接用户身份 | 首次购买体验课的用户 | 新用户 + 断课用户 |
+| 主接年级 | 小高 + 初中 | 小低 + 9 年级 |
+
+转化目标：提升人头转化率
+1. **提升过程效率**：流程优化提升加微率、到完课率等
+2. **效果外化**：提升体验课的价值感知
+
+### 自习助理
+
+提供学习服务，保证到习、完习，确保学习效果。归因窗口 14 天。
+
+---
+
+## 四、关键术语速查
+
+| 术语 | 含义 |
+|------|------|
+| Leads | 线索，潜在转化用户（= 体验课用户） |
+| 析出 | 用户从流量池转化为 leads（购买体验课） |
+| CC | 课程顾问/规划老师，灵活跟进，主接小低+断课 |
+| 销售（标准单周） | 标准化流程跟进，主接小高+初中首购用户 |
+| 自习助理 | 提供学习服务，保证到习完习，确保学习效果 |
+| 标单（标准单周） | 按用户质量标记的订单，用于分层分配。"标单"是"标准单周"的简称 |
+| 专组 | 专门服务特定用户群的 CC/销售团队 |
+| 直投 | app 直接投放广告获客 |
+| 断课 | 曾付费但未续费、当前不在课的老用户 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+| 人效 | 每人每周承接的用户数量（销售 35-40，CC 120-150） |
+| 工作台 | CC/销售使用的客户管理工具 |
+
+---
+
+## 五、工具与后台索引
+
+| 工具 | 用途 | 链接 |
+|------|------|------|
+| Eagle | 查看在投素材 | [eagle.zhenguanyu.com](https://eagle.zhenguanyu.com/new/material-analyze/TENCENT_3_0) |
+| Aries-BI | 渠道量级及成本 ROI | [aries-bi.zhenguanyu.com](https://aries-bi.zhenguanyu.com/#/views/_17138453950620/ROI?:iid=1) |
+| Orion | 用户标签管理（研发侧） | [orion.zhenguanyu.com](https://orion.zhenguanyu.com/userManage/persona/persona-tag) |
+| emon | 私域标签运营 | [dora.zhenguanyu.com/emon](https://dora.zhenguanyu.com/emon/) |
+| gaffey | 营销活动 / 广告位 / keyfrom | [gaffey.zhenguanyu.com](https://gaffey.zhenguanyu.com/web/biz/) |
+| awesome | SPU/SKU 商品管理 | [awesome.zhenguanyu.com](https://awesome.zhenguanyu.com/infra/#/goods/manager/list?bizId=1401) |
+
+---
+
+## 六、待补充
+
+- [ ] 各渠道用户旅程差异（直投有完整端内旅程，直播/效果广告从端外购课进入）
+- [ ] 体验课期间产品体验（5 天体验期内学练补具体安排）
+- [ ] 销售侧工作流详解（标准单周的具体流程、跟进节奏）
+- [ ] 助理团队的职责和协作方式
+- [x] 端内 leads 析出入口详细清单（已移至「增长运营与实验.mdc → CC 业务详解」）
+
+
+[Tool result] Write
+
+assistant:
+拆分完成：
+
+- **`增长业务上下文.mdc`**（~120 行）：保留核心框架 — 产品概述、增长漏斗、指标定义、组织角色、术语速查、工具索引
+- **`增长运营与实验.mdc`**（~350 行，新建）：CC 业务详解、定价 SKU、营销基建、用户标签体系、AB 实验沉淀
+
+两个文件头部互相引用，方便按需加载。
+
+user:
+<external_links>
+### Potentially Relevant Websearch Results
+
+You should respond as if these information are known to you. Refrain from saying "I am unable to browse the internet" or "I don't have access to the internet" or "I'm unable to provide real-time news updates". This is your internet search results. Please always cite any links you referenced from the above search results in your response in markdown format.
+
+-------
+Website URL: https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380
+Website Title: SSO登录 | 登录
+Website Content:
+提示 × 
+
+确定 
+
+企业微信登录
+
+手机号码登录
+
+获取验证码 
+
+登录 
+
+提示 × 
+
+换一张?
+
+确定 
+
+ 网站备案/许可证号： 京ICP备12032703号-5
+____
+
+</external_links>
+<user_query>
+https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380 用这个文档扩充一下用户属性术语（like 体验课断课限购/非限购）到增长 context
+</user_query>
+
+assistant:
+[Thinking] The user wants me to read the Confluence page about the user tag system and use it to expand the user attribute terminology in the growth context file. Let me fetch the Confluence page first.
+[Tool call] user-tutor-wb-mcp-1_0-get_confluence_content
+  pageId: 618924380
+
+[Tool result] user-tutor-wb-mcp-1_0-get_confluence_content
+
+assistant:
+[Thinking] The Confluence page has a lot of content. Let me read the full output that was written to the file to get all the details.
+内容较多，让我读取完整输出。
+[Tool call] Read
+  path: /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/agent-tools/91e12bb8-a7fa-4240-b094-a750d8c4626f.txt
+  offset: -50
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have the full Confluence content about the tag system. The user wants me to expand the user attribute terminology in the growth context file (`增长业务上下文.mdc`) with terms like "体验课断课限购/非限购" etc.
+
+Let me identify the key user-attribute-related terms from this document that would be useful in the terminology section:
+
+1. **限购 / 非限购** - The purchase restriction logic for trial courses
+2. **体验在读 / 体验断课** - Trial user states
+3. **会员在读 / 会员断课** - VIP user states  
+
+
+4. **囤量池** - The queue where unallocated users wait
+5. **出班** - When a user exits from a sales/CC class
+6. **保护期** - Protection period after membership ends or refund
+7. **可激活用户** - Users who can be activated (= not purchase-restricted)
+8. **用户分层** (user_layering) - High-intent user segmentation
+9. Various distance metrics tracking time since last activity
+
+The user specifically wants to add user attribute-related terms, and the current terminology section in `增长业务上下文.mdc` is missing many of these key concepts that appear throughout the Confluence documentation. me look at what's already there and what's missing.
+
+Current terms in `增长业务上下文.mdc`:
+- Leads
+- 析出
+- CC
+- 销售（标准单周）
+- 自习助理
+- 标单（标准单周）
+- 专组
+- 直投
+- 断课
+- 课包
+- keyfrom
+- 学练补
+- 到习 / 完习
+- 人效
+- 工作台
+
+Missing important terms from the tag system doc:
+- 限购 / 非限购
+- 体验在读 / 体验断课
+- 会员在读 / 会员断课
+- 出班
+- 囤量池
+- 保护期
+- 可激活用户
+- 用户分层
+- 真实年级 / 学习年级
+
+Now I need to check the current file and add these missing terms.
+从 Confluence 文档中提取到了完整的标签体系信息。现在往 `增长业务上下文.mdc` 的术语速查表中补充用户身份/状态相关术语。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  offset: 90
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I see the current state of the file. The user already has "体验课断课" and "正式课断课" terms (lines 104-105), which look like they were already updated from the previous conversation version. But these don't fully cover the user attribute terminology from the Confluence doc.
+
+Let me add the missing terms to the table. I need to add:
+1. 限购 / 非限购
+2. 体验在读
+3. 会员在读
+4. 会员断课
+5. 出班
+6. 囤量池
+7. 保护期
+
+
+8. 可激活用户
+9. 真实年级 / 学习年级
+10. 用户分层 (user_layering)
+
+Since "断课" is already split into the trial and formal course versions, I should focus on adding the purchase restriction concept, the various user status terms like trial active and VIP active, plus the other missing attributes. Let me replace the entire terminology section with a comprehensive list.
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: | 术语 | 含义 |
+|------|------|
+| Leads | 线索，潜在转化用户（= 体验课用户） |
+| 析出 | 用户从流量池转化为 leads（购买体验课） |
+| CC | 课程顾问/规划老师，灵活跟进，主接小低+断课 |
+| 销售（标准单周） | 标准化流程跟进，主接小高+初中首购用户 |
+| 自习助理 | 提供学习服务，保证到习完习，确保学习效果 |
+| 标单（标准单周） | 按用户质量标记的订单，用于分层分配。"标单"是"标准单周"的简称 |
+| 专组 | 专门服务特定用户群的 CC/销售团队 |
+| 直投 | app 直接投放广告获客 |
+| 体验课断课 | 曾经体验课购课用户，后面无续费，"体断"是"体验课断课"的简称。体验课断课又分为断课限购和断课非限购 |
+| 正式课断课 | 曾经正式课购课用户，后面无续费 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+| 人效 | 每人每周承接的用户数量（销售 35-40，CC 120-150） |
+| 工作台 | CC/销售使用的客户管理工具 |
+  new_string: ### 组织角色
+
+| 术语 | 含义 |
+|------|------|
+| Leads | 线索，潜在转化用户（= 体验课用户） |
+| 析出 | 用户从流量池转化为 leads（购买体验课） |
+| CC | 课程顾问/规划老师，灵活跟进，主接小低+断课 |
+| 销售（标准单周） | 标准化流程跟进，主接小高+初中首购用户。"标单"是"标准单周"的简称 |
+| 自习助理 | 提供学习服务，保证到习完习，确保学习效果 |
+| 专组 | 专门服务特定用户群的 CC/销售团队 |
+| 人效 | 每人每周承接的用户数量（销售 35-40，CC 120-150） |
+| 工作台 | CC/销售使用的客户管理工具 |
+
+### 用户身份与状态
+
+来源：[海豚标签体系](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380)
+
+| 术语 | 含义 |
+|------|------|
+| 注册用户 | 仅注册，无任何购买或 leads 激活记录（标签值 REGISTER_USER） |
+| 体验在读 | 有销售/CC leads 激活记录，且还未出班或出囤量池（标签值 TRIAL）。退款后仍为「体验在读」，出班后才变「体验断课」 |
+| 体验断课（体断） | leads 从销售/CC 侧出班，或在囤量池超 30 天未分配被释放（标签值 TRIAL_OVERDUE） |
+| 会员在读 | 有正式版订单且在生效中（标签值 VIP） |
+| 会员断课 | 会员到期过保护期，或退费过保护期（全额退费不用过保护期）（标签值 VIP_OVERDUE） |
+| 销售/CC 用户身份 | 独立于生命周期标签。分为体验在读、体验断课、已转化三种。购买会员后在渠道视角始终为「已转化」 |
+| 限购 | 体验课购买限制。用户如果是体验在读/会员在读/会员断课，或距上次购买体验课 < 210 天，则限购（不能再买体验课） |
+| 非限购 | 注册用户或体验断课，且距上次购买体验课 ≥ 210 天（约 7 个月），可再次购买。群组 key: `allow_buy_trial_new` |
+| 断课限购 | 体验断课用户，但距上次购买体验课 < 210 天，只能通过留资方式析出（走 CC 召回链路） |
+| 断课非限购 | 体验断课用户，且距上次购买体验课 ≥ 210 天，可直接购买体验课。群组 key: `xg_GradeNotNine` |
+| 可激活用户 | 企微标签，标记当前处于非限购状态的用户，即可被激活为 leads 的人 |
+| 出班 | leads 服务周期结束，从销售/CC 班级释放。出班后生命周期标签变为「体验断课」 |
+| 囤量池 | 分配后未被销售/CC 接走的 leads 暂存池，超 30 天未分配自动释放（等同出班） |
+| 保护期 | 会员到期或退费后的缓冲期（约 14 天），期间仍归属原助理服务。过保护期后才标记为「会员断课」 |
+| 真实年级 | 来源：售卖页/前测/留资落地页/工作台手动更新。标签 key: `aries_real_grade`，每年暑假自动升级 |
+| 学习年级 | 用户在 App 内手动切换的年级。标签 key: `aries_user_grade`，每年暑假自动升级 |
+| 用户分层（user_layering） | 高意向用户分层标签，按自然新用户/体验断课 x 到课/会员页曝光组合，每日定时刷新 |
+
+### 业务流程
+
+| 术语 | 含义 |
+|------|------|
+| 直投 | app 直接投放广告获客 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+| 续费期 | 会员到期前的续费窗口，分续1~续5（续1=到期当月，续5=到期前4个月） |
+| 服务期 | 会员有效期内，自习助理提供学习服务的阶段 |
+
+[Tool result] StrReplace
+
+assistant:
+[Thinking] The replacement string wasn't found. It seems the file might have been edited between my read and my write attempt. Let me re-read the file to get the exact content.
+文件内容有变化，让我重新读取准确内容。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ## 四、关键术语速查
+
+| 术语 | 含义 |
+|------|------|
+| Leads | 线索，潜在转化用户（= 体验课用户） |
+| 析出 | 用户从流量池转化为 leads（购买体验课） |
+| CC | 课程顾问/规划老师，灵活跟进，主接小低+断课 |
+| 销售（标准单周） | 标准化流程跟进，主接小高+初中首购用户 |
+| 自习助理 | 提供学习服务，保证到习完习，确保学习效果 |
+| 标单（标准单周） | 按用户质量标记的订单，用于分层分配。"标单"是"标准单周"的简称 |
+| 专组 | 专门服务特定用户群的 CC/销售团队 |
+| 直投 | app 直接投放广告获客 |
+| 体验课断课 | 曾经体验课购课用户，后面无续费，"体断"是"体验课断课"的简称。体验课断课又分为断课限购和断课非限购 |
+| 正式课断课 | 曾经正式课购课用户，后面无续费 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+| 人效 | 每人每周承接的用户数量（销售 35-40，CC 120-150） |
+| 工作台 | CC/销售使用的客户管理工具 |
+  new_string: ## 四、关键术语速查
+
+### 组织角色
+
+| 术语 | 含义 |
+|------|------|
+| Leads | 线索，潜在转化用户（= 体验课用户） |
+| 析出 | 用户从流量池转化为 leads（购买体验课） |
+| CC | 课程顾问/规划老师，灵活跟进，主接小低+断课 |
+| 销售（标准单周） | 标准化流程跟进，主接小高+初中首购用户。"标单"是"标准单周"的简称 |
+| 自习助理 | 提供学习服务，保证到习完习，确保学习效果 |
+| 专组 | 专门服务特定用户群的 CC/销售团队 |
+| 人效 | 每人每周承接的用户数量（销售 35-40，CC 120-150） |
+| 工作台 | CC/销售使用的客户管理工具 |
+
+### 用户身份与状态
+
+来源：[海豚标签体系](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380)，标签详情见 `增长运营与实验.mdc → 用户标签体系`
+
+| 术语 | 含义 |
+|------|------|
+| 注册用户 | 仅注册，无任何购买或 leads 激活记录（REGISTER_USER） |
+| 体验在读 | 有销售/CC leads 激活记录，且还未出班或出囤量池（TRIAL）。退款后仍为「体验在读」，出班后才变「体验断课」 |
+| 体验断课（体断） | leads 从销售/CC 侧出班，或在囤量池超 30 天未分配被释放（TRIAL_OVERDUE） |
+| 会员在读 | 有正式版订单且在生效中（VIP） |
+| 会员断课 | 会员到期过保护期，或退费过保护期；全额退费不用过保护期（VIP_OVERDUE） |
+| 销售/CC 用户身份 | 独立于生命周期标签，分体验在读、体验断课、已转化三种。购买会员后在渠道视角始终为「已转化」 |
+| 限购 | 体验课购买限制。体验在读/会员在读/会员断课，或距上次购买体验课 < 210 天 → 限购 |
+| 非限购 | 注册用户或体验断课，且距上次购买体验课 ≥ 210 天（约 7 个月），可再次购买。群组: `allow_buy_trial_new` |
+| 断课限购 | 体验断课 + 距上次购买 < 210 天，只能通过留资走 CC 召回链路 |
+| 断课非限购 | 体验断课 + 距上次购买 ≥ 210 天，可直接购买体验课。群组: `xg_GradeNotNine` |
+| 可激活用户 | 企微标签，标记当前非限购状态的用户（可被激活为 leads） |
+| 出班 | leads 服务周期结束，从销售/CC 班级释放，生命周期标签变为「体验断课」 |
+| 囤量池 | 分配后未被销售/CC 接走的 leads 暂存池，超 30 天未分配自动释放（等同出班） |
+| 保护期 | 会员到期或退费后的缓冲期（~14 天），期间仍归属原助理。过保护期后才标记「会员断课」 |
+| 真实年级 | 来源：售卖页/前测/留资落地页/工作台手动更新，每年暑假自动升级。标签: `aries_real_grade` |
+| 学习年级 | 用户在 App 内手动切换的年级，每年暑假自动升级。标签: `aries_user_grade` |
+| 用户分层 | 高意向用户标签（user_layering），按自然新用户/体验断课 x 到课/会员页曝光组合，每日定时刷新 |
+| 续费期 | 会员到期前的续费窗口，续1=到期当月，续5=到期前4个月 |
+| 服务期 | 会员有效期内，自习助理提供学习服务的阶段 |
+
+### 业务流程
+
+| 术语 | 含义 |
+|------|------|
+| 直投 | app 直接投放广告获客 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+
+[Tool result] StrReplace
+
+assistant:
+[Thinking] It seems the StrReplace keeps failing. The issue might be with special characters or whitespace. Let me try a different approach - write the entire file.
+StrReplace 匹配有问题，直接重写整个文件。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  contents: ---
+description: 海豚AI学增长核心框架——产品模式、增长全链路、组织角色、用户身份状态、关键术语与工具索引。涉及增长策略、PRD、转化、留存时参考。运营详情（CC/定价/标签/实验）见「增长运营与实验.mdc」。
+alwaysApply: false
+---
+
+> 运营详情（CC业务、定价SKU、营销基建、用户标签、AB实验）见 `增长运营与实验.mdc`
+
+## 一、产品概述
+
+- **产品**：海豚AI学，猿辅导旗下 AI 教育产品，面向 1-9 年级
+- **模式**：订阅制，按时长收费，可学任意年级学科
+- **核心体验**：学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节
+- **转化路径**：新用户 → 体验课（5天体验会员）→ 正式会员
+
+---
+
+## 二、增长全链路与核心指标
+
+### 漏斗总览
+
+```
+市场投放（信息流/直播电商/app直投）
+    ↓ 曝光
+落地页 / 电商渠道
+    ↓ leads 析出（析出率）
+体验课购买
+    ↓ 分配（按用户质量/年级分给销售或CC）
+建联（电话 + 加微）
+    ↓ 加微率 / 首通率
+催习
+    ↓ day1 到习率
+体验课完课
+    ↓ day1 完习率 / day2 到习 / 完习率
+回访和服务
+    ↓ 转化率
+首单购买（正价课）
+    ↓ 首单 ROI / UE
+在课学习
+    ↓ 周完习率
+续费 / 断课
+    ↓ 长续率 / 退费率
+```
+
+### 核心指标定义
+
+| 指标 | 定义 | 备注 |
+|------|------|------|
+| 析出率 | 从广告曝光到体验课购买的转化 | 受投放素材、落地页、前测等影响 |
+| 加微率 | 购买体验课后添加微信的比例 | 已达 ~95%，天花板效应 |
+| 到习率 | 约习后实际到课学习的比例 | 受跟进、提醒触达影响 |
+| 完课率 | 到习后完成全部学习环节的比例 | 学练补三环节都完成 |
+| 转化率 | 体验课用户购买正价课的比例 | 核心北极星指标之一 |
+| 人头转化率 | 购买正式会员的 leads 数 / 总 leads 数 | |
+| GMV 转化率 | 购买正式会员总 GMV / 基准价 / 总 leads 数 | |
+| 首单 ROI / UE | 获客成本与首单收入的投入产出比 | 衡量获客效率 |
+| 周完习率 | 在课用户每周完成学习的比例 | 全完习 55-60%，到习完习 90-92% |
+| 长续率 | 老用户续费下一期的比例 | 衡量长期留存 |
+| 退费率 | 用户申请退费的比例 | 防护指标 |
+
+---
+
+## 三、组织角色与分工
+
+### 线索获取
+
+日常关注端内 leads 析出，从三个层面理解：
+- **数量**：充分利用所有流量，关注析出效率
+- **抓手**：基于渠道和用户特点设计流程，平衡用户体验和流程效率
+- **质量**：不同质量的 leads 适配不同的承接人效和转化形式
+
+### 线索转化：销售 vs CC
+
+| 维度 | 销售（标准单周） | CC |
+|------|----------------|-----|
+| 周均人效 | 35-40 | 120-150 |
+| 跟进形式 | 固定周期进量、标准化流程 | 随时进量、灵活跟进 |
+| 用户体验流程 | 所有用户体验统一课程内容 | 沟通学情后定制下发课包 |
+| 服务特点 | 更深入，周期更长 | 更灵活：断课用户转化 ~3 天，新客更长 |
+| 主接用户身份 | 首次购买体验课的用户 | 新用户 + 断课用户 |
+| 主接年级 | 小高 + 初中 | 小低 + 9 年级 |
+
+转化目标：提升人头转化率
+1. **提升过程效率**：流程优化提升加微率、到完课率等
+2. **效果外化**：提升体验课的价值感知
+
+### 自习助理
+
+提供学习服务，保证到习、完习，确保学习效果。归因窗口 14 天。
+
+---
+
+## 四、关键术语速查
+
+### 组织角色
+
+| 术语 | 含义 |
+|------|------|
+| Leads | 线索，潜在转化用户（= 体验课用户） |
+| 析出 | 用户从流量池转化为 leads（购买体验课） |
+| CC | 课程顾问/规划老师，灵活跟进，主接小低+断课 |
+| 销售（标准单周） | 标准化流程跟进，主接小高+初中首购用户。"标单"是"标准单周"的简称 |
+| 自习助理 | 提供学习服务，保证到习完习，确保学习效果 |
+| 专组 | 专门服务特定用户群的 CC/销售团队 |
+| 人效 | 每人每周承接的用户数量（销售 35-40，CC 120-150） |
+| 工作台 | CC/销售使用的客户管理工具 |
+
+### 用户身份与状态
+
+来源：[海豚标签体系](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380)，标签详情见 `增长运营与实验.mdc` 第四节
+
+| 术语 | 含义 |
+|------|------|
+| 注册用户 | 仅注册，无任何购买或 leads 激活记录（REGISTER_USER） |
+| 体验在读 | 有销售/CC leads 激活记录，且还未出班或出囤量池（TRIAL）。退款后仍为「体验在读」，出班后才变「体验断课」 |
+| 体验断课（体断） | leads 从销售/CC 侧出班，或在囤量池超 30 天未分配被释放（TRIAL_OVERDUE） |
+| 会员在读 | 有正式版订单且在生效中（VIP） |
+| 会员断课 | 会员到期过保护期，或退费过保护期；全额退费不用过保护期（VIP_OVERDUE） |
+| 销售/CC 用户身份 | 独立于生命周期标签，分体验在读、体验断课、已转化三种。购买会员后在渠道视角始终为「已转化」 |
+| 限购 | 体验课购买限制。体验在读/会员在读/会员断课，或距上次购买体验课 < 210 天，则限购 |
+| 非限购 | 注册用户或体验断课，且距上次购买体验课 >= 210 天（约 7 个月），可再次购买。群组: `allow_buy_trial_new` |
+| 断课限购 | 体验断课 + 距上次购买 < 210 天，只能通过留资走 CC 召回链路 |
+| 断课非限购 | 体验断课 + 距上次购买 >= 210 天，可直接购买体验课。群组: `xg_GradeNotNine` |
+| 可激活用户 | 企微标签，标记当前非限购状态的用户（可被激活为 leads） |
+| 出班 | leads 服务周期结束，从销售/CC 班级释放，生命周期标签变为「体验断课」 |
+| 囤量池 | 分配后未被销售/CC 接走的 leads 暂存池，超 30 天未分配自动释放（等同出班） |
+| 保护期 | 会员到期或退费后的缓冲期（~14 天），期间仍归属原助理。过保护期后才标记「会员断课」 |
+| 真实年级 | 来源：售卖页/前测/留资落地页/工作台手动更新，每年暑假自动升级。标签: `aries_real_grade` |
+| 学习年级 | 用户在 App 内手动切换的年级，每年暑假自动升级。标签: `aries_user_grade` |
+| 用户分层 | 高意向用户标签（user_layering），按自然新用户/体验断课 x 到课/会员页曝光组合，每日定时刷新 |
+| 续费期 | 会员到期前的续费窗口，续1=到期当月，续5=到期前4个月 |
+| 服务期 | 会员有效期内，自习助理提供学习服务的阶段 |
+
+### 业务流程
+
+| 术语 | 含义 |
+|------|------|
+| 直投 | app 直接投放广告获客 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+
+---
+
+## 五、工具与后台索引
+
+| 工具 | 用途 | 链接 |
+|------|------|------|
+| Eagle | 查看在投素材 | [eagle.zhenguanyu.com](https://eagle.zhenguanyu.com/new/material-analyze/TENCENT_3_0) |
+| Aries-BI | 渠道量级及成本 ROI | [aries-bi.zhenguanyu.com](https://aries-bi.zhenguanyu.com/#/views/_17138453950620/ROI?:iid=1) |
+| Orion | 用户标签管理（研发侧） | [orion.zhenguanyu.com](https://orion.zhenguanyu.com/userManage/persona/persona-tag) |
+| emon | 私域标签运营 | [dora.zhenguanyu.com/emon](https://dora.zhenguanyu.com/emon/) |
+| gaffey | 营销活动 / 广告位 / keyfrom | [gaffey.zhenguanyu.com](https://gaffey.zhenguanyu.com/web/biz/) |
+| awesome | SPU/SKU 商品管理 | [awesome.zhenguanyu.com](https://awesome.zhenguanyu.com/infra/#/goods/manager/list?bizId=1401) |
+
+---
+
+## 六、待补充
+
+- [ ] 各渠道用户旅程差异（直投有完整端内旅程，直播/效果广告从端外购课进入）
+- [ ] 体验课期间产品体验（5 天体验期内学练补具体安排）
+- [ ] 销售侧工作流详解（标准单周的具体流程、跟进节奏）
+- [ ] 助理团队的职责和协作方式
+- [x] 端内 leads 析出入口详细清单（已移至「增长运营与实验.mdc → CC 业务详解」）
+
+
+[Tool result] Write
+
+assistant:
+完成。术语速查表从原来的单一列表拆成了三个分组，新增了 **用户身份与状态** 子表，补充了以下术语：
+
+- **注册用户 / 体验在读 / 体验断课 / 会员在读 / 会员断课** — 完整的用户生命周期状态
+- **限购 / 非限购** — 体验课购买限制的判断规则
+- **断课限购 / 断课非限购** — 体断用户按 210 天分界的两种析出路径
+- **可激活用户** — 企微侧的非限购标记
+- **出班 / 囤量池 / 保护期** — 状态流转相关的业务机制
+- **真实年级 / 学习年级** — 两套年级标签的区别和来源
+- **用户分层（user_layering）** — 高意向用户分层标签
+- **续费期 / 服务期** — 会员阶段划分
+
+user:
+<user_query>
+@personal/.cursor/rules 这里的 context 都需要用@personal/.cursor/rules/SKILL.md 这个 skill review 一遍，你要不把这个写到 rules 的 readme or somewhere，你可以自己调用
+</user_query>
+
+assistant:
+[Thinking] The user wants me to:
+1. Read the SKILL.md to understand what the context-builder skill does
+2. Create a rule or README that tells me (the AI) to automatically use this skill to review context files in `personal/.cursor/rules/`
+
+Let me first read the SKILL.md to understand it, then figure out where to put this instruction.
+先看下这个 SKILL.md 的内容，再决定放哪里。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/SKILL.md
+
+[Tool result] Read
+
+assistant:
+[Thinking] The user wants me to create a rule that tells the AI to automatically use this SKILL.md to review context files in `personal/.cursor/rules/`. Let me check if there's already a README or similar file in that directory.
+[Tool call] Glob
+  glob_pattern: *
+  target_directory: /Users/jiwenyue/cursorProjects/personal/.cursor/rules
+
+[Tool result] Glob
+
+assistant:
+[Thinking] There's no README.md yet. The user wants a rule that tells me to use the context-builder SKILL.md to review context files. 
+
+The best approach is to create a `.mdc` rule file in the same directory, since that's how Cursor rules work. This way, when I'm working with context files, I can automatically use the skill.
+
+Actually, looking at it more carefully, the user said "写到 rules 的 readme or somewhere，你可以自己调用". So they want me to put this instruction somewhere I can access. 
+
+The most practical approach: create a new `.mdc` rule that instructs me to use the context-builder skill when reviewing or editing context files. Or I could add it to the existing `协作协议.mdc`.
+
+
+I should create a dedicated rule file for context management that specifies which files are context files, when to auto-review using the SKILL.md, and how to invoke it properly with the correct Cursor rule format.
+把这个写成一条 Cursor rule，这样我处理 context 文件时能自动遵循。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/context管理规范.mdc
+  contents: ---
+description: context 文件的管理规范。当新建、修改、review personal/.cursor/rules/ 下的 .mdc context 文件时自动应用。
+alwaysApply: false
+---
+
+## Context 文件清单
+
+`personal/.cursor/rules/` 下以下 `.mdc` 文件是业务 context：
+
+| 文件 | 内容 |
+|------|------|
+| 海豚AI学产品上下文.mdc | 产品概述、课程流程、设备兼容、核心指标、技术架构 |
+| 增长业务上下文.mdc | 增长核心框架、漏斗、组织角色、用户身份状态、术语、工具 |
+| 增长运营与实验.mdc | CC业务、定价SKU、营销基建、用户标签、AB实验沉淀 |
+| AI课产品机制.mdc | 课程结构、题目体系、推题策略、游戏化机制 |
+| 竞品与行业认知.mdc | AI教育赛道竞品分析与差异化定位 |
+
+以下 `.mdc` 文件是 UI/交互规范，不属于业务 context：
+- 海豚App-UI规范.mdc
+- 学习环节-UI规范.mdc
+- 交互设计原则.mdc
+
+以下是协作规则，不属于 context：
+- 协作协议.mdc
+
+## Review 规范
+
+**新建或大幅修改 context 后，必须用 context-builder skill review。**
+
+操作方式：读取 `personal/.cursor/rules/SKILL.md`，按其中的分类体系和 review 方法逐条检查。
+
+### 何时触发 review
+
+1. **新建 context 文件**：写完后自动 review
+2. **大幅补充内容**（新增一个章节或多段信息）：补充完后 review 新增部分
+3. **用户明确要求** review
+4. **小修改**（改几个字、修正笔误）：不需要 review
+
+### Review 执行要点
+
+1. 先分类（A~F），再按分类对应的检查项逐条检查
+2. 区分「事实」和「推测」，推测必须标注
+3. 交叉验证：检查新内容与其他 context 文件是否矛盾
+4. 输出 review 结果时列出发现的问题，由用户决定是否修改
+5. 不要跳过追问——该问的必须问，宁可多确认也不要沉淀错误信息
+
+
+[Tool result] Write
+
+assistant:
+创建了 `context管理规范.mdc`，作为一条 Cursor rule。核心内容：
+
+1. **列出了哪些 `.mdc` 是业务 context**（和 UI 规范、协作规则区分开）
+2. **规定了触发 review 的时机**：新建 context、大幅补充内容时自动 review，小修改不需要
+3. **操作方式**：读取同目录下的 `SKILL.md` 并按其分类体系执行
+
+这样我在新建或大幅修改 context 文件时，会自动读取 SKILL.md 执行 review，不需要你每次手动提醒了。
+
+user:
+[Image]
+<image_files>
+The following images were provdied by the user and saved to the workspace for future use:
+1. /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/assets/image-555e799e-6e67-4f59-8dd9-c16b5591c14e.png
+
+These images can be copied for use in other locations.
+</image_files>
+<user_query>
+这个是我们团队的仓库和空间，我的工作流是，先在自己的 personal 中创建 context→你根据我空间下的 .mdc 自动 review→后面我将会把在这边验证过的 context 搬到团队空间→但是也需要完善团队空间的 context review 建设
+</user_query>
+
+assistant:
+[Thinking] The user is describing their workflow:
+1. Create context in `personal/.cursor/rules/` (personal space)
+2. AI auto-reviews using the SKILL.md
+3. Move verified context to team space (`aries/团队-增长/context/`)
+4. Need to also set up context review infrastructure in the team space
+
+Let me look at the team space structure to understand what's already there.
+明白了，先看下团队空间现有的结构。
+[Tool call] Glob
+  glob_pattern: **/*
+  target_directory: /Users/jiwenyue/cursorProjects/aries/团队-增长
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/README.md
+
+[Tool result] Glob
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I see the team space structure. There's already a `context` directory (seen in the screenshot) but it's empty (no files found by Glob - it might just have a `.gitkeep`). 
+
+Let me check if there's a `.gitkeep` in the context directory.
+[Tool call] Glob
+  glob_pattern: *
+  target_directory: /Users/jiwenyue/cursorProjects/aries/团队-增长/context
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Shell
+  command: ls -la /Users/jiwenyue/cursorProjects/aries/团队-增长/context/
+  description: Check context dir contents
+
+[Tool result] Shell
+
+assistant:
+[Thinking] The `context` directory is empty, not even a `.gitkeep`. Let me also check if there are any `.cursor/rules` in the aries repo.
+团队空间的 `context/` 目录是空的。现在需要做两件事：
+
+1. 把 context-builder SKILL.md 放到团队空间也能用的位置
+2. 建立团队 context 的管理规范
+
+先看下 aries 仓库的 rules 目录结构。
+[Tool call] Glob
+  glob_pattern: **/*.mdc
+  target_directory: /Users/jiwenyue/cursorProjects/aries/.cursor/rules
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Glob
+  glob_pattern: *
+  target_directory: /Users/jiwenyue/cursorProjects/aries/.cursor
+
+[Tool result] Glob
+
+assistant:
+[Tool call] Glob
+  glob_pattern: **/SKILL.md
+  target_directory: /Users/jiwenyue/cursorProjects/aries/共享工具/context-builder
+
+[Tool result] Glob
+
+assistant:
+[Thinking] So the context-builder SKILL.md already exists in two places:
+1. `aries/共享工具/context-builder/SKILL.md` - the team's shared version (original)
+2. `personal/.cursor/rules/SKILL.md` - the personal copy
+
+Now I understand the full picture:
+- `aries` is the team repo (共享)
+- `personal` is the user's personal space
+- The user's workflow: personal context → review → move to team space
+
+For the team space, I need to:
+1. Create a README.md in `团队-增长/context/` explaining how context works
+
+
+2. Reference the existing SKILL.md from the shared tools directory rather than duplicating it
+3. Set up a rule in the aries repo so the AI knows to use context-builder when dealing with context files
+
+Since the aries repo doesn't have a `.cursor/rules/` directory yet, I'll create the README to document what context files should contain and how they work, then reference the context-builder SKILL that already exists in the shared tools.
+
+The key question is whether team context files should live as `.md` files in `团队-增长/context/` or as `.mdc` files that Cursor can auto-load as rules—I'm thinking `.md` files make more sense for team collaboration, but I'll need to create a `.cursor/rules/` entry in aries that points the AI to use the context-builder workflow when reviewing these files. I'll create the `.mdc` rule file that references the context-builder SKILL, documents the existing context files in the team space, and outlines the review and migration workflow.
+现在清楚了整个工作流。aries 仓库的情况：
+- `共享工具/context-builder/SKILL.md` 已有（review skill 的源头）
+- `团队-增长/context/` 空目录，准备放团队 context
+- `.cursor/rules/` 不存在，没有自动 review 规范
+
+我来一次性把团队空间的 context 基建搭好。
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"创建 团队-增长/context/README.md：说明 context 目录的用途、文件规范、review 流程","status":"in_progress"},{"id":"2","content":"创建 aries/.cursor/rules/context管理规范.mdc：让 AI 自动 review 团队 context","status":"pending"},{"id":"3","content":"更新 团队-增长/README.md：加入 context/ 目录说明","status":"pending"}]
+  merge: false
+
+[Tool result] TodoWrite
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/context/README.md
+  contents: # 增长团队 Context
+
+经过验证的业务 context 沉淀。AI 在做分析、写方案、review 时会自动参考这些文件。
+
+---
+
+## 工作流
+
+```
+个人空间创建 context（personal/.cursor/rules/*.mdc）
+    ↓ AI 用 context-builder skill 自动 review
+个人空间验证通过
+    ↓ 搬运到团队空间
+团队-增长/context/*.md
+    ↓ AI 用同一套 skill 再次 review（交叉验证团队已有 context）
+团队 context 生效
+```
+
+**核心原则：所有进入团队空间的 context 都必须经过 review，不沉淀未验证的信息。**
+
+---
+
+## 文件规范
+
+### 命名
+
+- 用中文，简短描述覆盖的领域
+- 示例：`增长业务框架.md`、`用户标签体系.md`、`AB实验沉淀.md`
+
+### 文件结构
+
+每个 context 文件顶部包含元数据块：
+
+```markdown
+<!--
+来源: personal/.cursor/rules/增长业务上下文.mdc
+review状态: 已验证
+最近review: 2026-03-13
+维护人: @jiwenyue
+-->
+```
+
+正文内容和 personal 空间的 `.mdc` 保持一致（去掉 frontmatter 即可）。
+
+### 与 personal 空间的关系
+
+| 个人空间（personal/.cursor/rules/） | 团队空间（团队-增长/context/） |
+|-----------------------------------|-----------------------------|
+| `.mdc` 格式，Cursor rule 自动加载 | `.md` 格式，作为团队参考文档 |
+| 个人维护，快速迭代 | 经 review 后搬运，团队共享 |
+| 可以有个人判断、待验证内容 | 只放已验证的内容 |
+
+---
+
+## Review 规范
+
+使用 [context-builder skill](../../共享工具/context-builder/SKILL.md) 进行 review。
+
+### 何时 review
+
+| 场景 | 触发 |
+|------|------|
+| 从 personal 搬运新 context 到团队空间 | 必须 review |
+| 大幅更新已有 context | review 变更部分 |
+| 小修改（改几个字、修正笔误） | 不需要 |
+
+### Review 检查清单
+
+- [ ] 内容按 A~F 分类，每条信息的分类是否正确
+- [ ] 事实和推测是否区分标注
+- [ ] 数据类信息是否标注来源、口径、时间
+- [ ] 与团队已有 context 是否有矛盾
+- [ ] 术语使用是否与其他文件一致
+
+---
+
+## 当前文件清单
+
+> 随着 context 沉淀，在此更新
+
+（暂无，待从 personal 空间搬运）
+
+
+[Tool result] Write
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"1","status":"completed"},{"id":"2","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+[Tool call] Shell
+  command: mkdir -p /Users/jiwenyue/cursorProjects/aries/.cursor/rules
+  description: Create aries rules directory
+
+[Tool result] Shell
+
+assistant:
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/aries/.cursor/rules/context管理规范.mdc
+  contents: ---
+description: 团队 context 文件的管理规范。当新建、修改、review 团队-增长/context/ 下的 context 文件时自动应用。
+alwaysApply: false
+---
+
+## Context 目录
+
+团队 context 存放在 `团队-增长/context/`，详细说明见该目录的 README.md。
+
+## Review 规范
+
+**新建或大幅修改 context 后，必须用 context-builder skill review。**
+
+操作方式：读取 `共享工具/context-builder/SKILL.md`，按其中的分类体系和 review 方法逐条检查。
+
+### 何时触发
+
+1. **从 personal 空间搬运 context 到团队空间**：必须 review，交叉验证与已有 context 是否矛盾
+2. **大幅补充内容**（新增章节或多段信息）：review 新增部分
+3. **用户明确要求** review
+4. **小修改**（改几个字、修正笔误）：不需要
+
+### Review 执行要点
+
+1. 先分类（A~F），再按分类对应的检查项逐条检查
+2. 区分「事实」和「推测」，推测必须标注
+3. 交叉验证：检查新内容与 `团队-增长/context/` 下其他文件是否矛盾
+4. 数据类信息必须标注来源、口径、时间范围
+5. 输出 review 结果，由用户决定是否修改
+
+## 与 personal 空间的关系
+
+个人空间 `personal/.cursor/rules/*.mdc` 是 context 的初稿和快速迭代空间。
+团队空间 `团队-增长/context/*.md` 只放经过 review 验证的内容。
+两边用同一套 context-builder skill review，标准一致。
+
+
+[Tool result] Write
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"2","status":"completed"},{"id":"3","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/README.md
+  old_string: ```
+团队-增长/
+├── 项目/           # 产品项目归档
+├── AB实验/         # 独立 AB 实验
+└── 数据探查/       # 数据分析与探查
+```
+  new_string: ```
+团队-增长/
+├── 项目归档/       # 产品项目归档
+├── AB实验/         # 独立 AB 实验
+├── 数据探查/       # 数据分析与探查
+└── context/        # 经验证的业务 context 沉淀
+```
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/README.md
+  old_string: ### 注意
+
+无论如何都不要捏造数据！！只需要做真实的归档和推演
+  new_string: ### context/
+
+经过 review 验证的业务 context 沉淀。AI 在做分析、写方案时会参考这些文件。
+
+工作流：个人空间创建 → AI review → 验证通过 → 搬运到此目录。
+
+详见 [context/README.md](context/README.md)。
+
+---
+
+### 注意
+
+无论如何都不要捏造数据！！只需要做真实的归档和推演
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"3","status":"completed"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+完成了。搭建了三个文件：
+
+**1. `aries/团队-增长/context/README.md`** — context 目录的使用说明
+- 工作流图（personal 创建 → review → 搬到团队）
+- 文件命名和元数据规范（顶部标注来源、review 状态、维护人）
+- personal 和团队空间的关系（个人快速迭代 vs 团队只放已验证内容）
+- Review 检查清单
+
+**2. `aries/.cursor/rules/context管理规范.mdc`** — Cursor rule
+- 让我在处理 `团队-增长/context/` 的文件时，自动读取 `共享工具/context-builder/SKILL.md` 执行 review
+- 定义了触发时机：搬运时必须 review、大改需 review、小修不需要
+
+**3. 更新了 `aries/团队-增长/README.md`** — 目录结构中加入了 context/ 的说明
+
+现在两边的 review 链路是打通的：
+
+```
+personal/.cursor/rules/*.mdc          aries/团队-增长/context/*.md
+        ↓                                       ↓
+personal/.cursor/rules/SKILL.md      共享工具/context-builder/SKILL.md
+   (同一套 review skill)                  (同一套 review skill)
+```
+
+你在 personal 空间写好 context、我 review 通过后，搬到团队空间时我会再做一轮交叉验证。
+
+user:
+<user_query>
+wait。。我这个意思是说，增长团队的 context 需要放在`团队-增长/context/` 下，以及这个@aries/.cursor/rules/context管理规范.mdc ，也是仅对团队-增长这个空间中的 context 生效
+</user_query>
+
+assistant:
+明白，你的意思是：
+
+1. `aries/.cursor/rules/context管理规范.mdc` 的 scope 仅限 `团队-增长/context/`，不是 aries 全局的
+2. context 文件放在 `团队-增长/context/` 下，review 也只针对这个目录
+
+现在的文件内容已经基本符合这个意图了，我调整一下 description 让 scope 更精确。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/.cursor/rules/context管理规范.mdc
+
+[Tool result] Read
+
+assistant:
+看了下，内容本身就是围绕 `团队-增长/context/` 的，scope 没问题。description 也已经写了"当新建、修改、review 团队-增长/context/ 下的 context 文件时自动应用"。
+
+这个文件当前的定位就是对的 — 它不是 aries 全局规范，只在操作 `团队-增长/context/` 下文件时才触发。你看还需要改什么地方吗？
+
+user:
+<user_query>
+那可以不要把这个文档放在 Aires 下如此明显的地方吗，能放在团队-增长下，或者是其他地方吗
+</user_query>
+
+assistant:
+[Thinking] The user doesn't want the `.cursor/rules/context管理规范.mdc` sitting at the aries repo's root-level `.cursor/rules/` directory since it's too prominent and it's only for the 团队-增长 context. They want it placed somewhere under 团队-增长 or another less prominent location.
+
+The challenge is that Cursor only auto-loads `.mdc` rules from `.cursor/rules/` directory. If I move it elsewhere, it won't auto-trigger.
+
+But there are alternatives:
+1. Put the rule content directly into `团队-增长/context/README.md` (which I already created) - this is a reference doc, not auto-triggered
+
+
+2. Put a SKILL.md in `团队-增长/context/` that can be manually invoked
+3. Keep the `.mdc` in `.cursor/rules/` but that's what the user doesn't want
+
+The practical solution is to merge the content into `团队-增长/context/README.md` since it already contains most of this information, which keeps it out of the prominent `.cursor/rules/` directory while still making it accessible as documentation. I think consolidating everything into the `团队-增长/context/README.md` makes the most sense—it keeps the context management rules scoped to where they actually apply, and I can reference that file whenever I'm working in that directory instead of maintaining a separate rule file.
+把规范内容合并进 `团队-增长/context/README.md`（那里已经有大部分信息了），然后删掉 `.cursor/rules/context管理规范.mdc`。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/context/README.md
+
+[Tool result] Read
+
+assistant:
+README.md 已经涵盖了 `.cursor/rules/context管理规范.mdc` 的所有内容，直接删掉那个文件就行。
+[Tool call] Delete
+  path: /Users/jiwenyue/cursorProjects/aries/.cursor/rules/context管理规范.mdc
+
+[Tool result] Delete
+
+assistant:
+删掉了。现在所有 context 管理规范都在 `团队-增长/context/README.md` 一个地方，不会在 aries 根目录的 `.cursor/rules/` 下留东西。
+
+user:
+<user_query>
+这里还有要注意的：1.不一定都是从 personal 搬运的，可能有其他空间。 2.也可能会有直接在团队空间新建 mdc 的情况
+</user_query>
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/context/README.md
+  old_string: # 增长团队 Context
+
+经过验证的业务 context 沉淀。AI 在做分析、写方案、review 时会自动参考这些文件。
+
+---
+
+## 工作流
+
+```
+个人空间创建 context（personal/.cursor/rules/*.mdc）
+    ↓ AI 用 context-builder skill 自动 review
+个人空间验证通过
+    ↓ 搬运到团队空间
+团队-增长/context/*.md
+    ↓ AI 用同一套 skill 再次 review（交叉验证团队已有 context）
+团队 context 生效
+```
+
+**核心原则：所有进入团队空间的 context 都必须经过 review，不沉淀未验证的信息。**
+
+---
+
+## 文件规范
+
+### 命名
+
+- 用中文，简短描述覆盖的领域
+- 示例：`增长业务框架.md`、`用户标签体系.md`、`AB实验沉淀.md`
+
+### 文件结构
+
+每个 context 文件顶部包含元数据块：
+
+```markdown
+<!--
+来源: personal/.cursor/rules/增长业务上下文.mdc
+review状态: 已验证
+最近review: 2026-03-13
+维护人: @jiwenyue
+-->
+```
+
+正文内容和 personal 空间的 `.mdc` 保持一致（去掉 frontmatter 即可）。
+
+### 与 personal 空间的关系
+
+| 个人空间（personal/.cursor/rules/） | 团队空间（团队-增长/context/） |
+|-----------------------------------|-----------------------------|
+| `.mdc` 格式，Cursor rule 自动加载 | `.md` 格式，作为团队参考文档 |
+| 个人维护，快速迭代 | 经 review 后搬运，团队共享 |
+| 可以有个人判断、待验证内容 | 只放已验证的内容 |
+
+---
+
+## Review 规范
+
+使用 [context-builder skill](../../共享工具/context-builder/SKILL.md) 进行 review。
+
+### 何时 review
+
+| 场景 | 触发 |
+|------|------|
+| 从 personal 搬运新 context 到团队空间 | 必须 review |
+| 大幅更新已有 context | review 变更部分 |
+| 小修改（改几个字、修正笔误） | 不需要 |
+
+### Review 检查清单
+
+- [ ] 内容按 A~F 分类，每条信息的分类是否正确
+- [ ] 事实和推测是否区分标注
+- [ ] 数据类信息是否标注来源、口径、时间
+- [ ] 与团队已有 context 是否有矛盾
+- [ ] 术语使用是否与其他文件一致
+
+---
+
+## 当前文件清单
+
+> 随着 context 沉淀，在此更新
+
+（暂无，待从 personal 空间搬运）
+  new_string: # 增长团队 Context
+
+经过验证的业务 context 沉淀。AI 在做分析、写方案、review 时会参考这些文件。
+
+**核心原则：所有进入团队空间的 context 都必须经过 review，不沉淀未验证的信息。**
+
+---
+
+## 来源与工作流
+
+Context 可以从多个来源进入团队空间：
+
+| 来源 | 流程 |
+|------|------|
+| 个人空间搬运 | 在个人空间（如 personal/.cursor/rules/）创建并 review → 验证通过 → 搬运到此目录 |
+| 其他工作空间搬运 | 在其他空间创建并 review → 验证通过 → 搬运到此目录 |
+| 团队空间直接新建 | 直接在此目录新建 → 新建后必须 review |
+
+不管哪种来源，进入此目录前（或新建后）都要用 context-builder skill review。
+
+---
+
+## 文件规范
+
+### 命名
+
+- 用中文，简短描述覆盖的领域
+- 示例：`增长业务框架.md`、`用户标签体系.md`、`AB实验沉淀.md`
+
+### 文件结构
+
+每个 context 文件顶部包含元数据块：
+
+```markdown
+<!--
+来源: personal/.cursor/rules/增长业务上下文.mdc（或：团队空间直接新建）
+review状态: 已验证
+最近review: 2026-03-13
+维护人: @jiwenyue
+-->
+```
+
+---
+
+## Review 规范
+
+使用 [context-builder skill](../../共享工具/context-builder/SKILL.md) 进行 review。
+
+### 何时 review
+
+| 场景 | 触发 |
+|------|------|
+| 从其他空间搬运 context 到此目录 | 必须 review |
+| 在此目录直接新建 context | 新建后必须 review |
+| 大幅更新已有 context | review 变更部分 |
+| 小修改（改几个字、修正笔误） | 不需要 |
+
+### Review 检查清单
+
+- [ ] 内容按 A~F 分类，每条信息的分类是否正确
+- [ ] 事实和推测是否区分标注
+- [ ] 数据类信息是否标注来源、口径、时间
+- [ ] 与此目录下已有 context 是否有矛盾
+- [ ] 术语使用是否与其他文件一致
+
+---
+
+## 当前文件清单
+
+> 随着 context 沉淀，在此更新
+
+（暂无）
+
+[Tool result] StrReplace
+
+assistant:
+[Thinking] The file has been modified since I last read it. Let me re-read and use Write to update it.
+文件已被改过了，重新读取后整体更新。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/context/README.md
+
+[Tool result] Read
+
+assistant:
+看到你已经手动改过了一部分（64 行加了"直接新增"、82 行也改了）。我把剩余的「仅限 personal」的表述也一起改掉。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/aries/团队-增长/context/README.md
+  contents: # 增长团队 Context
+
+经过验证的业务 context 沉淀。AI 在做分析、写方案、review 时会参考这些文件。
+
+**核心原则：所有进入此目录的 context 都必须经过 review，不沉淀未验证的信息。**
+
+---
+
+## 来源与工作流
+
+Context 可以从多个来源进入：
+
+| 来源 | 流程 |
+|------|------|
+| 从其他空间搬运 | 在个人空间或其他工作空间创建并 review → 验证通过 → 搬运到此目录 |
+| 直接新建 | 在此目录直接新建 → 新建后必须 review |
+
+不管哪种来源，都要用 [context-builder skill](../../共享工具/context-builder/SKILL.md) review。
+
+---
+
+## 文件规范
+
+### 命名
+
+- 用中文，简短描述覆盖的领域
+- 示例：`增长业务框架.md`、`用户标签体系.md`、`AB实验沉淀.md`
+
+### 文件结构
+
+每个 context 文件顶部包含元数据块：
+
+```markdown
+<!--
+来源: personal/.cursor/rules/增长业务上下文.mdc（或：直接新建）
+review状态: 已验证
+最近review: 2026-03-13
+维护人: @jiwenyue
+-->
+```
+
+---
+
+## Review 规范
+
+使用 [context-builder skill](../../共享工具/context-builder/SKILL.md) 进行 review。
+
+### 何时 review
+
+| 场景 | 触发 |
+|------|------|
+| 从其他空间搬运 context 到此目录 | 必须 review |
+| 在此目录直接新建 context | 必须 review |
+| 大幅更新已有 context | review 变更部分 |
+| 小修改（改几个字、修正笔误） | 不需要 |
+
+### Review 检查清单
+
+- [ ] 内容按 A~F 分类，每条信息的分类是否正确
+- [ ] 事实和推测是否区分标注
+- [ ] 数据类信息是否标注来源、口径、时间
+- [ ] 与此目录下已有 context 是否有矛盾
+- [ ] 术语使用是否与其他文件一致
+
+---
+
+## 当前文件清单
+
+> 随着 context 沉淀，在此更新
+
+（暂无）
+
+
+[Tool result] Write
+
+assistant:
+改好了。主要调整：
+
+- 去掉了「个人空间 vs 团队空间」的对比表（不再假设只从 personal 来）
+- 来源改为「从其他空间搬运」和「直接新建」两种
+- 元数据块的来源示例加了「直接新建」选项
+- 文件清单的描述也去掉了 personal 限定
+
+user:
+<user_query>
+@personal/.cursor/rules/增长运营与实验.mdc 把 cc业务的部分放到新增的一个 mdc.吧，叫增长业务方
+</user_query>
+
+assistant:
+[Thinking] The user wants to split the CC business section from `增长运营与实验.mdc` into a new file called `增长业务方.mdc`. Let me read the current file to understand the structure.
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长运营与实验.mdc
+
+[Tool result] Read
+
+assistant:
+[Thinking] The user wants to split the CC business section (section 一, lines 8-162) into a new file called `增长业务方.mdc`. Let me create the new file with that content and update the original file to remove it and add a reference.
+把 CC 业务部分（第一节整块）拆到新文件，同时更新原文件。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务方.mdc
+  contents: ---
+description: 海豚AI学增长业务方详情——CC全流程SOP、Leads来源、用户分层标签、关单策略。涉及CC运营、leads分析、转化策略时参考。
+alwaysApply: false
+---
+
+> 核心增长框架（漏斗、组织角色、术语）见 `增长业务上下文.mdc`
+> 定价/标签/实验等见 `增长运营与实验.mdc`
+
+## CC 业务详解
+
+- **周均人效**：120-150
+- **流量来源**：新用户（小低 + 9 年级）+ 断课老用户
+- **主接渠道**：端内自然流量、直投、部分效果广告（按年级/用户质量分配）
+
+### CC Leads 来源全景
+
+CC leads 按转化方式分**购买**和**留资**两类，按渠道分**端内**和**私域**。
+
+#### 端内 — 购买转化（用户直接购买体验课）
+
+| 用户身份 | 入口 | 说明 |
+|---------|------|------|
+| 自然流量（新用户） | 新用户流程 | 前测流程析出，最大量级入口（周曝光 ~665，点击率 ~19%） |
+| | 资料库 | 周曝光 ~134，点击率 ~19% |
+| | 找页面磁铁 | 周曝光 ~57，点击率 ~33% |
+| | 首页 banner | 周曝光 ~8，点击率 ~38% |
+| | 首页弹窗 | 小量级 |
+| | 会员页挽留弹窗 | 小量级 |
+| 断课非限购 | 资料库 | 周曝光 ~38，点击率 ~8% |
+| | 会员页挽留弹窗 | 小量级 |
+| | 首页弹窗 | 小量级 |
+| | 首页 banner | 小量级 |
+
+#### 端内 — 留资转化（用户留资成为 leads）
+
+| 入口 | 落地页曝光 | 点击率 | 表单曝光 | 表单点击 | 说明 |
+|------|----------|--------|---------|---------|------|
+| 计划页自回入口 | ~6307 | ~6% | ~384 | ~175 | 量级最大，但点击率低 |
+| 会员页咨询入口 | ~3203 | ~6% | — | — | 量级大，点击率低 |
+| 老用户回归礼-首页弹窗 | ~624 | ~40% | ~250 | ~190 | 点击率高，是断课限购用户最有效的留资入口 |
+| 老用户回归礼-我资源位 | ~119 | ~43% | ~51 | ~37 | 点击率高 |
+| 老用户回归礼-banner | ~49 | ~51% | ~24 | ~14 | 量级小但点击率最高 |
+| 优惠券引导入口 | — | — | — | — | 当前无量级 |
+
+#### 私域 — 留资转化
+
+| 入口 | 落地页曝光 | 点击率 | 说明 |
+|------|----------|--------|------|
+| 私域社群留资页 | ~1275 | ~16% | 私域最大量级入口 |
+| 私域SOP留资 | ~179 | ~29% | |
+| 私域企微客服发送留资页 | ~74 | ~80% | 量级小但点击率极高 |
+| 私域客服发送留资页 | ~11 | ~82% | |
+| CC老带新 | ~3 | 100% | 量级极小 |
+
+#### 端内 Leads 来源总结
+
+**按用户身份的析出路径**：
+
+| 用户状态 | 析出方式 | 主要入口 | 承接方 |
+|---------|---------|---------|-------|
+| 新用户（自然流量） | 购买体验课 | 新用户前测流程、资料库、我的页面磁铁 | CC（小低+9年级）/ 销售 |
+| 断课限购 | 留资转化 | 老用户回归礼弹窗/资源位、计划页召回入口、会员页咨询 | CC |
+| 断课非限购| 购买体验课 | 资料库、会员页挽留弹窗 | 销售 |
+| | 留资转化 | 计划页、会员页咨询入口 | CC |
+
+**断课老用户析出瓶颈**（整体析出率不到 3%，周活跃 ~1.4w）：
+1. **广告位曝光率低**（~41% vs 新用户 97%）：PAD 不展示首页致首页广告位无效（~40%）、秒开关 APP（~25%）
+2. **广告位 CTR 低**：「免费」「0 元」等营销文案引发防备，用户需主动点击才能进入析出场景
+3. **入口分散**：仅 ~50% 断课活跃用户有广告位曝光
+
+**改进方向**（断课用户增加前测，2026.1 启动 AB）：用前测问答替代营销弹窗，提升曝光率（目标 80%）和参与感，前测通过后展示落地页引导留资。
+
+### CC 全流程 SOP
+
+**阶段一：建联**
+
+目标：电话接通 + 加微信
+
+| 触达轮次 | 操作 |
+|---------|------|
+| 首次建联 | 两次手机号拨号 + 一次工作台外呼（都没接 → 下一个） |
+| 二次跟进 | 两次工作台外呼 + 工作台群发加微短信 |
+| 重点跟进 | 以上均未联系上 → 手机发送加微短信 |
+
+**阶段二：挖需（SPIN）**
+
+目标：了解学情、判断意向、打标签（A/B/C）
+
+- **S（现状）**：成绩、学科表现、补习经历、走读/住校、作业时间
+- **P（痛点）**：基础薄弱还是思维固化？计算板块还是应用板块？
+- **I（影响）**：不解决会怎样（落后、厌学、升学压力）
+- **N（价值）**：海豚个性化方案如何匹配
+
+**阶段三：产品介绍 + 约习**
+
+目标：让家长理解产品价值，约定体验课时间
+
+- 介绍学练补三环节 + AI 动画模式
+- 约习时间在工作台勾选确认
+- 微信留痕 + 到课提醒
+
+**阶段四：回访（完课后）**
+
+目标：反馈学习情况，建立信任，推动转化
+
+首次回访：
+1. **破冰** → 确认孩子是否独立完成学习
+2. **和孩子聊**（区分小学/初中）→ 表扬学习情况 → 抽查知识点 → 设立小目标 → 确认能否坚持
+3. **和家长聊** → 按学练补三步逐一反馈课堂情况（区分学得好/学得差的反馈策略）→ 介绍 AI + 真人助理模式 → 规划学习 → 默认关单
+
+二次回访（体验课全部完成后）：
+1. 反馈后续课程表现
+2. **达共识**：为什么学 → 为什么在海豚学 → 为什么现在学
+3. **默认关单** → 带家长打开 APP 报名
+
+**阶段五：关单与异议处理**
+
+目标：推动付费转化，处理犹豫和拒绝
+
+关单策略（按场景选用）：
+
+| 策略 | 核心方向 |
+|------|---------|
+| 学情关单 | 按年级拆解知识点递进关系，说明当下不学对后续的影响 |
+| 福利关单 | 200 优惠券 / 小猿搜题 VIP / 猿题库终身 / 亲子账号（多孩免费）/ 全科微课视频 |
+| 调退保障关单 | 14 天无理由全额调退，按周扣费，合同保障 |
+| 竞品对比 | 对比学习机（科大讯飞）/ 松鼠 AI / 线上直播课 / 洋葱，用海豚优势对标竞品不足 |
+
+异议处理：
+
+| 异议 | 应对 |
+|------|------|
+| 考虑一下 | 追问具体顾虑（时间还是价格），针对性回应 |
+| 和爸爸商量 | 争取直接和爸爸沟通，或约定下次联系时间 |
+| 孩子不愿意 | 引用之前和孩子的沟通记录，说明孩子实际表现积极 |
+| 想再试听 | 强调正式课才有完整规划，14 天内可全额调退 |
+
+### 用户分层标签
+
+**建联后（A/B/C）**：
+
+| 标签 | 条件 |
+|------|------|
+| A | 有学习经验 + 现未报班/不满意 + 明确需求 + 购买力强 + 配合度高。朋友推荐直接标A |
+| B | 配合度高，但不完全满足 A 类条件 |
+| C | 配合度低，且不满足 A 类条件 |
+
+**回访后（S/A+/B+）**：
+
+| 标签 | 条件 |
+|------|------|
+| S | 完课后主动回复 + 家长认可 + 孩子喜欢 |
+| A+ | 无主动回复，但家长认可、孩子喜欢 |
+| B+ | 回访不配合，微信不回复 |
+
+**转化后**：考虑 / 不考虑
+
+### 工作台操作
+
+- 建联记录：培优/补差、各科成绩、走读/住校、补习班、意向度、约习时间
+- 标签管理：建联 A/B/C、回访 S/A+/B+、转化 考虑/不考虑
+- 约习时间：工作台勾选确认
+
+
+[Tool result] Write
+
+assistant:
+现在更新原文件，去掉 CC 业务部分。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长运营与实验.mdc
+  contents: ---
+description: 海豚AI学增长运营详情——定价SKU、营销基建、用户标签体系、AB实验沉淀。涉及定价方案、标签圈选、实验设计时参考。
+alwaysApply: false
+---
+
+> 核心增长框架（产品模式、漏斗、组织角色、术语、工具）见 `增长业务上下文.mdc`
+> CC 业务详解（Leads来源、SOP、关单策略）见 `增长业务方.mdc`
+
+## 一、定价与 SKU
+
+### 正价课：新 SKU 按月课包模式（2025.12 起）
+
+从固定 1 年单转为按月课包售卖：
+- 单月基准价 400 元，课包价格 = 月数 x 400 - 1（如 6 个月 = 2399）
+- 每个课包配满减优惠券（50 元/月），实付 = 月数 x 350 - 1
+- 课包时长 3~8 个月，按月份自动切换（通过 luban 配置售卖时间轴）
+- 切换逻辑：切换日对非在读用户自动切换新 SKU；在服务期用户按切换前价格关单
+- 老 SKU（1 年单 3399/2999）已于 2026.1.1 全面停售
+- 配置与维护：[新 SKU 售卖 checklist](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=978747091)
+
+**销售侧按月定价（12 个月轮转）**：
+
+| 购买月份 | 课包时长 | 课包名称 | 标价 | 优惠券 | 实付 |
+|---------|---------|---------|------|-------|------|
+| 1 月 | 6 个月 | x年级·下学期直通车 | 2399 | 300 | 2099 |
+| 2 月 | 5 个月 | x年级·下学期直通车 | 1999 | 250 | 1749 |
+| 3 月 | 4 个月 | x年级·下学期直通车 | 1599 | 200 | 1399 |
+| 4 月 | 3 个月 | x年级·下学期直通车 | 1199 | 150 | 1049 |
+| 5 月 | 8 个月 | x年级·上学期直通车 | 3199 | 400 | 2799 |
+| 6 月 | 7 个月 | x年级·上学期直通车 | 2799 | 350 | 2449 |
+| 7 月 | 6 个月 | x年级·上学期直通车 | 2399 | 300 | 2099 |
+| 8 月 | 5 个月 | x年级·上学期直通车 | 1999 | 250 | 1749 |
+| 9 月 | 4 个月 | x年级·上学期直通车 | 1599 | 200 | 1399 |
+| 10 月 | 3 个月 | x年级·上学期直通车 | 1199 | 150 | 1049 |
+| 11 月 | 8 个月 | x年级·上学期直通车 | 3199 | 400 | 2799 |
+| 12 月 | 7 个月 | x年级·下学期直通车 | 2799 | 350 | 2449 |
+
+**助理侧续费**：仅 1 月和 7 月开放，固定 6 个月课包，实付 2099
+
+### 体验课定价（按渠道）
+
+| 渠道 | 价格 |
+|------|------|
+| 效果广告（抖音/腾讯/百度） | 29 元 |
+| 端内自然流量、App 直投 | 9 元 |
+| 微信公众号 | 1 元 |
+| 猿编程导流 | 0 元 |
+
+### 退款规则
+
+- 购买后 14 天内：App 自助退款，全额退
+- 超 14 天：原则上不予退费，用户投诉意向后才可退
+
+---
+
+## 二、营销活动与基建能力
+
+### 营销活动
+
+| 活动类型 | 说明 | 后台 |
+|---------|------|------|
+| 转介绍 | 通用配置能力，支持活动人群/奖励/分享方式/皮肤，H5+小程序 | gaffey - referral |
+| 拼团 | 私域运营场景，裂变拉新 | gaffey - group-booking |
+| 买赠 | 通用能力，扩展场景需 case by case 开发 | gaffey - gift-activity |
+| 幸运抽奖 | 主要用于大促续费和常规续费，扩展场景需开发 | gaffey - raffle |
+
+### 市场投放
+
+主要渠道：直播电商、信息流效果广告、app 直投
+
+产品工作：
+- 新渠道接入、归因逻辑处理
+- 三方电商解密（抖音、视频号直播卖虚拟商品，需解密获取真实手机号）
+- 平台政策变化时灵活支持
+
+### 基建能力
+
+| 能力 | 说明 |
+|------|------|
+| 用户标签体系 | 研发侧用 Orion 标签平台；私域运营用企微标签，正迁移至运营能效平台(emon) |
+| 自研直播系统 | 教研直播（横屏，板书场景）+ 营销直播（竖屏，售卖+抽奖） |
+| 落地页后台 | 通用落地页（非售卖类）+ 售卖落地页（售卖类） |
+| AB 实验能力 | [AB实验能力介绍](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=926462571) |
+| 广告资源位 | 产品收口管理 |
+
+---
+
+## 三、用户标签体系
+
+[标签体系文档](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380) | 研发侧：Orion 标签平台 | 私域侧：企微标签 → 运营能效平台(emon)
+
+### 用户生命周期（aries_user_identify）
+
+用户在系统中的核心身份标签，驱动所有入口展示、限购判断和人群圈定。
+
+```
+注册用户(REGISTER_USER)
+    ↓ 购买体验课 / leads 激活
+体验在读(TRIAL)  ←→  销售体验在读(SALES_TRIAL) / CC体验在读(CC_TRIAL)
+    ↓ 出班或囤量池释放
+体验断课(TRIAL_OVERDUE)  ←→  销售体验断课 / CC体验断课
+    ↓ 购买正式会员
+会员在读(VIP)  →  销售已转化(SALES_TRANSFORMED) / CC已转化(CC_TRANSFORMED)
+    ↓ 到期或退费（过保护期后）
+会员断课(VIP_OVERDUE)
+```
+
+状态刷新触发事件：leads 激活、会员购买、出班/囤量池释放、退款、会员到期。
+
+注意：
+- 体验在读用户退款后仍标记为「体验在读」，出班后才变「体验断课」
+- 会员断课 = 到期过保护期 或 退费过保护期（全额退费不用过保护期）
+- 销售/CC 身份标签独立于生命周期标签，购买会员后在渠道身份视角始终为「已转化」
+
+### 体验课限购逻辑
+
+限购判断决定用户看到的入口和析出路径，是增长产品的核心规则之一。
+
+**不限购条件**（同时满足）：
+1. 用户不是体验在读 / 会员在读 / 会员断课
+2. 最近一次购买 CC 或销售体验课的时间 无值 或 距今 ≥ 210 天
+
+即：注册用户、体验断课用户，且距上次购买体验课超过 210 天（约 7 个月），才可再次购买体验课。
+
+### 关键用户属性标签
+
+| 标签 | 标签key | 说明 |
+|------|---------|------|
+| 用户真实年级 | aries_real_grade | 1~9，来源：售卖页/前测/留资落地页/工作台手动更新，每年暑假自动升级 |
+| 用户学习年级 | aries_user_grade | 1~9，来源：前测/App个人信息切换，每年暑假自动升级 |
+| 注册渠道 | aries:registerKeyfrom | 注册 keyfrom 前 4 级 |
+| 回归渠道 | aries:comeBackKeyfrom | 回归 keyfrom 前 4 级 |
+| 距最近购买体验课天数 | aries:lastedBuyTrialSpendDays | 用于限购判断 |
+| 距最近 leads 激活天数 | aries:lastedTrialActivateSpendDays / lastedCCActivateSpendDays | 分销售/CC |
+| 距最近断课天数 | lastedSalesOverdueSpendDays / lastedCCOverdueSpendDays / lastedVIPOverdueSpendDays | 分销售/CC/会员 |
+| 用户分层 | user_layering | 高意向用户分层触达（OrganicNewUser_Attend_and_VipShow 等），每日定时刷新 |
+| 到课 | attendClass | 有任意到课行为后打标 |
+
+### 业务标签（工作台同步）
+
+| 标签 | 说明 |
+|------|------|
+| 激活渠道 | 转介绍/推广/客服/App/导流/私域/直播/其他，再次激活时更新 |
+| 住宿 | 住宿/走读，来源：销售工作台或助理问卷 |
+| 期次 | 班课期次或 1v1 体验周，再次激活时更新 |
+| 体验课购买次数 | trialPurchaseTimes，用于识别多次购买用户 |
+| 用户阶段（助理） | 服务期/续费期，续费期细分续1~续5（续1=到期当月） |
+| 用户分层（助理） | SABC，每月1日更新 |
+| 销售服务节点 | 首通→入门测→D1到习→D2到习→反馈→抢购→转化 |
+| 助理服务节点 | 首触→首访→学情沟通→续费沟通 |
+
+### 常用人群群组
+
+群组 = 多个标签条件组合圈定的人群包，用于端内入口展示、AB 实验分流等。
+
+| 场景 | 群组 | 圈选逻辑 |
+|------|------|---------|
+| 前测/资源位入口（自然流量） | organic_GradeNotNine | 注册用户 + 年级非9 |
+| 前测/资源位入口（直投） | aries_trial_app-zt_abtest | 注册用户 + 注册/回归keyfrom为直投渠道 |
+| 断课非限购入口 | xg_GradeNotNine | 体验断课 + 距上次购买体验课≥210天 + 真实年级有值 |
+| 计划页体验周入口 | nature/zt/xg_planPageTrial | 注册用户或体验断课 + 距上次购买≥210天 + 年级非1/2/3/9 |
+| 会员页召回入口 | nature/zt/trial/vip_vipPageRecall | 注册用户 或 体验断课 或 会员断课 |
+| 计划页召回入口 | planPage_recall | 注册/体验断课/会员断课 + 最近CC激活≥120天 + 最近断课>7天 |
+| 留资召回入口 | aries_trial_zt_recall | 进入通用落地页→小程序加私域客服微信→私域析出为CC leads |
+
+年级限制说明：1/2/3/9 年级的体验课 leads 分配给 CC（定制体验课），体验周入口展示的是销售体验课大纲，因此排除这些年级。
+
+---
+
+## 四、增长侧 AB 实验沉淀
+
+来源：[增长侧 AB 实验汇总](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=963282611)，截至 2025.12.24
+
+### 实验清单
+
+| # | 实验 | 上线 | 核心结论 | 结果 |
+|---|------|------|---------|------|
+| 1 | 强制登录实验 | 2025.5（数据观测期 9.12~10.12） | 「强制+有利益文案」登录率比「可跳过」高 1.4pp（置信），但登录析出率和端到端效率无显著差异 | 下线强制无文案组 |
+| 2 | 前测挽留弹窗 | 2025.8.18 | 新弹窗样式析出率显著优于旧样式（p=0.002） | 全量实验组 |
+| 3 | 加微页 x 计划页交叉实验 | 2025.8 | 交叉组合效果更好（旧加微+新计划、新加微+旧计划）；新计划页显著提升入门测到测率 | 全量旧加微+新计划 |
+| 4 | 计划页付费浮层优化 v1 | 2025.8.28 | 旧样式 CTR 更好；新样式下单→支付成功率更高（由挽留弹窗贡献）。信息更全面的弹窗 CTR 反而跌 3pp | 继续优化 |
+| 5 | 计划页付费浮层优化 v2 | 2025.10.30 | 暖色系整体转化更好 | 全量暖色 |
+| 6 | 计划页试看视频 | 2025.10.13 | 售卖落地页曝光提升，但整体析出率下跌。计划页析出无显著变化，其他位置析出率从 4.1%→3.3%（点击过试看的用户更低：2.7%） | 回滚 |
+| 7 | 加微页优化 v2 | 2025.12.09 | 进行中 | — |
+
+### 直投新用户漏斗（实验背景数据）
+
+来源：[强制登录实验](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=859434203) + [计划页提升析出优化](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=913910240)，截至 2025.8
+
+```
+App 激活
+  ↓ 登录成功率 ~75%（25%在登录环节流失）
+注册登录
+  ↓ 前测通过率 ~95.56%
+前测完成
+  ├─ 析出（购买体验课）：前测析出率 ~15.7%
+  └─ 未购买进入端内：占全部激活用户 ~53%
+      ├─ 20% 在计划页加载前退出
+      └─ 80%+ 落在计划页
+           └─ 30% 有点击行为（资料库/我的/首页各占 ~40%）
+```
+
+整体析出率 ~17.5%，其中计划页贡献 1.4pp
+
+### 探索中的实验方向：先前测再登录
+
+来源：[先前测再登录方案](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=868016361)，2025.5（方案设计阶段，未上线实验）
+
+**核心假设**：当前"先登录再前测"模式下登录成功率仅 ~75%。如果改为"先前测再登录"，利用沉没成本和认知收获感（"测试让我更了解自己"），登录行为从"门槛"变成"奖励解锁"，预期登录率可提升至 ~90%。
+
+| 模式 | 前测通过率 | 登录成功率 | 预期析出率 |
+|------|-----------|-----------|-----------|
+| 先登录（现状） | 95.56% | 75% | 15.7% |
+| 先登录（优化后） | 96% | 80% | 17% |
+| 先前测（预估） | 92% | 90% | 17% |
+
+**竞品参考**：
+- 多邻国：开屏→前测→内容学习→登录（登录最后置，沉没成本最大化）
+- Brilliant：开屏→前测→登录+订阅→内容学习（前测后立即转化）
+- 两者共同点：前测中都嵌入了产品价值展示和动机激励
+- 关键差异：海豚场景是"家长下载、孩子使用"，和竞品"用户给自己找工具"不同，不能直接照搬
+
+**状态**：方案设计阶段，标注为"施工中"，待 AB 实验验证（基于经验判断，待验证）
+
+### 沉淀的关键认知
+
+**1. 漏斗前端强制行为不一定提升端到端效率**（实验1）
+- 强制登录提高了登录率，但流失用户在后续环节同样会流失，说明增量用户质量较低
+- 启示：漏斗前端的"堵漏"要区分是真正减少流失还是只是延后流失
+
+**2. 挽留弹窗是有效的析出提升手段**（实验2、4）
+- 前测挽留弹窗改版显著提升析出（p=0.002）
+- 付费浮层的挽留弹窗也贡献了下单→支付成功率的提升
+
+**3. 信息量过多可能抑制即时点击**（实验4、5）（单实验猜想，待更多验证）
+- 事实：付费浮层信息更全面 → CTR 反而跌 3pp；暖色系全量后整体转化更好
+- 猜想：信息过多增加决策成本，析出场景下"简洁+情感"可能优于"全面+理性"
+
+**4. 加微页与计划页存在交互效应，不能单变量优化**（实验3）
+- 最佳组合是"交叉混搭"而非"全新"或"全旧"
+- 标单大盘最佳：旧加微+新计划；直投专组最佳：新加微+旧计划
+- 原因推测（基于数据分析，非验证结论）：
+  - 新加微页建立"专属学习安排"预期 → 落地旧计划页（有学习规划环节）形成呼应
+  - 旧加微页预期弱 → 落地新计划页（清晰课程安排）深化"课程"概念
+- 启示（推测）：用户预期管理是连续的，相邻页面之间需要"期望差"来保持动力
+
+**5. 试看内容的"替代效应"**（实验6）
+- 事实：有试看视频 → 计划页析出无显著变化，但其他位置析出率从 4.1%→3.3%；点击过试看的用户在其他页面析出率更低（2.7%）
+- 推测：免费体验满足了探索需求，反而降低了付费动机。试看/试用类功能需要在"体验够了"和"还想要更多"之间找到平衡点
+
+**6. 新计划页对早期完课有正向影响，但可能恶化转化**（实验3复盘）
+- 事实：直投专组新计划页显著提升入门测到完测率和 D1 到课率（置信）；但转化率偏低（不显著，受多因素影响）
+- 推测原因（3个假设，均未验证）：
+  - 假设1-跟进间隔：用户提早自主学习 D1 → D1 完课到销售跟进解锁 D2 的间隔变长。参考数据：D1D2 解锁间隔 0-1 天、完课间隔 1 天时转化率最高（来源：历史分析，原始出处待确认）
+  - 假设2-筛选效果：新计划页引导效果强 → 更多低意向用户也进入漏斗 → 销售做功更分散
+  - 假设3-服务配合度：专组新计划页对应的主动加微率、被动加微成功率整体不如旧计划页
+- 启示（推测）：产品优化和服务节奏需要联动，产品侧提前了用户行为但服务侧没跟上
+
+### 实验方法论沉淀
+
+- **AB 平台**：switch 平台（即基建能力中的"AB 实验能力"），支持实验变量配置和分流
+- **置信标准**：p < 0.05 认为置信
+- **常见陷阱**：
+  - 单看局部指标正向不代表端到端正向（实验1、6）
+  - 多变量交叉时单变量分析会误导（实验3）
+  - 转化率受销售做功影响大，样式实验对转化率的影响往往不显著（实验3复盘）
+
+
+[Tool result] Write
+
+assistant:
+顺便更新 `context管理规范.mdc` 的文件清单。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/context管理规范.mdc
+  old_string: | 文件 | 内容 |
+|------|------|
+| 海豚AI学产品上下文.mdc | 产品概述、课程流程、设备兼容、核心指标、技术架构 |
+| 增长业务上下文.mdc | 增长核心框架、漏斗、组织角色、用户身份状态、术语、工具 |
+| 增长运营与实验.mdc | CC业务、定价SKU、营销基建、用户标签、AB实验沉淀 |
+| AI课产品机制.mdc | 课程结构、题目体系、推题策略、游戏化机制 |
+| 竞品与行业认知.mdc | AI教育赛道竞品分析与差异化定位 |
+  new_string: | 文件 | 内容 |
+|------|------|
+| 海豚AI学产品上下文.mdc | 产品概述、课程流程、设备兼容、核心指标、技术架构 |
+| 增长业务上下文.mdc | 增长核心框架、漏斗、组织角色、用户身份状态、术语、工具 |
+| 增长业务方.mdc | CC业务详解、Leads来源、SOP、关单策略、用户分层标签 |
+| 增长运营与实验.mdc | 定价SKU、营销基建、用户标签体系、AB实验沉淀 |
+| AI课产品机制.mdc | 课程结构、题目体系、推题策略、游戏化机制 |
+| 竞品与行业认知.mdc | AI教育赛道竞品分析与差异化定位 |
+
+[Tool result] StrReplace
+
+assistant:
+完成。现在增长 context 拆成了三个文件：
+
+| 文件 | 内容 | 行数 |
+|------|------|------|
+| `增长业务上下文.mdc` | 核心框架、漏斗、角色、术语 | ~165 |
+| `增长业务方.mdc`（新） | CC 全流程（Leads来源、SOP、关单、分层标签） | ~165 |
+| `增长运营与实验.mdc` | 定价、营销基建、标签体系、AB实验 | ~260 |
+
+三个文件头部互相引用，按需加载。
+
+user:
+<git_status>
+This is the git status at the start of the conversation. Note that this status is a snapshot in time, and will not update during the conversation.
+
+Git repo: /Users/jiwenyue/aries-teach
+
+## master...origin/master
+
+Git repo: /Users/jiwenyue/cursorProjects/aries
+
+## main...origin/main [behind 1]
+
+Git repo: /Users/jiwenyue/cursorProjects/personal
+
+## main...origin/main
+</git_status>
+
+<agent_transcripts>
+Agent transcripts (past chats) live in /Users/jiwenyue/.cursor/projects/Users-jiwenyue-aries-teach/agent-transcripts. They have names like <uuid>.jsonl, cite them to the user as [<title for chat <=6 words>](<uuid excluding .jsonl>). NEVER cite subagent transcripts/IDs; you can only cite parent uuids. Don't discuss the folder structure.
+</agent_transcripts>
+
+<agent_skills>
+When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge. To use a skill, read the skill file at the provided absolute path using the Read tool, then follow the instructions within. When a skill is relevant, read and follow it IMMEDIATELY as your first action. NEVER just announce or mention a skill without actually reading and following it. Only use skills listed below.
+
+<available_skills description="Skills the agent can use. Use the Read tool with the provided absolute path to fetch full contents.">
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/answer-generator/SKILL.md">批量生成小学五年级数学标答。支持单题生成和 Excel 批量处理，根据题干、图片描述、教学重难点自动生成含解析过程的标准答案并回填表格</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/board-component-generator/SKILL.md">根据题目资料生成符合规范的教学板书指令</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/check-for-online/SKILL.md">AI 驱动的物料上线前质检技能——由 AI 逐文件阅读、理解并检查物料的格式、内容、板书、对话等维度，确保上线前质量达标</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-branch-creator/SKILL.md">帮助用户创建规范命名的 feature 分支</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-branch-switcher/SKILL.md">安全地在 Git 分支之间切换</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-commit-helper/SKILL.md">帮助非研发人员轻松完成 Git 本地提交操作，自动检查状态、生成规范的 commit message</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-mr-updater/SKILL.md">响应 GitLab MR 评审意见，创建新提交并更新 MR</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/git-push-review/SKILL.md">帮助非研发人员推送到远端 feature 分支并发起代码 review，处理常见推送问题</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/aries-teach/.claude/skills/question-for-teach/SKILL.md">教学选题系统，支持12题/16-18题双模式，为指定讲次输出可人工复核的选题方案</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/cursorProjects/aries/.cursor/skills/tableau-filter-mapping/SKILL.md">Tableau筛选器中英文映射字典。当用户使用中文描述Tableau视图筛选需求时（如"渠道ROI中的带班类型"），自动查询对应的英文filter名称（如issue_type）。用于将用户友好的中文描述转换为Tableau API所需的英文筛选器参数。</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/cursorProjects/aries/.cursor/skills/yuanfudao-weekly-tracker/SKILL.md" />
+
+<agent_skill fullPath="/Users/jiwenyue/.cursor/skills/sales-conversion-analysis/SKILL.md">销售转化数据分析——按 issue/班期维度，分析首通前行为、微信沟通、学习行为对转化率的影响</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/.cursor/skills-cursor/create-rule/SKILL.md">Create Cursor rules for persistent AI guidance. Use when the user wants to create a rule, add coding standards, set up project conventions, configure file-specific patterns, create RULE.md files, or asks about .cursor/rules/ or AGENTS.md.</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/.cursor/skills-cursor/create-skill/SKILL.md">Guides users through creating effective Agent Skills for Cursor. Use when the user wants to create, write, or author a new skill, or asks about skill structure, best practices, or SKILL.md format.</agent_skill>
+
+<agent_skill fullPath="/Users/jiwenyue/.cursor/skills-cursor/update-cursor-settings/SKILL.md">Modify Cursor/VSCode user settings in settings.json. Use when the user wants to change editor settings, preferences, configuration, themes, font size, tab size, format on save, auto save, keybindings, or any settings.json values.</agent_skill>
+</available_skills>
+</agent_skills>
+
+<mcp_instructions description="Instructions provided by MCP servers to help use them properly">
+Server: tableau
+通过 MCP 协议操作 Tableau Server REST API：查询资源、获取视图截图/数据、刷新数据源、管理作业等
+</mcp_instructions>
+
+user:
+<user_query>
+@personal/.cursor/rules/增长运营与实验.mdc 里面定价和 sku 的部分，挪到@personal/.cursor/rules/增长业务上下文.mdc 上下文的 mdc 吧
+</user_query>
+
+assistant:
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: description: 海豚AI学增长核心框架——产品模式、增长全链路、组织角色、用户身份状态、关键术语与工具索引。涉及增长策略、PRD、转化、留存时参考。运营详情（CC/定价/标签/实验）见「增长运营与实验.mdc」。
+  new_string: description: 海豚AI学增长核心框架——产品模式、增长全链路、组织角色、用户身份状态、定价SKU、关键术语与工具索引。涉及增长策略、PRD、转化、留存、定价时参考。
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: > 运营详情（CC业务、定价SKU、营销基建、用户标签、AB实验）见 `增长运营与实验.mdc`
+  new_string: > CC 业务详解见 `增长业务方.mdc`，营销基建/标签/实验见 `增长运营与实验.mdc`
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ---
+
+## 五、工具与后台索引
+  new_string: ---
+
+## 五、定价与 SKU
+
+### 正价课：新 SKU 按月课包模式（2025.12 起）
+
+从固定 1 年单转为按月课包售卖：
+- 单月基准价 400 元，课包价格 = 月数 x 400 - 1（如 6 个月 = 2399）
+- 每个课包配满减优惠券（50 元/月），实付 = 月数 x 350 - 1
+- 课包时长 3~8 个月，按月份自动切换（通过 luban 配置售卖时间轴）
+- 切换逻辑：切换日对非在读用户自动切换新 SKU；在服务期用户按切换前价格关单
+- 老 SKU（1 年单 3399/2999）已于 2026.1.1 全面停售
+- 配置与维护：[新 SKU 售卖 checklist](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=978747091)
+
+**销售侧按月定价（12 个月轮转）**：
+
+| 购买月份 | 课包时长 | 课包名称 | 标价 | 优惠券 | 实付 |
+|---------|---------|---------|------|-------|------|
+| 1 月 | 6 个月 | x年级·下学期直通车 | 2399 | 300 | 2099 |
+| 2 月 | 5 个月 | x年级·下学期直通车 | 1999 | 250 | 1749 |
+| 3 月 | 4 个月 | x年级·下学期直通车 | 1599 | 200 | 1399 |
+| 4 月 | 3 个月 | x年级·下学期直通车 | 1199 | 150 | 1049 |
+| 5 月 | 8 个月 | x年级·上学期直通车 | 3199 | 400 | 2799 |
+| 6 月 | 7 个月 | x年级·上学期直通车 | 2799 | 350 | 2449 |
+| 7 月 | 6 个月 | x年级·上学期直通车 | 2399 | 300 | 2099 |
+| 8 月 | 5 个月 | x年级·上学期直通车 | 1999 | 250 | 1749 |
+| 9 月 | 4 个月 | x年级·上学期直通车 | 1599 | 200 | 1399 |
+| 10 月 | 3 个月 | x年级·上学期直通车 | 1199 | 150 | 1049 |
+| 11 月 | 8 个月 | x年级·上学期直通车 | 3199 | 400 | 2799 |
+| 12 月 | 7 个月 | x年级·下学期直通车 | 2799 | 350 | 2449 |
+
+**助理侧续费**：仅 1 月和 7 月开放，固定 6 个月课包，实付 2099
+
+### 体验课定价（按渠道）
+
+| 渠道 | 价格 |
+|------|------|
+| 效果广告（抖音/腾讯/百度） | 29 元 |
+| 端内自然流量、App 直投 | 9 元 |
+| 微信公众号 | 1 元 |
+| 猿编程导流 | 0 元 |
+
+### 退款规则
+
+- 购买后 14 天内：App 自助退款，全额退
+- 超 14 天：原则上不予退费，用户投诉意向后才可退
+
+---
+
+## 六、工具与后台索引
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ## 六、待补充
+  new_string: ## 七、待补充
+
+[Tool result] StrReplace
+
+assistant:
+现在从 `增长运营与实验.mdc` 删掉定价部分。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长运营与实验.mdc
+  old_string: description: 海豚AI学增长运营详情——定价SKU、营销基建、用户标签体系、AB实验沉淀。涉及定价方案、标签圈选、实验设计时参考。
+  new_string: description: 海豚AI学增长运营详情——营销基建、用户标签体系、AB实验沉淀。涉及标签圈选、实验设计时参考。
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长运营与实验.mdc
+  old_string: > 核心增长框架（产品模式、漏斗、组织角色、术语、工具）见 `增长业务上下文.mdc`
+> CC 业务详解（Leads来源、SOP、关单策略）见 `增长业务方.mdc`
+
+## 一、定价与 SKU
+
+### 正价课：新 SKU 按月课包模式（2025.12 起）
+
+从固定 1 年单转为按月课包售卖：
+- 单月基准价 400 元，课包价格 = 月数 x 400 - 1（如 6 个月 = 2399）
+- 每个课包配满减优惠券（50 元/月），实付 = 月数 x 350 - 1
+- 课包时长 3~8 个月，按月份自动切换（通过 luban 配置售卖时间轴）
+- 切换逻辑：切换日对非在读用户自动切换新 SKU；在服务期用户按切换前价格关单
+- 老 SKU（1 年单 3399/2999）已于 2026.1.1 全面停售
+- 配置与维护：[新 SKU 售卖 checklist](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=978747091)
+
+**销售侧按月定价（12 个月轮转）**：
+
+| 购买月份 | 课包时长 | 课包名称 | 标价 | 优惠券 | 实付 |
+|---------|---------|---------|------|-------|------|
+| 1 月 | 6 个月 | x年级·下学期直通车 | 2399 | 300 | 2099 |
+| 2 月 | 5 个月 | x年级·下学期直通车 | 1999 | 250 | 1749 |
+| 3 月 | 4 个月 | x年级·下学期直通车 | 1599 | 200 | 1399 |
+| 4 月 | 3 个月 | x年级·下学期直通车 | 1199 | 150 | 1049 |
+| 5 月 | 8 个月 | x年级·上学期直通车 | 3199 | 400 | 2799 |
+| 6 月 | 7 个月 | x年级·上学期直通车 | 2799 | 350 | 2449 |
+| 7 月 | 6 个月 | x年级·上学期直通车 | 2399 | 300 | 2099 |
+| 8 月 | 5 个月 | x年级·上学期直通车 | 1999 | 250 | 1749 |
+| 9 月 | 4 个月 | x年级·上学期直通车 | 1599 | 200 | 1399 |
+| 10 月 | 3 个月 | x年级·上学期直通车 | 1199 | 150 | 1049 |
+| 11 月 | 8 个月 | x年级·上学期直通车 | 3199 | 400 | 2799 |
+| 12 月 | 7 个月 | x年级·下学期直通车 | 2799 | 350 | 2449 |
+
+**助理侧续费**：仅 1 月和 7 月开放，固定 6 个月课包，实付 2099
+
+### 体验课定价（按渠道）
+
+| 渠道 | 价格 |
+|------|------|
+| 效果广告（抖音/腾讯/百度） | 29 元 |
+| 端内自然流量、App 直投 | 9 元 |
+| 微信公众号 | 1 元 |
+| 猿编程导流 | 0 元 |
+
+### 退款规则
+
+- 购买后 14 天内：App 自助退款，全额退
+- 超 14 天：原则上不予退费，用户投诉意向后才可退
+
+---
+
+## 二、营销活动与基建能力
+  new_string: > 核心增长框架（产品模式、漏斗、组织角色、定价SKU、术语、工具）见 `增长业务上下文.mdc`
+> CC 业务详解（Leads来源、SOP、关单策略）见 `增长业务方.mdc`
+
+## 一、营销活动与基建能力
+
+[Tool result] StrReplace
+
+assistant:
+更新剩余章节编号。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长运营与实验.mdc
+  old_string: ## 三、用户标签体系
+  new_string: ## 二、用户标签体系
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长运营与实验.mdc
+  old_string: ## 四、增长侧 AB 实验沉淀
+  new_string: ## 三、增长侧 AB 实验沉淀
+
+[Tool result] StrReplace
+
+assistant:
+最后更新 `增长业务方.mdc` 的交叉引用，加上定价已移到上下文文件的说明。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务方.mdc
+  old_string: > 核心增长框架（漏斗、组织角色、术语）见 `增长业务上下文.mdc`
+> 定价/标签/实验等见 `增长运营与实验.mdc`
+  new_string: > 核心增长框架（漏斗、组织角色、定价SKU、术语）见 `增长业务上下文.mdc`
+> 标签/实验等见 `增长运营与实验.mdc`
+
+[Tool result] StrReplace
+
+assistant:
+搞定。定价与 SKU 部分已从 `增长运营与实验.mdc` 挪到 `增长业务上下文.mdc` 的第五节，三个文件的交叉引用和章节编号都已同步更新。
+
+当前文件分布：
+- **增长业务上下文.mdc**：产品概述、漏斗指标、组织角色、术语、**定价与SKU**、工具索引
+- **增长业务方.mdc**：CC 业务详解
+- **增长运营与实验.mdc**：营销基建、用户标签体系、AB 实验沉淀
+
+user:
+<user_query>
+https://shimo.zhenguanyu.com/docs/30dyDb9jlMMyFzPQ/ 《集团导流-海豚&猿编程项目文档》
+集团导流是用户增长的其中一个手段，可以补充到增长 context 中
+</user_query>
+
+assistant:
+[Thinking] The user wants me to read a Shimo document about "集团导流-海豚&猿编程项目文档" and incorporate the information into the growth context. Let me fetch the document first.
+[Tool call] user-tutor-wb-mcp-1_0-get_shimo_content
+  fileUrl: https://shimo.zhenguanyu.com/docs/30dyDb9jlMMyFzPQ/
+
+[Tool result] user-tutor-wb-mcp-1_0-get_shimo_content
+
+assistant:
+[Thinking] I now have the content about 集团导流 (internal group cross-promotion between 海豚AI学 and 猿编程). Let me analyze the key points and determine where to add this in the growth context.
+
+Key points:
+1. **Background**: Cross-promotion between different products within the company (猿辅导, 猿编程, 斑马, 海豚)
+2. **Two directions**: 
+   - 编程→海豚: Programming selects age-appropriate paying users, after renewals, privately messages for cross-enrollment to 海豚 (0 yuan free). These users go to 海豚 sales as leads (mixed with 29/9 yuan leads). Weekly Wednesday afternoon/evening.
+   - 海豚→编程: From week 5 of formal users, privately message to promote programming. Weekly Friday afternoon/evening.
+3. **Data (Q4 up to Nov 24)**:
+   - 编程→海豚: 1127 diverted, 5277 touched, ~24% cross-enrollment rate (target 20%), ~8.9% conversion rate (target 10%)
+   - 海豚→编程: 2737 touched, 230 cross-enrolled, 8% rate (target 8%)
+4. **Planned expansion**: Testing diversion of programming's churned users
+5. **Workflow**: The process involves selecting qualified users, timing the outreach strategically, and tracking performance against targets.
+
+Now I'm thinking about where this cross-product diversion strategy fits in the documentation structure. It's fundamentally an acquisition channel, so it could live in the core growth framework or in the operational details section depending on whether I'm emphasizing it as a funnel component or as a tactical marketing initiative. The key details I need to capture are the cross-promotion flow between 猿编程 and 海豚, the conversion metrics, and how these leads integrate into the sales pipeline. I should add 集团导流 as a distinct acquisition channel in the funnel section and include a brief explanation of the mechanics—the bidirectional flow, the 0元 trial pricing, and how these leads get mixed with other sources for allocation. This belongs in the growth context document as it's essential to understanding the full acquisition picture. 我需要在漏斗概览中加入集团导流作为一个获客渠道，然后在适当的位置添加关于集团导流机制的简要说明。最直接的方式是在第二部分更新顶部漏斗来源，并在业务流程或新的小节中补充集团导流的具体细节。
+
+Generating markdown table... 价课用户续报后，私发消息导流海豚体验课 | 编程适龄正价课用户 | 0 元（免费领取） | 每周三下午 |
+| 海豚→编程 | 海豚正式版用户 W5 起，自习助理私发导流 | 正式版 ≥35 天用户 | - | 每周五下午 |
+
+看一下 Q4 截至 11.24 的数据表现。编程到海豚的转化触达了 5277 人，其中扩科 1127 人（24%），转正率约 8.9%，还差一点才能达到 10% 的目标。海豚到编程这边触达 2737 人，扩科 230 人（8%），刚好达标。编程导流进来的 leads 会和 29 元、9 元的 leads 一起分配给销售团队处理。
+文档已拿到，我来提取关键信息整合到增长上下文中。集团导流是一个独立的获客渠道，核心信息包括双向导流机制、用户群、定价和数据表现。
+
+先读一下当前 `增长业务上下文.mdc` 确认最新状态。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have the full picture. I need to add 集团导流 information. I'll:
+
+1. Update the funnel diagram to include 集团导流 as a source
+2. Add a section about 集团导流 - I think it fits best as a new section "六、集团导流" before the tools section, or I can add it as a subsection under the funnel section.
+
+Actually, thinking about it more, 集团导流 is a specific acquisition channel. The funnel already shows "市场投放" at the top. I should:
+1. Update the funnel top to mention 集团导流
+
+
+2. Add a concise section explaining how 集团导流 works mechanically
+3. Add both "集团导流" and "扩科" to the 业务流程 terminology table
+4. Reorganize the sections so the new 集团导流 section becomes section 六, pushing the tools section to 七 and待补充 to 八
+
+I'm drafting the new section now with details about how 集团导流 connects猿编程 to海...
+
+Generating markdown table... I'm refocusing on the core model and mechanics rather than operational details—stripping away the specific metrics and contact info to keep just the essential framework. I should also expand the terminology section to include 扩科 (subject expansion) and 集团导流 (group traffic distribution) since those are key concepts in this system.
+内容已获取。集团导流是一个独立的获客渠道，我来提炼关键信息补充到上下文中。计划做三处更新：
+
+1. 漏斗图顶部补充集团导流作为流量来源
+2. 新增"集团导流"章节（机制、数据、对接方）
+3. 术语表补充"扩科""集团导流"
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ```
+市场投放（信息流/直播电商/app直投）
+    ↓ 曝光
+落地页 / 电商渠道
+    ↓ leads 析出（析出率）
+体验课购买
+  new_string: ```
+市场投放（信息流/直播电商/app直投）+ 集团导流（猿编程/斑马）
+    ↓ 曝光 / 扩科触达
+落地页 / 电商渠道 / 私发导流链接
+    ↓ leads 析出（析出率）
+体验课购买
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: || 直投 | app 直接投放广告获客 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+  new_string: || 直投 | app 直接投放广告获客 |
+| 集团导流 | 集团内部产品间的流量互换（猿编程 ↔ 海豚），利用用户群重合做扩科 |
+| 扩科 | 已购买 A 产品的用户被导流购买 B 产品，扩科率 = 成功购买数 / 触达数 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: | 直投 | app 直接投放广告获客 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+
+---
+
+## 五、定价与 SKU
+  new_string: | 直投 | app 直接投放广告获客 |
+| 集团导流 | 集团内部产品间的流量互换（猿编程 ↔ 海豚），利用用户群重合做扩科 |
+| 扩科 | 已购买 A 产品的用户被导流购买 B 产品，扩科率 = 成功购买数 / 触达数 |
+| 课包 | 新 SKU 模式下的售卖单位（3~8 个月），按月切换 |
+| keyfrom | 投放-分配-归因的关键标识，4 级结构（前 2 级 → 看板，前 3 级 → 分配，前 4 级 → 下单） |
+| 学练补 | 学（知识探究）+ 练（小试牛刀）+ 补（定向提升）三环节 |
+| 到习 / 完习 | 约习后实际到课学习 / 完成课程全部学习环节 |
+
+---
+
+## 五、集团导流（猿编程 ↔ 海豚）
+
+集团内部产品间的流量互换，利用用户群体重合做扩科转化。
+
+| 方向 | 机制 | 用户群 | 定价 | 节奏 |
+|------|------|--------|------|------|
+| 编程→海豚 | 编程正价课用户续报后，业务侧私发消息导流海豚体验课 | 编程适龄段正价课用户 | 0 元 | 每周三 |
+| 海豚→编程 | 正式版用户 W5（≥35 天）起，自习助理私发导流编程 | 海豚正式版在读用户 | — | 每周五 |
+
+- 编程导流进来的 leads 与 29 元/9 元 leads 一起分配给销售转正
+- 编程侧按年级分等级：1-3 年级 J 等级，4-6 年级 S 等级
+- Q4 参考数据（截至 2024.11）：
+  - 编程→海豚：触达 5277，扩科 1127（扩科率 24%，目标 20%），转正率 ~8.9%（目标 10%）
+  - 海豚→编程：触达 2737，扩科 230（扩科率 8%，达标）
+- 探索方向：编程断课用户导流（扩大流量池）
+- 对接人：编程侧 刘美麟（主）/ 史琢玉（流量池），海豚侧 自习助理
+- 项目文档：[集团导流-海豚&猿编程](https://shimo.zhenguanyu.com/docs/30dyDb9jlMMyFzPQ/)
+
+---
+
+## 六、定价与 SKU
+
+[Tool result] StrReplace
+
+assistant:
+更新后续章节编号。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ## 六、工具与后台索引
+  new_string: ## 七、工具与后台索引
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ## 七、待补充
+  new_string: ## 八、待补充
+
+[Tool result] StrReplace
+
+assistant:
+最后更新 description。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: description: 海豚AI学增长核心框架——产品模式、增长全链路、组织角色、用户身份状态、定价SKU、关键术语与工具索引。涉及增长策略、PRD、转化、留存、定价时参考。
+  new_string: description: 海豚AI学增长核心框架——产品模式、增长全链路、组织角色、用户身份状态、集团导流、定价SKU、关键术语与工具索引。涉及增长策略、PRD、转化、留存、定价时参考。
+
+[Tool result] StrReplace
+
+assistant:
+搞定。在 `增长业务上下文.mdc` 中做了三处更新：
+
+1. **漏斗图顶部**：增加了"集团导流（猿编程/斑马）"作为流量来源
+2. **新增第五节"集团导流"**：涵盖双向导流机制、用户群、定价、节奏、Q4 参考数据、探索方向和对接人
+3. **术语表**：新增"集团导流"和"扩科"两个术语
+
+操作性的 SOP 内容（取数模板、物料文档、权限申请等）没有放进来，那些更适合放在具体项目文档里而不是 context。
+
+user:
+<user_query>
+我现在需要你帮我整理一下增长 context 的结构
+1.目的：为了整理增长 context 结构
+2.结构：
+--分成增长业务本身（包括增长业务内容、边界、常用的基本概念等，基本信息为主）；
+--增长业务方（包括常对接的业务方，业务方的背景信息、业务模式和 sop 等，方便在涉及到业务方的项目你能快速理解这个业务信息）；
+--重点的项目和业务（比如直投渠道，已经有自己比较完善的框架，而且是重点方向）；
+--实验和运营（包括增长方向的实验信息沉淀，结论、可复用的信息，还有涉及到的一些运营能力）
+可以参考之前@personal/work/analysis/流量类型承接形式梳理/汇报-流量分类与评级现状.html 这个流量分级
+</user_query>
+
+assistant:
+[Thinking] The user wants me to reorganize the growth context structure. Let me first understand the current state by reading the relevant files, then propose a restructuring plan.
+
+Let me read:
+1. The current growth context files
+2. The HTML file they referenced for flow classification
+
+I already have the content of `增长业务上下文.mdc` from the previous read. Let me read the other files I haven't seen yet and the HTML file.
+先把相关文件都看一遍，理解现状后再规划结构。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/work/analysis/流量类型承接形式梳理/汇报-流量分类与评级现状.html
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have a comprehensive understanding of the current state and the user's request. Let me read the remaining context files to understand the full picture.
+
+The user wants to reorganize the growth context into 4 categories:
+1. **增长业务本身** (Growth business basics) - business content, boundaries, basic concepts
+2. **增长业务方** (Business counterparts) - CC, sales, and other teams the growth team works with
+3. **重点项目和业务** (Key projects/business lines) - like 直投渠道 which already has its own framework
+4. **实验和运营** (Experiments and operations) - experiment learnings, reusable conclusions, operational capabilities
+
+
+I'm reviewing the existing files to see what's already documented: the main growth context file covers product overview, funnel, roles, and tools; there's a separate file for CC business details; another for marketing infrastructure and experiments; and the 直投渠道 file likely has its own established structure. I can also see flow classification data with performance grades for different lead types in the HTML.
+
+Now I need to understand what the user wants to reorganize. They're asking me to separate business fundamentals—what growth does, its scope, key concepts, and metrics—from operational specifics like 集团导流 details and pricing tables. Let me check the 直投渠道 file in the team space to understand its current scope before deciding what should move where.
+
+Looking at the structure, I see four main categories emerging: the core growth business context, the business partners and teams we collaborate with, major focus projects like 直投渠道 that deserve their own comprehensive frameworks, and then the experimental and operational layer covering AB tests, insights, and marketing capabilities. The real question is whether the user wants me to just outline this reorganization plan or actually execute it across the files.
+
+Given they asked to "整理一下" (organize/tidy up), they probably want action, but I should propose the structure first and get confirmation before making changes. I'm also noticing the flow classification data in that HTML file—the S/A/B/C grading system, lead quality assessment framework, and conversion metrics by channel—could be valuable reference material to incorporate into the growth context, especially since it defines quality through observable signals before service intervention.
+
+For the actual restructuring, I'm thinking the main growth context file should cover the fundamentals: product overview, funnel metrics, team roles, key terms, pricing, acquisition channels like 集团导流, and the tools we use. Then I'd add that flow classification system as reference data. The business partners file would expand to properly document CC, sales (标单), 自习助理, and whoever else we regularly coordinate with. And for specialized areas, I'd create separate focused files starting with 直投渠道.
+
+mdc and potentially 流量分级.mdc as projects emerge. The experiments and operations file would then house all the AB testing learnings, marketing infrastructure, user tagging systems, and operational processes. I should check what's currently in the main context file and move things around accordingly—keeping the product overview, full-funnel metrics, and organizational structure there, but pushing detailed SOPs and business partner specifics into their own dedicated sections. 我需要从流量分级系统中提取关键信息，然后提出一个清晰的结构方案给用户，最后确认是否要执行这些调整。
+
+让我先查看其他文件来完整理解当前的状态，这样才能给出更有针对性的重组建议。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务方.mdc
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长运营与实验.mdc
+
+[Tool result] Read
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I have a clear picture of all the current files. Let me also check if there's a `直投渠道.mdc` in the personal space or only in the team space.
+[Tool call] Glob
+  glob_pattern: **/*.mdc
+  target_directory: /Users/jiwenyue/cursorProjects/personal/.cursor/rules
+
+[Tool result] Glob
+
+assistant:
+[Thinking] Now let me also check the team space for context files:
+现在全貌清楚了。让我对照你的四分结构，梳理现状和调整方案。
+
+---
+
+**你定义的四块结构 vs 现有文件对照：**
+
+| 你定义的分类 | 现有文件 | 现状评估 |
+|---|---|---|
+| **增长业务本身**（基本信息、边界、概念） | `增长业务上下文.mdc` | 基本 OK，但混入了「集团导流」的对接人/SOP 细节，偏运营 |
+| **增长业务方**（对接方的背景、模式、SOP） | `增长业务方.mdc` | 只有 CC 一个业务方，缺销售（标单）和自习助理的业务详情 |
+| **重点项目和业务** | 团队空间有 `直投渠道.mdc`，personal 没有 | 你的流量分级分析也属于这类，但还没沉淀为 context |
+| **实验和运营** | `增长运营与实验.mdc` | 内容 OK，营销基建 + 标签 + 实验都在 |
+
+**需要调整的点：**
+
+1. **增长业务上下文.mdc**：集团导流的「对接人、周三/周五节奏、Q4 数据」偏运营细节，应该只保留"集团导流是什么、和增长漏斗的关系"这层基本概念，细节挪到运营或独立专题
+2. **增长业务方.mdc**：标题叫"业务方"但内容只有 CC，如果要体现"增长常对接的业务方"，应该补上销售（标单）的业务模式和 SOP、自习助理的服务模式。集团导流的编程侧对接信息也可以放这里
+3. **重点项目**：直投渠道已有，流量分级可以作为新的专题沉淀
+4. **实验和运营**：结构已经比较好，不需要大改
+
+你看这个方向对不对？确认后我来执行具体调整。两个问题想确认：
+
+- **销售（标单）的 SOP 和业务模式**你手头有资料吗？还是先在"业务方"里留个占位？
+- **流量分级**那个分析要不要沉淀成一个重点项目的 context？
+
+user:
+<user_query>
+1. 我觉得可以，但是集团导流说白了，还是一种流量渠道，我在想这个是需要在业务上下文中展开说，还是要在增长业务方中展开
+2. 后续会补齐，我觉得可以先建上对应的标题，内容先空着：销售（分为标单和直投）、CC、助理、市场投放
+流量分级可以作为增长的一个上下文内容？
+</user_query>
+
+assistant:
+[Thinking] The user has two points:
+
+1. About 集团导流 - they're asking whether to expand it in 增长业务上下文 (business basics) or 增长业务方 (business counterparts). Their point is that 集团导流 is fundamentally a traffic channel.
+
+2. They want to set up placeholder sections in 增长业务方 for: 销售 (split into 标单 and 直投), CC, 助理, 市场投放. Content can be empty for now.
+
+3. 流量分级 can be a growth context file.
+
+Let me think about question 1:
+- 集团导流 is a traffic/acquisition channel, like 直投, 效果广告, etc.
+
+
+- In the current structure, 增长业务上下文 already covers channels in the funnel overview, while 增长业务方 focuses on "常对接的业务方" - the actual counterparts and teams you work with
+- 编程 (猿编程) is a business counterpart since they're a separate team/product, but the channel mechanics like 0元导流 and leads分配 belong in the growth business context itself
+
+So the right approach is to keep 集团导流 in 增长业务上下文 as a channel concept - covering what it is, how it fits in the funnel, and basic mechanics - but keep it brief.
+
+Now looking at whether 编程 belongs in 增长业务方: re-reading the definition "包括常对接的业务方，业务方的背景信息、业务模式和 sop 等", I see that 市场投放 is listed as a 业务方, which means it's not just internal service teams like CC/销售/助理 - it also includes functional areas like marketing. So 集团导流 could potentially fit as a subsection under a broader 业务方 category, or maybe it's part of the 市场投放 area.
+
+I think the cleanest approach is to keep 集团导流 in 增长业务上下文 as a concept-level mention of one acquisition channel alongside 直投/效果广告/电商, then put the detailed mechanics under 增长业务方 since 编程团队 is an actual counterpart I work with regularly. I'm settling on putting 集团导流 under 增长业务方 as part of the 市场投放 section since it's a business channel that pairs with 编程, then I'll trim it down to just a concept mention in the context file and create the 流量分级 file to complete the restructuring. 我需要把集团导流分开处理——在增长业务上下文中保留概念层面的描述，精简掉具体的对接细节，然后在增长业务方的市场投放部分展开操作层面的内容。现在我来规划具体的改动：在增长业务上下文里把集团导流条目简化到只讲它是什么，在增长业务方里新增或扩展市场投放部分来放入集团导流的执行细节。
+
+同时我想到可以单独创建一个流量分级的上下文文件，把用户提到的流量分类和质量评估提炼出来。让我列出待办项并开始执行。
+关于集团导流，我的判断：它本质是流量渠道，**概念放在增长业务上下文**（和直投、效果广告并列），**编程团队的对接细节放在增长业务方的「市场投放」下**（因为你把市场投放列为业务方之一）。这样概念和操作分层清晰。
+
+流量分级作为增长 context 合适，它描述的是 leads 质量评估框架，是增长业务的基础认知。
+
+现在开始执行。
+[Tool call] TodoWrite
+  todos: [{"id":"1","content":"增长业务上下文.mdc：集团导流部分精简为概念级（去掉对接人、SOP细节）","status":"in_progress"},{"id":"2","content":"增长业务方.mdc：重构为四个业务方（销售、CC、助理、市场投放），CC 保留内容，其余留占位","status":"pending"},{"id":"3","content":"新建 流量分级.mdc：从 HTML 分析提炼 leads 质量评估框架","status":"pending"}]
+  merge: false
+
+[Tool result] TodoWrite
+
+assistant:
+先精简 `增长业务上下文.mdc` 的集团导流部分。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务上下文.mdc
+  old_string: ## 五、集团导流（猿编程 ↔ 海豚）
+
+集团内部产品间的流量互换，利用用户群体重合做扩科转化。
+
+| 方向 | 机制 | 用户群 | 定价 | 节奏 |
+|------|------|--------|------|------|
+| 编程→海豚 | 编程正价课用户续报后，业务侧私发消息导流海豚体验课 | 编程适龄段正价课用户 | 0 元 | 每周三 |
+| 海豚→编程 | 正式版用户 W5（≥35 天）起，自习助理私发导流编程 | 海豚正式版在读用户 | — | 每周五 |
+
+- 编程导流进来的 leads 与 29 元/9 元 leads 一起分配给销售转正
+- 编程侧按年级分等级：1-3 年级 J 等级，4-6 年级 S 等级
+- Q4 参考数据（截至 2024.11）：
+  - 编程→海豚：触达 5277，扩科 1127（扩科率 24%，目标 20%），转正率 ~8.9%（目标 10%）
+  - 海豚→编程：触达 2737，扩科 230（扩科率 8%，达标）
+- 探索方向：编程断课用户导流（扩大流量池）
+- 对接人：编程侧 刘美麟（主）/ 史琢玉（流量池），海豚侧 自习助理
+- 项目文档：[集团导流-海豚&猿编程](https://shimo.zhenguanyu.com/docs/30dyDb9jlMMyFzPQ/)
+  new_string: ## 五、集团导流
+
+集团内部产品间的流量互换（猿编程 ↔ 海豚），利用用户群重合做扩科转化。是增长获客渠道之一，与直投、效果广告、电商并列。
+
+- **编程→海豚**：编程正价课用户续报后，0 元导流海豚体验课，leads 与其他渠道一起分配给销售转正
+- **海豚→编程**：海豚正式版用户 W5 起，自习助理导流编程
+
+> 对接方详情、SOP、数据见 `增长业务方.mdc` → 市场投放 → 集团导流
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"1","status":"completed"},{"id":"2","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+现在重构 `增长业务方.mdc`，把整体结构改为四个业务方，CC 保留已有内容，其余留占位，集团导流细节放到市场投放下。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长业务方.mdc
+  contents: ---
+description: 增长常对接的业务方——销售（标单/直投）、CC、自习助理、市场投放的背景信息、业务模式与SOP。涉及业务方协作、leads承接、转化策略时参考。
+alwaysApply: false
+---
+
+> 核心增长框架（漏斗、指标、定价SKU、术语）见 `增长业务上下文.mdc`
+> 标签/实验等见 `增长运营与实验.mdc`
+
+---
+
+## 一、销售
+
+### 1. 标单（标准单周）
+
+> 待补充：标单业务模式、跟进节奏、SOP
+
+- **周均人效**：35-40
+- **主接用户**：首次购买体验课的用户
+- **主接年级**：小高 + 初中
+- **跟进形式**：固定周期进量、标准化流程
+- **体验流程**：所有用户体验统一课程内容
+
+### 2. 直投专组
+
+> 待补充：直投专组的业务模式、与标单的差异、SOP
+
+---
+
+## 二、CC
+
+- **周均人效**：120-150
+- **流量来源**：新用户（小低 + 9 年级）+ 断课老用户
+- **主接渠道**：端内自然流量、直投、部分效果广告（按年级/用户质量分配）
+
+### CC Leads 来源全景
+
+CC leads 按转化方式分**购买**和**留资**两类，按渠道分**端内**和**私域**。
+
+#### 端内 — 购买转化（用户直接购买体验课）
+
+| 用户身份 | 入口 | 说明 |
+|---------|------|------|
+| 自然流量（新用户） | 新用户流程 | 前测流程析出，最大量级入口（周曝光 ~665，点击率 ~19%） |
+| | 资料库 | 周曝光 ~134，点击率 ~19% |
+| | 找页面磁铁 | 周曝光 ~57，点击率 ~33% |
+| | 首页 banner | 周曝光 ~8，点击率 ~38% |
+| | 首页弹窗 | 小量级 |
+| | 会员页挽留弹窗 | 小量级 |
+| 断课非限购 | 资料库 | 周曝光 ~38，点击率 ~8% |
+| | 会员页挽留弹窗 | 小量级 |
+| | 首页弹窗 | 小量级 |
+| | 首页 banner | 小量级 |
+
+#### 端内 — 留资转化（用户留资成为 leads）
+
+| 入口 | 落地页曝光 | 点击率 | 表单曝光 | 表单点击 | 说明 |
+|------|----------|--------|---------|---------|------|
+| 计划页自回入口 | ~6307 | ~6% | ~384 | ~175 | 量级最大，但点击率低 |
+| 会员页咨询入口 | ~3203 | ~6% | — | — | 量级大，点击率低 |
+| 老用户回归礼-首页弹窗 | ~624 | ~40% | ~250 | ~190 | 点击率高，是断课限购用户最有效的留资入口 |
+| 老用户回归礼-我资源位 | ~119 | ~43% | ~51 | ~37 | 点击率高 |
+| 老用户回归礼-banner | ~49 | ~51% | ~24 | ~14 | 量级小但点击率最高 |
+| 优惠券引导入口 | — | — | — | — | 当前无量级 |
+
+#### 私域 — 留资转化
+
+| 入口 | 落地页曝光 | 点击率 | 说明 |
+|------|----------|--------|------|
+| 私域社群留资页 | ~1275 | ~16% | 私域最大量级入口 |
+| 私域SOP留资 | ~179 | ~29% | |
+| 私域企微客服发送留资页 | ~74 | ~80% | 量级小但点击率极高 |
+| 私域客服发送留资页 | ~11 | ~82% | |
+| CC老带新 | ~3 | 100% | 量级极小 |
+
+#### 端内 Leads 来源总结
+
+**按用户身份的析出路径**：
+
+| 用户状态 | 析出方式 | 主要入口 | 承接方 |
+|---------|---------|---------|-------|
+| 新用户（自然流量） | 购买体验课 | 新用户前测流程、资料库、我的页面磁铁 | CC（小低+9年级）/ 销售 |
+| 断课限购 | 留资转化 | 老用户回归礼弹窗/资源位、计划页召回入口、会员页咨询 | CC |
+| 断课非限购| 购买体验课 | 资料库、会员页挽留弹窗 | 销售 |
+| | 留资转化 | 计划页、会员页咨询入口 | CC |
+
+**断课老用户析出瓶颈**（整体析出率不到 3%，周活跃 ~1.4w）：
+1. **广告位曝光率低**（~41% vs 新用户 97%）：PAD 不展示首页致首页广告位无效（~40%）、秒开关 APP（~25%）
+2. **广告位 CTR 低**：「免费」「0 元」等营销文案引发防备，用户需主动点击才能进入析出场景
+3. **入口分散**：仅 ~50% 断课活跃用户有广告位曝光
+
+**改进方向**（断课用户增加前测，2026.1 启动 AB）：用前测问答替代营销弹窗，提升曝光率（目标 80%）和参与感，前测通过后展示落地页引导留资。
+
+### CC 全流程 SOP
+
+**阶段一：建联**
+
+目标：电话接通 + 加微信
+
+| 触达轮次 | 操作 |
+|---------|------|
+| 首次建联 | 两次手机号拨号 + 一次工作台外呼（都没接 → 下一个） |
+| 二次跟进 | 两次工作台外呼 + 工作台群发加微短信 |
+| 重点跟进 | 以上均未联系上 → 手机发送加微短信 |
+
+**阶段二：挖需（SPIN）**
+
+目标：了解学情、判断意向、打标签（A/B/C）
+
+- **S（现状）**：成绩、学科表现、补习经历、走读/住校、作业时间
+- **P（痛点）**：基础薄弱还是思维固化？计算板块还是应用板块？
+- **I（影响）**：不解决会怎样（落后、厌学、升学压力）
+- **N（价值）**：海豚个性化方案如何匹配
+
+**阶段三：产品介绍 + 约习**
+
+目标：让家长理解产品价值，约定体验课时间
+
+- 介绍学练补三环节 + AI 动画模式
+- 约习时间在工作台勾选确认
+- 微信留痕 + 到课提醒
+
+**阶段四：回访（完课后）**
+
+目标：反馈学习情况，建立信任，推动转化
+
+首次回访：
+1. **破冰** → 确认孩子是否独立完成学习
+2. **和孩子聊**（区分小学/初中）→ 表扬学习情况 → 抽查知识点 → 设立小目标 → 确认能否坚持
+3. **和家长聊** → 按学练补三步逐一反馈课堂情况（区分学得好/学得差的反馈策略）→ 介绍 AI + 真人助理模式 → 规划学习 → 默认关单
+
+二次回访（体验课全部完成后）：
+1. 反馈后续课程表现
+2. **达共识**：为什么学 → 为什么在海豚学 → 为什么现在学
+3. **默认关单** → 带家长打开 APP 报名
+
+**阶段五：关单与异议处理**
+
+目标：推动付费转化，处理犹豫和拒绝
+
+关单策略（按场景选用）：
+
+| 策略 | 核心方向 |
+|------|---------|
+| 学情关单 | 按年级拆解知识点递进关系，说明当下不学对后续的影响 |
+| 福利关单 | 200 优惠券 / 小猿搜题 VIP / 猿题库终身 / 亲子账号（多孩免费）/ 全科微课视频 |
+| 调退保障关单 | 14 天无理由全额调退，按周扣费，合同保障 |
+| 竞品对比 | 对比学习机（科大讯飞）/ 松鼠 AI / 线上直播课 / 洋葱，用海豚优势对标竞品不足 |
+
+异议处理：
+
+| 异议 | 应对 |
+|------|------|
+| 考虑一下 | 追问具体顾虑（时间还是价格），针对性回应 |
+| 和爸爸商量 | 争取直接和爸爸沟通，或约定下次联系时间 |
+| 孩子不愿意 | 引用之前和孩子的沟通记录，说明孩子实际表现积极 |
+| 想再试听 | 强调正式课才有完整规划，14 天内可全额调退 |
+
+### 用户分层标签
+
+**建联后（A/B/C）**：
+
+| 标签 | 条件 |
+|------|------|
+| A | 有学习经验 + 现未报班/不满意 + 明确需求 + 购买力强 + 配合度高。朋友推荐直接标A |
+| B | 配合度高，但不完全满足 A 类条件 |
+| C | 配合度低，且不满足 A 类条件 |
+
+**回访后（S/A+/B+）**：
+
+| 标签 | 条件 |
+|------|------|
+| S | 完课后主动回复 + 家长认可 + 孩子喜欢 |
+| A+ | 无主动回复，但家长认可、孩子喜欢 |
+| B+ | 回访不配合，微信不回复 |
+
+**转化后**：考虑 / 不考虑
+
+### 工作台操作
+
+- 建联记录：培优/补差、各科成绩、走读/住校、补习班、意向度、约习时间
+- 标签管理：建联 A/B/C、回访 S/A+/B+、转化 考虑/不考虑
+- 约习时间：工作台勾选确认
+
+---
+
+## 三、自习助理
+
+> 待补充：自习助理的服务模式、服务节奏、与增长的协作方式
+
+- **核心职责**：提供学习服务，保证到习、完习，确保学习效果
+- **归因窗口**：14 天
+- **续费**：仅 1 月和 7 月开放，固定 6 个月课包，实付 2099
+- **集团导流**：海豚正式版用户 W5 起，自习助理私发导流编程（每周五）
+
+---
+
+## 四、市场投放
+
+> 待补充：市场投放的渠道策略、投放逻辑、与增长产品的协作方式
+
+主要渠道：直播电商、信息流效果广告、APP 直投
+
+### 集团导流（猿编程 ↔ 海豚）
+
+集团内部产品间的流量互换，利用用户群重合做扩科转化。
+
+| 方向 | 机制 | 用户群 | 定价 | 节奏 |
+|------|------|--------|------|------|
+| 编程→海豚 | 编程正价课用户续报后，业务侧私发消息导流海豚体验课 | 编程适龄段正价课用户 | 0 元 | 每周三 |
+| 海豚→编程 | 正式版用户 W5（≥35 天）起，自习助理私发导流编程 | 海豚正式版在读用户 | — | 每周五 |
+
+- 编程导流进来的 leads 与 29 元/9 元 leads 一起分配给销售转正
+- 编程侧按年级分等级：1-3 年级 J 等级，4-6 年级 S 等级
+- Q4 参考数据（截至 2024.11）：
+  - 编程→海豚：触达 5277，扩科 1127（扩科率 24%，目标 20%），转正率 ~8.9%（目标 10%）
+  - 海豚→编程：触达 2737，扩科 230（扩科率 8%，达标）
+- 探索方向：编程断课用户导流（扩大流量池）
+- 对接人：编程侧 刘美麟（主）/ 史琢玉（流量池），海豚侧 自习助理
+- 项目文档：[集团导流-海豚&猿编程](https://shimo.zhenguanyu.com/docs/30dyDb9jlMMyFzPQ/)
+
+
+[Tool result] Write
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"2","status":"completed"},{"id":"3","status":"in_progress"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+现在从 HTML 分析中提炼流量分级 context。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-流量分级.mdc
+  contents: ---
+description: 增长流量分级框架——Leads质量评估体系（S/A/B/C）、各渠道分类与转化率基线、承接方式匹配。涉及leads分配、渠道评估、承接策略时参考。
+alwaysApply: false
+---
+
+> 核心增长框架见 `增长业务上下文.mdc`
+> 业务方详情见 `增长业务方.mdc`
+
+## 一、分析框架
+
+**核心问题**：不同质量的流量，是否匹配了合理的承接路径？
+
+分析逻辑：梳理流量分类 → 定义质量分级 → 用转化率验证 → 对照承接方式 → 识别错配
+
+**关键原则**：质量必须用服务介入前就能观察到的信号来定义，转化率只用来验证。因为转化率 = leads 本身质量 x 承接方式效果，混在一起无法区分"leads 本来就差"和"被服务拖了后腿"。
+
+---
+
+## 二、流量分类
+
+### 新用户（按渠道）
+
+| 渠道 | 析出方式 | 体验课价格 | 占比 | 转化率 |
+|------|---------|-----------|------|--------|
+| 电商直播 | 站外下单→API激活（抖音/视频号） | 29 元 | ~51% | 17.01% |
+| 效果广告 | 端外落地页购买（腾讯+头条） | 29 元 | ~23% | 20.51% |
+| APP 直投 | 站内多点位析出（头条/华为/ASA等） | 9 元 | ~17% | 11.73% |
+| 端内自然 | 站内多点位析出（自然流量） | 9 元 | ~6% | 13.96% |
+| 私域 | 留资/购买（企微+社群） | 1 元 | ~1% | 15.33% |
+| 转介绍 | 购买体验课（周团+邀请） | 混合 | ~2% | 15.18% |
+
+### 站内析出点位差异（直投 + 自然）
+
+同一渠道内，不同析出点位的 leads 质量差异显著：
+
+| 析出点位 | 转化率（直投-头条） | 转化率（端内自然） | 说明 |
+|---------|-------------------|-------------------|------|
+| 「我的」页面 | 18.8% | 19.6% | 主动浏览行为，高意向信号 |
+| 「计划页」 | 16.7% | 17.9% | 主动浏览行为 |
+| 资料库 | 14.1% | 10.1% | |
+| 新用户前测 | 11.8% | 13.4% | 占比最大（~80%），被引导析出 |
+| 首页 | 10.0% | 7.1% | 量极小 |
+
+### 召回用户
+
+| 类型 | 说明 | 周活跃 | Leads 产生率 | 转化率 |
+|------|------|--------|-------------|--------|
+| 体验断课-限购 | 距上次购买 <210天 | ~18,309 | 5.7% | 5.3% |
+| 体验断课-非限购 | 距上次购买 ≥210天 | ~6,024 | 6.6% | 7.1% |
+| 会员断课 | 会员到期/退费过保护期 | ~4,740 | 1.8% | 14.6% |
+
+### CC 补量（被动圈选）
+
+| 圈选条件 | 周均人数 | 转化率（随机） | 转化率（模型Top50%） |
+|---------|---------|--------------|-------------------|
+| 浏览会员购买页 | ~330 | 1.46% | 2.10% |
+| 当日学习时长>10min | ~450 | 1.56% | 2.84% |
+
+圈选 leads 转化率（1.5-2.8%）远低于正常渠道（11-20%），本质是从已有用户中挖掘弱意向信号。
+
+---
+
+## 三、质量分级（S/A/B/C）
+
+| 等级 | 定义 | 对应 Leads | 占比 | 转化率验证 |
+|------|------|-----------|------|-----------|
+| **S** | 高价主动购买（29元），或中价+主动浏览析出（「我的」「计划页」），或有信任信号（转介绍） | 效果广告、电商直播、直投/自然「我的」「计划页」、转介绍 | ~66% | 15-21% |
+| **A** | 中价+前测引导析出，或低价获取 | 直投/自然前测析出、私域 | ~18% | 11-15% |
+| **B** | 断课回流，有过付费经历但已流失 | 断课-限购、断课-非限购 | ~8% | 5-7% |
+| **C** | 无主动行为，被动圈选 | 大模型/条件圈选 | ~8% | ~2.8% |
+
+**分级信号解读**：
+- S 级的核心信号：高付费门槛（29元）= 强付费意愿，或主动浏览行为 = 自发购买意向
+- A 级与 S 级的区别：前测引导析出是"被流程推着走"，vs「我的」「计划页」是"自己找过来的"
+- 1/2/3/9 年级从「我的」「计划页」析出的用户量极小（两周 ~48），转化率 0-15%，样本不足暂归 A 级
+
+---
+
+## 四、承接匹配
+
+| Leads | 等级 | 当前承接方 | 转化率 | 判断 |
+|-------|------|----------|--------|------|
+| 效果广告 | S | 销售（标单） | 20.51% | 匹配 |
+| 电商直播 | S | 销售（标单） | 17.01% | 匹配 |
+| 直投/自然「我的」「计划页」4-8年级 | S | 销售 | 17-24% | 匹配 |
+| 直投/自然「我的」「计划页」1/2/3/9年级 | A | CC | 0-15% | 样本小，待观察 |
+| 直投/自然 前测析出 4-8年级 | A | 销售 | 13-18% | 匹配 |
+| 直投/自然 前测析出 1/2/3/9年级 | A | CC | 2-5% | 偏低，待分析 |
+| 私域 | A | CC | 15.33% | 偏高于 A 级预期，待确认 |
+| 断课-限购 | B | CC | 5.3% | 匹配 |
+| 断课-非限购 | B | CC | 7.1% | 匹配 |
+| 大模型圈选 | C | CC | ~2.8% | 匹配（补量性质） |
+
+---
+
+## 五、待深入
+
+- [ ] 分级标准与 leads 分配规则的联动优化
+- [ ] 1/2/3/9 年级前测析出转化率偏低的根因分析
+- [ ] 私域 leads 质量评估（15.33% 转化率偏高于 A 级，可能是 S 级）
+- [ ] 会员断课 leads（14.6% 转化率）的分级归属（当前量太小未单独定级）
+- [ ] 分级体系的定期刷新机制（数据周期、更新频率）
+
+数据来源：[流量分类与评级现状分析](汇报-流量分类与评级现状.html)，数据范围 3.2 周 + 3.9 周（两周合计），2026.03
+
+
+[Tool result] Write
+
+assistant:
+最后更新 `context管理规范.mdc` 的文件清单。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/context管理规范.mdc
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/context管理规范.mdc
+  old_string: | 文件 | 内容 |
+|------|------|
+| 海豚AI学产品上下文.mdc | 产品概述、课程流程、设备兼容、核心指标、技术架构 |
+| 增长业务上下文.mdc | 增长核心框架、漏斗、组织角色、用户身份状态、术语、工具、定价sku |
+| 增长业务方.mdc | CC业务详解、Leads来源、SOP、关单策略、用户分层标签 |
+| 增长运营与实验.mdc | 营销基建、用户标签体系、AB实验沉淀 |
+| AI课产品机制.mdc | 课程结构、题目体系、推题策略、游戏化机制 |
+| 竞品与行业认知.mdc | AI教育赛道竞品分析与差异化定位 |
+  new_string: | 文件 | 内容 |
+|------|------|
+| 海豚AI学产品上下文.mdc | 产品概述、课程流程、设备兼容、核心指标、技术架构 |
+| 增长业务上下文.mdc | 增长核心框架、漏斗、组织角色、用户身份状态、定价SKU、集团导流、术语、工具 |
+| 增长业务方.mdc | 增长常对接业务方：销售（标单/直投）、CC、自习助理、市场投放 |
+| 增长运营与实验.mdc | 营销基建、用户标签体系、AB实验沉淀 |
+| 增长-流量分级.mdc | Leads质量分级框架（S/A/B/C）、渠道分类、转化率基线、承接匹配 |
+| AI课产品机制.mdc | 课程结构、题目体系、推题策略、游戏化机制 |
+| 竞品与行业认知.mdc | AI教育赛道竞品分析与差异化定位 |
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] TodoWrite
+  todos: [{"id":"3","status":"completed"}]
+  merge: true
+
+[Tool result] TodoWrite
+
+assistant:
+全部完成。整理后的增长 context 结构：
+
+**一、增长业务本身** → `增长业务上下文.mdc`
+- 产品概述、增长漏斗与指标、组织角色、用户身份状态、集团导流（概念级）、定价SKU、术语、工具索引
+
+**二、增长业务方** → `增长业务方.mdc`
+- 销售（标单 / 直投专组）— 已建占位
+- CC — 完整内容（Leads来源、SOP、关单策略）
+- 自习助理 — 已建占位
+- 市场投放 — 已建占位 + 集团导流对接细节
+
+**三、重点项目** → 独立文件
+- `增长-流量分级.mdc`（新建）— S/A/B/C 分级框架、各渠道分类与转化率基线、承接匹配分析
+- 团队空间已有 `增长-APP 直投.mdc`
+
+**四、实验和运营** → `增长运营与实验.mdc`
+- 营销基建、用户标签体系、AB 实验沉淀（未改动）
+
+user:
+<user_query>
+流量分级要不要放在增长业务上下文里呢？
+</user_query>
+
+assistant:
+[Thinking] The user is asking whether the flow classification (流量分级) should be placed inside 增长业务上下文.mdc rather than as a standalone file.
+
+Let me think about this:
+
+Arguments for putting it in 增长业务上下文:
+- 流量分级 (S/A/B/C) IS a fundamental concept of the growth business - it defines how leads are classified and matched to service teams
+- It's "基本信息" - a core framework for understanding leads quality
+- The user's own definition of 增长业务上下文 was "增长业务内容、边界、常用的基本概念等，基本信息为主"
+
+
+- The grading system is a basic concept that everyone in growth should understand
+
+Arguments for keeping it separate:
+- 增长业务上下文 is already quite comprehensive with product overview, funnel, roles, terms, pricing, and tools
+- The detailed data tables with conversion rates and volumes feel more analytical than conceptual
+- The specific data windows mean it'll likely need frequent updates, which is easier to manage as a standalone file
+- It's more discoverable and referenceable on its own
+
+The core tension is whether the conceptual framework belongs in the foundational context document, or if the detailed analytical data warrants keeping it separate for maintainability.
+
+Looking at the user's file naming pattern, I see they've already been standardizing with hyphens (增长-业务方, 增长-实验和运营能力, 增长-流量分级), which suggests they're treating these as distinct, parallel reference documents rather than nested concepts. That structure probably makes sense—keeping the flow grading framework separate lets it evolve independently without bloating the main business context file. the user is asking whether to include it in 增长业务上下文. The framework itself—the grade definitions and core principles—feels like foundational knowledge that belongs there, but adding the full analysis with all the data tables would push the file to over 300 lines and make it unwieldy. I think the best approach is to put a condensed version of just the grading framework into 增长业务上下文 while keeping the detailed analysis as a separate reference document, or alternatively, treat it as a 重点项目 since the user already organized things that way.
+我觉得要区分两层：
+
+**分级框架本身**（S/A/B/C 怎么定义、用什么信号分级、为什么不用转化率定义质量）— 这是增长业务的基础概念，放在增长业务上下文里合适，和漏斗、指标、术语是同一层级的东西。
+
+**详细的数据表和承接分析**（各渠道具体转化率、两周量级、承接匹配判断）— 这是基于特定时间窗口的分析产出，会随数据更新而变化，单独放更好维护。
+
+所以建议：把分级框架的核心定义（那张 S/A/B/C 的表 + 分级信号解读 + 分析原则）合并进增长业务上下文，`增长-流量分级.mdc` 保留完整的数据明细作为参考。你觉得呢？
+
+user:
+<user_query>
+我看行
+</user_query>
+
+assistant:
+[Thinking] The user agrees with my suggestion. Let me:1. Read the current state of `增长业务上下文.mdc` and `增长-流量分级.mdc` (noting that file names may have changed based on the recently viewed files)
+2. Extract the framework part from 增长-流量分级.mdc and add it to 增长业务上下文.mdc
+3. Trim 增长-流量分级.mdc to keep only the detailed data
+
+I notice from the recently viewed files that the files have been renamed:- `增长-业务方.mdc` (was `增长业务方.mdc`)
+
+
+- `增长-实验和运营能力.mdc` (was `增长运营与实验.mdc`)
+
+But the 增长业务上下文.mdc hasn't been renamed yet apparently. Let me check by reading the current files to see their actual state.
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-流量分级.mdc
+[Tool call] Glob
+  glob_pattern: 增长*.mdc
+  target_directory: /Users/jiwenyue/cursorProjects/personal/.cursor/rules
+
+[Tool result] Read
+
+[Tool result] Glob
+
+assistant:
+[Thinking] I see the files have been renamed:
+- `增长业务上下文.mdc` → `增长-业务上下文.mdc`
+- `增长业务方.mdc` → `增长-业务方.mdc`
+- `增长运营与实验.mdc` → `增长-实验和运营能力.mdc`
+
+Let me read the current 增长-业务上下文.mdc to see what it looks like now.
+文件名已经被你重命名过了，让我先看当前 `增长-业务上下文.mdc` 的状态。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-业务上下文.mdc
+
+[Tool result] Read
+
+assistant:
+[Thinking] Now I need to:1. Add the flow grading framework (S/A/B/C definitions + key principles) to `增长-业务上下文.mdc`
+2. Update `增长-流量分级.mdc` to keep only the detailed data, and reference the framework from 业务上下文I also notice the cross-references in 增长-业务上下文.mdc still point to old file names (`增长业务方.mdc`, `增长运营与实验.mdc`). I should update those to the new names (`增长-业务方.mdc`, `增长-实验和运营能力.mdc`).
+
+
+For the edits, I'll update the cross-references in 增长-业务上下文.mdc first, then insert the flow grading framework section with the S/A/B/C table and key principles between 集团导流 and 定价. For 增长-流量分级.mdc, I'll strip out the framework and quality grading sections while preserving the data tables and adding a reference back to the framework. I'm identifying which content belongs in each document—the framework principles and grading definitions should move to the business context file, while the detailed data tables and analysis points stay in the traffic classification document. I'll also need to update the cross-references between them.
+现在来做两件事：把分级框架合并进 `增长-业务上下文.mdc`，然后精简 `增长-流量分级.mdc` 保留数据明细。同时顺便更新交叉引用中的旧文件名。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-业务上下文.mdc
+  old_string: description: 海豚AI学增长核心框架——产品模式、增长全链路、组织角色、用户身份状态、集团导流、定价SKU、关键术语与工具索引。涉及增长策略、PRD、转化、留存、定价时参考。
+  new_string: description: 海豚AI学增长核心框架——产品模式、增长全链路、组织角色、用户身份状态、流量分级、集团导流、定价SKU、关键术语与工具索引。涉及增长策略、PRD、转化、留存、定价时参考。
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-业务上下文.mdc
+  old_string: > CC 业务详解见 `增长业务方.mdc`，营销基建/标签/实验见 `增长运营与实验.mdc`
+  new_string: > 业务方详情（销售/CC/助理/市场投放）见 `增长-业务方.mdc`
+> 营销基建/标签/实验见 `增长-实验和运营能力.mdc`
+> 流量分级数据明细见 `增长-流量分级.mdc`
+
+[Tool result] StrReplace
+
+assistant:
+现在在集团导流和定价之间插入流量分级框架。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-业务上下文.mdc
+  old_string: > 对接方详情、SOP、数据见 `增长业务方.mdc` → 市场投放 → 集团导流
+
+---
+
+## 六、定价与 SKU
+  new_string: > 对接方详情、SOP、数据见 `增长-业务方.mdc` → 市场投放 → 集团导流
+
+---
+
+## 六、流量质量分级（S/A/B/C）
+
+**核心原则**：质量必须用服务介入前就能观察到的信号来定义，转化率只用来验证。因为转化率 = leads 本身质量 x 承接方式效果，混在一起无法区分"leads 本来就差"和"被服务拖了后腿"。
+
+| 等级 | 定义 | 对应 Leads | 占比 | 转化率验证 |
+|------|------|-----------|------|-----------|
+| **S** | 高价主动购买（29元），或中价+主动浏览析出（「我的」「计划页」），或有信任信号（转介绍） | 效果广告、电商直播、直投/自然「我的」「计划页」、转介绍 | ~66% | 15-21% |
+| **A** | 中价+前测引导析出，或低价获取 | 直投/自然前测析出、私域 | ~18% | 11-15% |
+| **B** | 断课回流，有过付费经历但已流失 | 断课-限购、断课-非限购 | ~8% | 5-7% |
+| **C** | 无主动行为，被动圈选 | 大模型/条件圈选 | ~8% | ~2.8% |
+
+**分级信号解读**：
+- S 级核心信号：高付费门槛（29元）= 强付费意愿，或主动浏览行为 = 自发购买意向
+- A 级与 S 级的区别：前测引导析出是"被流程推着走"，vs「我的」「计划页」是"自己找过来的"
+- 1/2/3/9 年级从「我的」「计划页」析出的量极小，样本不足暂归 A 级
+
+> 各渠道详细数据、承接匹配分析见 `增长-流量分级.mdc`
+
+---
+
+## 七、定价与 SKU
+
+[Tool result] StrReplace
+
+assistant:
+更新后续章节编号。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-业务上下文.mdc
+  old_string: ## 七、工具与后台索引
+  new_string: ## 八、工具与后台索引
+
+[Tool result] StrReplace
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-业务上下文.mdc
+  old_string: ## 八、待补充
+  new_string: ## 九、待补充
+
+[Tool result] StrReplace
+
+assistant:
+同时更新术语表里的旧文件引用。
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-业务上下文.mdc
+  old_string: 来源：[海豚标签体系](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380)，标签详情见 `增长运营与实验.mdc` 第四节
+  new_string: 来源：[海豚标签体系](https://confluence.zhenguanyu.com/pages/viewpage.action?pageId=618924380)，标签详情见 `增长-实验和运营能力.mdc`
+
+[Tool result] StrReplace
+
+assistant:
+现在精简 `增长-流量分级.mdc`，去掉已合并到业务上下文的框架部分，保留数据明细。
+[Tool call] Write
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/增长-流量分级.mdc
+  contents: ---
+description: 增长流量分级数据明细——各渠道Leads分类、转化率基线、承接方式匹配。涉及leads分配、渠道评估、承接策略时参考。
+alwaysApply: false
+---
+
+> 分级框架（S/A/B/C 定义与原则）见 `增长-业务上下文.mdc` → 六、流量质量分级
+> 业务方详情见 `增长-业务方.mdc`
+
+## 一、新用户流量分类（按渠道）
+
+| 渠道 | 析出方式 | 体验课价格 | 占比 | 转化率 |
+|------|---------|-----------|------|--------|
+| 电商直播 | 站外下单→API激活（抖音/视频号） | 29 元 | ~51% | 17.01% |
+| 效果广告 | 端外落地页购买（腾讯+头条） | 29 元 | ~23% | 20.51% |
+| APP 直投 | 站内多点位析出（头条/华为/ASA等） | 9 元 | ~17% | 11.73% |
+| 端内自然 | 站内多点位析出（自然流量） | 9 元 | ~6% | 13.96% |
+| 私域 | 留资/购买（企微+社群） | 1 元 | ~1% | 15.33% |
+| 转介绍 | 购买体验课（周团+邀请） | 混合 | ~2% | 15.18% |
+
+### 站内析出点位差异（直投 + 自然）
+
+同一渠道内，不同析出点位的 leads 质量差异显著：
+
+| 析出点位 | 转化率（直投-头条） | 转化率（端内自然） | 说明 |
+|---------|-------------------|-------------------|------|
+| 「我的」页面 | 18.8% | 19.6% | 主动浏览行为，高意向信号 |
+| 「计划页」 | 16.7% | 17.9% | 主动浏览行为 |
+| 资料库 | 14.1% | 10.1% | |
+| 新用户前测 | 11.8% | 13.4% | 占比最大（~80%），被引导析出 |
+| 首页 | 10.0% | 7.1% | 量极小 |
+
+---
+
+## 二、召回用户
+
+| 类型 | 说明 | 周活跃 | Leads 产生率 | 转化率 |
+|------|------|--------|-------------|--------|
+| 体验断课-限购 | 距上次购买 <210天 | ~18,309 | 5.7% | 5.3% |
+| 体验断课-非限购 | 距上次购买 ≥210天 | ~6,024 | 6.6% | 7.1% |
+| 会员断课 | 会员到期/退费过保护期 | ~4,740 | 1.8% | 14.6% |
+
+### CC 补量（被动圈选）
+
+| 圈选条件 | 周均人数 | 转化率（随机） | 转化率（模型Top50%） |
+|---------|---------|--------------|-------------------|
+| 浏览会员购买页 | ~330 | 1.46% | 2.10% |
+| 当日学习时长>10min | ~450 | 1.56% | 2.84% |
+
+圈选 leads 转化率（1.5-2.8%）远低于正常渠道（11-20%），本质是从已有用户中挖掘弱意向信号。
+
+---
+
+## 三、承接匹配
+
+| Leads | 等级 | 当前承接方 | 转化率 | 判断 |
+|-------|------|----------|--------|------|
+| 效果广告 | S | 销售（标单） | 20.51% | 匹配 |
+| 电商直播 | S | 销售（标单） | 17.01% | 匹配 |
+| 直投/自然「我的」「计划页」4-8年级 | S | 销售 | 17-24% | 匹配 |
+| 直投/自然「我的」「计划页」1/2/3/9年级 | A | CC | 0-15% | 样本小，待观察 |
+| 直投/自然 前测析出 4-8年级 | A | 销售 | 13-18% | 匹配 |
+| 直投/自然 前测析出 1/2/3/9年级 | A | CC | 2-5% | 偏低，待分析 |
+| 私域 | A | CC | 15.33% | 偏高于 A 级预期，待确认 |
+| 断课-限购 | B | CC | 5.3% | 匹配 |
+| 断课-非限购 | B | CC | 7.1% | 匹配 |
+| 大模型圈选 | C | CC | ~2.8% | 匹配（补量性质） |
+
+---
+
+## 四、待深入
+
+- [ ] 分级标准与 leads 分配规则的联动优化
+- [ ] 1/2/3/9 年级前测析出转化率偏低的根因分析
+- [ ] 私域 leads 质量评估（15.33% 转化率偏高于 A 级，可能是 S 级）
+- [ ] 会员断课 leads（14.6% 转化率）的分级归属（当前量太小未单独定级）
+- [ ] 分级体系的定期刷新机制（数据周期、更新频率）
+
+数据来源：流量分类与评级现状分析，数据范围 3.2 周 + 3.9 周（两周合计），2026.03
+
+
+[Tool result] Write
+
+assistant:
+最后更新 `context管理规范.mdc` 里的文件名。
+[Tool call] Read
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/context管理规范.mdc
+
+[Tool result] Read
+
+assistant:
+[Tool call] StrReplace
+  path: /Users/jiwenyue/cursorProjects/personal/.cursor/rules/context管理规范.mdc
+  old_string: | 文件 | 内容 |
+|------|------|
+| 海豚AI学产品上下文.mdc | 产品概述、课程流程、设备兼容、核心指标、技术架构 |
+| 增长业务上下文.mdc | 增长核心框架、漏斗、组织角色、用户身份状态、定价SKU、集团导流、术语、工具 |
+| 增长业务方.mdc | 增长常对接业务方：销售（标单/直投）、CC、自习助理、市场投放 |
+| 增长运营与实验.mdc | 营销基建、用户标签体系、AB实验沉淀 |
+| 增长-流量分级.mdc | Leads质量分级框架（S/A/B/C）、渠道分类、转化率基线、承接匹配 |
+| AI课产品机制.mdc | 课程结构、题目体系、推题策略、游戏化机制 |
+| 竞品与行业认知.mdc | AI教育赛道竞品分析与差异化定位 |
+  new_string: | 文件 | 内容 |
+|------|------|
+| 海豚AI学产品上下文.mdc | 产品概述、课程流程、设备兼容、核心指标、技术架构 |
+| 增长-业务上下文.mdc | 增长核心框架、漏斗、组织角色、用户身份状态、流量分级框架、集团导流、定价SKU、术语、工具 |
+| 增长-业务方.mdc | 增长常对接业务方：销售（标单/直投）、CC、自习助理、市场投放 |
+| 增长-实验和运营能力.mdc | 营销基建、用户标签体系、AB实验沉淀 |
+| 增长-流量分级.mdc | 流量分级数据明细：各渠道Leads分类、转化率基线、承接匹配 |
+| AI课产品机制.mdc | 课程结构、题目体系、推题策略、游戏化机制 |
+| 竞品与行业认知.mdc | AI教育赛道竞品分析与差异化定位 |
+
+[Tool result] StrReplace
+
+assistant:
+搞定。变更总结：
+
+**`增长-业务上下文.mdc`**：新增第六节「流量质量分级」，包含 S/A/B/C 定义表、核心原则（"质量用服务介入前的信号定义，转化率只验证"）、分级信号解读。交叉引用更新为新文件名。
+
+**`增长-流量分级.mdc`**：精简为纯数据明细——渠道分类表、析出点位差异、召回用户数据、承接匹配分析。框架定义指向业务上下文。
