@@ -10,6 +10,13 @@
 - 关注"隐性知识显性化"——把只存在于人脑中的业务知识变成 AI 可读的 context
 - Skill / Agent 设计需要关注实际效果，避免"看起来能用但不好用"
 
+## 与 Cursor Rules 的关联
+
+| Rule 文件 | 加载方式 | 说明 |
+|-----------|---------|------|
+| `协作协议.mdc` | always | 通用协作规范（含知识沉淀章节） |
+| `context管理规范.mdc` | requestable | Context 文件的创建、维护、review 规范 |
+
 ## 知识索引
 
 ### Principles

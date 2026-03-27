@@ -25,9 +25,9 @@
 │   ├── insights/                # 通用洞察（跨领域的规律性认知）
 │   └── experience/              # 不属于特定角色的经验
 │
-├── roles/                       # 各角色目录
+├── 各角色目录/                   # 按角色分类的知识
 │   ├── product-design/          # 产品设计（PRD、交互、用户体验）
-│   ├── growth/                  # 增长策略（投放、转化、落地页、实验）
+│   ├── 增长策略/                 # 投放、转化、落地页、实验
 │   └── ai-craft/                # AI 工程（prompt、context、agent 协作）
 │
 ├── tech/                        # 技术文章归档
@@ -56,7 +56,7 @@
 - skills：（空）
 - principles：（空）
 
-详见 → `roles/product-design/ROLE.md`
+详见 → `各角色目录/product-design/ROLE.md`
 
 ---
 
@@ -65,15 +65,22 @@
 **关注**：投放链路、转化漏斗、落地页优化、实验设计、流量分级
 
 **Cursor Rules 关联**（按需加载）：
+- `增长-业务上下文.mdc` — 增长业务全景、核心指标、团队职责
+- `增长-业务方.mdc` — 业务方对接关系和协作方式
+- `增长-实验和运营能力.mdc` — 实验设计、运营策略、AB 测试
+- `增长-流量分级.mdc` — 流量类型分级、渠道评估
+- `增长业务上下文.mdc` — 增长业务补充上下文
 - `竞品与行业认知.mdc` — 行业认知和差异化定位
 
 **知识索引**：
-- experience：（空）
+- experience：
+  - `各角色目录/增长策略/experience/2025-12-18-keyfrom规范优化.md` — keyfrom 命名规范改造：层级定义（6-12级）、历史映射、后台配置扩展
+  - `各角色目录/增长策略/experience/2026-03-26-断课用户增加前测复盘.md` — 断课限购用户增加前测 AB 实验设计与阶段性复盘（实验 3726）
 - skills：（空）
 - principles：（空）
 - insights：（空）
 
-详见 → `roles/growth/ROLE.md`
+详见 → `各角色目录/增长策略/ROLE.md`
 
 ---
 
@@ -84,13 +91,13 @@
 **知识索引**：
 - experience：
   - `tech/tableau-mcp-初体验.md` — Tableau MCP 工具首次接入实践
-  - `roles/ai-craft/experience/2026-03-26-知识工程框架搭建.md` — 首次搭建知识工程框架：适配 Cursor 加载机制、PM 角色划分、与现有 rules 对接
+  - `各角色目录/ai-craft/experience/2026-03-26-知识工程框架搭建.md` — 首次搭建知识工程框架：适配 Cursor 加载机制、PM 角色划分、与现有 rules 对接
 - skills：（空）
 - insights：
   - `tech/agent-知识工程实践.md` — stonepage 的知识工程框架（阅读归档）
 - principles：（空）
 
-详见 → `roles/ai-craft/ROLE.md`
+详见 → `各角色目录/ai-craft/ROLE.md`
 
 ---
 
@@ -113,7 +120,7 @@
 │  ┌───────────────────────────┐  │
 │  │ KNOWLEDGE.md（本文件）     │  │  索引入口，知道有什么
 │  ├───────────────────────────┤  │
-│  │ roles/<role>/ROLE.md      │  │  角色描述 + 细分索引
+│  │ 各角色目录/<role>/ROLE.md  │  │  角色描述 + 细分索引
 │  ├───────────────────────────┤  │
 │  │ experience / skill / ...  │  │  具体知识，通过索引命中后加载
 │  └───────────────────────────┘  │
@@ -130,14 +137,14 @@
 |------|------|------|
 | **常驻** | `协作协议.mdc` | 每次对话自动加载 |
 | **任务启动** | 本文件 `KNOWLEDGE.md` | 复杂任务开始时，快速扫描可用知识 |
-| **按需** | `roles/<role>/ROLE.md` → 具体 experience/skill | 命中关键词后深入加载 |
+| **按需** | `各角色目录/<role>/ROLE.md` → 具体 experience/skill | 命中关键词后深入加载 |
 | **触发式** | 特定场景直接读取 | 见下方触发规则 |
 
 ### 触发规则
 
-- 写 PRD / 做交互方案 → 先读 `roles/product-design/ROLE.md`
-- 分析投放/转化数据 → 先读 `roles/growth/ROLE.md`
-- 搭建 prompt / context / skill → 先读 `roles/ai-craft/ROLE.md`
+- 写 PRD / 做交互方案 → 先读 `各角色目录/product-design/ROLE.md`
+- 分析投放/转化数据 → 先读 `各角色目录/增长策略/ROLE.md`
+- 搭建 prompt / context / skill → 先读 `各角色目录/ai-craft/ROLE.md`
 - 做过类似的事但记不清细节 → grep `知识沉淀/` 搜关键词
 
 ## 沉淀触发
