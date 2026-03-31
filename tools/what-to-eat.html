@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今天吃什么？</title>
+<style>
+  :root {
+    --bg-from: #667eea;
+    --bg-to: #764ba2;
+    --card-bg: rgba(255,255,255,0.12);
+    --text: #fff;
+    --text-muted: rgba(255,255,255,0.7);
+    --btn-bg: #ff6b6b;
+    --btn-hover: #ee5a24;
+    --danger: #e74c3c;
+    --success: #27ae60;
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-from), var(--bg-to));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  h1 {
+    margin-top: 32px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 6px;
+    margin-bottom: 24px;
+  }
+
+  .wheel-container {
+    position: relative;
+    width: 340px;
+    height: 340px;
+    margin-bottom: 24px;
+  }
+
+  canvas {
+    width: 340px;
+    height: 340px;
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.3));
+  }
+
+  .pointer {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 30px solid #fff;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    z-index: 10;
+  }
+
+  .spin-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    transition: transform 0.15s;
+    letter-spacing: 2px;
+  }
+  .spin-btn:hover { transform: translate(-50%, -50%) scale(1.08); }
+  .spin-btn:active { transform: translate(-50%, -50%) scale(0.95); }
+  .spin-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: translate(-50%, -50%); }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .action-btn {
+    padding: 10px 24px;
+    border-radius: 24px;
+    border: 2px solid rgba(255,255,255,0.4);
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 14px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
+  }
+  .action-btn:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.7);
+  }
+  .action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .action-btn.nearby-btn {
+    border-color: rgba(39,174,96,0.6);
+    background: rgba(39,174,96,0.2);
+  }
+  .action-btn.nearby-btn:hover {
+    background: rgba(39,174,96,0.35);
+    border-color: rgba(39,174,96,0.9);
+  }
+
+  .location-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    text-align: center;
+    min-height: 18px;
+  }
+
+  /* 面板通用样式 */
+  .panel {
+    display: none;
+    width: min(90vw, 420px);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(16px);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .panel.show { display: block; }
+
+  .panel h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .add-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .add-row input, .key-row input {
+    flex: 1;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+  }
+  .add-row input::placeholder, .key-row input::placeholder { color: rgba(255,255,255,0.4); }
+  .add-row input:focus, .key-row input:focus { border-color: rgba(255,255,255,0.6); }
+
+  .add-btn, .save-key-btn {
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: none;
+    background: var(--btn-bg);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .add-btn:hover, .save-key-btn:hover { background: var(--btn-hover); }
+  .save-key-btn { background: var(--success); }
+  .save-key-btn:hover { background: #219a52; }
+
+  .menu-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .menu-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    font-size: 13px;
+    animation: tagIn 0.2s ease;
+  }
+
+  @keyframes tagIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .menu-tag .del {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .menu-tag .del:hover { background: var(--danger); }
+
+  .reset-btn {
+    margin-top: 16px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+  /* API Key 设置面板 */
+  .key-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .key-status {
+    font-size: 12px;
+    padding: 4px 0;
+  }
+  .key-status.ok { color: #82E0AA; }
+  .key-status.empty { color: var(--text-muted); }
+
+  .key-help {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 8px;
+  }
+  .key-help a { color: #85C1E9; }
+
+  /* 附近美食列表 */
+  .nearby-list {
+    max-height: 240px;
+    overflow-y: auto;
+    margin-top: 12px;
+  }
+  .nearby-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: background 0.15s;
+  }
+  .nearby-item:hover { background: rgba(255,255,255,0.1); }
+  .nearby-item .name {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nearby-item .meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .nearby-item .distance {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+
+  .nearby-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .nearby-actions button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .use-all-btn {
+    background: var(--success);
+    color: #fff;
+  }
+  .use-all-btn:hover { background: #219a52; }
+  .refresh-btn {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+  }
+  .refresh-btn:hover { background: rgba(255,255,255,0.25); }
+
+  .radius-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .radius-row select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 13px;
+    outline: none;
+  }
+  .radius-row select option { background: #555; color: #fff; }
+
+  .loading-spinner {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* 结果弹窗 */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+  }
+  .overlay.show { display: flex; }
+
+  .result-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px 48px;
+    text-align: center;
+    color: #333;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-width: 90vw;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.6) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .result-card .slogan {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 8px;
+  }
+
+  .result-card .food-name {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--bg-from), var(--bg-to));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .result-card .food-detail {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 24px;
+    min-height: 20px;
+  }
+
+  .result-card button {
+    padding: 12px 36px;
+    border-radius: 24px;
+    border: none;
+    background: linear-gradient(135deg, var(--bg-from), var(--bg-to));
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .result-card button:hover { transform: scale(1.05); }
+
+  .footer {
+    margin-top: auto;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 22px; margin-top: 20px; }
+    .wheel-container { width: 280px; height: 280px; }
+    canvas { width: 280px; height: 280px; }
+    .spin-btn { width: 60px; height: 60px; font-size: 13px; }
+    .result-card { padding: 28px 24px; }
+    .result-card .food-name { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>今天吃什么？</h1>
+<p class="subtitle">把选择困难交给命运吧</p>
+
+<div class="wheel-container">
+  <div class="pointer"></div>
+  <canvas id="wheel" width="680" height="680"></canvas>
+  <button class="spin-btn" id="spinBtn" onclick="spin()">开转</button>
+</div>
+
+<div class="actions">
+  <button class="action-btn nearby-btn" id="nearbyBtn" onclick="handleNearby()">附近美食</button>
+  <button class="action-btn" onclick="togglePanel('menuPanel')">编辑菜单</button>
+  <button class="action-btn" onclick="togglePanel('keyPanel')">API 设置</button>
+</div>
+<div class="location-hint" id="locationHint"></div>
+
+<!-- API Key 设置面板 -->
+<div class="panel" id="keyPanel">
+  <h3>高德地图 API Key</h3>
+  <div class="key-row">
+    <input type="text" id="keyInput" placeholder="粘贴你的 Web服务 API Key">
+    <button class="save-key-btn" onclick="saveKey()">保存</button>
+  </div>
+  <div class="key-status" id="keyStatus"></div>
+  <div class="key-help">
+    <strong>获取方式（免费，2 分钟搞定）：</strong><br>
+    1. 打开 <a href="https://lbs.amap.com/" target="_blank">lbs.amap.com</a> 注册/登录<br>
+    2. 控制台 → 应用管理 → 创建新应用<br>
+    3. 添加 Key → 服务平台选「Web服务」<br>
+    4. 复制生成的 Key 粘贴到上方
+  </div>
+</div>
+
+<!-- 附近美食结果面板 -->
+<div class="panel" id="nearbyPanel">
+  <h3>附近美食</h3>
+  <div class="radius-row">
+    <span>搜索范围</span>
+    <select id="radiusSelect" onchange="saveRadius()">
+      <option value="500">500m</option>
+      <option value="1000" selected>1km</option>
+      <option value="2000">2km</option>
+      <option value="3000">3km</option>
+    </select>
+  </div>
+  <div class="add-row">
+    <input type="text" id="addrInput" placeholder="输入地址搜索（如：中关村、国贸）"
+           onkeydown="if(event.key==='Enter')searchByAddress()">
+    <button class="add-btn" onclick="searchByAddress()">搜索</button>
+  </div>
+  <div id="nearbyContent"></div>
+  <div class="nearby-actions" id="nearbyActions" style="display:none">
+    <button class="use-all-btn" onclick="useNearbyItems()">用这些替换转盘</button>
+    <button class="refresh-btn" onclick="fetchNearby()">换一批</button>
+  </div>
+</div>
+
+<!-- 菜单管理面板 -->
+<div class="panel" id="menuPanel">
+  <h3>自定义菜单</h3>
+  <div class="add-row">
+    <input type="text" id="newItem" placeholder="输入新选项，回车添加" maxlength="10"
+           onkeydown="if(event.key==='Enter')addItem()">
+    <button class="add-btn" onclick="addItem()">添加</button>
+  </div>
+  <div class="menu-list" id="menuList"></div>
+  <button class="reset-btn" onclick="resetMenu()">恢复默认菜单</button>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeResult(event)">
+  <div class="result-card">
+    <div class="slogan" id="slogan"></div>
+    <div class="food-name" id="foodName"></div>
+    <div class="food-detail" id="foodDetail"></div>
+    <button onclick="closeResult()">再来一次</button>
+  </div>
+</div>
+
+<div class="footer">命运转盘 · 拒绝选择困难</div>
+
+<script>
+const DEFAULT_ITEMS = [
+  '黄焖鸡','麻辣烫','沙县小吃','螺蛳粉','炒饭','拉面','兰州拌面',
+  '汉堡','披萨','寿司','轻食沙拉','冒菜','酸菜鱼','烤肉饭',
+  '水饺','煲仔饭','肯德基','麦当劳','米线','盖浇饭',
+  '烧烤','炸鸡','三明治','牛肉面','小龙虾'
+];
+
+const SLOGANS = [
+  '就决定是你了！','命运的选择！','今天就吃这个！',
+  '别犹豫了！','宇宙给出了答案！','干饭人的最终归宿！',
+  '这就是缘分啊！','冥冥之中自有安排！'
+];
+
+const COLORS = [
+  '#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7',
+  '#DDA0DD','#98D8C8','#F7DC6F','#BB8FCE','#85C1E9',
+  '#F0B27A','#82E0AA','#F1948A','#AED6F1','#D7BDE2',
+  '#A3E4D7','#FAD7A0','#A9CCE3','#D5F5E3','#FADBD8',
+  '#E8DAEF','#D4E6F1','#FCF3CF','#D5D8DC','#ABEBC6'
+];
+
+let items = [];
+let nearbyData = [];
+let spinning = false;
+let currentAngle = 0;
+let currentLocation = null;
+
+const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
+const CX = 340, CY = 340, R = 320;
+
+// ---- 数据持久化 ----
+function loadItems() {
+  const saved = localStorage.getItem('whatToEat_items');
+  items = saved ? JSON.parse(saved) : [...DEFAULT_ITEMS];
+}
+function saveItems() {
+  localStorage.setItem('whatToEat_items', JSON.stringify(items));
+}
+function loadKey() {
+  return localStorage.getItem('whatToEat_amapKey') || '';
+}
+function saveRadius() {
+  localStorage.setItem('whatToEat_radius', document.getElementById('radiusSelect').value);
+}
+function loadRadius() {
+  const r = localStorage.getItem('whatToEat_radius');
+  if (r) document.getElementById('radiusSelect').value = r;
+}
+
+// ---- 转盘绘制 ----
+function drawWheel() {
+  const n = items.length;
+  if (n === 0) return;
+  const arc = (2 * Math.PI) / n;
+  ctx.clearRect(0, 0, 680, 680);
+
+  ctx.save();
+  ctx.translate(CX, CY);
+  ctx.rotate(currentAngle);
+  ctx.translate(-CX, -CY);
+
+  for (let i = 0; i < n; i++) {
+    const startAngle = i * arc - Math.PI / 2;
+    const endAngle = startAngle + arc;
+
+    ctx.beginPath();
+    ctx.moveTo(CX, CY);
+    ctx.arc(CX, CY, R, startAngle, endAngle);
+    ctx.closePath();
+    ctx.fillStyle = COLORS[i % COLORS.length];
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(CX, CY);
+    ctx.rotate(startAngle + arc / 2);
+    const label = items[i].length > 5 ? items[i].slice(0, 5) + '…' : items[i];
+    const fontSize = n > 18 ? 15 : n > 12 ? 18 : 22;
+    ctx.fillStyle = '#333';
+    ctx.font = `bold ${fontSize}px "PingFang SC", sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, R * 0.65, 0);
+    ctx.restore();
+  }
+  ctx.restore();
+
+  ctx.beginPath();
+  ctx.arc(CX, CY, 50, 0, 2 * Math.PI);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+// ---- 旋转 & 结果 ----
+function spin() {
+  if (spinning || items.length === 0) return;
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+
+  const totalRotation = Math.PI * 2 * (5 + Math.random() * 5);
+  const duration = 4000 + Math.random() * 1000;
+  const startAngle = currentAngle;
+  const startTime = performance.now();
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    currentAngle = startAngle + totalRotation * easeOutCubic(progress);
+    drawWheel();
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      spinning = false;
+      document.getElementById('spinBtn').disabled = false;
+      showResult();
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+function showResult() {
+  const n = items.length;
+  const arc = (2 * Math.PI) / n;
+  const normalizedAngle = ((2 * Math.PI) - (currentAngle % (2 * Math.PI)) + (2 * Math.PI)) % (2 * Math.PI);
+  const index = Math.floor(normalizedAngle / arc) % n;
+  const name = items[index];
+
+  document.getElementById('slogan').textContent = SLOGANS[Math.floor(Math.random() * SLOGANS.length)];
+  document.getElementById('foodName').textContent = name;
+
+  const poi = nearbyData.find(d => d.name === name);
+  document.getElementById('foodDetail').textContent = poi
+    ? `${poi.address || poi.type} · ${formatDistance(poi.distance)}`
+    : '';
+
+  document.getElementById('overlay').classList.add('show');
+}
+
+function formatDistance(m) {
+  const meters = parseInt(m);
+  return meters >= 1000 ? (meters / 1000).toFixed(1) + 'km' : meters + 'm';
+}
+
+function closeResult(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('overlay').classList.remove('show');
+}
+
+// ---- 面板切换 ----
+function togglePanel(id) {
+  const panel = document.getElementById(id);
+  const isShowing = panel.classList.contains('show');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+  if (!isShowing) panel.classList.add('show');
+}
+
+// ---- 菜单管理 ----
+function renderMenuList() {
+  document.getElementById('menuList').innerHTML = items.map((item, i) =>
+    `<span class="menu-tag">${item}<button class="del" onclick="removeItem(${i})">&times;</button></span>`
+  ).join('');
+}
+
+function addItem() {
+  const input = document.getElementById('newItem');
+  const val = input.value.trim();
+  if (!val || items.includes(val)) { input.value = ''; return; }
+  items.push(val);
+  saveItems();
+  renderMenuList();
+  drawWheel();
+  input.value = '';
+  input.focus();
+}
+
+function removeItem(index) {
+  if (items.length <= 2) return;
+  items.splice(index, 1);
+  saveItems();
+  renderMenuList();
+  drawWheel();
+}
+
+function resetMenu() {
+  nearbyData = [];
+  items = [...DEFAULT_ITEMS];
+  saveItems();
+  renderMenuList();
+  drawWheel();
+  setHint('已恢复默认菜单');
+}
+
+// ---- API Key 管理 ----
+function saveKey() {
+  const key = document.getElementById('keyInput').value.trim();
+  if (!key) return;
+  localStorage.setItem('whatToEat_amapKey', key);
+  updateKeyStatus();
+  setHint('Key 已保存，点击「附近美食」试试吧');
+}
+
+function updateKeyStatus() {
+  const key = loadKey();
+  const el = document.getElementById('keyStatus');
+  if (key) {
+    el.className = 'key-status ok';
+    el.textContent = '已配置 Key：' + key.slice(0, 6) + '******';
+    document.getElementById('keyInput').value = key;
+  } else {
+    el.className = 'key-status empty';
+    el.textContent = '尚未配置，请先获取 Key';
+  }
+}
+
+// ---- 定位 & 附近搜索 ----
+function setHint(text) {
+  document.getElementById('locationHint').textContent = text;
+}
+
+function handleNearby() {
+  const key = loadKey();
+  if (!key) {
+    togglePanel('keyPanel');
+    setHint('请先配置高德 API Key');
+    return;
+  }
+  togglePanel('nearbyPanel');
+  fetchNearby();
+}
+
+const EXCLUDE_KEYWORDS = ['咖啡','茶艺','茶馆','茶餐厅','奶茶','饮品','饮料','冷饮','甜品','蛋糕','烘焙','面包','酒吧','酒庄','棋牌'];
+
+function filterPois(pois) {
+  return pois.filter(p => {
+    const text = (p.name || '') + (p.type || '');
+    return !EXCLUDE_KEYWORDS.some(kw => text.includes(kw));
+  });
+}
+
+function getLocationByGPS() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) { reject(new Error('no_geo')); return; }
+    navigator.geolocation.getCurrentPosition(
+      pos => resolve({ lng: pos.coords.longitude, lat: pos.coords.latitude, source: 'gps' }),
+      () => reject(new Error('gps_fail')),
+      { enableHighAccuracy: true, timeout: 5000 }
+    );
+  });
+}
+
+async function getLocationByIP() {
+  const key = loadKey();
+  setHint('GPS 不可用，正在通过 IP 定位…');
+  const data = await jsonpFetch(`https://restapi.amap.com/v3/ip?key=${key}`);
+  if (data.status === '1' && data.rectangle) {
+    const [sw, ne] = data.rectangle.split(';');
+    const [lng1, lat1] = sw.split(',').map(Number);
+    const [lng2, lat2] = ne.split(',').map(Number);
+    return { lng: (lng1+lng2)/2, lat: (lat1+lat2)/2, source: 'ip', city: data.city };
+  }
+  throw new Error('IP 定位失败');
+}
+
+async function getLocation() {
+  if (currentLocation) return currentLocation;
+  setHint('正在获取位置…');
+  try {
+    const loc = await getLocationByGPS();
+    const converted = await convertToAmapCoords(loc.lng, loc.lat);
+    currentLocation = { ...converted, source: 'gps' };
+    return currentLocation;
+  } catch(e) {
+    const loc = await getLocationByIP();
+    currentLocation = loc;
+    return currentLocation;
+  }
+}
+
+let jsonpCounter = 0;
+
+function jsonpFetch(url) {
+  return new Promise((resolve, reject) => {
+    const cbName = '_whatToEat_cb_' + (++jsonpCounter);
+    const script = document.createElement('script');
+    const timeout = setTimeout(() => {
+      cleanup();
+      reject(new Error('请求超时'));
+    }, 10000);
+
+    function cleanup() {
+      clearTimeout(timeout);
+      delete window[cbName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    window[cbName] = (data) => {
+      cleanup();
+      resolve(data);
+    };
+
+    script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
+    script.onerror = () => { cleanup(); reject(new Error('网络请求失败')); };
+    document.head.appendChild(script);
+  });
+}
+
+async function convertToAmapCoords(lng, lat) {
+  const key = loadKey();
+  const url = `https://restapi.amap.com/v3/assistant/coordinate/convert?key=${key}&locations=${lng},${lat}&coordsys=gps`;
+  try {
+    const data = await jsonpFetch(url);
+    if (data.status === '1' && data.locations) {
+      const [aLng, aLat] = data.locations.split(',');
+      return { lng: aLng, lat: aLat };
+    }
+  } catch(e) {}
+  return { lng, lat };
+}
+
+function renderNearbyResults(pois, locLabel) {
+  const content = document.getElementById('nearbyContent');
+  const actions = document.getElementById('nearbyActions');
+
+  const filtered = filterPois(pois);
+  if (filtered.length === 0) {
+    content.innerHTML = '<div class="loading-spinner">附近没有搜到餐饮店（已排除饮品/咖啡/甜品），试试扩大范围</div>';
+    actions.style.display = 'none';
+    return;
+  }
+
+  nearbyData = filtered.map(p => ({
+    name: p.name,
+    type: (p.type || '').split(';')[0],
+    address: p.address,
+    distance: p.distance
+  }));
+
+  content.innerHTML = nearbyData.map(p =>
+    `<div class="nearby-item">
+      <div>
+        <div class="name">${p.name}</div>
+        <div class="meta">${p.type}${p.address ? ' · ' + p.address : ''}</div>
+      </div>
+      <div class="distance">${p.distance ? formatDistance(p.distance) : ''}</div>
+    </div>`
+  ).join('');
+
+  actions.style.display = 'flex';
+  setHint(locLabel);
+}
+
+async function fetchNearby() {
+  const key = loadKey();
+  const content = document.getElementById('nearbyContent');
+  const actions = document.getElementById('nearbyActions');
+  const radius = document.getElementById('radiusSelect').value;
+
+  content.innerHTML = '<div class="loading-spinner">正在定位并搜索附近美食…</div>';
+  actions.style.display = 'none';
+
+  try {
+    const loc = await getLocation();
+    const locLabel = loc.source === 'ip'
+      ? `已通过 IP 定位到${loc.city || '当前城市'}（精度有限，建议输入具体地址）`
+      : `已定位 (${Number(loc.lng).toFixed(4)}, ${Number(loc.lat).toFixed(4)})`;
+
+    const url = `https://restapi.amap.com/v3/place/around?key=${key}&location=${loc.lng},${loc.lat}&types=050000&radius=${radius}&offset=40&page=1&extensions=all&sortrule=distance`;
+    const data = await jsonpFetch(url);
+
+    if (data.status !== '1') {
+      const errMsgs = { INVALID_USER_KEY: 'API Key 无效，请检查设置', DAILY_QUERY_OVER_LIMIT: '今日调用次数已用完' };
+      throw new Error(errMsgs[data.infocode] || data.info || '搜索失败');
+    }
+
+    renderNearbyResults(data.pois || [], locLabel);
+  } catch(err) {
+    content.innerHTML = `<div class="loading-spinner">${err.message}</div>`;
+    setHint(err.message);
+  }
+}
+
+async function searchByAddress() {
+  const key = loadKey();
+  const addr = document.getElementById('addrInput').value.trim();
+  if (!addr) return;
+
+  const content = document.getElementById('nearbyContent');
+  const actions = document.getElementById('nearbyActions');
+  const radius = document.getElementById('radiusSelect').value;
+
+  content.innerHTML = '<div class="loading-spinner">正在搜索…</div>';
+  actions.style.display = 'none';
+
+  try {
+    const geoUrl = `https://restapi.amap.com/v3/geocode/geo?key=${key}&address=${encodeURIComponent(addr)}`;
+    const geoData = await jsonpFetch(geoUrl);
+
+    if (geoData.status !== '1' || !geoData.geocodes || geoData.geocodes.length === 0) {
+      content.innerHTML = '<div class="loading-spinner">找不到该地址，换个关键词试试</div>';
+      return;
+    }
+
+    const location = geoData.geocodes[0].location;
+    const url = `https://restapi.amap.com/v3/place/around?key=${key}&location=${location}&types=050000&radius=${radius}&offset=40&page=1&extensions=all&sortrule=distance`;
+    const data = await jsonpFetch(url);
+
+    if (data.status !== '1') {
+      throw new Error(data.info || '搜索失败');
+    }
+
+    renderNearbyResults(data.pois || [], `搜索「${addr}」附近美食`);
+  } catch(err) {
+    content.innerHTML = `<div class="loading-spinner">${err.message}</div>`;
+  }
+}
+
+function useNearbyItems() {
+  if (nearbyData.length === 0) return;
+  const maxItems = Math.min(nearbyData.length, 20);
+  items = nearbyData.slice(0, maxItems).map(p => p.name);
+  saveItems();
+  renderMenuList();
+  currentAngle = 0;
+  drawWheel();
+  setHint(`已加载 ${items.length} 家附近美食到转盘`);
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+}
+
+// ---- 初始化 ----
+loadItems();
+loadRadius();
+drawWheel();
+renderMenuList();
+updateKeyStatus();
+</script>
+</body>
+</html>

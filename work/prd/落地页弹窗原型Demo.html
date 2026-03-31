@@ -279,7 +279,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
   flex-shrink: 0; display: flex; align-items: flex-start; justify-content: center;
 }
 .hz-image-canvas {
-  width: 300px; height: 420px; background: #f5f5f5; border-radius: 12px;
+  width: 300px; height: 420px; background: #f5f5f5; border-radius: 16px;
   position: relative; overflow: hidden;
 }
 .hz-image-bg {
@@ -440,21 +440,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
   </div>
 
   <div class="component-panel">
-    <div class="component-card" id="card-retain" onclick="selectCard('retain')">
-      <div class="card-preview" style="background:#e0e0e0;">
-        <div class="preview-img"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
-        <div class="preview-btn orange">确定</div>
-        <div class="preview-close">✕</div>
-      </div>
-      <div class="card-label">挽留弹窗</div>
-    </div>
-    <div class="component-card active" id="card-entry" onclick="selectCard('entry')">
+    <div class="component-card active" id="card-popup" onclick="selectCard('popup')">
       <div class="card-preview" style="background:#d4d4d4;">
         <div class="preview-img"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
         <div class="preview-btn green">立即免费领取</div>
         <div class="preview-close">✕</div>
       </div>
-      <div class="card-label">前置弹窗 <span class="badge">新</span></div>
+      <div class="card-label">异形弹窗 <span class="badge">改</span></div>
     </div>
   </div>
 
@@ -526,9 +518,27 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
   <!-- 右侧配置栏 -->
   <div class="config-panel">
     <div class="config-header">
-      配置栏 - <span>前置弹窗</span>
+      配置栏 - <span>异形弹窗</span>
     </div>
     <div class="config-body">
+
+      <!-- 触发时机 -->
+      <div class="config-group">
+        <div class="config-label"><span class="required">*</span> 触发时机</div>
+        <div class="radio-group" id="triggerGroup">
+          <div class="radio-item" data-trigger="exit" onclick="setTrigger(this)">
+            <div class="radio-dot"></div> App内退出落地页
+          </div>
+          <div class="radio-item active" data-trigger="enter" onclick="setTrigger(this)">
+            <div class="radio-dot"></div> 首次进入页面
+          </div>
+          <div class="radio-item" data-trigger="order-back" onclick="setTrigger(this)">
+            <div class="radio-dot"></div> 下单页点击返回
+          </div>
+        </div>
+      </div>
+
+      <div class="config-divider"></div>
 
       <!-- 背景图 -->
       <div class="config-group">
@@ -559,7 +569,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
         <div class="config-label"><span class="required">*</span> 展示频率</div>
         <div class="radio-group" id="freqGroup">
           <div class="radio-item active" data-freq="every" onclick="setFreq(this)">
-            <div class="radio-dot"></div> 每次访问
+            <div class="radio-dot"></div> 每次
           </div>
           <div class="radio-item" data-freq="daily" onclick="setFreq(this)">
             <div class="radio-dot"></div> 每天首次
@@ -588,6 +598,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
       <div class="hz-modal-left">
         <div class="hz-image-canvas" id="hzCanvas">
           <div class="hz-image-bg">
+            <div style="position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85);font-size:12px;">✕</div>
             <div class="ribbon-sm">限时专属福利</div>
             <h4>开学季 · 1V1 提分特训</h4>
             <div class="sub-sm">数学思维能力全面提升</div>
@@ -596,6 +607,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
               <div class="hz-hl-item"><div class="n">2000+</div><div class="d">精美动画</div></div>
               <div class="hz-hl-item"><div class="n">2700+</div><div class="d">模拟试卷</div></div>
             </div>
+            <div style="width:85%;height:34px;background:linear-gradient(135deg,#ffe44d,#ffb800);border-radius:17px;display:flex;align-items:center;justify-content:center;color:#c44200;font-size:13px;font-weight:700;box-shadow:0 3px 8px rgba(255,184,0,.4);">立即免费领取</div>
+            <div style="width:65%;height:26px;background:transparent;border:1px solid rgba(255,255,255,.4);border-radius:13px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.75);font-size:11px;margin-top:6px;">先看看再说</div>
           </div>
         </div>
       </div>
@@ -631,11 +644,12 @@ var hotzones = [
 ];
 var hzNextId = 2;
 
-function selectCard(type) {
-  document.getElementById('card-retain').classList.toggle('active', type === 'retain');
-  document.getElementById('card-entry').classList.toggle('active', type === 'entry');
-}
+function selectCard(type) {}
 
+function setTrigger(el) {
+  document.querySelectorAll('#triggerGroup .radio-item').forEach(function(it) { it.classList.remove('active'); });
+  el.classList.add('active');
+}
 function setFreq(el) {
   document.querySelectorAll('#freqGroup .radio-item').forEach(function(it) { it.classList.remove('active'); });
   el.classList.add('active');
