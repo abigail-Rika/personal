@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>海豚夏日福利嘉年华 - H5 抽奖 Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f5f5f5;
+            max-width: 375px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ========== 背景 ========== */
+        .page-bg {
+            background: linear-gradient(180deg, #FF8C42 0%, #FF6B35 30%, #FFA366 60%, #FFD4B2 100%);
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+
+        /* ========== 头部 ========== */
+        .header {
+            padding: 48px 20px 16px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            margin-bottom: 6px;
+        }
+        .header .subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* ========== 在线人数条 ========== */
+        .status-bar {
+            margin: 0 16px 12px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status-bar .round-info {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .status-bar .round-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 2px;
+        }
+        .status-bar .online {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #fff;
+        }
+        .status-bar .online strong {
+            color: #FFE066;
+        }
+
+        /* ========== 抽奖卡片区 ========== */
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            padding: 16px 20px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cards-scroll {
+            padding: 0 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .cards-scroll::-webkit-scrollbar { display: none; }
+        .cards-row {
+            display: flex;
+            gap: 12px;
+            padding-bottom: 8px;
+        }
+
+        /* 单张卡片 */
+        .lottery-card {
+            flex-shrink: 0;
+            width: 220px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .lottery-card.current {
+            border: 2px solid #FFD700;
+            box-shadow: 0 4px 24px rgba(255,215,0,0.3);
+        }
+        .card-badge {
+            background: linear-gradient(135deg, #FF4E50, #F9D423);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            padding: 4px 0;
+        }
+        .card-body {
+            padding: 16px;
+            text-align: center;
+        }
+        .prize-img {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+        }
+        .prize-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .prize-meta {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+        .countdown-box {
+            background: #FFF8F0;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 12px;
+        }
+        .countdown-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+        .countdown-time {
+            font-size: 22px;
+            font-weight: 800;
+            color: #FF6B35;
+            font-variant-numeric: tabular-nums;
+        }
+        .countdown-time.not-yet {
+            font-size: 14px;
+            color: #bbb;
+            font-weight: 600;
+        }
+
+        /* 按钮状态 */
+        .card-btn {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-waiting {
+            background: #E8E8E8;
+            color: #999;
+            cursor: not-allowed;
+        }
+        .btn-reveal {
+            background: linear-gradient(135deg, #FF6B35, #FF4E50);
+            color: #fff;
+            animation: pulse-btn 2s ease-in-out infinite;
+        }
+        .btn-reveal:active {
+            transform: scale(0.96);
+        }
+        @keyframes pulse-btn {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,53,0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(255,107,53,0); }
+        }
+
+        /* ========== 揭晓结果弹窗 ========== */
+        .result-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .result-overlay.show { display: flex; }
+        .result-card {
+            background: #fff;
+            border-radius: 20px;
+            width: 300px;
+            text-align: center;
+            padding: 32px 24px 24px;
+            animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        @keyframes pop-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .result-icon { font-size: 64px; margin-bottom: 12px; }
+        .result-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .result-title.win { color: #FF6B35; }
+        .result-title.lose { color: #999; }
+        .result-prize { font-size: 14px; color: #666; margin-bottom: 20px; }
+        .result-close {
+            background: #F5F5F5;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 40px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        /* ========== 历史开奖 ========== */
+        .history-section {
+            margin: 20px 16px 0;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 16px;
+        }
+        .history-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .history-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .history-item:last-child { margin-bottom: 0; }
+        .history-emoji {
+            width: 44px;
+            height: 44px;
+            background: #FFF3E0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .history-info { flex: 1; }
+        .history-round {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+        .history-prize-name {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+        .history-action {
+            font-size: 12px;
+            color: #FF6B35;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        /* ========== 中奖名单弹窗 ========== */
+        .winners-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 100;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .winners-overlay.show { display: flex; }
+        .winners-sheet {
+            background: #fff;
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            max-height: 70vh;
+            padding: 20px;
+            animation: slide-up 0.3s ease-out;
+            overflow-y: auto;
+        }
+        @keyframes slide-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .winners-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .winners-header h3 { font-size: 16px; font-weight: 700; }
+        .winners-close {
+            width: 28px; height: 28px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .winner-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 14px;
+            color: #333;
+        }
+        .winner-row:last-child { border-bottom: none; }
+
+        /* ========== 活动规则 ========== */
+        .rules-section {
+            margin: 20px 16px 0;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 16px;
+        }
+        .rules-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .rules-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.8;
+        }
+
+        /* ========== 九重福利 ========== */
+        .benefits-section {
+            margin: 20px 16px 0;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 16px;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .benefit-item {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 14px 8px;
+            text-align: center;
+        }
+        .benefit-icon { font-size: 24px; margin-bottom: 4px; }
+        .benefit-name { font-size: 11px; color: #fff; }
+
+        /* ========== 吸底 CTA ========== */
+        .bottom-cta {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(10px);
+            padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+            border-top: 1px solid rgba(0,0,0,0.06);
+            z-index: 50;
+        }
+        .cta-btn {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .cta-unqualified {
+            background: linear-gradient(135deg, #FF6B35, #FF4E50);
+            color: #fff;
+            animation: pulse-btn 2s ease-in-out infinite;
+        }
+        .cta-qualified {
+            background: linear-gradient(135deg, #34C759, #30B050);
+            color: #fff;
+        }
+        .cta-ended {
+            background: #E0E0E0;
+            color: #999;
+            cursor: not-allowed;
+        }
+        .cta-sub {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        /* ========== 活动未开始蒙层 ========== */
+        .not-started-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .not-started-overlay.show { display: flex; }
+        .not-started-text {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .not-started-btn {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.4);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 30px;
+            cursor: default;
+        }
+
+        /* ========== Demo 状态切换控制栏 ========== */
+        .demo-controls {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            padding: 6px 12px;
+            z-index: 300;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .demo-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .demo-btn:hover { background: rgba(255,255,255,0.25); }
+        .demo-btn.active {
+            background: #FF6B35;
+            border-color: #FF6B35;
+        }
+        .demo-label {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            align-self: center;
+            margin-right: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Demo 控制栏 -->
+<div class="demo-controls">
+    <span class="demo-label">页面状态:</span>
+    <button class="demo-btn active" onclick="setState('running-qualified')">进行中·有资格</button>
+    <button class="demo-btn" onclick="setState('running-unqualified')">进行中·无资格</button>
+    <button class="demo-btn" onclick="setState('not-started')">未开始</button>
+    <button class="demo-btn" onclick="setState('ended')">已结束</button>
+</div>
+
+<!-- 活动未开始蒙层 -->
+<div id="not-started-overlay" class="not-started-overlay">
+    <div style="font-size:64px;margin-bottom:16px;">🐬</div>
+    <div class="not-started-text">直播预计在 12:00 开始</div>
+    <div class="not-started-btn" id="not-started-countdown">距离直播开始还有 01:10:23</div>
+</div>
+
+<!-- 主页面 -->
+<div class="page-bg">
+
+    <!-- 头部 -->
+    <div class="header" style="padding-top: 56px;">
+        <h1>🐬 海豚夏日福利嘉年华</h1>
+        <div class="subtitle">6月6日 12:00 - 22:00</div>
+    </div>
+
+    <!-- 在线信息条 -->
+    <div class="status-bar">
+        <div>
+            <div class="round-info">🔥 第8轮抽奖中</div>
+            <div class="round-sub">还有38轮 · 共285个奖品</div>
+        </div>
+        <div class="online"><strong>2,847</strong> 人在线</div>
+    </div>
+
+    <!-- 抽奖卡片区 -->
+    <div class="section-title">🎰 正在进行 & 即将开始</div>
+    <div class="cards-scroll">
+        <div class="cards-row">
+
+            <!-- 卡片1: 当前轮次 - 倒计时中 -->
+            <div class="lottery-card current">
+                <div class="card-badge">🔥 正在进行</div>
+                <div class="card-body">
+                    <div class="prize-img">🎧</div>
+                    <div class="prize-name">降噪耳机</div>
+                    <div class="prize-meta">第8轮 · 15个名额</div>
+                    <div class="countdown-box">
+                        <div class="countdown-label">⏰ 距离开奖</div>
+                        <div class="countdown-time" id="current-countdown">03:27</div>
+                    </div>
+                    <button class="card-btn btn-waiting">等待开奖</button>
+                </div>
+            </div>
+
+            <!-- 卡片2: 已开奖未查看 - 揭晓结果 -->
+            <div class="lottery-card" id="reveal-card">
+                <div class="card-badge" style="background:linear-gradient(135deg,#FF6B35,#FFB347);">✨ 已开奖 · 待揭晓</div>
+                <div class="card-body" id="reveal-card-body">
+                    <div class="prize-img" style="position:relative;">
+                        🎁
+                        <div style="position:absolute;top:-4px;right:-4px;width:12px;height:12px;background:#FF4E50;border-radius:50%;border:2px solid #fff;"></div>
+                    </div>
+                    <div class="prize-name">小白周边礼盒</div>
+                    <div class="prize-meta">第7轮 · 50个名额</div>
+                    <div class="countdown-box" style="background:#FFF0E0;">
+                        <div class="countdown-label">🎉 已开奖</div>
+                        <div class="countdown-time" style="font-size:14px;color:#FF6B35;">点击下方按钮揭晓结果</div>
+                    </div>
+                    <button class="card-btn btn-reveal" onclick="revealResult()">揭晓我的结果</button>
+                </div>
+            </div>
+
+            <!-- 卡片3: 未到轮次 -->
+            <div class="lottery-card">
+                <div class="card-body">
+                    <div class="prize-img">🎧</div>
+                    <div class="prize-name">降噪耳机</div>
+                    <div class="prize-meta">第9轮 · 15个名额</div>
+                    <div class="countdown-box">
+                        <div class="countdown-label">⏱️ 开奖时间</div>
+                        <div class="countdown-time" style="font-size:16px;">14:36</div>
+                    </div>
+                    <button class="card-btn btn-waiting">未到轮次</button>
+                </div>
+            </div>
+
+            <!-- 卡片4: 未到轮次 -->
+            <div class="lottery-card">
+                <div class="card-body">
+                    <div class="prize-img">📱</div>
+                    <div class="prize-name">小猿学练机</div>
+                    <div class="prize-meta">第10轮 · 5个名额</div>
+                    <div class="countdown-box">
+                        <div class="countdown-label">⏱️ 开奖时间</div>
+                        <div class="countdown-time" style="font-size:16px;">14:48</div>
+                    </div>
+                    <button class="card-btn btn-waiting">未到轮次</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 历史开奖记录 -->
+    <div class="history-section">
+        <div class="history-title">📋 历史开奖记录</div>
+
+        <div class="history-item">
+            <div class="history-emoji">🎁</div>
+            <div class="history-info">
+                <div class="history-round">第6轮 · 小白周边礼盒</div>
+                <div class="history-prize-name">50人中奖 · 13:12 开奖</div>
+            </div>
+            <div class="history-action" onclick="showWinners(6)">中奖名单 ›</div>
+        </div>
+
+        <div class="history-item">
+            <div class="history-emoji">🎁</div>
+            <div class="history-info">
+                <div class="history-round">第5轮 · 小白周边礼盒</div>
+                <div class="history-prize-name">50人中奖 · 13:00 开奖</div>
+            </div>
+            <div class="history-action" onclick="showWinners(5)">中奖名单 ›</div>
+        </div>
+
+        <div class="history-item">
+            <div class="history-emoji">🎧</div>
+            <div class="history-info">
+                <div class="history-round">第4轮 · 降噪耳机</div>
+                <div class="history-prize-name">15人中奖 · 12:48 开奖</div>
+            </div>
+            <div class="history-action" onclick="showWinners(4)">中奖名单 ›</div>
+        </div>
+
+        <div class="history-item">
+            <div class="history-emoji">🎁</div>
+            <div class="history-info">
+                <div class="history-round">第3轮 · 小白周边礼盒</div>
+                <div class="history-prize-name">50人中奖 · 12:36 开奖</div>
+            </div>
+            <div class="history-action" onclick="showWinners(3)">中奖名单 ›</div>
+        </div>
+
+        <div class="history-item">
+            <div class="history-emoji">🎁</div>
+            <div class="history-info">
+                <div class="history-round">第2轮 · 小白周边礼盒</div>
+                <div class="history-prize-name">50人中奖 · 12:24 开奖</div>
+            </div>
+            <div class="history-action" onclick="showWinners(2)">中奖名单 ›</div>
+        </div>
+
+        <div class="history-item">
+            <div class="history-emoji">🎁</div>
+            <div class="history-info">
+                <div class="history-round">第1轮 · 小白周边礼盒</div>
+                <div class="history-prize-name">50人中奖 · 12:12 开奖</div>
+            </div>
+            <div class="history-action" onclick="showWinners(1)">中奖名单 ›</div>
+        </div>
+    </div>
+
+    <!-- 九重福利 -->
+    <div class="benefits-section">
+        <div class="history-title">🎁 下单即享九重福利</div>
+        <div class="benefits-grid">
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利一</div></div>
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利二</div></div>
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利三</div></div>
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利四</div></div>
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利五</div></div>
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利六</div></div>
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利七</div></div>
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利八</div></div>
+            <div class="benefit-item"><div class="benefit-icon">🎁</div><div class="benefit-name">福利九</div></div>
+        </div>
+    </div>
+
+    <!-- 活动规则 -->
+    <div class="rules-section">
+        <div class="rules-title">📋 活动规则</div>
+        <div class="rules-text">
+            1. 下单/续费后自动获得全部共有轮次抽奖资格<br>
+            2. 每轮自动参与，开奖后可揭晓个人结果<br>
+            3. 每轮抽取一种奖品，中奖名单实时公布<br>
+            4. 下单用户可同时获得九重专属福利<br>
+            5. 本活动最终解释权归海豚所有
+        </div>
+    </div>
+
+    <div style="height: 40px;"></div>
+</div>
+
+<!-- 吸底 CTA：有资格 -->
+<div class="bottom-cta" id="cta-qualified">
+    <button class="cta-btn cta-qualified">🎉 已获得抽奖资格，可参与剩余 38 轮抽奖</button>
+</div>
+
+<!-- 吸底 CTA：无资格 -->
+<div class="bottom-cta" id="cta-unqualified" style="display:none;">
+    <button class="cta-btn cta-unqualified" onclick="alert('跳转到下单页面')">🎁 立即下单，获得抽奖资格</button>
+    <div class="cta-sub">下单即可参与剩余 38 轮抽奖 + 九重福利</div>
+</div>
+
+<!-- 吸底 CTA：已结束 -->
+<div class="bottom-cta" id="cta-ended" style="display:none;">
+    <button class="cta-btn cta-ended">活动已结束</button>
+</div>
+
+<!-- 揭晓结果弹窗 -->
+<div class="result-overlay" id="result-overlay" onclick="if(event.target===this)closeResult()">
+    <div class="result-card" id="result-card"></div>
+</div>
+
+<!-- 中奖名单弹窗 -->
+<div class="winners-overlay" id="winners-overlay" onclick="if(event.target===this)closeWinners()">
+    <div class="winners-sheet" id="winners-sheet"></div>
+</div>
+
+<script>
+    // ========== 揭晓结果 ==========
+    let revealed = false;
+    function revealResult() {
+        if (revealed) return;
+        revealed = true;
+
+        const isWin = Math.random() > 0.7;
+        const overlay = document.getElementById('result-overlay');
+        const card = document.getElementById('result-card');
+
+        if (isWin) {
+            card.innerHTML = `
+                <div class="result-icon">🎉</div>
+                <div class="result-title win">恭喜您中奖了！</div>
+                <div style="font-size:40px;margin:8px 0;">🎁</div>
+                <div class="result-prize">小白周边礼盒</div>
+                <button class="result-close" onclick="closeResult()">我知道了</button>
+            `;
+        } else {
+            card.innerHTML = `
+                <div class="result-icon">😢</div>
+                <div class="result-title lose">很遗憾，您未中奖</div>
+                <div class="result-prize">继续参与后续轮次，好运在后面！</div>
+                <button class="result-close" onclick="closeResult()">继续等待好运</button>
+            `;
+        }
+        overlay.classList.add('show');
+
+        // 更新卡片状态
+        const revealCard = document.getElementById('reveal-card');
+        revealCard.querySelector('.card-badge').textContent = '✅ 已揭晓';
+        revealCard.querySelector('.card-badge').style.background = '#999';
+        const btn = revealCard.querySelector('.card-btn');
+        btn.textContent = isWin ? '🎉 已中奖' : '未中奖';
+        btn.className = 'card-btn btn-waiting';
+    }
+
+    function closeResult() {
+        document.getElementById('result-overlay').classList.remove('show');
+    }
+
+    // ========== 中奖名单 ==========
+    function showWinners(round) {
+        const overlay = document.getElementById('winners-overlay');
+        const sheet = document.getElementById('winners-sheet');
+        const names = [];
+        for (let i = 0; i < 15; i++) {
+            names.push(`用户${Math.random().toString(36).substr(2, 3)}***`);
+        }
+        sheet.innerHTML = `
+            <div class="winners-header">
+                <h3>🎉 第${round}轮中奖名单</h3>
+                <button class="winners-close" onclick="closeWinners()">✕</button>
+            </div>
+            ${names.map((n, i) => `
+                <div class="winner-row">
+                    <span>${i + 1}. ${n}</span>
+                    <span style="color:#999;">138****${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}</span>
+                </div>
+            `).join('')}
+        `;
+        overlay.classList.add('show');
+    }
+
+    function closeWinners() {
+        document.getElementById('winners-overlay').classList.remove('show');
+    }
+
+    // ========== 倒计时 ==========
+    let seconds = 207;
+    setInterval(() => {
+        seconds = Math.max(0, seconds - 1);
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        const el = document.getElementById('current-countdown');
+        if (el) el.textContent = `${m}:${s}`;
+    }, 1000);
+
+    // ========== Demo 状态切换 ==========
+    function setState(state) {
+        // 更新按钮高亮
+        document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const notStarted = document.getElementById('not-started-overlay');
+        const ctaQ = document.getElementById('cta-qualified');
+        const ctaU = document.getElementById('cta-unqualified');
+        const ctaE = document.getElementById('cta-ended');
+
+        notStarted.classList.remove('show');
+        ctaQ.style.display = 'none';
+        ctaU.style.display = 'none';
+        ctaE.style.display = 'none';
+
+        switch (state) {
+            case 'running-qualified':
+                ctaQ.style.display = 'block';
+                break;
+            case 'running-unqualified':
+                ctaU.style.display = 'block';
+                break;
+            case 'not-started':
+                notStarted.classList.add('show');
+                ctaQ.style.display = 'block';
+                break;
+            case 'ended':
+                ctaE.style.display = 'block';
+                break;
+        }
+    }
+</script>
+
+</body>
+</html>
