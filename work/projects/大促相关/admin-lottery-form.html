@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>后台配置 - 新增抽奖活动（标注改动）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .modal {
+            background: #fff;
+            border-radius: 8px;
+            width: 680px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            position: relative;
+        }
+        .modal-header {
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 { font-size: 16px; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 20px; color: #999; cursor: pointer; }
+        .modal-body { padding: 24px; }
+        .modal-footer {
+            padding: 12px 24px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .form-item {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .form-label .required { color: #ff4d4f; }
+
+        input[type="text"], select {
+            width: 100%;
+            height: 36px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            padding: 0 12px;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            background: #fff;
+        }
+        input::placeholder { color: #bbb; }
+        select { color: #bbb; appearance: auto; }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            font-size: 14px;
+            color: #333;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #d9d9d9;
+        }
+        .btn-default { background: #fff; color: #333; }
+        .btn-primary { background: #1677ff; color: #fff; border-color: #1677ff; }
+
+        /* 奖品池表格 */
+        .prize-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .prize-table th {
+            background: #fafafa;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 500;
+            color: #666;
+            border: 1px solid #f0f0f0;
+        }
+        .prize-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+        .prize-table select, .prize-table input {
+            width: 100%;
+            height: 32px;
+            font-size: 13px;
+        }
+
+        /* 新增标注 */
+        .new-marker {
+            position: relative;
+        }
+        .new-marker::after {
+            content: '新增';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4d4f;
+            color: #fff;
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            z-index: 1;
+        }
+        .highlight-new {
+            border: 2px dashed #ff4d4f !important;
+            background: #fff1f0 !important;
+            border-radius: 6px;
+            position: relative;
+        }
+        .highlight-cell {
+            border: 2px dashed #ff4d4f !important;
+            background: #fff1f0 !important;
+        }
+
+        .tag-new {
+            display: inline-block;
+            background: #ff4d4f;
+            color: #fff;
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        /* 文字计数 */
+        .input-with-count {
+            position: relative;
+        }
+        .input-count {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #bbb;
+        }
+
+        /* 上传按钮 */
+        .upload-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #999;
+            font-size: 11px;
+            margin: 0 auto;
+            gap: 2px;
+        }
+        .upload-btn .plus { font-size: 20px; color: #bbb; }
+        .upload-tip {
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="modal">
+    <div class="modal-header">
+        <h2>新增抽奖活动</h2>
+        <button class="modal-close">×</button>
+    </div>
+
+    <div class="modal-body">
+
+        <!-- 抽奖名称 -->
+        <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 抽奖名称</div>
+            <input type="text" placeholder="建议使用「直播间名称第x轮抽奖」">
+        </div>
+
+        <!-- 抽奖模版 -->
+        <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 抽奖模版</div>
+            <select><option>福袋抽奖</option></select>
+        </div>
+
+        <!-- 奖品池 -->
+        <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 奖品池</div>
+            <table class="prize-table">
+                <thead>
+                    <tr>
+                        <th style="width:25%">商品sku</th>
+                        <th style="width:20%">商品类目</th>
+                        <th style="width:12%">数量</th>
+                        <th style="width:20%">发放时效</th>
+                        <th style="width:23%" class="highlight-cell">
+                            奖品图片 <span class="tag-new">新增</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><select><option></option></select></td>
+                        <td><select><option></option></select></td>
+                        <td><input type="text" value="1" style="text-align:center;"></td>
+                        <td><select><option>自动发放</option></select></td>
+                        <td class="highlight-cell">
+                            <div class="upload-btn">
+                                <span class="plus">+</span>
+                                <span>上传</span>
+                            </div>
+                            <div class="upload-tip">支持动图/静态图</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 中奖人数 -->
+        <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 中奖人数</div>
+            <input type="text" placeholder="请输入">
+        </div>
+
+        <!-- 倒计时时长 -->
+        <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 倒计时时长</div>
+            <select><option>请选择</option></select>
+        </div>
+
+        <!-- 评论内容 -->
+        <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 评论内容</div>
+            <div class="input-with-count">
+                <input type="text" placeholder="请输入">
+                <span class="input-count">0 / 20</span>
+            </div>
+        </div>
+
+        <!-- 参与条件（新增「仅下单」） -->
+        <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 参与条件</div>
+            <div class="radio-group">
+                <label><input type="radio" name="condition"> 仅评论</label>
+                <label><input type="radio" name="condition" checked> 评论且下单</label>
+                <label class="highlight-new" style="padding:4px 10px;">
+                    <input type="radio" name="condition"> 仅下单 <span class="tag-new">新增</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 抽奖渠道（整个字段新增） -->
+        <div class="form-item highlight-new" style="padding:12px 14px;">
+            <div class="form-label"><span class="required">*</span> 抽奖渠道 <span class="tag-new">新增</span></div>
+            <div class="radio-group">
+                <label><input type="radio" name="channel" checked> 仅直播间</label>
+                <label><input type="radio" name="channel"> 直播间和H5</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default">取消</button>
+        <button class="btn btn-primary">确定</button>
+    </div>
+</div>
+
+</body>
+</html>
