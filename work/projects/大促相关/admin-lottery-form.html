@@ -9,8 +9,10 @@
             font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
             background: #f0f2f5;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding: 40px 20px;
+            gap: 0;
         }
         .modal {
             background: #fff;
@@ -189,10 +191,165 @@
             text-align: center;
             margin-top: 4px;
         }
+
+        /* 活动列表区域 */
+        .list-section {
+            width: 900px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+        .list-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-header h2 { font-size: 16px; font-weight: 600; }
+        .list-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .list-table th {
+            background: #fafafa;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .list-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+        }
+        .list-table .link-btn {
+            color: #1677ff;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 13px;
+            padding: 0;
+        }
+        .list-table .link-btn:hover { text-decoration: underline; }
+        .list-table .link-btn-new {
+            color: #1677ff;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 13px;
+            padding: 0;
+            position: relative;
+        }
+        .list-table .link-btn-new:hover { text-decoration: underline; }
+        .highlight-op {
+            border: 2px dashed #ff4d4f !important;
+            background: #fff1f0 !important;
+            border-radius: 4px;
+            padding: 4px 8px !important;
+        }
+        .section-label {
+            font-size: 12px;
+            color: #999;
+            padding: 12px 24px 4px;
+            background: #f0f2f5;
+        }
+        .toast-demo {
+            display: none;
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            z-index: 999;
+            animation: toastIn 0.3s ease;
+        }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
     </style>
 </head>
 <body>
 
+<div id="toast" class="toast-demo">H5 链接已复制到剪贴板</div>
+
+<!-- ========== 改动①：售卖活动列表 — 操作列新增「H5链接」 ========== -->
+<div class="section-label">改动① 直播售卖管理 → 活动列表 → 操作列新增「H5链接」（PRD §5.4）</div>
+<div class="list-section">
+    <div class="list-header">
+        <h2>直播售卖管理</h2>
+        <button class="btn btn-primary" style="padding:6px 14px; font-size:13px;">新建直播售卖活动</button>
+    </div>
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>售卖活动id</th>
+                <th>关联直播间id</th>
+                <th>关联直播间名称</th>
+                <th>开拍时间</th>
+                <th>结束时间</th>
+                <th>操作人</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2032</td>
+                <td>4719</td>
+                <td>6·6海豚夏日福利嘉年华</td>
+                <td>2026-06-06 12:00</td>
+                <td>2026-06-06 22:00</td>
+                <td>jiwenyue</td>
+                <td>
+                    <button class="link-btn">复制</button>
+                    <span style="color:#e8e8e8; margin:0 6px;">|</span>
+                    <span class="highlight-op">
+                        <button class="link-btn-new" onclick="showToast()">H5链接</button>
+                        <span class="tag-new">新增</span>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>1965</td>
+                <td>5679</td>
+                <td>【大促回测】5-43-0</td>
+                <td>2025-05-23 15:00</td>
+                <td>2026-02-14 00:05</td>
+                <td>jiwenyue</td>
+                <td>
+                    <button class="link-btn">复制</button>
+                    <span style="color:#e8e8e8; margin:0 6px;">|</span>
+                    <button class="link-btn" style="color:#bbb; cursor:not-allowed;" title="该活动暂无H5抽奖轮次">H5链接</button>
+                </td>
+            </tr>
+            <tr>
+                <td>1899</td>
+                <td>5583</td>
+                <td>【大促回测】5-43-0</td>
+                <td>2025-05-23 15:00</td>
+                <td>2025-12-12 00:05</td>
+                <td>yangfanbj04</td>
+                <td>
+                    <button class="link-btn">复制</button>
+                    <span style="color:#e8e8e8; margin:0 6px;">|</span>
+                    <button class="link-btn" style="color:#bbb; cursor:not-allowed;" title="该活动暂无H5抽奖轮次">H5链接</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ========== 改动②③：抽奖配置表单 ========== -->
+<div class="section-label">改动②③ 新增抽奖活动表单 — 奖品图片 / 参与条件「仅下单」/ 抽奖渠道（PRD §5.1-5.3）</div>
 <div class="modal">
     <div class="modal-header">
         <h2>新增抽奖活动</h2>
@@ -295,6 +452,14 @@
         <button class="btn btn-primary">确定</button>
     </div>
 </div>
+
+<script>
+function showToast() {
+    var t = document.getElementById('toast');
+    t.style.display = 'block';
+    setTimeout(function() { t.style.display = 'none'; }, 2000);
+}
+</script>
 
 </body>
 </html>
