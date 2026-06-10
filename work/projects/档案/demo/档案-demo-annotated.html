@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>档案首诊 Demo · 可编辑标注版</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f0f2f5;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #222;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { margin: 0; }
+  button { font-family: inherit; }
+
+  /* 顶部状态切换器 */
+  .state-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: #1f1f1f; color: #fff;
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  }
+  .state-bar .label { font-size: 12px; opacity: .7; }
+  .state-bar .group-label { font-size: 11px; opacity: .5; padding: 0 6px; }
+  .state-bar button {
+    padding: 6px 14px;
+    border: 1px solid #444;
+    background: transparent; color: #fff;
+    border-radius: 16px; cursor: pointer; font-size: 13px;
+    transition: all .15s;
+  }
+  .state-bar button:hover { background: #333; }
+  .state-bar button.active { background: #5B7BFF; border-color: #5B7BFF; }
+  .state-bar .meta { margin-left: auto; font-size: 12px; opacity: .6; }
+
+  /* 路径提示条 */
+  .path-hint {
+    background: #fffbe6; border-bottom: 1px solid #ffe58f;
+    padding: 8px 24px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 12px; color: #614700;
+  }
+  .path-hint .phint-label { font-weight: 600; }
+  .path-hint .phint-flow .arrow { color: #b8860b; margin: 0 4px; }
+  .path-hint .phint-flow b { color: #ad6800; }
+  .path-hint .phint-note { margin-left: auto; opacity: .7; }
+
+  /* 主布局 */
+  .layout { display: flex; gap: 24px; padding: 24px; max-width: 1400px; margin: 0 auto; }
+  .left { flex: 0 0 420px; position: sticky; top: 72px; height: fit-content; }
+  .right { flex: 1; max-width: 780px; }
+
+  /* 手机框 */
+  .phone {
+    width: 375px; height: 760px;
+    background: #fff;
+    border-radius: 36px;
+    box-shadow: 0 12px 36px rgba(0,0,0,.18), 0 0 0 8px #2a2a2a;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+  }
+  .statusbar {
+    height: 38px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    font-size: 13px; font-weight: 600;
+    background: #fff;
+  }
+  .navbar {
+    height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px; font-weight: 600;
+    position: relative;
+    background: #fff;
+  }
+  .navbar .back {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: #5B7BFF; font-size: 14px; cursor: pointer;
+  }
+  .screen {
+    height: calc(100% - 38px - 44px);
+    overflow-y: auto;
+    position: relative;
+    background: #f7f8fa;
+  }
+  .screen::-webkit-scrollbar { width: 0; }
+
+  /* 状态屏 */
+  .screen-page { display: none; padding: 16px; }
+  .screen-page.active { display: block; }
+
+  /* 首诊页：两段标题 */
+  .part-section {
+    margin-bottom: 16px;
+  }
+  .part-header {
+    display: flex; align-items: baseline; gap: 8px;
+    margin-bottom: 10px;
+    padding: 0 4px;
+  }
+  .part-header .part-num {
+    background: #5B7BFF; color: #fff;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .part-header .part-title {
+    font-size: 15px; font-weight: 600;
+  }
+  .part-header .part-sub {
+    margin-left: auto;
+    font-size: 11px; color: #999;
+  }
+
+  /* 通用卡片 */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  }
+  .card h4 {
+    font-size: 13px; color: #5B7BFF;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .card h4 .mark {
+    background: #eef1ff; color: #5B7BFF;
+    padding: 1px 6px; border-radius: 4px;
+    font-size: 10px;
+  }
+
+  /* 表单元素 */
+  .form-group { margin-bottom: 14px; }
+  .form-group:last-child { margin-bottom: 0; }
+  .form-group label {
+    display: block; font-size: 13px; color: #666; margin-bottom: 6px;
+  }
+  .form-group .prefilled {
+    background: #f5f7fa; border: 1px dashed #d0d6dd;
+    padding: 9px 12px; border-radius: 8px;
+    font-size: 14px; color: #555;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .form-group .prefilled .tag {
+    font-size: 10px; color: #999; background: #fff;
+    padding: 2px 6px; border-radius: 4px;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%; padding: 9px 12px;
+    border: 1px solid #d9d9d9; border-radius: 8px;
+    font-size: 14px; font-family: inherit;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: #5B7BFF; }
+  .form-group textarea { resize: none; min-height: 56px; }
+
+  /* 4 段成绩选择 */
+  .seg { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; }
+  .seg .seg-item {
+    padding: 8px 0; border: 1px solid #d9d9d9; border-radius: 6px;
+    text-align: center; font-size: 12px; cursor: pointer;
+  }
+  .seg .seg-item.selected {
+    border-color: #5B7BFF; background: #eef1ff; color: #5B7BFF;
+  }
+
+  /* 问题选择列表 */
+  .problem-list .problem-item {
+    background: #fff; padding: 11px 12px;
+    border: 1px solid #e5e7eb; border-radius: 10px;
+    margin-bottom: 8px; cursor: pointer;
+    transition: all .15s;
+  }
+  .more-problems { margin-top: 4px; }
+  .more-problems summary {
+    cursor: pointer; text-align: center;
+    font-size: 12px; color: #5B7BFF;
+    padding: 8px; list-style: none;
+    border: 1px dashed #d6e4ff;
+    border-radius: 8px;
+    background: #f7faff;
+  }
+  .more-problems summary::-webkit-details-marker { display: none; }
+  .more-problems[open] summary {
+    background: transparent; border: none;
+    color: #999;
+  }
+  .more-problems[open] summary::before { content: '收起 ↑'; }
+  .more-problems:not([open]) summary::before { content: '+ 查看更多问题（2 类）'; }
+  .more-problems > .problem-list { margin-top: 6px; }
+  .problem-list .problem-item.selected {
+    border-color: #5B7BFF; background: #eef1ff;
+  }
+  .problem-list .problem-item .ptype {
+    font-size: 13px; font-weight: 600; margin-bottom: 3px;
+  }
+  .problem-list .problem-item .ptrans {
+    font-size: 12px; color: #5B7BFF; line-height: 1.4;
+  }
+  .problem-list .problem-item .pexpr {
+    font-size: 11px; color: #999; margin-top: 3px;
+  }
+
+  /* 提交按钮 */
+  .submit-bar {
+    background: #5B7BFF; color: #fff;
+    padding: 12px; border-radius: 10px;
+    text-align: center; font-size: 15px; font-weight: 600;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  .submit-bar.wechat {
+    background: linear-gradient(135deg, #07c160 0%, #5cba76 100%);
+  }
+  .submit-bar.wechat .wechat-icon {
+    display: inline-block; margin-right: 4px; font-size: 14px;
+  }
+  .submit-bar + .submit-hint {
+    text-align: center; font-size: 11px; color: #999;
+    margin-top: 6px;
+  }
+
+  /* 基本信息收起卡片 */
+  .info-collapse {
+    background: #f7f8fa;
+    border: 1px solid #eef0f3;
+    border-radius: 10px;
+    padding: 11px 12px;
+    margin-bottom: 14px;
+    cursor: pointer;
+  }
+  .info-collapse .ic-head {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px;
+  }
+  .info-collapse .ic-summary {
+    color: #222; font-weight: 500;
+  }
+  .info-collapse .ic-summary .ic-tag {
+    background: #fff; color: #999; font-size: 10px;
+    padding: 1px 6px; border-radius: 4px;
+    margin-left: 4px;
+  }
+  .info-collapse .ic-toggle {
+    color: #5B7BFF; font-size: 12px;
+  }
+  .info-collapse .ic-detail {
+    display: none;
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px dashed #d9d9d9;
+  }
+  .info-collapse.expanded .ic-detail { display: block; }
+  .info-collapse.expanded .ic-toggle::before { content: '收起'; }
+  .info-collapse:not(.expanded) .ic-toggle::before { content: '展开修改'; }
+
+  /* 3 段成绩 */
+  .seg-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .seg-3 .seg-item {
+    padding: 12px 0; border: 1px solid #d9d9d9; border-radius: 8px;
+    text-align: center; cursor: pointer;
+    background: #fff;
+  }
+  .seg-3 .seg-item .stitle {
+    font-size: 14px; font-weight: 600; color: #222;
+  }
+  .seg-3 .seg-item .sdesc {
+    font-size: 11px; color: #999; margin-top: 2px;
+  }
+  .seg-3 .seg-item.selected {
+    border-color: #5B7BFF; background: #eef1ff;
+  }
+  .seg-3 .seg-item.selected .stitle { color: #5B7BFF; }
+
+  /* 希望改善输入区 */
+  .wish-block {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f4ff 100%);
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 12px;
+  }
+  .wish-block .wlabel {
+    font-size: 12px; color: #1890ff;
+    margin-bottom: 6px; font-weight: 500;
+    display: flex; align-items: center; gap: 4px;
+    flex-wrap: wrap;
+  }
+  .wish-block .wlabel .wopt {
+    color: #999; font-weight: 400; font-size: 11px;
+  }
+  .wish-block textarea {
+    background: #fff; border: 1px solid #d6e4ff;
+  }
+
+  /* 视频占位 */
+  .video-divider {
+    margin-top: 14px; margin-bottom: 8px;
+    font-size: 12px; color: #999;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .video-divider::before,
+  .video-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: #eef0f3;
+  }
+  .video-placeholder {
+    background: #1f1f1f;
+    border-radius: 10px;
+    height: 180px;
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .video-placeholder::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(91,123,255,.4), rgba(123,91,255,.4));
+  }
+  .video-placeholder .vp-play {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(255,255,255,.95);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,.3);
+  }
+  .video-placeholder .vp-play::after {
+    content: ''; width: 0; height: 0;
+    border-left: 14px solid #5B7BFF;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    margin-left: 4px;
+  }
+  .video-placeholder .vp-info {
+    position: absolute; bottom: 12px; left: 12px; right: 12px;
+    color: #fff; font-size: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .video-placeholder .vp-info .vp-title {
+    font-weight: 500;
+  }
+  .video-placeholder .vp-info .vp-duration {
+    background: rgba(0,0,0,.5); padding: 2px 6px; border-radius: 3px;
+    font-size: 11px;
+  }
+
+  /* 三步行动指引 */
+  .action-steps {
+    position: relative;
+    padding-left: 4px;
+  }
+  .astep {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0;
+    position: relative;
+  }
+  .astep + .astep::before {
+    content: '';
+    position: absolute;
+    left: 24px; top: -10px;
+    width: 1px; height: 20px;
+    background: linear-gradient(180deg, transparent, #d9d9d9, transparent);
+  }
+  .astep .astep-num {
+    flex-shrink: 0; width: 48px; height: 28px;
+    background: #eef1ff; color: #5B7BFF;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+  }
+  .astep.todo-confirm .astep-num {
+    background: #fff3cd; color: #b8860b;
+  }
+  .astep .astep-content { flex: 1; padding-top: 2px; }
+  .astep .astep-title {
+    font-size: 14px; color: #222; font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .astep .astep-desc {
+    font-size: 12px; color: #888;
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap;
+  }
+  .astep .astep-desc .conf-mark {
+    font-size: 10px; color: #b8860b;
+    background: #fff8e1; padding: 1px 6px; border-radius: 4px;
+  }
+
+  /* Step 2 顶部·孩子情况汇总 */
+  .kid-summary {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-left: 4px solid #5B7BFF;
+  }
+  .kid-summary h4 {
+    font-size: 13px; color: #5B7BFF;
+    margin-bottom: 8px;
+  }
+  .kid-summary .ks-text {
+    font-size: 13px; color: #222; line-height: 1.6;
+  }
+  .kid-summary .ks-text .tag-inline {
+    background: #eef1ff; color: #5B7BFF;
+    padding: 1px 6px; border-radius: 4px;
+    font-size: 12px; margin: 0 2px;
+  }
+  .kid-summary .ks-text .tag-inline.bold {
+    background: #fff3cd; color: #b8860b;
+    font-weight: 600;
+  }
+
+  /* === Part 2 / 档案页：5 模块视觉 === */
+  .archive-header {
+    background: linear-gradient(135deg, #5B7BFF 0%, #7B5BFF 100%);
+    color: #fff;
+    padding: 16px 18px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+  }
+  .archive-header .version {
+    font-size: 11px; opacity: .8;
+    background: rgba(255,255,255,.2); display: inline-block;
+    padding: 2px 8px; border-radius: 10px; margin-bottom: 6px;
+  }
+  .archive-header .name { font-size: 17px; font-weight: 600; margin-bottom: 3px; }
+  .archive-header .sub { font-size: 12px; opacity: .9; }
+
+  .module {
+    background: #fff;
+    border-radius: 12px;
+    padding: 13px 14px;
+    margin-bottom: 10px;
+  }
+  .module .mhead {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 600; margin-bottom: 10px;
+  }
+  .module .mhead .mtag {
+    font-size: 10px; padding: 1px 6px; border-radius: 8px;
+    background: #f0f2f5; color: #888;
+  }
+  .module .mhead .mtag.core {
+    background: #fff3cd; color: #b8860b;
+  }
+  .module .mhead .mtag.input { background: #e6f7ff; color: #1890ff; }
+
+  /* 模块 1 画像 */
+  .profile-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  }
+  .profile-grid .pitem {
+    background: #f7f8fa; padding: 8px 10px;
+    border-radius: 8px; font-size: 12px;
+  }
+  .profile-grid .pitem .k { color: #999; }
+  .profile-grid .pitem .v { color: #222; font-weight: 500; margin-top: 2px; }
+
+  /* 模块 2 问题 */
+  .problem-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .problem-chips .chip {
+    background: #eef1ff; color: #5B7BFF;
+    padding: 4px 10px; border-radius: 12px; font-size: 12px;
+  }
+
+  /* 模块 3 解决方案卡 */
+  .solution-card {
+    border: 1px solid #f0f0f0; border-radius: 10px;
+    padding: 11px 12px; margin-bottom: 8px;
+  }
+  .solution-card:last-child { margin-bottom: 0; }
+  .solution-card .sproblem {
+    font-size: 11px; color: #999; margin-bottom: 4px;
+  }
+  .solution-card .spath {
+    font-size: 13px; color: #222; line-height: 1.5; margin-bottom: 8px;
+  }
+  .solution-card .scourses {
+    display: flex; gap: 6px;
+    background: #f7f8fa; padding: 7px; border-radius: 8px;
+  }
+  .solution-card .scourse {
+    flex: 1; font-size: 11px;
+  }
+  .solution-card .scourse .scname { color: #222; margin-bottom: 2px; }
+  .solution-card .scourse .scmeta { color: #999; font-size: 10px; }
+  .solution-card .scta {
+    color: #5B7BFF; font-size: 12px; margin-top: 6px;
+    text-align: right;
+  }
+
+  /* 模块 4 学习路径 */
+  .path-overview {
+    background: #f7f8fa; border-radius: 10px;
+    padding: 10px 12px; margin-bottom: 10px;
+  }
+  .path-overview .pmeta {
+    font-size: 11px; color: #999; margin-bottom: 4px;
+  }
+  .path-overview .pcount {
+    font-size: 15px; font-weight: 600; color: #222;
+  }
+  .path-overview .pcount .total { color: #999; font-size: 13px; font-weight: 400; }
+
+  .progress-bar {
+    height: 5px; background: #f0f2f5; border-radius: 3px;
+    overflow: hidden; margin-top: 6px;
+  }
+  .progress-bar .pfill {
+    height: 100%; background: linear-gradient(90deg, #5B7BFF, #7B5BFF);
+    border-radius: 3px;
+  }
+  .path-list .pitem {
+    padding: 7px 0; border-bottom: 1px solid #f5f5f5;
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12px;
+  }
+  .path-list .pitem:last-child { border-bottom: none; }
+  .path-list .pitem .picon {
+    width: 16px; flex-shrink: 0; text-align: center; font-size: 12px;
+  }
+  .path-list .pitem.done .picon { color: #52c41a; }
+  .path-list .pitem.doing .picon { color: #faad14; }
+  .path-list .pitem.todo .picon { color: #ccc; }
+  .path-list .pitem .ptxt { flex: 1; line-height: 1.5; }
+  .path-list .pitem .pdetail { color: #999; font-size: 11px; margin-top: 2px; }
+
+  /* 模块 5 综合建议 */
+  .advice-block {
+    background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .advice-block .alabel {
+    font-size: 11px; color: #b8860b;
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .advice-block .atext {
+    font-size: 13px; color: #4a3a00;
+    line-height: 1.55;
+  }
+  .advice-block .atext .hl {
+    background: rgba(184, 134, 11, .15); padding: 0 2px;
+    border-radius: 2px;
+  }
+  .advice-block.kid {
+    background: linear-gradient(135deg, #e6f7ff 0%, #d6f0ff 100%);
+  }
+  .advice-block.kid .alabel { color: #1890ff; }
+  .advice-block.kid .atext { color: #003a8c; }
+
+  /* 标注圆点 */
+  .dot {
+    position: absolute; width: 22px; height: 22px;
+    background: #ff4d4f; color: #fff;
+    border-radius: 50%; font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 50;
+    box-shadow: 0 2px 6px rgba(255,77,79,.5);
+    transition: transform .15s;
+  }
+  .dot:hover { transform: scale(1.15); }
+  .dots-hidden .dot { display: none; }
+
+  /* 工具栏 */
+  .toolbar {
+    margin-top: 14px;
+    display: flex; gap: 8px; justify-content: center;
+  }
+  .toolbar button {
+    padding: 7px 14px;
+    border: 1px solid #d9d9d9; background: #fff;
+    border-radius: 6px; cursor: pointer; font-size: 13px;
+    transition: all .15s;
+  }
+  .toolbar button:hover { border-color: #5B7BFF; color: #5B7BFF; }
+  .toolbar button.primary {
+    background: #5B7BFF; color: #fff; border-color: #5B7BFF;
+  }
+  .toolbar button.primary:hover { background: #4a6aee; color: #fff; }
+  .toolbar button.save-btn {
+    background: #f0f5ff; border-color: #c7d6ff; color: #5B7BFF;
+  }
+  .toolbar button.save-btn:disabled {
+    background: #f5f6f8; border-color: #e5e7eb; color: #9aa0aa; cursor: default;
+  }
+  .toolbar button.save-btn.dirty {
+    background: #ff6b35; border-color: #ff6b35; color: #fff;
+    animation: savePulse 1.6s ease-in-out infinite;
+  }
+  .toolbar button.save-btn.dirty:hover { background: #e85a26; border-color: #e85a26; color: #fff; }
+  @keyframes savePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,53,.45); }
+    50%      { box-shadow: 0 0 0 6px rgba(255,107,53,0); }
+  }
+  .toolbar button.editing {
+    background: #fff3cd; border-color: #b8860b; color: #b8860b;
+    font-weight: 600;
+  }
+  .toolbar button.editing:hover { background: #ffe69c; color: #b8860b; border-color: #b8860b; }
+
+  /* 原型文案·编辑模式 */
+  .phone.edit-mode {
+    box-shadow: 0 12px 36px rgba(184,134,11,.25), 0 0 0 4px #b8860b, 0 0 0 12px #2a2a2a;
+  }
+  .edit-banner {
+    display: none;
+    position: absolute; left: 0; right: 0; top: 0;
+    z-index: 50;
+    background: #fff3cd; color: #b8860b;
+    font-size: 11px; font-weight: 600; text-align: center;
+    padding: 4px 8px;
+    border-bottom: 1px solid #f3e0a0;
+  }
+  .phone.edit-mode .edit-banner { display: block; }
+  .phone.edit-mode .screen { padding-top: 24px; }
+
+  /* 可编辑节点态：仅在 edit-mode 下生效 */
+  .phone.edit-mode [contenteditable="true"],
+  .phone.edit-mode [contenteditable="plaintext-only"] {
+    outline: none;
+    border-radius: 3px;
+    background: linear-gradient(transparent calc(100% - 1px), rgba(184,134,11,.35) 0) no-repeat;
+    background-size: 100% 100%;
+    transition: background-color .12s;
+  }
+  .phone.edit-mode [contenteditable]:hover {
+    background-color: rgba(255,243,205,.6);
+  }
+  .phone.edit-mode [contenteditable]:focus {
+    background-color: #fff3cd;
+    box-shadow: 0 0 0 2px rgba(184,134,11,.4);
+  }
+
+  /* 右侧详情面板 */
+  .right h2 {
+    font-size: 13px; color: #888; font-weight: 500;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .right h2 .filter-info {
+    color: #5B7BFF; font-weight: 600; margin-left: 6px;
+  }
+
+  .right article {
+    padding: 14px 16px; border-radius: 8px;
+    margin-bottom: 10px; background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    transition: all .15s;
+  }
+  .right article.active {
+    background: #fff7e6;
+    border-left: 4px solid #ff4d4f;
+    padding-left: 12px;
+  }
+  .right article h3 {
+    font-size: 14px; margin-bottom: 8px;
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .right article h3 .num {
+    color: #ff4d4f; font-weight: 700;
+  }
+  .right article h3 .ststamp {
+    margin-left: auto; font-size: 10px;
+    background: #f0f2f5; color: #888;
+    padding: 2px 6px; border-radius: 4px; font-weight: 400;
+  }
+  .right article h3 .ststamp.part1 { background: #eef1ff; color: #5B7BFF; }
+  .right article h3 .ststamp.part2 { background: #fff3cd; color: #b8860b; }
+  .right article h3 .ststamp.v1 { background: #e6f7ff; color: #1890ff; }
+  .right article h3 .ststamp.v2 { background: #f6ffed; color: #52c41a; }
+
+  .right dl {
+    margin: 0;
+    display: grid; grid-template-columns: 78px 1fr;
+    gap: 6px 10px;
+    font-size: 12.5px;
+  }
+  .right dt {
+    color: #888; font-weight: 500;
+    padding-top: 4px;
+  }
+  .right dd {
+    margin: 0; line-height: 1.6;
+  }
+  .right dd a {
+    color: #5B7BFF; text-decoration: none;
+    font-size: 11px;
+  }
+  .right dd a:hover { text-decoration: underline; }
+
+  /* 可编辑视觉提示 */
+  [contenteditable="true"] {
+    outline: none;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: background .15s;
+    cursor: text;
+    min-height: 1.2em;
+    display: inline-block;
+    min-width: 20px;
+  }
+  [contenteditable="true"]:empty::before {
+    content: '点击编辑';
+    color: #ccc;
+  }
+  [contenteditable="true"]:hover { background: #f5f5f5; }
+  [contenteditable="true"]:focus {
+    background: #fffbe6;
+    box-shadow: inset 0 0 0 1px #ffd666;
+  }
+
+  #savedTip {
+    position: fixed; bottom: 20px; right: 20px;
+    background: #52c41a; color: #fff;
+    padding: 10px 18px; border-radius: 6px;
+    font-size: 13px;
+    opacity: 0; transition: opacity .3s;
+    pointer-events: none;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部状态切换器 -->
+<div class="state-bar">
+  <span class="label">视图：</span>
+  <span class="group-label">档案诊断（替换加微页）</span>
+  <button data-state="A" class="active">① Step 1 · 用户基本信息</button>
+  <button data-state="B">② Step 2 · 建议和解决方案</button>
+  <span class="group-label">· 档案常态（首诊产出物）</span>
+  <button data-state="C">③ v1 · 刚生成</button>
+  <button data-state="D">④ v2 · 学习中</button>
+  <span class="meta">仅 demo 用，上线时不带</span>
+</div>
+
+<!-- 路径提示条 -->
+<div class="path-hint">
+  <span class="phint-label">📍 当前路径</span>
+  <span class="phint-flow">付费完成 <span class="arrow">→</span> <b>档案诊断</b>（替换原加微页）<span class="arrow">→</span> 完成档案 <span class="arrow">→</span> <b>跳转微信小程序</b>（老师接管）</span>
+  <span class="phint-note">效果广告路径等 app 内方案定完再改</span>
+</div>
+
+<div class="layout">
+
+  <!-- 左侧：手机预览 -->
+  <div class="left">
+    <div class="phone">
+      <div class="edit-banner">✎ 编辑模式·点击任意文案即可修改，自动保存</div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●● 5G ▮</span>
+      </div>
+      <div class="navbar" id="navbar">完成孩子档案</div>
+      <div class="screen" id="screen">
+
+        <!-- ============ 状态 A：档案诊断 · Step 1 用户基本信息 ============ -->
+        <div class="screen-page active" data-page="A">
+          <div class="part-header">
+            <span class="part-num">1</span>
+            <span class="part-title">完善孩子信息</span>
+            <span class="part-sub">约 2 分钟</span>
+          </div>
+
+          <!-- 用户基本信息（默认收起） -->
+          <div class="info-collapse" onclick="this.classList.toggle('expanded')" style="position: relative;">
+            <div class="ic-head">
+              <span class="ic-summary">
+                小明 · 三年级 · 人教版
+                <span class="ic-tag">前测已填</span>
+              </span>
+              <span class="ic-toggle"></span>
+            </div>
+            <div class="ic-detail" onclick="event.stopPropagation()">
+              <div class="form-group">
+                <label>孩子姓名</label>
+                <input type="text" value="小明">
+              </div>
+              <div class="form-group">
+                <label>年级</label>
+                <input type="text" value="三年级">
+              </div>
+              <div class="form-group">
+                <label>教材版本</label>
+                <input type="text" value="人教版">
+              </div>
+            </div>
+            <span class="dot" data-id="A1" style="top:-8px; right:-8px;">1</span>
+          </div>
+
+          <!-- 孩子学习成绩（3 档） -->
+          <div class="card" style="position: relative;">
+            <h4>① 孩子学习成绩</h4>
+            <div class="form-group">
+              <div class="seg-3">
+                <div class="seg-item">
+                  <div class="stitle">高</div>
+                  <div class="sdesc">90 分以上</div>
+                </div>
+                <div class="seg-item selected">
+                  <div class="stitle">中</div>
+                  <div class="sdesc">60-89 分</div>
+                </div>
+                <div class="seg-item">
+                  <div class="stitle">低</div>
+                  <div class="sdesc">60 分以下</div>
+                </div>
+              </div>
+            </div>
+            <span class="dot" data-id="A2" style="top:12px; right:-8px;">2</span>
+          </div>
+
+          <!-- 主要问题：问题 + 举例 + 希望改善 -->
+          <div class="card" style="position: relative;">
+            <h4>② 主要问题</h4>
+
+            <div class="form-group">
+              <label>选出最符合的（可多选，建议 1-3 个）</label>
+              <div class="problem-list">
+                <div class="problem-item selected">
+                  <div class="ptype">错题吸收型</div>
+                  <div class="pexpr">举例：错题不整理、同类型不会、粗心</div>
+                </div>
+                <div class="problem-item">
+                  <div class="ptype">基础薄弱型</div>
+                  <div class="pexpr">举例：基础差、听不懂、跟不上</div>
+                </div>
+                <div class="problem-item selected">
+                  <div class="ptype">习惯执行型</div>
+                  <div class="pexpr">举例：拖拉、不自觉、玩手机</div>
+                </div>
+                <div class="problem-item">
+                  <div class="ptype">兴趣动力型</div>
+                  <div class="pexpr">举例：不想学、抗拒、没兴趣</div>
+                </div>
+              </div>
+              <details class="more-problems">
+                <summary></summary>
+                <div class="problem-list">
+                  <div class="problem-item">
+                    <div class="ptype">时间受限型</div>
+                    <div class="pexpr">举例：住校、作业多、补课多</div>
+                  </div>
+                  <div class="problem-item">
+                    <div class="ptype">家庭管理困难型</div>
+                    <div class="pexpr">举例：家长忙、管不了、不在身边</div>
+                  </div>
+                </div>
+              </details>
+              <span class="dot" data-id="A3" style="top:32px; right:-8px;">3</span>
+            </div>
+
+            <div class="wish-block" style="position: relative;">
+              <div class="wlabel">✨ 你希望孩子改善到什么样？<span class="wopt">（选填，写一句话能帮老师更懂你家孩子）</span></div>
+              <textarea placeholder="举例：能自己整理错题本 / 每天能坚持 15 分钟 / 不抗拒做数学">能自己整理错题本，并且做新题时不重复犯</textarea>
+              <span class="dot" data-id="A4" style="top:-4px; right:-8px;">4</span>
+            </div>
+          </div>
+
+          <div class="submit-bar">下一步 · 生成解决方案 →</div>
+        </div>
+
+        <!-- ============ 状态 B：档案诊断 · Step 2 建议和解决方案 ============ -->
+        <div class="screen-page" data-page="B">
+          <div class="part-header">
+            <span class="part-num">2</span>
+            <span class="part-title">海豚为小明制定的方案</span>
+            <span class="part-sub">基于你的输入定制</span>
+          </div>
+
+          <!-- ① 孩子情况简单汇总 -->
+          <div class="kid-summary" style="position: relative;">
+            <h4>① 孩子的情况</h4>
+            <div class="ks-text">
+              小明同学，主要卡在<span class="tag-inline">错题吸收</span>和<span class="tag-inline">习惯执行</span>两点上。结合你希望孩子能"自己整理错题本，做新题时不重复犯"——<b>海豚建议从<span class="tag-inline bold">短任务 + 错题精讲</span>入手</b>。
+            </div>
+            <span class="dot" data-id="B1" style="top:12px; right:-8px;">5</span>
+          </div>
+
+          <!-- ② 海豚的解决方法：方案（纯文字）+ 视频占位下移 -->
+          <div class="module" style="position: relative;">
+            <div class="mhead">② 海豚的解决方法</div>
+
+            <div class="solution-card">
+              <div class="sproblem">针对：错题吸收</div>
+              <div class="spath">用变式题让同类错题被反复练到掌握。孩子每错一题，海豚会给 2-3 道同类型变式，验证是真懂了还是粗心，错题不再重复犯。</div>
+            </div>
+            <div class="solution-card">
+              <div class="sproblem">针对：习惯执行</div>
+              <div class="spath">用 8 分钟短任务建立完成感。每天一小步的节奏比"每天一大段"更容易坚持，孩子完成后能拿到可视化反馈。</div>
+            </div>
+
+            <div class="video-divider">想看海豚整体怎么用？</div>
+            <div class="video-placeholder">
+              <div class="vp-play"></div>
+              <div class="vp-info">
+                <span class="vp-title">海豚学习方式·1 分钟看懂</span>
+                <span class="vp-duration">1:08</span>
+              </div>
+            </div>
+            <span class="dot" data-id="B2" style="top:12px; right:-8px;">6</span>
+            <span class="dot" data-id="B3" style="bottom:80px; left:-8px;">7</span>
+          </div>
+
+          <!-- ③ 现在开始行动！·三步引导（以 day1 到习/双完习为目标） -->
+          <div class="module" style="position: relative;">
+            <div class="mhead">③ 现在开始行动！</div>
+
+            <div class="action-steps">
+              <div class="astep">
+                <div class="astep-num">Step 1</div>
+                <div class="astep-content">
+                  <div class="astep-title">添加学习规划师</div>
+                  <div class="astep-desc">体验专属学习规划服务</div>
+                </div>
+              </div>
+              <div class="astep">
+                <div class="astep-num">Step 2</div>
+                <div class="astep-content">
+                  <div class="astep-title">完成入门测</div>
+                  <div class="astep-desc">完成诊断，获取体验周学习规划</div>
+                </div>
+              </div>
+              <div class="astep">
+                <div class="astep-num">Step 3</div>
+                <div class="astep-content">
+                  <div class="astep-title">体验课程学习</div>
+                  <div class="astep-desc">按规划开始首节，约 15 分钟</div>
+                </div>
+              </div>
+            </div>
+            <span class="dot" data-id="B4" style="top:12px; right:-8px;">8</span>
+          </div>
+
+          <!-- 按钮：跳转微信小程序 -->
+          <div style="position: relative;">
+            <div class="submit-bar wechat">
+              <span class="wechat-icon">💬</span>完成档案，联系老师开始学习 →
+            </div>
+            <div class="submit-hint">→ 跳转微信小程序，老师将基于这份档案接待</div>
+            <span class="dot" data-id="B5" style="top:0; right:-8px;">9</span>
+          </div>
+        </div>
+
+        <!-- ============ 状态 C：档案首页 v1（首诊产出） ============ -->
+        <div class="screen-page" data-page="C">
+          <div class="archive-header" style="position: relative;">
+            <div class="version">档案 v1 · 刚生成</div>
+            <div class="name">小明的学习档案</div>
+            <div class="sub">三年级 · 人教版 · 75-89 分段</div>
+            <span class="dot" data-id="C1" style="top:12px; right:-8px;">10</span>
+          </div>
+
+          <div class="module">
+            <div class="mhead">① 孩子画像</div>
+            <div class="profile-grid">
+              <div class="pitem"><div class="k">年级</div><div class="v">三年级</div></div>
+              <div class="pitem"><div class="k">教材</div><div class="v">人教版</div></div>
+              <div class="pitem"><div class="k">成绩段</div><div class="v">75-89 分</div></div>
+              <div class="pitem"><div class="k">习惯</div><div class="v">需短任务正反馈</div></div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="mhead">② 你提到的问题</div>
+            <div class="problem-chips">
+              <span class="chip">错题吸收</span>
+              <span class="chip">习惯执行</span>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="mhead">③ 解决方案 <span class="mtag core">解释性核心</span></div>
+            <div class="solution-card">
+              <div class="sproblem">问题 1：错题吸收</div>
+              <div class="spath">用变式题让同类错题被反复练到掌握</div>
+            </div>
+            <div class="solution-card">
+              <div class="sproblem">问题 2：习惯执行</div>
+              <div class="spath">用 8 分钟短任务建立完成感</div>
+            </div>
+          </div>
+
+          <div class="module" style="position: relative;">
+            <div class="mhead">④ 学习路径 <span class="mtag core">档案性核心</span></div>
+            <div class="path-overview">
+              <div class="pmeta">7 个知识点 · 预计 3 天</div>
+              <div class="pcount">0 <span class="total">/ 7 节</span></div>
+              <div class="progress-bar"><div class="pfill" style="width: 0%;"></div></div>
+            </div>
+            <div class="path-list">
+              <div class="pitem todo">
+                <span class="picon">○</span>
+                <div class="ptxt">第 1-3 节： 数学 全等三角形</div>
+              </div>
+              <div class="pitem todo">
+                <span class="picon">○</span>
+                <div class="ptxt">第 4-7 节：数学 等边三角形</div>
+              </div>
+              <div class="pitem todo">
+                <span class="picon">○</span>
+                <div class="ptxt">英语作文专项</div>
+              </div>
+              <div class="pitem todo">
+                <span class="picon">○</span>
+                <div class="ptxt">查漏补缺+错题答疑</div>
+              </div>
+            </div>
+            <span class="dot" data-id="C2" style="top:12px; right:-8px;">11</span>
+          </div>
+
+          <div class="module" style="position: relative;">
+            <div class="mhead">⑤ 建议方案</div>
+            <div class="advice-block">
+              <div class="alabel">📝 给家长</div>
+              <div class="atext">今晚 7-9 点带孩子完成<span class="hl">第 1 节</span>，重点观察错题时是不会还是粗心</div>
+            </div>
+            <div class="advice-block kid">
+              <div class="alabel">🎯 给孩子</div>
+              <div class="atext">你的第一关：基础诊断小练</div>
+            </div>
+            <span class="dot" data-id="C3" style="top:12px; right:-8px;">12</span>
+          </div>
+        </div>
+
+        <!-- ============ 状态 D：档案首页 v2（学习一段时间后） ============ -->
+        <div class="screen-page" data-page="D">
+          <div class="archive-header">
+            <div class="version">档案 v2 · 学习中</div>
+            <div class="name">小明的学习档案</div>
+            <div class="sub">第 1 天已完成 · 共 2 天体验周</div>
+          </div>
+
+          <div class="module">
+            <div class="mhead">① 孩子画像</div>
+            <div class="profile-grid">
+              <div class="pitem"><div class="k">年级</div><div class="v">三年级</div></div>
+              <div class="pitem"><div class="k">教材</div><div class="v">人教版</div></div>
+              <div class="pitem"><div class="k">成绩段</div><div class="v">75-89 分</div></div>
+              <div class="pitem"><div class="k">习惯</div><div class="v">需短任务正反馈</div></div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="mhead">② 你提到的问题</div>
+            <div class="problem-chips">
+              <span class="chip">错题吸收</span>
+              <span class="chip">习惯执行</span>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="mhead">③ 解决方案 <span class="mtag core">解释性核心</span></div>
+            <div class="solution-card">
+              <div class="sproblem">问题 1：错题吸收</div>
+              <div class="spath">用变式题让同类错题被反复练到掌握</div>
+            </div>
+            <div class="solution-card">
+              <div class="sproblem">问题 2：习惯执行</div>
+              <div class="spath">用 8 分钟短任务建立完成感</div>
+            </div>
+          </div>
+
+          <div class="module" style="position: relative;">
+            <div class="mhead">④ 学习路径 <span class="mtag core">体验周学习</span></div>
+            <div class="path-overview">
+              <div class="pmeta">7 个知识点 · 预计 3 天</div>
+              <div class="pcount">1 <span class="total">/ 7 节</span></div>
+              <div class="progress-bar"><div class="pfill" style="width: 25%;"></div></div>
+            </div>
+            <div class="path-list">
+              <div class="pitem done">
+                <span class="picon">✓</span>
+                <div class="ptxt">
+                  第一天  [数学] 正方形与全等三角形（上）
+                  <div class="pdetail">已完成，正确率 78%，有 2 个知识点待提升</div>
+                </div>
+              </div>
+              <div class="pitem doing">
+                <span class="picon">●</span>
+                <div class="ptxt">
+                第一天 [数学] 正方形与全等三角形（下）
+                  <div class="pdetail">已完成 0 / 4，待学习</div>
+                </div>
+              </div>
+              <div class="pitem todo">
+                <span class="picon">○</span>
+                <div class="ptxt">第二天：英语作文专项</div>
+              </div>
+            </div>
+            <span class="dot" data-id="D1" style="top:12px; right:-8px;">13</span>
+          </div>
+
+          <div class="module" style="position: relative;">
+            <div class="mhead">⑤ 建议方案</div>
+            <div class="advice-block">
+              <div class="alabel">📝 给家长</div>
+              <div class="atext">基础诊断完成，孩子在<span class="hl">分数除法</span>上有 2 道反复错题——今天的「错题精讲」会针对性讲这一类，建议先看视频再练习</div>
+            </div>
+            <div class="advice-block kid">
+              <div class="alabel">🎯 给孩子</div>
+              <div class="atext">再学 2 节，就能拿到这周的完成徽章</div>
+            </div>
+            <span class="dot" data-id="D2" style="top:12px; right:-8px;">14</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button onclick="toggleDots()">标注 ON/OFF</button>
+      <button id="editBtn" onclick="toggleEdit()">编辑原型文案：OFF</button>
+      <button id="saveBtn" class="save-btn" onclick="manualSave()" disabled title="Cmd/Ctrl + S">💾 已保存</button>
+      <button onclick="exportProtoJSON()" title="复制完整 JSON，粘给 AI 让其同步到源码">📋 复制原型 JSON（给 AI 同步用）</button>
+      <button class="primary" onclick="exportMd()">导出 Markdown</button>
+      <button onclick="resetAll()">恢复初稿</button>
+    </div>
+  </div>
+
+  <!-- 右侧：可编辑详情面板 -->
+  <div class="right" id="rightPanel">
+    <h2>功能标注 · 共 14 项<span class="filter-info" id="filterInfo"></span></h2>
+
+    <!-- === 状态 A：档案诊断 Step 1（4 项） === -->
+    <article data-id="A1" data-state="A">
+      <h3><span class="num">①</span> <span class="title" contenteditable="true">用户基本信息·默认收起</span><span class="ststamp part1">Step 1</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">Step 1 顶部第一张卡，浅灰背景的折叠卡片</dd>
+        <dt>逻辑</dt><dd contenteditable="true">姓名/年级/教材已从前测带入，默认收起为一行摘要（小明 · 三年级 · 人教版 + 「前测已填」tag）；点击整张卡展开为完整表单允许修改</dd>
+        <dt>样式</dt><dd contenteditable="true">浅灰底 #f7f8fa，1px 实线 #eef0f3，圆角 10px；右侧"展开修改"/"收起"切换文案；展开后用虚线分隔</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⚠️ 收起态是默认值——减少 Step 1 的视觉负担让家长聚焦在成绩+问题上；展开后内部 input 的点击不能再触发整卡折叠（已用 stopPropagation 处理）</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.1 模块 1（需补充"默认收起"形态）</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="A2" data-state="A">
+      <h3><span class="num">②</span> <span class="title" contenteditable="true">孩子学习成绩·3 档</span><span class="ststamp part1">Step 1</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">基本信息卡下方第一张实卡</dd>
+        <dt>逻辑</dt><dd contenteditable="true">3 档（不是 4 档）：高（90+）/ 中（60-89）/ 低（60-）；单选，必填</dd>
+        <dt>样式</dt><dd contenteditable="true">3 列等宽分段卡，每张含主标题（高/中/低）+ 副标题（分数段）；选中品牌色描边 + 浅蓝底</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">PRD §6.1 原写的是 4 档（90+/75-89/60-74/60-），本次确认改为 3 档——同步更新 PRD；3 档信息粒度更轻，但失去"75-89"和"60-74"的区分，后续若映射规则需要更细，再讨论</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.1 模块 1（4 档 → 3 档，待 PRD 同步）</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="A3" data-state="A">
+      <h3><span class="num">③</span> <span class="title" contenteditable="true">主要问题·高频 4 类 + 更多 2 类</span><span class="ststamp part1">Step 1</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">成绩卡下方</dd>
+        <dt>逻辑</dt><dd contenteditable="true">📌 高频 4 类常驻展示（错题吸收 / 基础薄弱 / 习惯执行 / 兴趣动力）+ 折叠"+ 查看更多问题（2 类）"按钮展开剩余 2 类（时间受限 / 家庭管理困难）；可多选，建议 1-3 个；每张卡 = 问题类型 + 家长常见举例</dd>
+        <dt>样式</dt><dd contenteditable="true">每卡：上方加粗类型 + 下方灰色"举例"；选中品牌色描边 + 浅蓝底；折叠按钮用虚线描边 + 浅蓝色，展开后变浅灰收起</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⚠️ 折叠的 2 类是低频但不能砍——时间受限/家庭管理困难是家长视角的真实痛点，砍了会让部分家长找不到匹配项；⏳ 后续可根据数据看是否要按"年级 × 成绩段"智能筛选展示哪几类</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.2.2（高频 4 类 + 2 类折叠，待 PRD 同步）</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="A4" data-state="A">
+      <h3><span class="num">④</span> <span class="title" contenteditable="true">希望改善·选填开放输入</span><span class="ststamp part1">Step 1</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">问题选择区底部，蓝色背景突出的独立区块</dd>
+        <dt>逻辑</dt><dd contenteditable="true">📌 选填字段——标题旁边明确标"（选填，写一句话能帮老师更懂你家孩子）"，让家长有动机但无压力；不填也能进入 Step 2；填了的话原文会在 Step 2"孩子情况汇总"被引用</dd>
+        <dt>样式</dt><dd contenteditable="true">浅蓝渐变背景 + ✨ 图标 + 主标题（蓝色）+ 副标题"(选填...)"（浅灰小字）；textarea 给举例</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⚠️ 选填的同时给"动机说明"（帮老师更懂），比简单写"选填"填写率更高；空时 Step 2 摘要要降级文案（不引用希望改善那一句）</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.2（新增"希望改善·选填"字段，待 PRD 同步）</a></dd>
+      </dl>
+    </article>
+
+    <!-- === 状态 B：档案诊断 Step 2（5 项） === -->
+    <article data-id="B1" data-state="B">
+      <h3><span class="num">⑤</span> <span class="title" contenteditable="true">孩子情况简单汇总·名字开头 + 海豚建议高亮</span><span class="ststamp part2">Step 2</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">Step 2 顶部第一张卡，左边带品牌色色条</dd>
+        <dt>逻辑</dt><dd contenteditable="true">📌 结构：「孩子名字 + 同学，主要卡在 {问题1} 和 {问题2} 两点上。结合你希望孩子能"原文引用"——<b>海豚建议从 {方案标签} 入手</b>。」<br>关键：去掉年级/成绩段前缀（开场更轻），只在"海豚建议从 XX 入手"那一句加粗</dd>
+        <dt>样式</dt><dd contenteditable="true">白底 + 左侧 4px 品牌色色条；问题用蓝色 tag-inline；海豚建议的方案标签用金色 tag-inline.bold（与正文区分）；其他文字常规字重</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⚠️ 希望改善为空时降级文案："基于你选的问题，海豚建议从 XX 入手"；4-6 个差异化模板按"问题组合"分流；老师在小程序里也要能看到这段</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.5（升级为"孩子情况汇总"，原下一步建议职能移交小程序老师）</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="B2" data-state="B">
+      <h3><span class="num">⑥</span> <span class="title" contenteditable="true">针对性方案·纯文字（无课程缩略卡）</span><span class="ststamp part2">Step 2</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">"海豚的解决方法"区块顶部，方案卡片纵向排列</dd>
+        <dt>逻辑</dt><dd contenteditable="true">📌 每个家长勾选的问题 → 一张纯文字方案卡（针对 + 路径描述）。<b>去掉了课程缩略卡（错题精讲 15min / 变式 3 连 12min 那种）</b>——理由：MVP 阶段不一定能给出"对的真实题/课程"，过早展示具体课程反而被家长拿放大镜挑刺</dd>
+        <dt>样式</dt><dd contenteditable="true">每卡：sproblem（针对：XX，灰色 11px）+ spath（路径描述，2-3 句话讲清"用什么方法 + 解决什么"）；去掉 scourses 区域</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⚠️ 纯文字版的 spath 文案要写到"具体可信"——不能空泛"用变式题让错题被掌握"，要给到"每错一题给 2-3 道同类型变式，验证是真懂还是粗心"的具体感；4-6 个差异化模板按问题类型分流</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.3（MVP 简化为纯文字方案，待 PRD 同步）</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="B3" data-state="B">
+      <h3><span class="num">⑦</span> <span class="title" contenteditable="true">产品介绍视频·下移到方案下方</span><span class="ststamp part2">Step 2</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">📌 调整：从顶部移到针对方案下面，前面带"想看海豚整体怎么用？"分隔提示</dd>
+        <dt>逻辑</dt><dd contenteditable="true">家长先看"对我家的针对方案"（强相关），再看"海豚整体怎么用"（通用补充）——按家长的注意力优先级排列；不强推视频，"想看吗"的措辞降低观看压力</dd>
+        <dt>样式</dt><dd contenteditable="true">前面 video-divider 横线分隔 + 灰色提示文案；视频卡 16:9 深色底 + 中央播放按钮 + 底部标题/时长</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⏳ 视频文件谁来出？通用版 1 分钟海豚学习方式介绍；时长建议 60-90s；移动端不 autoplay；如果完播率低，下一版可考虑只保留方案、视频移到档案常态</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.3 视频位置调整（待 PRD 同步 + 内容侧对齐）</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="B4" data-state="B">
+      <h3><span class="num">⑧</span> <span class="title" contenteditable="true">现在开始行动！·三步引导</span><span class="ststamp part2">Step 2</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">海豚解决方法下方，最后一个内容区块；模块标题从"学习计划安排"改为"现在开始行动！"——动词开头、感叹号传递推力</dd>
+        <dt>逻辑</dt><dd contenteditable="true">📌 <b>大调整：从"12 节·4 周"长期路径预告 → 改为对齐「day1 到习 / 双完习」目标的 3 步引导</b>。<br>Step 1：添加学习规划师（体验专属学习规划服务）<br>Step 2：完成入门测（完成诊断，获取体验周学习规划）<br>Step 3：体验课程学习（按规划开始首节，约 15 分钟）<br>叙事闭环：找规划师 → 拿规划 → <b>按规划行动</b>；理由：12 节·4 周对家长是"还没开始就压力大"，反而拉低 day1 到习；3 步行动是"立刻能做 + 目标看得见"，更服务我们「day1 到习/双完习」的北极星指标</dd>
+        <dt>样式</dt><dd contenteditable="true">三个步骤纵向排列，每步左边圆角 chip（Step N，蓝底蓝字），右边标题（粗）+ 描述（灰）；步骤间用渐变竖线连接</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⚠️ Step 3 的"约 15 分钟"是降低家长决策门槛的关键钩子（很多家长卡在"不知道要花多久"）——和 Step 1 的"体验专属"、Step 2 的"体验周学习规划"形成"专人 + 方案 + 执行"完整闭环。注意"按规划"三字回扣 Step 2 的"获取规划"，三步语义要连贯</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.4（模块 4 形态需重写：路径预告 → 三步行动；以 day1/双完习为北极星；待 PRD 同步）</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="B5" data-state="B">
+      <h3><span class="num">⑨</span> <span class="title" contenteditable="true">完成档案按钮·跳转微信小程序</span><span class="ststamp part2">Step 2</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">Step 2 最底部</dd>
+        <dt>逻辑</dt><dd contenteditable="true">📌 按钮文案"完成档案，联系老师开始学习 →"；点击 → 跳转微信小程序（携带 user_id + 档案摘要给小程序老师）；按钮下方一行小提示明确"会跳出 app"避免突兀</dd>
+        <dt>样式</dt><dd contenteditable="true">微信品牌色渐变 #07c160 → #5cba76 + 💬 图标；下方 11px 浅灰 hint 文案</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">📌📌 这是档案诊断**替换原加微页**的关键交付物——档案完成 = 加微完成 + 老师接管；小程序里的老师必须能看到这份档案的完整内容（含希望改善原文）；跳转失败兜底：fallback 到旧加微页流程</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">⚠️ 大改：§8 卡点策略 + 加微页替换说明（待 PRD 大改）</a></dd>
+      </dl>
+    </article>
+
+    <!-- === 状态 C：档案首页 v1（3 项） === -->
+    <article data-id="C1" data-state="C">
+      <h3><span class="num">⑩</span> <span class="title" contenteditable="true">档案 v1 整体结构·首诊产出常驻版</span><span class="ststamp v1">v1</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">档案首页，5 模块从上到下纵向排列</dd>
+        <dt>逻辑</dt><dd contenteditable="true">档案首页 = Part 2 内容的常驻可访问版本；家长完成首诊后随时可回看；模块 4-5 是动态的，会随学习更新</dd>
+        <dt>样式</dt><dd contenteditable="true">顶部 archive-header（v1 标签）+ 5 个模块卡（比 Part 2 更紧凑、可滚动浏览）</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">v1 → v2 的视觉差异要明显：版本号标识 + 模块 4 进度变化 + 模块 5 文案更新，让家长感知到档案"在动"</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§9 档案状态机·v1 已生成</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="C2" data-state="C">
+      <h3><span class="num">⑪</span> <span class="title" contenteditable="true">模块 4 · 首诊后初始态</span><span class="ststamp v1">v1</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">档案首页模块 4 位置</dd>
+        <dt>逻辑</dt><dd contenteditable="true">首诊产出后立即可见完整路径（0/12 + 4 段分组），所有段为 todo 态；不再是占位</dd>
+        <dt>样式</dt><dd contenteditable="true">同 Part 2 的路径预告，但更紧凑（去掉了 pdetail 二级文字）</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">家长第一次进档案首页时，模块 4 的"看见路径"感受 = 档案性的第一次正面证明</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.4 + §9 状态机 v1</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="C3" data-state="C">
+      <h3><span class="num">⑫</span> <span class="title" contenteditable="true">模块 5 · 首诊后建议方案常驻</span><span class="ststamp v1">v1</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">档案首页最底部</dd>
+        <dt>逻辑</dt><dd contenteditable="true">从 Part 2 继承的综合建议，常驻档案页；学习进度变化时跟随更新</dd>
+        <dt>样式</dt><dd contenteditable="true">同 Part 2 的 advice-block，但文案略简化（去掉了重点观察项的解释）</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⏳ Part 2 的建议文案 vs 档案常驻版的文案是否一致？建议一致——避免家长二次进入时感到"内容变了"</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.5 + §9 状态机</a></dd>
+      </dl>
+    </article>
+
+    <!-- === 状态 D：档案首页 v2（2 项） === -->
+    <article data-id="D1" data-state="D">
+      <h3><span class="num">⑬</span> <span class="title" contenteditable="true">模块 4 · v1 → v2 真实进度</span><span class="ststamp v2">v2</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">档案首页模块 4 位置</dd>
+        <dt>逻辑</dt><dd contenteditable="true">v1 的路径预告 + 学习行为数据回写 → v2 的真实进度状态；done/doing/todo 三态可视化；正确率等学情数据回填 pdetail</dd>
+        <dt>样式</dt><dd contenteditable="true">进度条 25% + 三态图标（✓ ● ○）+ 每段附带学情数据</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">⚠️ 从 doing → done 是揭晓时刻——建议加微动效（绿色脉冲 + toast"✓ 完成第一段"）；这是档案有情绪的关键</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.4.2 判定规则 + 揭晓时刻设计</a></dd>
+      </dl>
+    </article>
+
+    <article data-id="D2" data-state="D">
+      <h3><span class="num">⑭</span> <span class="title" contenteditable="true">模块 5 · 建议跟随进度更新</span><span class="ststamp v2">v2</span></h3>
+      <dl>
+        <dt>位置</dt><dd contenteditable="true">档案首页最底部</dd>
+        <dt>逻辑</dt><dd contenteditable="true">基于模块 4 进度状态自动重算建议文案；引用具体学情（如"分数除法有 2 道反复错题"）让家长感到"档案在看"</dd>
+        <dt>样式</dt><dd contenteditable="true">同 v1 模块 5，但 hl 高亮内容变成具体学情关键词</dd>
+        <dt>易遗漏</dt><dd contenteditable="true">v1 vs v2 的模块 5 文案对比是"档案性"最直接的可视化证据——评审时建议把 C 和 D 并排看</dd>
+        <dt>PRD 锚点</dt><dd><a href="../03-档案PRD.md" target="_blank">§6.5 + §3.3 反向约束</a></dd>
+      </dl>
+    </article>
+
+  </div>
+</div>
+
+<div id="savedTip">✓ 已保存到本地</div>
+
+<script>
+  // 状态切换
+  function setState(s) {
+    document.querySelectorAll('.state-bar button').forEach(b => {
+      b.classList.toggle('active', b.dataset.state === s);
+    });
+    document.querySelectorAll('.screen-page').forEach(p => {
+      p.classList.toggle('active', p.dataset.page === s);
+    });
+    document.querySelectorAll('#rightPanel article').forEach(a => {
+      a.style.display = a.dataset.state === s ? '' : 'none';
+    });
+    const cnt = document.querySelectorAll(`#rightPanel article[data-state="${s}"]`).length;
+    document.getElementById('filterInfo').textContent = ` · 当前视图 ${s}：${cnt} 项`;
+
+    const titles = {
+      A: '完善孩子档案 1/2',
+      B: '完善孩子档案 2/2',
+      C: '小明的档案',
+      D: '小明的档案'
+    };
+    document.getElementById('navbar').innerHTML =
+      (s !== 'A' ? '<span class="back">← 返回</span>' : '') + titles[s];
+
+    document.getElementById('screen').scrollTop = 0;
+  }
+  document.querySelectorAll('.state-bar button').forEach(b => {
+    b.onclick = () => setState(b.dataset.state);
+  });
+
+  // 圆点 ↔ 详情 双向联动
+  document.querySelectorAll('.dot').forEach(d => d.onclick = e => {
+    e.stopPropagation();
+    highlight(d.dataset.id);
+  });
+  document.querySelectorAll('#rightPanel article').forEach(a => a.onclick = e => {
+    if (e.target.isContentEditable || e.target.tagName === 'A') return;
+    highlight(a.dataset.id);
+  });
+  function highlight(id) {
+    document.querySelectorAll('#rightPanel article').forEach(s => s.classList.toggle('active', s.dataset.id === id));
+    const target = document.querySelector(`#rightPanel article[data-id="${id}"]`);
+    if (target) target.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  // 标注 ON/OFF
+  function toggleDots() {
+    document.querySelector('.phone').classList.toggle('dots-hidden');
+  }
+
+  // === 原型文案·编辑模式 ===
+  // 安全可编辑的选择器列表（只覆盖文本节点，绝不动结构/图标/dot）
+  const PROTO_EDIT_SELECTORS = [
+    '.navbar',
+    '.headline', '.brand', '.greet',
+    '.part-header h2', '.part-header .part-sub',
+    '.section-title', '.section-sub',
+    '.info-collapse .ic-summary',
+    '.seg-3 .seg-item',
+    '.problem-item .ptitle', '.problem-item .pexample',
+    '.more-problems summary',
+    '.wish-block .wlabel', '.wopt',
+    '.submit-bar', '.submit-hint',
+    '.kid-summary h4', '.kid-summary .ks-text',
+    '.kid-summary .ks-text b', '.kid-summary .ks-text .tag-inline',
+    '.module .mhead',
+    '.solution-card .sproblem', '.solution-card .spath',
+    '.video-divider', '.vp-title', '.vp-duration',
+    '.astep .astep-num', '.astep .astep-title', '.astep .astep-desc',
+    '.path-overview .pmeta', '.path-overview .pcount',
+    '.path-list .ptxt', '.path-list .pdetail',
+    '.archive-card .actitle', '.archive-card .acmeta', '.archive-card .acvalue'
+  ].join(',');
+
+  const PROTO_KEY = 'archive-demo-prototype::' + location.pathname;
+  const PROTO_VERSION = '2026-06-04-v6'; // 改原型结构时升版本，旧存档自动失效
+  let editMode = false;
+
+  function applyEditable(on) {
+    document.querySelectorAll('.phone ' + PROTO_EDIT_SELECTORS).forEach(el => {
+      // 跳过包含 .dot 圆点的容器本体——只对叶子文本生效
+      if (el.classList.contains('dot')) return;
+      if (on) {
+        el.setAttribute('contenteditable', 'plaintext-only');
+      } else {
+        el.removeAttribute('contenteditable');
+      }
+    });
+  }
+
+  function toggleEdit() {
+    editMode = !editMode;
+    document.querySelector('.phone').classList.toggle('edit-mode', editMode);
+    const btn = document.getElementById('editBtn');
+    btn.textContent = '编辑原型文案：' + (editMode ? 'ON' : 'OFF');
+    btn.classList.toggle('editing', editMode);
+    applyEditable(editMode);
+  }
+
+  function savePrototype() {
+    // 先剥离 contenteditable 属性，避免污染 HTML 存档
+    const editables = document.querySelectorAll('.phone [contenteditable]');
+    const restore = [];
+    editables.forEach(n => {
+      restore.push([n, n.getAttribute('contenteditable')]);
+      n.removeAttribute('contenteditable');
+    });
+    const data = { version: PROTO_VERSION, pages: {} };
+    document.querySelectorAll('.screen-page').forEach(p => {
+      data.pages[p.dataset.page] = p.innerHTML;
+    });
+    try {
+      localStorage.setItem(PROTO_KEY, JSON.stringify(data));
+      flashSaved();
+    } catch (e) { console.warn('savePrototype failed', e); }
+    restore.forEach(([n, v]) => n.setAttribute('contenteditable', v));
+  }
+
+  function loadPrototype() {
+    const raw = localStorage.getItem(PROTO_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      if (data.version !== PROTO_VERSION) {
+        console.info('原型版本升级，旧文案存档已丢弃');
+        localStorage.removeItem(PROTO_KEY);
+        return;
+      }
+      document.querySelectorAll('.screen-page').forEach(p => {
+        const html = data.pages[p.dataset.page];
+        if (html) p.innerHTML = html;
+      });
+      // innerHTML 重写后需要重新绑定 dot 事件
+      document.querySelectorAll('.dot').forEach(d => d.onclick = e => {
+        e.stopPropagation();
+        highlight(d.dataset.id);
+      });
+    } catch (e) { console.warn('loadPrototype failed', e); }
+  }
+
+  // 可编辑 + localStorage 自动保存 + 导出
+  const STORAGE_KEY = 'archive-demo-annotation::' + location.pathname;
+
+  function collect() {
+    const data = {};
+    document.querySelectorAll('#rightPanel article').forEach(a => {
+      const id = a.dataset.id;
+      const item = {
+        title: a.querySelector('.title').innerText.trim(),
+        state: a.dataset.state,
+        fields: {}
+      };
+      a.querySelectorAll('dt').forEach((dt, i) => {
+        const dd = a.querySelectorAll('dd')[i];
+        item.fields[dt.innerText.trim()] = dd.innerHTML;
+      });
+      data[id] = item;
+    });
+    return data;
+  }
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(collect()));
+    flashSaved();
+  }
+
+  function load() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      document.querySelectorAll('#rightPanel article').forEach(a => {
+        const item = data[a.dataset.id];
+        if (!item) return;
+        if (item.title) a.querySelector('.title').innerText = item.title;
+        a.querySelectorAll('dt').forEach((dt, i) => {
+          const v = item.fields[dt.innerText.trim()];
+          if (v !== undefined) a.querySelectorAll('dd')[i].innerHTML = v;
+        });
+      });
+    } catch (e) { console.warn('load failed', e); }
+  }
+
+  function exportMd() {
+    const data = collect();
+    const byState = { A: [], B: [], C: [], D: [] };
+    Object.entries(data).forEach(([id, item]) => {
+      byState[item.state].push({ id, ...item });
+    });
+    let md = `# 档案首诊 Demo · 功能标注\n\n> 导出时间：${new Date().toLocaleString('zh-CN')}\n> 来源：${location.pathname}\n\n`;
+    const stateNames = {
+      A: '状态 A · 档案诊断 Step 1 用户基本信息',
+      B: '状态 B · 档案诊断 Step 2 建议和解决方案',
+      C: '状态 C · 档案常态 v1（首诊刚生成）',
+      D: '状态 D · 档案常态 v2（学习中）'
+    };
+    Object.entries(byState).forEach(([s, items]) => {
+      if (!items.length) return;
+      md += `## ${stateNames[s]}\n\n`;
+      items.forEach(item => {
+        md += `### ${item.id} · ${item.title}\n\n`;
+        Object.entries(item.fields).forEach(([k, v]) => {
+          const text = v.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+          md += `- **${k}**：${text}\n`;
+        });
+        md += '\n';
+      });
+    });
+
+    // 附录：当前各页面原型文案快照（按视觉顺序）
+    md += `\n---\n\n## 附录·原型文案快照\n\n`;
+    document.querySelectorAll('.screen-page').forEach(p => {
+      const sname = stateNames[p.dataset.page] || p.dataset.page;
+      md += `### ${sname}\n\n`;
+      const lines = [];
+      p.querySelectorAll(PROTO_EDIT_SELECTORS).forEach(el => {
+        const text = el.innerText.replace(/\s+/g, ' ').trim();
+        if (text && !lines.includes(text)) lines.push(text);
+      });
+      lines.forEach(l => md += `- ${l}\n`);
+      md += '\n';
+    });
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(md).then(
+        () => alert('✓ Markdown 已复制到剪贴板'),
+        () => fallbackExport(md)
+      );
+    } else {
+      fallbackExport(md);
+    }
+  }
+  function fallbackExport(md) {
+    const w = window.open();
+    w.document.write(`<title>导出 Markdown</title><pre style="font-family: monospace; padding: 20px; white-space: pre-wrap;">${md.replace(/</g, '&lt;')}</pre>`);
+  }
+
+  function resetAll() {
+    if (!confirm('恢复到 HTML 初稿？所有本地修改（标注 + 原型文案）会丢失')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(PROTO_KEY);
+    dirtyAnnot = false; dirtyProto = false; // 避免被 beforeunload 二次拦截
+    location.reload();
+  }
+
+  // 手动保存：dirty flag 模式
+  let dirtyAnnot = false;   // 右侧标注有未保存修改
+  let dirtyProto = false;   // 原型文案有未保存修改
+
+  function updateSaveBtn() {
+    const btn = document.getElementById('saveBtn');
+    if (!btn) return;
+    const dirty = dirtyAnnot || dirtyProto;
+    btn.disabled = !dirty;
+    btn.classList.toggle('dirty', dirty);
+    if (dirty) {
+      const tags = [];
+      if (dirtyAnnot) tags.push('标注');
+      if (dirtyProto) tags.push('原型');
+      btn.textContent = '💾 保存修改（' + tags.join(' + ') + '）';
+    } else {
+      btn.textContent = '💾 已保存';
+    }
+  }
+
+  function manualSave() {
+    if (dirtyAnnot) { save(); dirtyAnnot = false; }
+    if (dirtyProto) { savePrototype(); dirtyProto = false; }
+    updateSaveBtn();
+  }
+
+  // 一键导出当前原型 JSON，用于让 AI 同步进源码
+  function exportProtoJSON() {
+    const out = { version: PROTO_VERSION, pages: {} };
+    // 先剥离 contenteditable 属性，避免污染输出
+    const editables = document.querySelectorAll('.phone [contenteditable]');
+    const restore = [];
+    editables.forEach(n => {
+      restore.push([n, n.getAttribute('contenteditable')]);
+      n.removeAttribute('contenteditable');
+    });
+    document.querySelectorAll('.screen-page').forEach(p => {
+      out.pages[p.dataset.page] = p.innerHTML;
+    });
+    restore.forEach(([n, v]) => n.setAttribute('contenteditable', v));
+    const json = JSON.stringify(out);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(json).then(
+        () => alert('✓ 原型 JSON 已复制到剪贴板\n粘给 AI 并说"同步一下" 即可'),
+        () => fallbackExport(json)
+      );
+    } else {
+      fallbackExport(json);
+    }
+  }
+
+  document.addEventListener('input', e => {
+    if (!e.target.isContentEditable) return;
+    if (e.target.closest('#rightPanel')) dirtyAnnot = true;
+    else if (e.target.closest('.phone')) dirtyProto = true;
+    updateSaveBtn();
+  });
+
+  // Cmd/Ctrl + S 触发保存
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+      e.preventDefault();
+      if (dirtyAnnot || dirtyProto) manualSave();
+    }
+  });
+
+  let flashTimer;
+  function flashSaved() {
+    const tip = document.getElementById('savedTip');
+    tip.style.opacity = '1';
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(() => tip.style.opacity = '0', 1200);
+  }
+
+  window.addEventListener('load', () => {
+    loadPrototype(); // 必须先加载原型存档（会重写 innerHTML）
+    load();          // 再加载标注存档
+    setState('A');
+    updateSaveBtn();
+  });
+
+  // 离开前如果有未保存内容，浏览器原生确认
+  window.addEventListener('beforeunload', e => {
+    if (dirtyAnnot || dirtyProto) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+</script>
+
+</body>
+</html>

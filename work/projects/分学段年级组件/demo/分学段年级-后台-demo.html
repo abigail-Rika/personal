@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海豚 - 落地页管理 - 售卖入口 · 分学段年级组件</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f6fa; color: #333; font-size: 13px; }
+
+  /* Header */
+  .header { height: 48px; background: #2c3e50; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; color: #fff; }
+  .header-left { display: flex; align-items: center; gap: 10px; }
+  .header-logo { width: 28px; height: 28px; background: #4a9ff5; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .header-title { font-size: 14px; font-weight: 500; }
+  .header-tag { font-size: 11px; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 3px; }
+  .header-user { font-size: 13px; color: rgba(255,255,255,0.8); }
+
+  /* Toolbar */
+  .toolbar { height: 44px; background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .toolbar-btn { padding: 5px 14px; border: 1px solid #d9d9d9; border-radius: 4px; background: #fff; cursor: pointer; font-size: 13px; color: #333; }
+  .toolbar-btn.active { background: #1890ff; color: #fff; border-color: #1890ff; }
+  .toolbar-btn.save { background: #52c41a; color: #fff; border-color: #52c41a; }
+  .toolbar select { padding: 5px 8px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 13px; }
+
+  /* Main Layout */
+  .main { display: flex; height: calc(100vh - 92px); }
+
+  /* Left Sidebar */
+  .sidebar { width: 180px; background: #fff; border-right: 1px solid #e8e8e8; display: flex; flex-direction: column; }
+  .sidebar-nav { padding: 12px 0; }
+  .sidebar-item { padding: 10px 20px; cursor: pointer; color: #666; font-size: 13px; transition: all 0.2s; }
+  .sidebar-item:hover { color: #1890ff; background: #f0f7ff; }
+  .sidebar-item.active { color: #1890ff; font-weight: 500; border-left: 3px solid #1890ff; padding-left: 17px; }
+  .sidebar-divider { height: 1px; background: #f0f0f0; margin: 4px 16px; }
+  .sidebar-popups { padding: 12px 16px; flex: 1; overflow-y: auto; }
+  .sidebar-popup-label { font-size: 11px; color: #999; margin-bottom: 8px; }
+
+  /* 组件卡片（原图样式 + 新增） */
+  .comp-card { position: relative; background: #fff; border: 1.5px solid #e8e8e8; border-radius: 6px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: all 0.2s; }
+  .comp-card:hover { border-color: #1890ff; }
+  .comp-card.active { border-color: #1890ff; box-shadow: 0 0 0 2px rgba(24,144,255,.12); }
+  .comp-card.new-comp { border: 2px solid #ff7a45; box-shadow: 0 0 0 3px rgba(255,122,69,.08); }
+
+  /* 旧版组件预览缩略 */
+  .mini-old {
+    padding: 10px 8px; background: #fff;
+  }
+  .mini-old-title { text-align: center; font-size: 8px; color: #f5576c; margin-bottom: 4px; border: 1px solid #ffd4c4; border-radius: 4px; padding: 2px; }
+  .mini-old-btn { font-size: 7px; color: #f5576c; border: 1px solid #ffd4c4; border-radius: 6px; text-align: center; padding: 2px; margin-bottom: 3px; }
+
+  /* 新组件缩略 */
+  .mini-new {
+    padding: 8px 6px; background: #fff;
+  }
+  .mini-new-title { text-align: center; font-size: 8px; color: #f5576c; margin-bottom: 4px; }
+  .mini-stage-label { display: inline-block; font-size: 7px; color: #f5576c; padding: 1px 6px; background: #fff5f0; border: 1px solid #ffe0d4; border-radius: 4px; margin-bottom: 3px; }
+  .mini-row { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-bottom: 3px; }
+  .mini-btn { font-size: 7px; color: #f5576c; border: 1px solid #ffd4c4; border-radius: 6px; text-align: center; padding: 2px; }
+
+  .new-badge { position: absolute; top: -1px; right: -1px; background: #ff7a45; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 0 4px 0 6px; font-weight: 600; z-index: 2; }
+
+  /* Center - Phone Preview */
+  .preview-area { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 24px; overflow-y: auto; background: #f0f2f5; }
+  .preview-canvas { width: 320px; background: transparent; }
+
+  /* 顶部固定头条 */
+  .canvas-header {
+    background: #fff; border: 1.5px solid #4a9ff5; border-radius: 8px;
+    padding: 14px 12px; margin-bottom: 10px; position: relative;
+  }
+  .canvas-header-label {
+    position: absolute; top: -8px; left: 10px; background: #4a9ff5;
+    color: #fff; font-size: 10px; padding: 1px 8px; border-radius: 3px;
+  }
+
+  /* 卡片：选中态 = 蓝色描边 */
+  .canvas-card {
+    background: #fff; border-radius: 8px; padding: 12px;
+    margin-bottom: 10px; border: 2px solid transparent;
+    cursor: pointer; transition: all .2s; position: relative;
+  }
+  .canvas-card.is-selected {
+    border-color: #4a9ff5; box-shadow: 0 0 0 3px rgba(74,159,245,.15);
+  }
+  .canvas-card-tag {
+    position: absolute; top: -8px; left: 10px; background: #4a9ff5;
+    color: #fff; font-size: 10px; padding: 1px 8px; border-radius: 3px;
+    display: none;
+  }
+  .canvas-card.is-selected .canvas-card-tag { display: inline-block; }
+
+  /* 分学段年级（C 端样式） */
+  .ribbon-title { text-align: center; font-size: 13px; color: #f5576c; font-weight: 600; margin-bottom: 10px; }
+  .ribbon-title::before { content: "❋ "; }
+  .ribbon-title::after { content: " ❋"; }
+
+  .stage-card-inner { background: #fff; border: 1.5px solid #ffd4c4; border-radius: 12px; padding: 12px 10px; }
+  .stage-block { margin-bottom: 12px; }
+  .stage-block:last-child { margin-bottom: 0; }
+  .stage-header-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .stage-header-row .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #ffd4c4, transparent); }
+  .stage-header-row .label { font-size: 11px; color: #f5576c; font-weight: 600; padding: 2px 10px; background: #fff5f0; border-radius: 8px; border: 1px solid #ffe0d4; }
+  .grade-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .grade-btn-pv { padding: 6px 4px; border: 1px solid #ffd4c4; border-radius: 16px; text-align: center; font-size: 10.5px; color: #f5576c; background: #fff; }
+
+  /* 占位"拖拽至此" */
+  .drop-area {
+    background: #fff; border-radius: 8px; padding: 18px;
+    text-align: center; color: #bbb; font-size: 12px;
+    border: 1px dashed #ddd; margin-bottom: 10px;
+  }
+  /* 购买按钮区 */
+  .buy-card { background: #fff; border-radius: 8px; padding: 12px; }
+  .buy-card-label { font-size: 11px; color: #666; margin-bottom: 8px; }
+  .buy-btn-pv { background: linear-gradient(135deg, #8b7cf6, #6a5acd); color: #fff; text-align: center; padding: 10px; border-radius: 18px; font-size: 12px; }
+
+  /* 卡片侧边的上下移/删除 操作条 */
+  .card-ops {
+    position: absolute; top: 50%; right: -36px; transform: translateY(-50%);
+    display: none; flex-direction: column; gap: 4px;
+  }
+  .canvas-card.is-selected .card-ops { display: flex; }
+  .card-op-btn {
+    width: 26px; height: 26px; border-radius: 50%; background: #fff;
+    border: 1px solid #d9d9d9; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #666; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.06);
+  }
+  .card-op-btn:hover { color: #1890ff; border-color: #1890ff; }
+  .card-op-btn.del:hover { color: #ff4d4f; border-color: #ff4d4f; }
+
+  /* Right Panel - Config（极简，与原图一致） */
+  .config-panel { width: 320px; background: #fff; border-left: 1px solid #e8e8e8; overflow-y: auto; }
+  .config-header {
+    padding: 14px 16px; border-bottom: 1px solid #e8e8e8;
+    display: flex; align-items: center; justify-content: space-between; background: #fafafa;
+  }
+  .config-title { font-size: 14px; font-weight: 600; color: #333; }
+  .config-dropdown { padding: 4px 8px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 12px; }
+
+  .config-body { padding: 16px; }
+  .config-row {
+    display: flex; align-items: flex-start; padding: 8px 0;
+    border-bottom: 1px dashed #f0f0f0; font-size: 13px;
+  }
+  .config-row:last-child { border-bottom: none; }
+  .config-row .k { width: 80px; color: #999; flex-shrink: 0; }
+  .config-row .v { flex: 1; color: #333; }
+  .config-row .v.placeholder { color: #ccc; }
+
+  .source-tip {
+    margin-top: 12px; padding: 8px 10px; background: #f6ffed;
+    border-left: 3px solid #52c41a; border-radius: 0 4px 4px 0;
+    font-size: 11px; color: #666; line-height: 1.6;
+  }
+  .source-tip b { color: #389e0d; }
+
+  .proto-badge { position: fixed; bottom: 16px; right: 16px; background: #ff4d4f; color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 500; box-shadow: 0 2px 12px rgba(255,77,79,.3); z-index: 100; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo">🐬</div>
+    <span class="header-title">海豚 - 落地页管理</span>
+    <span class="header-tag">线上</span>
+  </div>
+  <span class="header-user">jiwenyue</span>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <button class="toolbar-btn active">编辑</button>
+  <button class="toolbar-btn">预览</button>
+  <select>
+    <option>375 x 667 iPhone 6/7/8</option>
+    <option>414 x 896 iPhone XR</option>
+    <option>390 x 844 iPhone 12</option>
+  </select>
+  <button class="toolbar-btn">返回</button>
+  <button class="toolbar-btn save">保存</button>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-nav">
+      <div class="sidebar-item">多媒体</div>
+      <div class="sidebar-item">售卖信息</div>
+      <div class="sidebar-item active">售卖入口</div>
+      <div class="sidebar-item">拼团售卖（旧）</div>
+      <div class="sidebar-item">拼团售卖（新）</div>
+      <div class="sidebar-item">弹窗</div>
+      <div class="sidebar-item">其他</div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-popups">
+      <div class="sidebar-popup-label">售卖入口 - 组件库</div>
+
+      <!-- 旧：平铺年级（沿原图样式） -->
+      <div class="comp-card">
+        <div class="mini-old">
+          <div class="mini-old-title">请选择年龄</div>
+          <div class="mini-old-btn">10-11岁</div>
+          <div class="mini-old-btn">12-13岁</div>
+          <div class="mini-old-btn">14-15岁</div>
+          <div class="mini-old-btn">其他</div>
+        </div>
+      </div>
+
+      <!-- 新：分学段年级 -->
+      <div class="comp-card new-comp active">
+        <span class="new-badge">NEW</span>
+        <div class="mini-new">
+          <div class="mini-new-title">请选择9月升学年级</div>
+          <div style="text-align:center;"><span class="mini-stage-label">小学</span></div>
+          <div class="mini-row">
+            <div class="mini-btn">四人教</div>
+            <div class="mini-btn">四其他</div>
+          </div>
+          <div class="mini-row">
+            <div class="mini-btn">五人教</div>
+            <div class="mini-btn">五其他</div>
+          </div>
+          <div style="text-align:center; margin-top:4px;"><span class="mini-stage-label">初中</span></div>
+          <div class="mini-row">
+            <div class="mini-btn">初一</div>
+            <div class="mini-btn">初二</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center - Preview Canvas（不画手机壳，更贴近原图的画布形态） -->
+  <div class="preview-area">
+    <div class="preview-canvas">
+
+      <!-- 顶部固定信息（不可编辑） -->
+      <div class="canvas-header">
+        <span class="canvas-header-label">头部固定</span>
+        <div style="text-align:center; font-size:13px; color:#333;">请选择年级</div>
+        <div style="text-align:center; font-size:11px; color:#999; margin-top:4px;">（系统读取，不可编辑）</div>
+      </div>
+
+      <!-- 新组件：分学段年级（当前选中态） -->
+      <div class="canvas-card is-selected">
+        <span class="canvas-card-tag">当前选中</span>
+        <div class="ribbon-title">请选择孩子9月升学年级</div>
+        <div class="stage-card-inner">
+          <div class="stage-block">
+            <div class="stage-header-row">
+              <div class="line"></div>
+              <div class="label">小学</div>
+              <div class="line"></div>
+            </div>
+            <div class="grade-grid">
+              <div class="grade-btn-pv">四年级人教版</div>
+              <div class="grade-btn-pv">四年级其他版本</div>
+              <div class="grade-btn-pv">五年级人教版</div>
+              <div class="grade-btn-pv">五年级其他版本</div>
+              <div class="grade-btn-pv">六年级人教版</div>
+              <div class="grade-btn-pv">六年级其他版本</div>
+            </div>
+          </div>
+          <div class="stage-block">
+            <div class="stage-header-row">
+              <div class="line"></div>
+              <div class="label">初中</div>
+              <div class="line"></div>
+            </div>
+            <div class="grade-grid">
+              <div class="grade-btn-pv">初一</div>
+              <div class="grade-btn-pv">初二</div>
+            </div>
+          </div>
+        </div>
+        <!-- 卡片侧边操作 -->
+        <div class="card-ops">
+          <div class="card-op-btn" title="上移">↑</div>
+          <div class="card-op-btn" title="下移">↓</div>
+          <div class="card-op-btn del" title="删除组件">×</div>
+        </div>
+      </div>
+
+      <!-- 拖拽占位 -->
+      <div class="drop-area">请拖拽组件至此</div>
+
+      <!-- 购买按钮（其他组件） -->
+      <div class="buy-card">
+        <div class="buy-card-label">购买按钮</div>
+        <div class="buy-btn-pv">点击购买</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Right Panel - 极简配置（与原图一致） -->
+  <div class="config-panel">
+    <div class="config-header">
+      <span class="config-title">配置栏 - 年级选择</span>
+      <select class="config-dropdown">
+        <option>1 - 分学段年级</option>
+      </select>
+    </div>
+
+    <div class="config-body">
+      <div class="config-row">
+        <div class="k">主背景：</div>
+        <div class="v placeholder">默认</div>
+      </div>
+
+      <div class="source-tip">
+        <b>数据来源：</b>本组件展示的「学段 / 年级 / 教材版本 / SKU」均自动读取前置的「年级与学段 SKU 配置页」数据，本页无需重复维护。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="proto-badge">原型演示 · 非线上页面</div>
+
+</body>
+</html>

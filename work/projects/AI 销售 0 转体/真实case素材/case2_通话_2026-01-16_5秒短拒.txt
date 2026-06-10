@@ -1,0 +1,1 @@
+[{"identityType":"teacher","channelId":0,"text":"孩子妈妈，您好。给咱们打电话。是想提醒一下，您就是给宝。","startTime":"1600","endTime":"5544"},{"identityType":"student","channelId":1,"text":"元力科技来电。","startTime":"0","endTime":"1400"},{"identityType":"student","channelId":1,"text":"嗯","startTime":"4200","endTime":"5544"}]

@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>档案·三条路径全景图</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #f5f6f8;
+    color: #1f1f1f;
+    min-width: 100vw;
+  }
+
+  h1 {
+    font-size: 22px; margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .subtitle {
+    font-size: 13px; color: #888; margin-bottom: 18px;
+  }
+  .subtitle code { background: #fff3cd; padding: 1px 6px; border-radius: 3px; color: #b8860b; font-size: 12px; }
+
+  /* 工具栏 */
+  .toolbar {
+    display: flex; gap: 10px; align-items: center;
+    margin-bottom: 18px;
+    padding: 10px 14px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  .toolbar button {
+    padding: 6px 12px; font-size: 12px;
+    border: 1px solid #d9d9d9; background: #fff;
+    border-radius: 5px; cursor: pointer;
+    transition: all .15s;
+  }
+  .toolbar button:hover { border-color: #5B7BFF; color: #5B7BFF; }
+  .toolbar .save-tip {
+    font-size: 11px; color: #52c41a; opacity: 0;
+    transition: opacity .3s;
+  }
+  .toolbar .save-tip.show { opacity: 1; }
+
+  /* 图例 */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px 16px;
+    margin-left: auto;
+    font-size: 11px; color: #666;
+    align-items: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 2px;
+  }
+
+  /* 容器标签颜色 */
+  .tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+  .tag-app { background: #eef1ff; color: #5B7BFF; }
+  .tag-wxapp { background: #e6f7ed; color: #07c160; }
+  .tag-h5 { background: #e6f4ff; color: #1890ff; }
+  .tag-shop { background: #fff2e8; color: #ff7e2d; }
+  .tag-sms { background: #f0f0f0; color: #666; }
+  .tag-公众号 { background: #fff7e6; color: #faad14; }
+
+  /* 路径行 */
+  .path-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    overflow-x: auto;
+  }
+  .path-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #eef0f3;
+  }
+  .path-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    color: #fff; font-weight: 700; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .path-1 .path-num { background: #5B7BFF; }
+  .path-2 .path-num { background: #ff7e2d; }
+  .path-3 .path-num { background: #07c160; }
+  .path-title { font-size: 16px; font-weight: 600; }
+  .path-meta {
+    font-size: 11px; color: #888;
+    margin-left: auto;
+    display: flex; gap: 6px; align-items: center;
+  }
+
+  /* 节点流 */
+  .flow {
+    display: flex; align-items: center;
+    gap: 0;
+    min-width: max-content;
+    padding: 8px 0;
+  }
+
+  /* 节点 */
+  .node {
+    flex: 0 0 180px;
+    min-height: 410px;
+    background: #fff;
+    border: 1.5px solid #e8eaee;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: all .15s;
+    position: relative;
+  }
+  .node:hover { border-color: #5B7BFF; box-shadow: 0 4px 12px rgba(91,123,255,.12); }
+
+  .node-img {
+    height: 260px;
+    background: #f8f9fb;
+    background-image:
+      linear-gradient(45deg, #eef0f3 25%, transparent 25%),
+      linear-gradient(-45deg, #eef0f3 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #eef0f3 75%),
+      linear-gradient(-45deg, transparent 75%, #eef0f3 75%);
+    background-size: 12px 12px;
+    background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+    border-bottom: 1px solid #e8eaee;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .node-img.has-img {
+    background: #fff;
+    background-image: none;
+  }
+  .node-img img {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+    display: block;
+  }
+  .node-img .img-hint {
+    font-size: 11px; color: #999; text-align: center;
+    padding: 12px; line-height: 1.5;
+    pointer-events: none;
+  }
+  .node-img.has-img .img-hint { display: none; }
+  .node-img.drag-over {
+    background: #fff3cd;
+    border-color: #b8860b;
+  }
+  .node-img .upload-overlay {
+    position: absolute; inset: 0;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(91,123,255,.85);
+    color: #fff; font-size: 11px; font-weight: 600;
+    flex-direction: column; gap: 4px;
+  }
+  .node-img:hover .upload-overlay {
+    display: flex;
+  }
+  .node-img .file-input { display: none; }
+  .node-img .clear-img {
+    position: absolute; top: 4px; right: 4px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(0,0,0,.6); color: #fff;
+    font-size: 11px; line-height: 20px; text-align: center;
+    cursor: pointer; opacity: 0;
+    transition: opacity .15s;
+    z-index: 2;
+  }
+  .node-img.has-img:hover .clear-img { opacity: 1; }
+
+  .node-body {
+    padding: 10px 12px;
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 6px;
+  }
+  .node-title {
+    font-size: 13px; font-weight: 600; color: #1f1f1f;
+    line-height: 1.3;
+  }
+  .node-tags {
+    display: flex; gap: 4px; flex-wrap: wrap;
+  }
+  .node-desc {
+    font-size: 11px; color: #666; line-height: 1.5;
+    margin-top: auto;
+  }
+
+  /* 箭头 */
+  .arrow {
+    flex: 0 0 24px;
+    height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .arrow::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 2px; background: #d9d9d9;
+  }
+  .arrow::after {
+    content: '';
+    position: absolute;
+    right: 4px; top: 50%; transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid #d9d9d9;
+  }
+  .arrow.dashed::before {
+    background: transparent;
+    border-top: 2px dashed #d9d9d9;
+    height: 0;
+  }
+
+  /* 分叉容器（垂直堆叠两条分支） */
+  .branch {
+    flex: 0 0 160px;
+    display: flex; flex-direction: column;
+    gap: 14px;
+    align-self: center;
+    position: relative;
+  }
+  .branch-item {
+    display: flex; align-items: center; gap: 6px;
+    background: #fafbfc;
+    border: 1px solid #e8eaee;
+    border-radius: 8px;
+    padding: 8px 10px;
+    position: relative;
+    min-height: 70px;
+  }
+  .branch-item.primary {
+    background: #f4f7ff;
+    border-color: #c4d2ff;
+  }
+  .branch-item.fallback {
+    background: #fff8e1;
+    border-color: #ffe69c;
+  }
+  .branch-label {
+    flex: 0 0 44px;
+    font-size: 10px; font-weight: 600;
+    text-align: center;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: #fff;
+  }
+  .branch-item.primary .branch-label { color: #5B7BFF; }
+  .branch-item.fallback .branch-label { color: #b8860b; }
+  .branch-content {
+    flex: 1;
+    font-size: 11px; color: #555;
+    line-height: 1.5;
+  }
+  .branch-content .b-title {
+    font-weight: 600; color: #1f1f1f; font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  /* 分叉 + 每条分支各带自己的截图节点 */
+  .branch-pair {
+    display: flex; flex-direction: column;
+    gap: 14px;
+    align-self: center;
+  }
+  .branch-row {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .branch-row .branch-item {
+    flex: 0 0 160px;
+    min-height: 70px;
+    align-self: center;
+  }
+  .branch-row .branch-arrow {
+    flex: 0 0 20px;
+    position: relative;
+    height: 70px;
+    align-self: center;
+  }
+  .branch-row .branch-arrow::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 2px; background: #d9d9d9;
+  }
+  .branch-row .branch-arrow::after {
+    content: '';
+    position: absolute;
+    right: 2px; top: 50%; transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid #d9d9d9;
+  }
+  .branch-row .node {
+    flex: 0 0 180px;
+  }
+
+  /* 大分叉：节点分裂为上下两条子路径，每条子路径顶部带 chip 标签 */
+  .mega-branch {
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 24px;
+    position: relative;
+    padding-left: 16px;
+    border-left: 3px solid #e8eaee;
+  }
+  .mega-branch-item {
+    display: flex; flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    position: relative;
+  }
+  .mega-branch-item::before {
+    content: '';
+    position: absolute;
+    left: -19px; top: 18px;
+    width: 13px; height: 2px;
+    background: #d9d9d9;
+  }
+  .mega-branch-item .mb-label {
+    display: inline-flex; align-items: center;
+    font-size: 11px; font-weight: 600; color: #5B7BFF;
+    background: #f0f5ff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+  .mega-branch-item.fallback .mb-label {
+    color: #888; background: #f5f5f5;
+  }
+  .mega-branch-item .mb-flow {
+    display: flex; align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+
+  /* 标记 */
+  .step-num {
+    position: absolute; top: 6px; left: 6px;
+    background: rgba(0,0,0,.6); color: #fff;
+    width: 18px; height: 18px; border-radius: 50%;
+    font-size: 10px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 3;
+  }
+
+  /* 纯文字节点（无截图，无前端页面，比如销售电话推进） */
+  .note-card {
+    flex: 0 0 200px;
+    min-height: 410px;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 20px 18px;
+    background: #fafbfc;
+    border: 1.5px dashed #c0c4cb;
+    border-radius: 10px;
+    color: #666;
+    text-align: center;
+    position: relative;
+  }
+  .note-card .nc-step {
+    position: absolute; top: 8px; left: 8px;
+    background: rgba(0,0,0,.6); color: #fff;
+    width: 22px; height: 22px; border-radius: 50%;
+    font-size: 10px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .note-card .nc-icon {
+    font-size: 32px; margin-bottom: 10px; opacity: .5;
+  }
+  .note-card .nc-title {
+    font-size: 14px; font-weight: 600; color: #333;
+    margin-bottom: 8px;
+  }
+  .note-card .nc-desc {
+    font-size: 11px; line-height: 1.7; color: #777;
+    margin-top: 8px;
+  }
+  .note-card .nc-flag {
+    margin-top: 12px;
+    background: #fff7e6; color: #faad14;
+    padding: 3px 10px; border-radius: 4px;
+    font-size: 11px; font-weight: 500;
+  }
+
+  /* 关键节点高亮（档案首诊相关） */
+  .node.is-archive {
+    border-color: #5B7BFF;
+    background: linear-gradient(180deg, #f4f7ff 0%, #fff 30%);
+  }
+  .node.is-archive .node-title::before {
+    content: '⭐ '; color: #b8860b;
+  }
+  .node.is-key {
+    border-color: #ff7e2d;
+    background: linear-gradient(180deg, #fff7e6 0%, #fff 30%);
+  }
+</style>
+</head>
+<body>
+
+<h1>
+  档案·三条路径全景图
+  <span style="font-size: 11px; color: #888; font-weight: 400;">v2 · 2026-06-03</span>
+</h1>
+<div class="subtitle">
+  把<code>路径① 直投/自然</code>、<code>路径② 效果广告</code>、<code>路径③ 直播</code>三条来源的完整用户旅程串起来。
+  ⭐ 标记的是档案相关节点。截图占位可直接<b>拖拽图片</b>进去或点击上传。
+</div>
+
+<div class="toolbar">
+  <button id="compressBtn" onclick="compressAndSaveAll()" style="background:#fff3cd; border-color:#b8860b; color:#b8860b; font-weight:600;">🗜 压缩并保存</button>
+  <button onclick="exportData()">导出 JSON（统计）</button>
+  <button onclick="resetAll()">清空所有截图</button>
+  <span class="save-tip" id="saveTip">✓ 已自动保存</span>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot" style="background:#5B7BFF"></span> app</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#07c160"></span> 微信小程序</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#1890ff"></span> h5 页面</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#ff7e2d"></span> 抖店/快店</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#666"></span> 短信</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#faad14"></span> 公众号</span>
+    <span class="legend-item" style="margin-left:12px;"><span style="font-size:13px;">⭐</span> 档案相关节点</span>
+  </div>
+</div>
+
+<!-- ============ 路径① 直投/自然 ============ -->
+<section class="path-section path-1">
+  <div class="path-header">
+    <div class="path-num">①</div>
+    <div class="path-title">直投/自然</div>
+    <div class="path-meta">app 内闭环 · 用户已注册 app · 站内购买体验课</div>
+  </div>
+
+  <div class="flow">
+    <div class="node">
+      <div class="node-img" data-img-id="p1-1">
+        <span class="step-num">1</span>
+        <span class="img-hint">[需截图]<br>app 注册页 / 首页</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">app 注册</div>
+        <div class="node-tags"><span class="tag tag-app">app</span></div>
+        <div class="node-desc">用户在 app 内注册账号</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node">
+      <div class="node-img" data-img-id="p1-2">
+        <span class="step-num">2</span>
+        <span class="img-hint">[需截图]<br>app 内体验课<br>商详/支付页</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">站内购买 9 元体验课</div>
+        <div class="node-tags"><span class="tag tag-app">app</span></div>
+        <div class="node-desc">9 元体验课购买完成</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node is-archive">
+      <div class="node-img" data-img-id="p1-3a">
+        <span class="step-num">3</span>
+        <span class="img-hint">[来自 demo]<br>档案首诊 Step 1<br>(用户基本信息)</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">档案首诊 Step 1</div>
+        <div class="node-tags"><span class="tag tag-app">app</span></div>
+        <div class="node-desc">替换原来的「销售加微页」</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node is-archive">
+      <div class="node-img" data-img-id="p1-3b">
+        <span class="step-num">4</span>
+        <span class="img-hint">[来自 demo]<br>档案首诊 Step 2<br>(建议和解决方案)</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">档案首诊 Step 2</div>
+        <div class="node-tags"><span class="tag tag-app">app</span></div>
+        <div class="node-desc">孩子情况汇总 + 解决方法 + 三步行动</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="branch-pair">
+      <div class="branch-row">
+        <div class="branch-item primary">
+          <div class="branch-label">立即分配</div>
+          <div class="branch-content">
+            <div class="b-title">→ 跳微信小程序加微</div>
+            <span class="tag tag-wxapp">小程序</span> 完成档案，联系老师开始学习
+          </div>
+        </div>
+        <div class="branch-arrow"></div>
+        <div class="node">
+          <div class="node-img" data-img-id="p1-5a">
+            <span class="step-num">5a</span>
+            <span class="img-hint">[需截图]<br>加微页 / 老师二维码<br>(小程序内)</span>
+            <input type="file" class="file-input" accept="image/*">
+            <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+            <div class="clear-img" title="清除">×</div>
+          </div>
+          <div class="node-body">
+            <div class="node-title">加微页</div>
+            <div class="node-tags"><span class="tag tag-wxapp">小程序</span></div>
+            <div class="node-desc">老师二维码 + 引导文案</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="branch-row">
+        <div class="branch-item fallback">
+          <div class="branch-label">未分配</div>
+          <div class="branch-content">
+            <div class="b-title">→ 跳计划页（更快进入入门测）</div>
+            <span class="tag tag-app">app</span> 直接进入产品体验
+          </div>
+        </div>
+        <div class="branch-arrow"></div>
+        <div class="node">
+          <div class="node-img" data-img-id="p1-5b">
+            <span class="step-num">5b</span>
+            <span class="img-hint">[需截图]<br>学习计划页 / 入门测入口<br>(app 内)</span>
+            <input type="file" class="file-input" accept="image/*">
+            <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+            <div class="clear-img" title="清除">×</div>
+          </div>
+          <div class="node-body">
+            <div class="node-title">学习计划页</div>
+            <div class="node-tags"><span class="tag tag-app">app</span></div>
+            <div class="node-desc">入门测入口 / 直接体验</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 路径② 效果广告 ============ -->
+<section class="path-section path-2">
+  <div class="path-header">
+    <div class="path-num">②</div>
+    <div class="path-title">效果广告</div>
+    <div class="path-meta">广告 → h5 购课 → 双触达（下载 app + 档案诊断短信）→ 用户选哪一条都能转</div>
+  </div>
+
+  <div class="flow">
+    <div class="node">
+      <div class="node-img" data-img-id="p2-1">
+        <span class="step-num">1</span>
+        <span class="img-hint">[需截图]<br>效果广告素材<br>(信息流/视频)</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">广告点击</div>
+        <div class="node-tags"><span class="tag tag-sms">外部</span></div>
+        <div class="node-desc">抖音/快手/视频号信息流</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node">
+      <div class="node-img" data-img-id="p2-2">
+        <span class="step-num">2</span>
+        <span class="img-hint">[需截图]<br>h5 落地页<br>(年级选择 + 拼团 19 元)</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">h5 落地页 + 购课</div>
+        <div class="node-tags"><span class="tag tag-h5">h5</span></div>
+        <div class="node-desc">填年级 → 拼团/支付</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node">
+      <div class="node-img" data-img-id="p2-3">
+        <span class="step-num">3</span>
+        <span class="img-hint">[需截图]<br>双短信触达：<br>1) 下载 app 短信<br>2) 档案诊断短信</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">短信触达（×2）</div>
+        <div class="node-tags"><span class="tag tag-sms">短信</span></div>
+        <div class="node-desc">用户可点其中任一条入</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <!-- 大分叉：先档案 vs 先下载 -->
+    <div class="mega-branch">
+      <!-- 子路径 A：先点档案诊断短信 → 小程序档案 -->
+      <div class="mega-branch-item">
+        <div class="mb-label">A · 先点档案诊断短信</div>
+        <div class="mb-flow">
+
+          <div class="node is-archive">
+            <div class="node-img" data-img-id="p2-4a">
+              <span class="step-num">4A</span>
+              <span class="img-hint">[需补]<br>小程序档案 Step 1<br>(app 同款 UI 适配小程序)</span>
+              <input type="file" class="file-input" accept="image/*">
+              <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+              <div class="clear-img" title="清除">×</div>
+            </div>
+            <div class="node-body">
+              <div class="node-title">小程序档案 Step 1</div>
+              <div class="node-tags"><span class="tag tag-wxapp">小程序</span></div>
+              <div class="node-desc">用户基本信息<br>（年级+教材也填）</div>
+            </div>
+          </div>
+
+          <div class="arrow"></div>
+
+          <div class="node is-archive">
+            <div class="node-img" data-img-id="p2-4b">
+              <span class="step-num">5A</span>
+              <span class="img-hint">[需补]<br>小程序档案 Step 2<br>(同 app 端形态)</span>
+              <input type="file" class="file-input" accept="image/*">
+              <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+              <div class="clear-img" title="清除">×</div>
+            </div>
+            <div class="node-body">
+              <div class="node-title">小程序档案 Step 2</div>
+              <div class="node-tags"><span class="tag tag-wxapp">小程序</span></div>
+              <div class="node-desc">建议和解决方案</div>
+            </div>
+          </div>
+
+          <div class="arrow"></div>
+
+          <div class="branch-pair">
+            <div class="branch-row">
+              <div class="branch-item primary">
+                <div class="branch-label">立即分配</div>
+                <div class="branch-content">
+                  <div class="b-title">→ 加微页</div>
+                  <span class="tag tag-wxapp">小程序</span> 老师二维码
+                </div>
+              </div>
+              <div class="branch-arrow"></div>
+              <div class="node">
+                <div class="node-img" data-img-id="p2-5a-1">
+                  <span class="step-num">5a-i</span>
+                  <span class="img-hint">[需截图]<br>小程序加微页<br>老师二维码</span>
+                  <input type="file" class="file-input" accept="image/*">
+                  <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+                  <div class="clear-img" title="清除">×</div>
+                </div>
+                <div class="node-body">
+                  <div class="node-title">小程序加微页</div>
+                  <div class="node-tags"><span class="tag tag-wxapp">小程序</span></div>
+                  <div class="node-desc">老师二维码 + 引导</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="branch-row">
+              <div class="branch-item fallback">
+                <div class="branch-label">未分配</div>
+                <div class="branch-content">
+                  <div class="b-title">→ 关注公众号</div>
+                  <span class="tag tag-公众号">公众号</span> 24h 内关注接收通知
+                </div>
+              </div>
+              <div class="branch-arrow"></div>
+              <div class="node">
+                <div class="node-img" data-img-id="p2-5a-2">
+                  <span class="step-num">5a-ii</span>
+                  <span class="img-hint">[需截图]<br>关注公众号页<br>(24h 内关注)</span>
+                  <input type="file" class="file-input" accept="image/*">
+                  <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+                  <div class="clear-img" title="清除">×</div>
+                </div>
+                <div class="node-body">
+                  <div class="node-title">关注公众号页</div>
+                  <div class="node-tags"><span class="tag tag-公众号">公众号</span></div>
+                  <div class="node-desc">兜底承接</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="arrow"></div>
+
+          <div class="note-card">
+            <span class="nc-step">5b</span>
+            <div class="nc-icon">📞</div>
+            <div class="nc-title">进入 app</div>
+            <div><span class="tag tag-app">app</span></div>
+            <div class="nc-desc">大概率是销售打电话引导下载<br>无固定页面截图</div>
+            <div class="nc-flag">销售电话推进</div>
+          </div>
+
+          <div class="arrow"></div>
+
+          <div class="node is-key">
+            <div class="node-img" data-img-id="p2-6">
+              <span class="step-num">6A</span>
+              <span class="img-hint">[已有截图]<br>app 内「确定前测」<br>(确认你的学习信息)</span>
+              <input type="file" class="file-input" accept="image/*">
+              <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+              <div class="clear-img" title="清除">×</div>
+            </div>
+            <div class="node-body">
+              <div class="node-title">app · 确定前测</div>
+              <div class="node-tags"><span class="tag tag-app">app</span></div>
+              <div class="node-desc">已完成档案 → 只确认<br>年级 + 教材版本</div>
+            </div>
+          </div>
+
+          <div class="arrow"></div>
+
+          <div class="node">
+            <div class="node-img" data-img-id="p2-7">
+              <span class="step-num">7A</span>
+              <span class="img-hint">[需截图]<br>app · 学习计划页 / day1 课</span>
+              <input type="file" class="file-input" accept="image/*">
+              <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+              <div class="clear-img" title="清除">×</div>
+            </div>
+            <div class="node-body">
+              <div class="node-title">开始学习</div>
+              <div class="node-tags"><span class="tag tag-app">app</span></div>
+              <div class="node-desc">day1 到习 / 双完习目标</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 子路径 B：先点下载 app -->
+      <div class="mega-branch-item fallback">
+        <div class="mb-label">B · 先点下载 app 短信</div>
+        <div class="mb-flow">
+          <div style="padding: 14px 20px; background: #fafbfc; border: 1px dashed #c0c4cb; border-radius: 8px; color: #666; font-size: 12px; line-height: 1.7;">
+            ↗ 同 <b style="color:#5B7BFF">路径①</b> 的 app 流程：
+            app 内档案首诊 Step 1+2 → 加微 / 计划页 → 学习
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 路径③ 直播 ============ -->
+<section class="path-section path-3">
+  <div class="path-header">
+    <div class="path-num">③</div>
+    <div class="path-title">直播</div>
+    <div class="path-meta">店铺购课 → 短信激活 → h5 注册 → 小程序档案 → 加微 → 下载 app → 走「确定前测」分支</div>
+  </div>
+
+  <div class="flow">
+    <div class="node">
+      <div class="node-img" data-img-id="p3-1">
+        <span class="step-num">1</span>
+        <span class="img-hint">[需截图]<br>抖店/快店<br>交易快照</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">店铺购买课程</div>
+        <div class="node-tags"><span class="tag tag-shop">店铺</span></div>
+        <div class="node-desc">抖音/快手店铺</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node">
+      <div class="node-img" data-img-id="p3-2">
+        <span class="step-num">2</span>
+        <span class="img-hint">[需截图]<br>激活短信<br>(链接跳 h5)</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">短信提示激活</div>
+        <div class="node-tags"><span class="tag tag-sms">短信</span></div>
+        <div class="node-desc">提醒激活账号</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node">
+      <div class="node-img" data-img-id="p3-3">
+        <span class="step-num">3</span>
+        <span class="img-hint">[需截图]<br>h5 激活页<br>(填手机号 / 注册 app)</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">h5 填手机号·注册 app</div>
+        <div class="node-tags"><span class="tag tag-h5">h5</span></div>
+        <div class="node-desc">同步注册 app 账号</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node is-archive">
+      <div class="node-img" data-img-id="p3-4a">
+        <span class="step-num">4</span>
+        <span class="img-hint">[需补]<br>小程序档案 Step 1<br>(同路径② 4A)</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">小程序档案 Step 1</div>
+        <div class="node-tags"><span class="tag tag-wxapp">小程序</span></div>
+        <div class="node-desc">补填年级 + 教材版本等</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node is-archive">
+      <div class="node-img" data-img-id="p3-4b">
+        <span class="step-num">5</span>
+        <span class="img-hint">[需补]<br>小程序档案 Step 2</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">小程序档案 Step 2</div>
+        <div class="node-tags"><span class="tag tag-wxapp">小程序</span></div>
+        <div class="node-desc">建议和解决方案</div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="branch-pair">
+      <div class="branch-row">
+        <div class="branch-item primary">
+          <div class="branch-label">立即分配</div>
+          <div class="branch-content">
+            <div class="b-title">→ 加微页</div>
+            <span class="tag tag-wxapp">小程序</span> 老师二维码
+          </div>
+        </div>
+        <div class="branch-arrow"></div>
+        <div class="node">
+          <div class="node-img" data-img-id="p3-5a">
+            <span class="step-num">5a</span>
+            <span class="img-hint">[需截图]<br>小程序加微页<br>老师二维码</span>
+            <input type="file" class="file-input" accept="image/*">
+            <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+            <div class="clear-img" title="清除">×</div>
+          </div>
+          <div class="node-body">
+            <div class="node-title">小程序加微页</div>
+            <div class="node-tags"><span class="tag tag-wxapp">小程序</span></div>
+            <div class="node-desc">老师二维码 + 引导</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="branch-row">
+        <div class="branch-item fallback">
+          <div class="branch-label">未分配</div>
+          <div class="branch-content">
+            <div class="b-title">→ 关注公众号</div>
+            <span class="tag tag-公众号">公众号</span> 24h 内关注
+          </div>
+        </div>
+        <div class="branch-arrow"></div>
+        <div class="node">
+          <div class="node-img" data-img-id="p3-5b">
+            <span class="step-num">5b</span>
+            <span class="img-hint">[需截图]<br>关注公众号页<br>(同路径② 5a-ii)</span>
+            <input type="file" class="file-input" accept="image/*">
+            <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+            <div class="clear-img" title="清除">×</div>
+          </div>
+          <div class="node-body">
+            <div class="node-title">关注公众号页</div>
+            <div class="node-tags"><span class="tag tag-公众号">公众号</span></div>
+            <div class="node-desc">兜底承接</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="note-card">
+      <span class="nc-step">6</span>
+      <div class="nc-icon">📞</div>
+      <div class="nc-title">下载 app</div>
+      <div><span class="tag tag-app">app</span></div>
+      <div class="nc-desc">大概率是销售打电话引导下载<br>无固定页面截图</div>
+      <div class="nc-flag">销售电话推进</div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="branch-pair">
+      <div class="branch-row">
+        <div class="branch-item primary">
+          <div class="branch-label">已做档案</div>
+          <div class="branch-content">
+            <div class="b-title">→「确定前测」</div>
+            <span class="tag tag-app">app</span> 只确认年级 + 教材
+          </div>
+        </div>
+        <div class="branch-arrow"></div>
+        <div class="node is-key">
+          <div class="node-img" data-img-id="p3-7a">
+            <span class="step-num">7a</span>
+            <span class="img-hint">[已有截图]<br>app · 确定前测<br>(确认你的学习信息)</span>
+            <input type="file" class="file-input" accept="image/*">
+            <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+            <div class="clear-img" title="清除">×</div>
+          </div>
+          <div class="node-body">
+            <div class="node-title">app · 确定前测</div>
+            <div class="node-tags"><span class="tag tag-app">app</span></div>
+            <div class="node-desc">轻量补充</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="branch-row">
+        <div class="branch-item fallback">
+          <div class="branch-label">未做档案</div>
+          <div class="branch-content">
+            <div class="b-title">→ 新用户前测 → 档案首诊</div>
+            <span class="tag tag-app">app</span> 补齐前测后走路径①
+          </div>
+        </div>
+        <div class="branch-arrow"></div>
+        <div class="node">
+          <div class="node-img" data-img-id="p3-7b">
+            <span class="step-num">7b</span>
+            <span class="img-hint">[需截图]<br>app · 新用户前测<br>(完整版前测)</span>
+            <input type="file" class="file-input" accept="image/*">
+            <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+            <div class="clear-img" title="清除">×</div>
+          </div>
+          <div class="node-body">
+            <div class="node-title">新用户前测</div>
+            <div class="node-tags"><span class="tag tag-app">app</span></div>
+            <div class="node-desc">未做档案 → 先完成完整前测</div>
+          </div>
+        </div>
+        <div class="branch-arrow"></div>
+        <div class="note-card">
+          <span class="nc-step">7c</span>
+          <div class="nc-icon">↗</div>
+          <div class="nc-title">档案首诊</div>
+          <div><span class="tag tag-app">app</span></div>
+          <div class="nc-desc">和 <b style="color:#5B7BFF">路径①</b> 一样的<br>Step 1 + Step 2</div>
+          <div class="nc-flag" style="background:#f0f5ff;color:#5B7BFF;">→ 复用路径①</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <div class="node">
+      <div class="node-img" data-img-id="p3-8">
+        <span class="step-num">8</span>
+        <span class="img-hint">[需截图]<br>app · 学习计划 / day1 课<br>(两条分支汇入)</span>
+        <input type="file" class="file-input" accept="image/*">
+        <div class="upload-overlay">📷 点击 / 拖拽上传</div>
+        <div class="clear-img" title="清除">×</div>
+      </div>
+      <div class="node-body">
+        <div class="node-title">开始学习</div>
+        <div class="node-tags"><span class="tag tag-app">app</span></div>
+        <div class="node-desc">两条分支汇入 · day1 到习</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 备注区 -->
+<section class="path-section">
+  <div class="path-header">
+    <div class="path-num" style="background:#999">!</div>
+    <div class="path-title">关键决策与未决</div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+    <div style="padding: 12px; background: #f4f7ff; border-radius: 8px; font-size: 12px; line-height: 1.6;">
+      <b>✅ 已定·档案不作为销售首通抓手</b><br>
+      销售首通和档案脱钩，档案产品价值需由产品本身承担——
+      让家长被听懂、看到方案、相信能解决。
+    </div>
+    <div style="padding: 12px; background: #f4f7ff; border-radius: 8px; font-size: 12px; line-height: 1.6;">
+      <b>✅ 已定·MVP 工程方案 C</b><br>
+      app 端原生（路径①主入口体验拉满） + 小程序端 h5（路径②③兜底，先用快上）。
+    </div>
+    <div style="padding: 12px; background: #fff7e6; border-radius: 8px; font-size: 12px; line-height: 1.6;">
+      <b>⏳ 待定·完成档案按钮的 4 种跳转</b><br>
+      app 已分配 / app 未分配 / 小程序已分配 / 小程序未分配——按钮文案 + 动作需要差异化。
+    </div>
+    <div style="padding: 12px; background: #fff7e6; border-radius: 8px; font-size: 12px; line-height: 1.6;">
+      <b>⏳ 待定·「确定前测」和档案 Step 1 的内容关系</b><br>
+      档案已采集年级+教材，确定前测又问一次。是二次确认 / 简化档案 Step 1 推到前测 / 还是省掉？
+    </div>
+    <div style="padding: 12px; background: #fff7e6; border-radius: 8px; font-size: 12px; line-height: 1.6;">
+      <b>⏳ 待定·档案常态 v1/v2 形态</b><br>
+      上一轮先放一放的事，下一轮迭代再说。
+    </div>
+  </div>
+</section>
+
+<div id="savedTip" style="position: fixed; bottom: 24px; right: 24px; background: #52c41a; color: #fff; padding: 8px 16px; border-radius: 4px; opacity: 0; transition: opacity .3s; pointer-events: none; font-size: 13px;">✓ 已保存截图到本地</div>
+
+<script>
+  const STORAGE_KEY = 'archive-path-overview::' + location.pathname;
+  const VERSION = '2026-06-03-v1';
+
+  function loadImages() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      if (data.version !== VERSION) { localStorage.removeItem(STORAGE_KEY); return; }
+      Object.entries(data.images || {}).forEach(([id, src]) => {
+        const slot = document.querySelector(`.node-img[data-img-id="${id}"]`);
+        if (slot && src) renderImage(slot, src);
+      });
+    } catch (e) { console.warn('load failed', e); }
+  }
+
+  function getCurrentSize() {
+    const images = {};
+    document.querySelectorAll('.node-img img').forEach(img => {
+      if (img.src.startsWith('data:')) {
+        const slot = img.closest('.node-img');
+        images[slot.dataset.imgId] = img.src;
+      }
+    });
+    return {
+      images,
+      bytes: JSON.stringify(images).length,
+      mb: (JSON.stringify(images).length / 1024 / 1024).toFixed(2)
+    };
+  }
+
+  function saveImages() {
+    const { images, mb } = getCurrentSize();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: VERSION, images }));
+      flashSaved();
+    } catch (e) {
+      console.warn('保存失败：localStorage 容量已满', e);
+      flashError(`⚠ 容量已满（约 ${mb}MB），请点工具栏「🗜 压缩并保存」`);
+    }
+  }
+
+  // ============ 图片压缩 ============
+  function compressImage(srcOrFile, maxWidth = 1200, quality = 0.78) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let w = img.naturalWidth, h = img.naturalHeight;
+        if (w > maxWidth) { h = Math.round(h * (maxWidth / w)); w = maxWidth; }
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        // 白底防止 PNG 透明区在转 JPEG 时变黑
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      if (typeof srcOrFile === 'string') {
+        img.src = srcOrFile;
+      } else {
+        const reader = new FileReader();
+        reader.onload = e => img.src = e.target.result;
+        reader.readAsDataURL(srcOrFile);
+      }
+    });
+  }
+
+  // 一键压缩所有屏幕上的图，然后再保存（用于「容量已满」的救场）
+  async function compressAndSaveAll() {
+    const imgs = document.querySelectorAll('.node-img.has-img img');
+    if (!imgs.length) { alert('当前没有截图可压缩'); return; }
+    const btn = document.getElementById('compressBtn');
+    const before = getCurrentSize().mb;
+    btn.disabled = true;
+    btn.textContent = `🗜 压缩中 0/${imgs.length}...`;
+    let i = 0;
+    for (const img of imgs) {
+      try {
+        const compressed = await compressImage(img.src, 1200, 0.78);
+        if (compressed.length < img.src.length) img.src = compressed;
+      } catch (e) { console.warn('压缩失败', e); }
+      i++;
+      btn.textContent = `🗜 压缩中 ${i}/${imgs.length}...`;
+    }
+    const after = getCurrentSize().mb;
+    btn.disabled = false;
+    btn.textContent = '🗜 压缩并保存';
+    try {
+      const { images } = getCurrentSize();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: VERSION, images }));
+      alert(`✓ 压缩完成\n体积：${before}MB → ${after}MB\n已成功保存到本地`);
+    } catch (e) {
+      alert(`⚠ 压缩后仍超容量（${after}MB）。\n建议手动删除几张大图后再试，或减小图片数量`);
+    }
+  }
+
+  function renderImage(slot, src) {
+    let img = slot.querySelector('img');
+    if (!img) {
+      img = document.createElement('img');
+      slot.insertBefore(img, slot.firstChild);
+    }
+    img.src = src;
+    slot.classList.add('has-img');
+  }
+
+  function clearImage(slot) {
+    const img = slot.querySelector('img');
+    if (img) img.remove();
+    slot.classList.remove('has-img');
+    saveImages();
+  }
+
+  async function handleFile(slot, file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    try {
+      const compressed = await compressImage(file, 1200, 0.78);
+      renderImage(slot, compressed);
+      saveImages();
+    } catch (e) {
+      console.warn('压缩失败，降级原始读取', e);
+      const reader = new FileReader();
+      reader.onload = e => { renderImage(slot, e.target.result); saveImages(); };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  document.querySelectorAll('.node-img').forEach(slot => {
+    const input = slot.querySelector('.file-input');
+    const clearBtn = slot.querySelector('.clear-img');
+
+    slot.addEventListener('click', e => {
+      if (e.target === clearBtn) return;
+      input.click();
+    });
+    input.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) handleFile(slot, file);
+    });
+    slot.addEventListener('dragover', e => {
+      e.preventDefault();
+      slot.classList.add('drag-over');
+    });
+    slot.addEventListener('dragleave', () => {
+      slot.classList.remove('drag-over');
+    });
+    slot.addEventListener('drop', e => {
+      e.preventDefault();
+      slot.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) handleFile(slot, file);
+    });
+    clearBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (confirm('清除这个截图？')) clearImage(slot);
+    });
+  });
+
+  // 全局粘贴：选中某个 slot 后 Cmd/Ctrl+V 直接贴
+  let activeSlot = null;
+  document.querySelectorAll('.node-img').forEach(slot => {
+    slot.addEventListener('mouseenter', () => activeSlot = slot);
+    slot.addEventListener('mouseleave', () => activeSlot = null);
+  });
+  document.addEventListener('paste', e => {
+    if (!activeSlot) return;
+    const items = e.clipboardData.items;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        const file = item.getAsFile();
+        handleFile(activeSlot, file);
+        e.preventDefault();
+        return;
+      }
+    }
+  });
+
+  function resetAll() {
+    if (!confirm('清空所有截图？此操作不可撤销')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+
+  function exportData() {
+    const data = { version: VERSION, exportedAt: new Date().toLocaleString('zh-CN'), nodes: [] };
+    document.querySelectorAll('.node-img').forEach(slot => {
+      const img = slot.querySelector('img');
+      data.nodes.push({
+        id: slot.dataset.imgId,
+        hasImage: !!img,
+        sizeKB: img ? Math.round(img.src.length / 1024) : 0
+      });
+    });
+    const json = JSON.stringify(data, null, 2);
+    const w = window.open();
+    w.document.write(`<title>导出</title><pre style="font-family:monospace;padding:20px;">${json}</pre>`);
+  }
+
+  let flashTimer;
+  function flashSaved() {
+    const tip = document.getElementById('savedTip');
+    tip.style.background = '#52c41a';
+    tip.textContent = '✓ 已保存截图到本地';
+    tip.style.opacity = '1';
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(() => tip.style.opacity = '0', 1200);
+  }
+  function flashError(msg) {
+    const tip = document.getElementById('savedTip');
+    tip.style.background = '#ff7e2d';
+    tip.textContent = msg;
+    tip.style.opacity = '1';
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(() => tip.style.opacity = '0', 4000);
+  }
+
+  window.addEventListener('load', loadImages);
+</script>
+
+</body>
+</html>

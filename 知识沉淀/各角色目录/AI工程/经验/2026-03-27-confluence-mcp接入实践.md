@@ -1,3 +1,7 @@
+---
+description: "Confluence MCP 接入：从链接提取 pageId 直接拉取内容，工具速查表"
+---
+
 # Confluence MCP 接入：遇到公司文档链接可以直接拉取内容
 
 日期: 2026-03-27

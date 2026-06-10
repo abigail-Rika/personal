@@ -1,3 +1,7 @@
+---
+description: "用 Playwright MCP 读取需要登录的石墨文档：navigate + evaluate('.ql-editor').innerText"
+---
+
 # 用 Playwright MCP 读取需要登录的石墨文档
 
 日期: 2026-04-03

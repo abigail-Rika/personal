@@ -332,6 +332,23 @@
         font-size: 0.72rem; color: var(--text-dim);
       }
       .phone-card .meta span::before { content: "● "; color: #07c160; }
+
+      /* 通话状态 - 占线/未接通 */
+      .phone-card.failed {
+        background: linear-gradient(135deg, #fee2e2, #fecaca);
+      }
+      .phone-card.failed .head { color: #991b1b; }
+      .phone-card.failed .script {
+        background: #fff5f5; color: #7f1d1d;
+        font-style: italic;
+      }
+      .phone-card .failed-stamp {
+        display: inline-block;
+        background: #ef4444; color: #fff;
+        font-size: 0.7rem; font-weight: 600;
+        padding: 2px 8px; border-radius: 3px;
+        margin-left: 8px;
+      }
     </style>
   </head>
   <body>
@@ -341,13 +358,13 @@
         <div class="subtitle">从 AI 电话触达到购买体验课的完整对话示意</div>
         <div class="case-tabs" role="tablist">
           <button class="case-tab active" data-target="case-1" role="tab">
-            Case A · 新客 + 有数据 <span class="tag">增量线</span>
+            Case A · 新客 + 少量 APP 数据 <span class="tag">增量线</span>
           </button>
           <button class="case-tab" data-target="case-3" role="tab">
-            Case C · 新客 + 无数据 <span class="tag">增量线</span>
+            Case B · 新客 + 无数据 <span class="tag">增量线</span>
           </button>
           <button class="case-tab" data-target="case-2" role="tab">
-            Case B · 断课非限购 <span class="tag">效率线</span>
+            Case C · 断课非限购 <span class="tag">效率线</span>
           </button>
         </div>
       </div>
@@ -361,26 +378,35 @@
       <section class="case-content active" id="case-1">
         <div class="user-card">
           <span>用户：<strong>李明妈妈</strong></span>
-          <span>用户来源：<strong>新客未析出</strong></span>
-          <span>孩子年级：<strong>四年级（人教版）</strong></span>
-          <span>APP 行为数据：<strong>充足</strong></span>
+          <span>用户来源：<strong>新客未析出 · 自然流量 APP 注册</strong></span>
+          <span>孩子年级：<strong>四年级下（人教版）</strong></span>
+          <span>APP 行为数据：<strong>少量</strong></span>
         </div>
 
-      <!-- ===== 阶段 1：AI 电话外呼 ===== -->
+
+      <!-- ============================================ -->
+      <!-- ===== 阶段 1：AI 电话外呼（抢断式） ===== -->
+      <!-- ============================================ -->
       <div class="stage-divider">
-        <div class="stage-tag">阶段 ① · AI 电话触达</div>
+        <div class="stage-tag">阶段 ① · AI 电话外呼</div>
       </div>
 
       <div class="date-divider"><time>5 月 18 日 周日 · 19:32</time></div>
 
       <div class="phone-card">
         <div class="head">📞 AI 电话外呼（接通后 28 秒）</div>
-        <div class="script-label">AI 路老师 · 钩子话术（学情诊断报告）</div>
+        <div class="script-label">AI 路老师 · 抢断式开场 · 钩子话术</div>
         <div class="script">
-          您好，请问是李明妈妈吗？我是海豚 AI 学的路老师。看到孩子最近在咱们 APP 上学了不少四年级的内容，我们根据他的学习数据做了一份学情分析，发现有几个知识点正答率偏低，期中可能会考到。我加您微信把报告发您看看，您方便加一下吗？
+          李明妈妈，您先别挂电话，我是咱们海豚 AI 学的路老师，李明这边的学习情况是我这边在跟，所以想给您打个电话同步下情况。
         </div>
         <div class="reply">
-          <strong>家长：</strong>哦好的，那你加我吧。
+          <strong>家长：</strong>嗯。
+        </div>
+        <div class="script" style="margin-top: 10px;">
+          我这边能看到李明最近在咱们 APP 上做过几道四年级的题，其中有一类分数应用题停留时间比较长。我加您微信简单跟您说下，您看是不是和他平时作业情况对得上？
+        </div>
+        <div class="reply">
+          <strong>家长：</strong>行，你加吧。
         </div>
         <div class="meta">
           <span>电话时长 28s</span>
@@ -389,210 +415,224 @@
       </div>
 
       <div class="anno">
-        <strong>设计要点 · 钩子兑现物预告</strong><br>
-        电话里"剧透"了具体发现（"几个知识点正答率偏低""期中可能会考到"），让家长好奇完整内容。报告是"已经做好的"，减少推销感。
+        <strong>设计要点 · 抢断式开场</strong><br>
+        来自 case1/2 真实数据复盘——陌生号家长第一反应是挂，AI 必须用「您先别挂电话，我是……就咱孩子……」的节奏把电话稳住，再进业务。</div>
+
+      <!-- ============================================ -->
+      <!-- ===== 电话未接通切微信语音兜底分支 ===== -->
+      <!-- ============================================ -->
+
+
+      <div class="phone-card failed">
+        <div class="head">📞 AI 电话外呼 第 1 通<span class="failed-stamp">未接通</span></div>
+        <div class="script">
+          ...您拨打的电话已关机...
+        </div>
       </div>
 
-      <!-- ===== 阶段 2：加微 + 钩子兑现 ===== -->
-      <div class="stage-divider">
-        <div class="stage-tag">阶段 ② · 加微建联 + 钩子兑现</div>
+      <div class="sys-msg-wrap">
+        <span class="sys-msg">系统：未接通 → 30 分钟后跨时段重拨 + 同时发加微短信</span>
       </div>
 
-      <div class="date-divider"><time>5 月 18 日 周日 · 19:35</time></div>
+      <div class="date-divider"><time>5 月 18 日 周日 · 20:02</time></div>
+
+      <div class="phone-card failed">
+        <div class="head">📞 AI 电话外呼 第 2 通<span class="failed-stamp">未接通</span></div>
+        <div class="script">
+          ...您拨打的电话已关机...
+        </div>
+      </div>
+
+      <div class="sys-msg-wrap">
+        <span class="sys-msg">系统：仍未接通 → 切微信主动添加</span>
+      </div>
+
+      <div class="date-divider"><time>5 月 18 日 周日 · 20:15</time></div>
 
       <div class="sys-msg-wrap">
         <span class="sys-msg">"李明妈妈"已添加你为好友，已自动通过</span>
       </div>
 
+      <div class="anno">
+        <strong>设计要点 · 加微即首通替代</strong><br>
+        电话未接通时，AI <strong>不需要在微信里"补一段电话本来要说的"</strong>——加微即视为新的起点，直接走下方"阶段 ②"标准流程（文字说明 + 不包装诊断报告）。AI 销售相对真人销售在此处有<strong>零成本优势</strong>：不需要为"挂掉的电话"补面子。
+      </div>
+
+      <!-- ============================================ -->
+      <!-- ===== 阶段 2：加微 + 简单说明来意（接通版 / 兜底版合流） ===== -->
+      <!-- ============================================ -->
+      <div class="stage-divider">
+        <div class="stage-tag">阶段 ② · 加微 + 简单说明来意</div>
+      </div>
+
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-time">19:35</div>
-          <div class="wx-bubble wx-bubble-ai">李明妈妈您好，我是刚才电话里的路老师 ☺️</div>
+          <div class="wx-time">20:16</div>
+          <div class="wx-bubble wx-bubble-ai">李明妈妈您好，我是海豚 AI 学的路老师 ☺️</div>
         </div>
       </div>
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-bubble wx-bubble-ai">电话里答应您的孩子学情分析报告，我整理好了，您看下 👇</div>
+          <div class="wx-bubble wx-bubble-ai">我先说明下，我们这边能看到的信息不多，不够直接给孩子下诊断。</div>
         </div>
       </div>
-
-      <!-- 学情报告卡片 -->
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
-        <div class="card-wrap">
-          <div class="info-card report-card">
-            <div class="card-header">
-              <div class="icon">📊</div>
-              <div>
-                <div class="title">李明 · 数学学情诊断</div>
-                <div class="subtitle">基于近 14 天 APP 学习数据</div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <span class="label">年级 / 教材</span>
-                <span class="value">四年级下 / 人教版</span>
-              </div>
-              <div class="row">
-                <span class="label">学习时长</span>
-                <span class="value">4 小时 12 分钟</span>
-              </div>
-              <div class="row">
-                <span class="label">题目正答率</span>
-                <span class="value">71%</span>
-              </div>
-
-              <div style="margin-top: 12px; font-weight: 600; font-size: 0.82rem; color: #92400e;">⚠️ 发现 2 个待关注的知识点</div>
-              <div class="weak-point">
-                <div class="name">小数的意义和性质</div>
-                <div class="desc">概念题正答率 88%，但小数大小比较失误较多</div>
-                <span class="stat">正答率 62%</span>
-              </div>
-              <div class="weak-point">
-                <div class="name">分数应用题（倍数关系）</div>
-                <div class="desc">"比多比少"类题目正答率正常，"倍数关系"类容易卡读题</div>
-                <span class="stat">正答率 45%</span>
-              </div>
-            </div>
-            <div class="card-footer">查看完整报告 ›</div>
-          </div>
+        <div>
+          <div class="wx-bubble wx-bubble-ai">只是看到李明最近做四年级题时，有几道分数应用题停留时间比较长，所以想跟您确认一下：他平时做应用题，是不是也容易卡在读题和列式上？</div>
         </div>
       </div>
 
       <div class="anno">
-        <strong>设计要点 · 兑现物先行</strong><br>
-        加微后第一件事是兑现钩子（发报告），不是问问题。家长的预期被满足后，对后续的对话才有耐心。
+        <strong>设计要点 · 不包装诊断报告</strong><br>
+        Case A 的 APP 数据有限（只有几道题），不够生成正式诊断报告。直接说明"信息不多，不够下诊断"——既诚实，又把后续问诊变成自然交互。
       </div>
 
-      <!-- ===== 阶段 3：基于报告展开首诊对话 ===== -->
+      <!-- ============================================ -->
+      <!-- ===== 阶段 3：首诊（错题大类） ===== -->
+      <!-- ============================================ -->
       <div class="stage-divider">
-        <div class="stage-tag">阶段 ③ · 基于报告的首诊对话</div>
+        <div class="stage-tag">阶段 ③ · 首诊对话</div>
       </div>
 
-      <div class="wx-row left">
-        <div class="wx-avatar ai">路</div>
-        <div>
-          <div class="wx-bubble wx-bubble-ai">报告里这个分数应用题的薄弱点，孩子最近做题或者考试时，您有发现这块经常错吗？</div>
-        </div>
-      </div>
 
       <div class="wx-row right">
         <div class="wx-avatar user">妈</div>
         <div>
-          <div class="wx-time">19:38</div>
-          <div class="wx-bubble wx-bubble-user">是的，他平时考试这块确实经常丢分</div>
+          <div class="wx-time">20:18</div>
+          <div class="wx-bubble wx-bubble-user">还行吧 我也没特别注意</div>
         </div>
       </div>
 
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-time">19:38</div>
-          <div class="wx-bubble wx-bubble-ai">嗯嗯，那您看他错的时候，是计算的时候马虎算错了，还是读题就转不过来？</div>
+          <div class="wx-time">20:18</div>
+          <div class="wx-bubble wx-bubble-ai">明白，您还记得他最近主要错哪类题吗？</div>
         </div>
       </div>
+      <div class="wx-row left">
+        <div class="wx-avatar ai">路</div>
+        <div>
+          <div class="wx-bubble wx-bubble-ai">应用题主要分这几类：<strong>比多比少 / 倍数 / 分数应用题</strong>——错最多的是哪一类？</div>
+        </div>
+      </div>
+
 
       <div class="wx-row right">
         <div class="wx-avatar user">妈</div>
         <div>
-          <div class="wx-time">19:39</div>
-          <div class="wx-bubble wx-bubble-user">感觉是读题就转不过来，列式经常列错</div>
+          <div class="wx-time">20:20</div>
+          <div class="wx-bubble wx-bubble-user">应该是倍数那种 他搞不清</div>
         </div>
       </div>
 
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-time">19:39</div>
-          <div class="wx-bubble wx-bubble-ai">明白了 👌 应用题里的"比多比少"和"倍数关系"，他是哪种更容易卡？</div>
-        </div>
-      </div>
-
-      <div class="wx-row right">
-        <div class="wx-avatar user">妈</div>
-        <div>
-          <div class="wx-time">19:40</div>
-          <div class="wx-bubble wx-bubble-user">应该是倍数那种吧 他自己也搞不清楚谁是几倍</div>
-        </div>
-      </div>
-
-      <div class="wx-row left">
-        <div class="wx-avatar ai">路</div>
-        <div>
-          <div class="wx-time">19:40</div>
-          <div class="wx-bubble wx-bubble-ai">您观察得挺准的，倍数应用题这块，是四年级下学期新学的，对很多孩子都是个坎</div>
+          <div class="wx-time">20:20</div>
+          <div class="wx-bubble wx-bubble-ai">嗯，倍数这块挺多孩子卡。<strong>具体卡在哪个点</strong>家长在家其实不太好定位——</div>
         </div>
       </div>
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-bubble wx-bubble-ai">而且这块如果现在没打牢，五年级开始的"分数除法应用题"会更吃力——本质都是"谁是单位 1"的问题</div>
-        </div>
-      </div>
-      <div class="wx-row left">
-        <div class="wx-avatar ai">路</div>
-        <div>
-          <div class="wx-bubble wx-bubble-ai">所以现在抓一下挺关键的</div>
+          <div class="wx-bubble wx-bubble-ai">咱们的体验课第 1 节就是带孩子做几道倍数应用题，AI 老师会让他自己说"哪个数字是 1 份"——他<strong>真懂还是糊弄一目了然</strong> ☺️</div>
         </div>
       </div>
 
-      <div class="anno">
-        <strong>设计要点 · 即时反馈，问完就给价值</strong><br>
-        每采集一个信息点（"读题错"→"倍数关系"）就立刻给出有价值的分析（"四年级下学期新学的""影响五年级"），让家长觉得对话本身有收获，不是被问。
-      </div>
 
-      <!-- ===== 阶段 4：诊断结论 + 引导购买 ===== -->
+      <!-- ============================================ -->
+      <!-- ===== 阶段 4：引导购买 ===== -->
+      <!-- ============================================ -->
       <div class="stage-divider">
-        <div class="stage-tag">阶段 ④ · 诊断结论 + 引导购买</div>
+        <div class="stage-tag">阶段 ④ · 引导购买</div>
       </div>
+
 
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-bubble wx-bubble-ai">我们的体验课刚好有一节专门讲"倍数关系应用题"的，是 AI 老师 1v1 互动那种，孩子边听边做题，能立马看到他卡在哪</div>
+          <div class="wx-bubble wx-bubble-ai">这块家长在家讲挺难讲透，因为不是算错，是读题方式的问题。咱们的体验课就是专门讲这块的：</div>
         </div>
       </div>
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-bubble wx-bubble-ai">想不想先让李明试一节看看？</div>
+          <div class="wx-bubble wx-bubble-ai">AI 老师 1v1 互动 25 分钟一节，<strong>9 块 3 节体验包</strong>，您要不要让小朋友先试一节看看？</div>
         </div>
       </div>
 
       <div class="wx-row right">
         <div class="wx-avatar user">妈</div>
         <div>
-          <div class="wx-time">19:43</div>
-          <div class="wx-bubble wx-bubble-user">这个课多长时间啊？</div>
+          <div class="wx-time">20:24</div>
+          <div class="wx-bubble wx-bubble-user">要多长时间 多少钱</div>
         </div>
       </div>
 
       <div class="anno">
         <span class="signal-badge">主动信号</span>
-        家长开始问"上课时间""怎么安排"——已切入决策阶段，AI 跳过流程直接报价。
+        家长主动追问时长 + 价格——已切入决策阶段，60 秒内给数字。
       </div>
 
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-bubble wx-bubble-ai">25 分钟，可以放周末或者放学后任意时间，孩子状态好的时候上 ☺️</div>
+          <div class="wx-time">20:24</div>
+          <div class="wx-bubble wx-bubble-ai">25 分钟一节，9 块 3 节一个体验包，可以挑周末或者放学后 ☺️</div>
         </div>
       </div>
 
       <div class="wx-row right">
         <div class="wx-avatar user">妈</div>
         <div>
-          <div class="wx-time">19:44</div>
-          <div class="wx-bubble wx-bubble-user">那多少钱</div>
+          <div class="wx-time">20:26</div>
+          <div class="wx-bubble wx-bubble-user">我得问问孩子爸爸</div>
         </div>
+      </div>
+
+      <div class="anno">
+        <span class="signal-badge">⭐ 决策权信号</span>
+        家长提到"问爸爸"——AI 需要给一个能直接转发给爸爸的版本（具体形态待设计，详见下方注释）。
       </div>
 
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-bubble wx-bubble-ai">就 9 元，是体验装的价格，不合适随时停 👇</div>
+          <div class="wx-time">20:26</div>
+          <div class="wx-bubble wx-bubble-ai">嗯好的，您看完跟爸爸聊一下，他要问啥您再来问我，咱们今晚先不定 ☺️</div>
+        </div>
+      </div>
+
+      <!-- ⏸ 给爸爸的版本（待设计）：内容形态未定 —— 30 秒语音 + 图卡？纯图卡？纯文字？暂留 placeholder 注释，等设计完后补回 -->
+      <div class="anno" style="background: rgba(0,0,0,0.04); border-left-color: #bbb; color: #888;">
+        <strong style="color: #888;">⏸ 待设计 · 给爸爸的版本</strong><br>
+        触发条件：家长说"问爸爸 / 让爸爸看看 / 爸爸做主"。<br>
+        AI 需要在这里给一个能直接转发给爸爸的内容包——具体形态（语音 / 图卡 / 文字组合）<strong style="color: #888;">尚未设计</strong>，暂留位等内容方案确定后补回。
+      </div>
+
+      <div class="wx-row right">
+        <div class="wx-avatar user">妈</div>
+        <div>
+          <div class="wx-time">20:28</div>
+          <div class="wx-bubble wx-bubble-user">行 我跟他说说</div>
+        </div>
+      </div>
+
+      <div class="sys-msg-wrap">
+        <span class="sys-msg">主对话进入"配偶决策等待"状态 · 不主动推送</span>
+      </div>
+
+      <div class="date-divider"><time>5 月 18 日 周日 · 22:00 · 1 小时 32 分钟后</time></div>
+
+      <div class="wx-row right">
+        <div class="wx-avatar user">妈</div>
+        <div>
+          <div class="wx-time">22:00</div>
+          <div class="wx-bubble wx-bubble-user">他说可以 试试看 👇</div>
         </div>
       </div>
 
@@ -611,11 +651,11 @@
             <div class="card-body">
               <div class="price">
                 <div class="num">9</div>
-                <div class="desc">体验装 · 含课后学情报告</div>
+                <div class="desc">体验装 · 3 节体验课</div>
               </div>
               <div class="row">
                 <span class="label">推荐内容</span>
-                <span class="value">D2 · 倍数关系应用题</span>
+                <span class="value">倍数应用题专项</span>
               </div>
               <div class="row">
                 <span class="label">课时</span>
@@ -627,80 +667,65 @@
         </div>
       </div>
 
-      <div class="wx-row right">
-        <div class="wx-avatar user">妈</div>
-        <div>
-          <div class="wx-time">19:46</div>
-          <div class="wx-bubble wx-bubble-user">行 那试试看吧</div>
-        </div>
-      </div>
-
       <div class="sys-msg-wrap">
         <span class="sys-msg" style="background: rgba(7, 193, 96, 0.1); color: #07c160;">✓ 李明妈妈已完成支付 · ¥9.00</span>
       </div>
 
+      <!-- ============================================ -->
       <!-- ===== 阶段 5：转交 ===== -->
+      <!-- ============================================ -->
       <div class="stage-divider">
         <div class="stage-tag">阶段 ⑤ · 转交</div>
       </div>
 
+
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-time">19:47</div>
-          <div class="wx-bubble wx-bubble-ai">收到啦 ✅ 给您约的是 5 月 24 日（周六）下午 4 点的 D2 倍数应用题</div>
+          <div class="wx-time">22:03</div>
+          <div class="wx-bubble wx-bubble-ai">收到啦 ✅ 给您约的是 5 月 24 日（周六）下午 4 点的「倍数应用题专项」</div>
         </div>
       </div>
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-bubble wx-bubble-ai">我把孩子的学情情况和这次体验课的安排已经同步给我们的学习管家王老师了，后面的课程王老师会跟进，有任何问题随时找她</div>
+          <div class="wx-bubble wx-bubble-ai">后面的课程进度和学情反馈，会有学习管家王老师跟进，课前一天她会再提醒一次 ☺️</div>
         </div>
       </div>
       <div class="wx-row left">
         <div class="wx-avatar ai">路</div>
         <div>
-          <div class="wx-bubble wx-bubble-ai">课前一天她会再提醒一次 😊</div>
+          <div class="wx-bubble wx-bubble-ai">3 节体验完她会基于真实表现给您一份完整学情，<strong>不合适随时退款</strong>，跟王老师说一声就行。</div>
+        </div>
+      </div>
+      <div class="wx-row left">
+        <div class="wx-avatar ai">路</div>
+        <div>
+          <div class="wx-bubble wx-bubble-ai">您要是收到王老师的消息不想看，回一个「<strong>先不聊</strong>」就行，她那边会标记，不会再连发 ☺️</div>
         </div>
       </div>
 
-      <!-- 转交档案卡片 -->
-      <div class="wx-row left">
-        <div class="wx-avatar ai" style="background: linear-gradient(135deg, #94a3b8, #64748b);">📋</div>
-        <div class="card-wrap">
-          <div class="info-card">
-            <div class="card-header">
-              <div class="icon" style="background: linear-gradient(135deg, #94a3b8, #64748b);">📋</div>
-              <div>
-                <div class="title">转交档案 · 李明妈妈</div>
-                <div class="subtitle">系统自动生成 · 移交至学习管家</div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="row"><span class="label">用户来源</span><span class="value">新客未析出</span></div>
-              <div class="row"><span class="label">加微钩子</span><span class="value">学情诊断报告</span></div>
-              <div class="row"><span class="label">孩子信息</span><span class="value">李明 · 四年级下 · 人教版</span></div>
-              <div class="row"><span class="label">首诊结论</span><span class="value">倍数应用题薄弱（45%）</span></div>
-              <div class="row"><span class="label">家长关注</span><span class="value">读题理解、列式</span></div>
-              <div class="row"><span class="label">购买信号</span><span class="value">主动问时长 + 价格</span></div>
-              <div class="row"><span class="label">购买内容</span><span class="value">体验课 D2 · ¥9</span></div>
-              <div class="row"><span class="label">已约课时间</span><span class="value">5/24 周六 16:00</span></div>
-            </div>
-            <div class="card-footer">查看完整对话记录 ›</div>
-          </div>
-        </div>
+
+      <!-- 转交档案（注释模块） -->
+      <div class="anno">
+        <strong>📋 转交档案 · 李明妈妈</strong>（系统自动生成 · 移交至学习管家）<br>
+        · 用户来源：新客未析出（自然流量）<br>
+        · 加微钩子：少量 APP 行为提醒<br>
+        · 孩子信息：李明 · 四年级下 · 人教版<br>
+        · 首诊大类：倍数应用题（待体验课验证）<br>
+        · 家长口述：读题不会列式<br>
+        · 决策权：⭐ 已转爸爸 → 通过<br>
+        · 购买内容：体验课 · 倍数专项 · ¥9<br>
+        · 已约课时间：5/24 周六 16:00<br>
+        · ⚠️ 已承诺：体验完不强推 + 「先不聊」打断权
       </div>
 
       <div class="anno">
         <strong>设计要点 · 转交即懂</strong><br>
-        结构化档案让承接方（学习管家 / AI 提转正 Agent）"接手即懂"，不用重新挖需。家长视角的过渡是平滑的——同一个团队的不同老师，而不是"重新介绍一遍"。
-      </div>
-
-      <div class="anno" style="margin-top: 24px; background: rgba(245, 158, 11, 0.08); border-color: var(--color-warn); color: #92400e;">
-        <strong>📌 Case A 说明</strong><br>
-        本对话是基于 PRD 设计思路的<strong>理想链路示意</strong>，新客增量线的关键是：电话钩子有"剧透"+加微即兑现+基于真实数据问诊。
+        结构化档案让承接方（学习管家 / AI 续课转正 Agent）"接手即懂"，不用重新挖需。<strong>关键新增</strong>：转交档案显式标注「已承诺打断权」，避免助理期 SOP 群发越界。
       </div>
       </section>
+
 
       <!-- ============================================== -->
       <!-- ============== CASE C · 新客 + 无数据 ========= -->

@@ -1,0 +1,163 @@
+[
+  {
+    "user_id": 374216238,
+    "tutor_ldap": "tangxueyingcs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777537674
+  },
+  {
+    "user_id": 525123745,
+    "tutor_ldap": "yankunpeng",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777553139
+  },
+  {
+    "user_id": 563668321,
+    "tutor_ldap": "wanjiamengcs01",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777560984
+  },
+  {
+    "user_id": 727834839,
+    "tutor_ldap": "zhangjialecs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777618484
+  },
+  {
+    "user_id": 980892351,
+    "tutor_ldap": "zhangmengmengwh05",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777623160
+  },
+  {
+    "user_id": 661459378,
+    "tutor_ldap": "yuanyingyingcs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777632965
+  },
+  {
+    "user_id": 256529738,
+    "tutor_ldap": "lichaocs02",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777637569
+  },
+  {
+    "user_id": 558113297,
+    "tutor_ldap": "tangxuzhucs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777642991
+  },
+  {
+    "user_id": 281326670,
+    "tutor_ldap": "liubingchuancs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777644766
+  },
+  {
+    "user_id": 485203530,
+    "tutor_ldap": "danhanqiao",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777699716
+  },
+  {
+    "user_id": 213476748,
+    "tutor_ldap": "yuxiaojiecs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777703163
+  },
+  {
+    "user_id": 326921026,
+    "tutor_ldap": "liubingchuancs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777706720
+  },
+  {
+    "user_id": 701783544,
+    "tutor_ldap": "guohuaize",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777708598
+  },
+  {
+    "user_id": 486771750,
+    "tutor_ldap": "wujunxiangwh",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777720493
+  },
+  {
+    "user_id": 226422752,
+    "tutor_ldap": "liuxincs29",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777724685
+  },
+  {
+    "user_id": 238940404,
+    "tutor_ldap": "luoxiangwh02",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777733683
+  },
+  {
+    "user_id": 210206028,
+    "tutor_ldap": "yankunpeng",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777782639
+  },
+  {
+    "user_id": 1133902601,
+    "tutor_ldap": "pengjiaqiancs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777788139
+  },
+  {
+    "user_id": 1132487242,
+    "tutor_ldap": "longbiaocs",
+    "comm_type": 25,
+    "comm_status": 1,
+    "comm_ts": 1777945410
+  },
+  {
+    "user_id": 169056568,
+    "tutor_ldap": "liuzhaocs03",
+    "comm_type": 69,
+    "comm_status": 1,
+    "comm_ts": 1777203705
+  },
+  {
+    "user_id": 334747496,
+    "tutor_ldap": "wangjiangfeng",
+    "comm_type": 69,
+    "comm_status": 1,
+    "comm_ts": 1777535120
+  },
+  {
+    "user_id": 403374958,
+    "tutor_ldap": "zhouwenxiacs",
+    "comm_type": 69,
+    "comm_status": 1,
+    "comm_ts": 1777556718
+  },
+  {
+    "user_id": 697650947,
+    "tutor_ldap": "yinsitian",
+    "comm_type": 69,
+    "comm_status": 1,
+    "comm_ts": 1777619528
+  }
+]

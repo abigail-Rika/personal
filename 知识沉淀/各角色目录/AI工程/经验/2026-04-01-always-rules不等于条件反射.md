@@ -1,3 +1,7 @@
+---
+description: "always_applied rules 加载≠条件反射：触发词未命中已有路径，全局搜索绕大圈"
+---
+
 # Always Rules 加载 ≠ 条件反射
 
 日期: 2026-04-01

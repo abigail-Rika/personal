@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>分学段年级组件 · C 端 Demo</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 32px 16px;
+  }
+
+  /* 顶部对比切换器（仅 demo 用） */
+  .switcher {
+    position: fixed; top: 16px; left: 16px; z-index: 100;
+    background: #fff; padding: 10px 14px; border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    display: flex; gap: 8px; align-items: center;
+  }
+  .switcher span { font-size: 12px; color: #666; margin-right: 4px; }
+  .switcher button {
+    padding: 5px 12px; border: 1px solid #d9d9d9; background: #fff;
+    border-radius: 4px; cursor: pointer; font-size: 12px; color: #333;
+  }
+  .switcher button.active { background: #1890ff; color: #fff; border-color: #1890ff; }
+
+  /* 手机外壳 */
+  .phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .phone-label { font-size: 12px; color: #999; font-weight: 500; }
+  .phone {
+    width: 375px; height: 720px; background: #fff; border-radius: 36px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.12); padding: 10px; position: relative;
+  }
+  .phone-notch { width: 110px; height: 18px; background: #1a1a1a; border-radius: 0 0 14px 14px; margin: 0 auto 6px; }
+  .screen { border-radius: 22px; overflow: hidden; height: calc(100% - 30px); background: #f5f6fa; position: relative; }
+
+  /* 微信头部 */
+  .wx-header {
+    background: #f7f7f7; padding: 8px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #eee;
+  }
+  .wx-header .x { font-size: 18px; color: #333; width: 24px; }
+  .wx-header .title-block { text-align: center; }
+  .wx-header .title-block .name { font-size: 14px; font-weight: 500; color: #333; }
+  .wx-header .title-block .url { font-size: 10px; color: #999; }
+  .wx-header .more { font-size: 18px; color: #333; width: 24px; text-align: right; }
+
+  /* 主体区 */
+  .body-area { padding: 16px; }
+
+  /* 标题（飘带） */
+  .ribbon-title {
+    text-align: center; font-size: 15px; color: #f5576c;
+    font-weight: 600; margin-bottom: 12px; letter-spacing: 1px;
+  }
+  .ribbon-title::before { content: "❋ "; }
+  .ribbon-title::after { content: " ❋"; }
+
+  /* ============ 旧版（平铺）：示意 8 + 2 个按钮 ============ */
+  .card-old, .card-new {
+    background: #fff; border: 1.5px solid #ffd4c4; border-radius: 16px;
+    padding: 16px 14px;
+  }
+  .grade-grid-old {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .grade-btn {
+    padding: 10px 8px; border: 1px solid #ffd4c4; border-radius: 22px;
+    text-align: center; font-size: 13px; color: #f5576c; cursor: pointer;
+    background: #fff; transition: all .15s;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .grade-btn:hover { border-color: #f5576c; background: #fff5f0; }
+  .grade-btn.long-text { font-size: 11.5px; padding: 10px 4px; }
+  .old-hint {
+    margin-top: 10px; font-size: 11px; color: #ff4d4f;
+    background: #fff5f0; padding: 6px 10px; border-radius: 6px;
+    border-left: 3px solid #ff4d4f;
+  }
+
+  /* ============ 新版（分学段）：小学 + 初中 ============ */
+  .stage-block { margin-bottom: 14px; }
+  .stage-block:last-child { margin-bottom: 0; }
+  .stage-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  }
+  .stage-header .line {
+    flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #ffd4c4, transparent);
+  }
+  .stage-header .label {
+    font-size: 13px; color: #f5576c; font-weight: 600;
+    padding: 2px 12px; background: #fff5f0; border-radius: 10px;
+    border: 1px solid #ffe0d4;
+  }
+  .grade-grid-new {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .new-hint {
+    margin-top: 12px; font-size: 11px; color: #52c41a;
+    background: #f6ffed; padding: 6px 10px; border-radius: 6px;
+    border-left: 3px solid #52c41a;
+  }
+
+  /* 提示 badge */
+  .proto-badge {
+    position: fixed; bottom: 16px; right: 16px; background: #ff4d4f; color: #fff;
+    padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 500;
+    box-shadow: 0 2px 12px rgba(255,77,79,.3); z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<!-- 仅 demo 用：切换是否同时展示旧版对比 -->
+<div class="switcher">
+  <span>对比展示：</span>
+  <button id="btnBoth" class="active" onclick="setMode('both')">新旧并列</button>
+  <button id="btnNew" onclick="setMode('new')">仅看新版</button>
+</div>
+
+<!-- 旧版（图 1 原样，文案拥挤示意） -->
+<div class="phone-wrap" id="oldPhone">
+  <div class="phone-label">旧版（当前线上）· 平铺 + 长文案拥挤</div>
+  <div class="phone">
+    <div class="phone-notch"></div>
+    <div class="screen">
+      <div class="wx-header">
+        <span class="x">×</span>
+        <div class="title-block">
+          <div class="name">海豚AI学</div>
+          <div class="url">aries.yuanfudao.com</div>
+        </div>
+        <span class="more">···</span>
+      </div>
+      <div class="body-area">
+        <div class="ribbon-title">请选择孩子9月升学年级</div>
+        <div class="card-old">
+          <div class="grade-grid-old">
+            <div class="grade-btn long-text">9月升四年级人教版</div>
+            <div class="grade-btn long-text">9月升四年级其他版本</div>
+            <div class="grade-btn long-text">9月升五年级人教版</div>
+            <div class="grade-btn long-text">9月升五年级其他版本</div>
+            <div class="grade-btn long-text">9月升六年级人教版</div>
+            <div class="grade-btn long-text">9月升六年级其他版本</div>
+            <div class="grade-btn">升初一</div>
+            <div class="grade-btn">升初二</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新版（分学段） -->
+<div class="phone-wrap" id="newPhone">
+  <div class="phone-label">新版（本次优化）· 分学段 + 按钮文案短</div>
+  <div class="phone">
+    <div class="phone-notch"></div>
+    <div class="screen">
+      <div class="wx-header">
+        <span class="x">×</span>
+        <div class="title-block">
+          <div class="name">海豚AI学</div>
+          <div class="url">aries.yuanfudao.com</div>
+        </div>
+        <span class="more">···</span>
+      </div>
+      <div class="body-area">
+        <div class="ribbon-title">请选择孩子9月升学年级</div>
+        <div class="card-new">
+          <!-- 小学 -->
+          <div class="stage-block">
+            <div class="stage-header">
+              <div class="line"></div>
+              <div class="label">小学</div>
+              <div class="line"></div>
+            </div>
+            <div class="grade-grid-new">
+              <div class="grade-btn">四年级人教版</div>
+              <div class="grade-btn">四年级其他版本</div>
+              <div class="grade-btn">五年级人教版</div>
+              <div class="grade-btn">五年级其他版本</div>
+              <div class="grade-btn">六年级人教版</div>
+              <div class="grade-btn">六年级其他版本</div>
+            </div>
+          </div>
+          <!-- 初中 -->
+          <div class="stage-block">
+            <div class="stage-header">
+              <div class="line"></div>
+              <div class="label">初中</div>
+              <div class="line"></div>
+            </div>
+            <div class="grade-grid-new">
+              <div class="grade-btn">初一</div>
+              <div class="grade-btn">初二</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="proto-badge">原型演示 · 非线上页面</div>
+
+<script>
+  function setMode(mode) {
+    const oldPhone = document.getElementById('oldPhone');
+    const newPhone = document.getElementById('newPhone');
+    document.getElementById('btnBoth').classList.toggle('active', mode === 'both');
+    document.getElementById('btnNew').classList.toggle('active', mode === 'new');
+    oldPhone.style.display = mode === 'both' ? 'flex' : 'none';
+    newPhone.style.display = 'flex';
+  }
+</script>
+
+</body>
+</html>
