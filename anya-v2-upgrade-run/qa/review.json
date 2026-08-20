@@ -1,0 +1,990 @@
+{
+  "ok": true,
+  "frames_root": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames",
+  "errors": [],
+  "warnings": [
+    "idle used extraction method stable-slots; confirm motion playback remains stable and unclipped",
+    "running-right used extraction method stable-slots; confirm motion playback remains stable and unclipped",
+    "running-left used extraction method stable-slots; confirm motion playback remains stable and unclipped",
+    "waving used extraction method stable-slots; confirm motion playback remains stable and unclipped",
+    "jumping used extraction method stable-slots; confirm motion playback remains stable and unclipped",
+    "failed used extraction method stable-slots; confirm motion playback remains stable and unclipped",
+    "waiting used extraction method stable-slots; confirm motion playback remains stable and unclipped",
+    "running used extraction method stable-slots; confirm motion playback remains stable and unclipped",
+    "review used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "idle used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/idle/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13130,
+          "bbox": [
+            46,
+            6,
+            146,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/idle/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13238,
+          "bbox": [
+            47,
+            6,
+            146,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/idle/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13190,
+          "bbox": [
+            46,
+            6,
+            145,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/idle/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13247,
+          "bbox": [
+            46,
+            6,
+            146,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 4,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/idle/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13245,
+          "bbox": [
+            46,
+            5,
+            146,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/idle/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13230,
+          "bbox": [
+            46,
+            6,
+            146,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    },
+    {
+      "state": "running-right",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "running-right used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-right/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13085,
+          "bbox": [
+            36,
+            5,
+            155,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 1
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-right/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13023,
+          "bbox": [
+            36,
+            5,
+            154,
+            201
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-right/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12807,
+          "bbox": [
+            44,
+            5,
+            148,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 2
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-right/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12746,
+          "bbox": [
+            43,
+            5,
+            147,
+            201
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 4,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-right/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12878,
+          "bbox": [
+            43,
+            5,
+            147,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-right/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12716,
+          "bbox": [
+            43,
+            5,
+            148,
+            201
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 6,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-right/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13056,
+          "bbox": [
+            36,
+            5,
+            155,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 7,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-right/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13079,
+          "bbox": [
+            38,
+            8,
+            152,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 1
+        }
+      ]
+    },
+    {
+      "state": "running-left",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "running-left used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-left/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13017,
+          "bbox": [
+            37,
+            5,
+            154,
+            198
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-left/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12399,
+          "bbox": [
+            45,
+            5,
+            145,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-left/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12878,
+          "bbox": [
+            36,
+            5,
+            155,
+            198
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-left/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12287,
+          "bbox": [
+            46,
+            6,
+            145,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 1
+        },
+        {
+          "index": 4,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-left/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12584,
+          "bbox": [
+            42,
+            5,
+            148,
+            201
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 2
+        },
+        {
+          "index": 5,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-left/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12641,
+          "bbox": [
+            38,
+            5,
+            153,
+            198
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 2
+        },
+        {
+          "index": 6,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-left/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12265,
+          "bbox": [
+            46,
+            6,
+            145,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 2
+        },
+        {
+          "index": 7,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running-left/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12934,
+          "bbox": [
+            36,
+            5,
+            155,
+            199
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 1
+        }
+      ]
+    },
+    {
+      "state": "waving",
+      "expected_frames": 4,
+      "actual_frames": 4,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "waving used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waving/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14416,
+          "bbox": [
+            40,
+            5,
+            151,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waving/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14234,
+          "bbox": [
+            34,
+            5,
+            156,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waving/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14700,
+          "bbox": [
+            32,
+            5,
+            159,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waving/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14249,
+          "bbox": [
+            41,
+            5,
+            150,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    },
+    {
+      "state": "jumping",
+      "expected_frames": 5,
+      "actual_frames": 5,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "jumping used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/jumping/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 7868,
+          "bbox": [
+            50,
+            72,
+            140,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/jumping/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 8627,
+          "bbox": [
+            50,
+            32,
+            141,
+            186
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/jumping/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 9171,
+          "bbox": [
+            48,
+            5,
+            143,
+            158
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/jumping/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 8887,
+          "bbox": [
+            49,
+            31,
+            141,
+            194
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 4,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/jumping/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 8085,
+          "bbox": [
+            51,
+            61,
+            140,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "failed used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/failed/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13651,
+          "bbox": [
+            40,
+            5,
+            151,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/failed/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12794,
+          "bbox": [
+            41,
+            30,
+            150,
+            197
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/failed/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12278,
+          "bbox": [
+            36,
+            52,
+            154,
+            201
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/failed/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12192,
+          "bbox": [
+            35,
+            62,
+            155,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 4,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/failed/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 9379,
+          "bbox": [
+            26,
+            96,
+            165,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/failed/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 9271,
+          "bbox": [
+            27,
+            97,
+            164,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 6,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/failed/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 9240,
+          "bbox": [
+            27,
+            97,
+            164,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 7,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/failed/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 9183,
+          "bbox": [
+            27,
+            97,
+            164,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    },
+    {
+      "state": "waiting",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "waiting used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waiting/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13890,
+          "bbox": [
+            42,
+            5,
+            149,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 1
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waiting/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14016,
+          "bbox": [
+            36,
+            5,
+            155,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waiting/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13838,
+          "bbox": [
+            35,
+            5,
+            157,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waiting/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14046,
+          "bbox": [
+            36,
+            5,
+            156,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 1
+        },
+        {
+          "index": 4,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waiting/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13736,
+          "bbox": [
+            43,
+            5,
+            149,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/waiting/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13838,
+          "bbox": [
+            43,
+            5,
+            149,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    },
+    {
+      "state": "running",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "running used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16475,
+          "bbox": [
+            38,
+            5,
+            153,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 1
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16442,
+          "bbox": [
+            38,
+            5,
+            153,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16454,
+          "bbox": [
+            38,
+            5,
+            153,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16432,
+          "bbox": [
+            39,
+            5,
+            152,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 1
+        },
+        {
+          "index": 4,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16404,
+          "bbox": [
+            39,
+            5,
+            153,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/running/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16359,
+          "bbox": [
+            39,
+            5,
+            153,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "review used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/review/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13170,
+          "bbox": [
+            44,
+            6,
+            147,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/review/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12756,
+          "bbox": [
+            41,
+            13,
+            150,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/review/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13104,
+          "bbox": [
+            44,
+            6,
+            146,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/review/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12704,
+          "bbox": [
+            41,
+            10,
+            150,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 4,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/review/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12830,
+          "bbox": [
+            45,
+            6,
+            146,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "file": "/Users/hanjingwei/Documents/Codex/2026-08-13/new-chat/work/anya-hatch-run/qa/despill-candidate/frames/review/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13371,
+          "bbox": [
+            43,
+            5,
+            148,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    }
+  ]
+}

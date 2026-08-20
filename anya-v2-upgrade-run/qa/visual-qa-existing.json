@@ -1,0 +1,6 @@
+{
+  "visual_qa": "pass",
+  "qa_note": "Blue fringe is visually resolved to an acceptable clean edge; all motions and state semantics remain correct, including the stable celebratory jump arc, with no clipping, erosion, or new artifacts.",
+  "repair_rows": [],
+  "repair_notes": []
+}
